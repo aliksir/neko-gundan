@@ -1,0 +1,55 @@
+# 猫軍団 タスクキュー テンプレート
+# ====================================
+# このファイルはサンプルです。実際のタスクは自動生成されます。
+
+# --- 親方猫 → 仕事猫 への指示例 ---
+oyakata_to_shigoto_example:
+  task_id: "mission_001"
+  from: oyakata-neko
+  to: shigoto-neko
+  priority: high
+  command: decompose_and_execute
+  description: |
+    jp-dashboardにダークモード機能を追加せよ。
+    - トグルボタンの配置
+    - CSS変数によるテーマ管理
+    - localStorageへの設定保存
+  constraints:
+    - 既存のレイアウトを崩さないこと
+    - レスポンシブ対応すること
+  deadline: "本日中"
+
+# --- 仕事猫 → 現場猫 への指示例 ---
+shigoto_to_genba_example:
+  task_id: "genba_001"
+  parent_task: "mission_001"
+  from: shigoto-neko
+  to: genba-neko-1
+  command: implement
+  target: "jp-dashboard/src/components/ThemeToggle.jsx"
+  description: |
+    ダークモードのトグルボタンコンポーネントを作成する。
+    指差し確認項目：
+    1. ボタンのデザイン…ヨシッッ！
+    2. onClick handler…ヨシッッ！
+    3. aria-label設定…ヨシッッ！
+  constraints:
+    - React functional componentで実装
+    - 他のコンポーネントに影響を与えない
+
+# --- 現場猫 → 仕事猫 への報告例 ---
+genba_to_shigoto_report:
+  task_id: "genba_001"
+  from: genba-neko-1
+  to: shigoto-neko
+  status: completed  # completed | failed | blocked
+  result: |
+    ThemeToggle.jsxを作成しました！
+    動作確認…ヨシッッ！
+    現場からは以上です！
+  files_changed:
+    - path: "jp-dashboard/src/components/ThemeToggle.jsx"
+      action: created
+    - path: "jp-dashboard/src/styles/theme.css"
+      action: modified
+  issues: []  # 問題があれば記載

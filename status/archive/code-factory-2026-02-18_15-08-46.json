@@ -1,0 +1,10 @@
+{
+  "project": "jp-dashboard",
+  "timestamp": "2026-02-18T15:08:46.984Z",
+  "headSha": "14adb5d",
+  "riskTier": "none",
+  "changedFiles": [],
+  "checks": {},
+  "gateResult": "pass",
+  "message": "変更ファイルなし — ゲート通過"
+}

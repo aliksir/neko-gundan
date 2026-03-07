@@ -1,0 +1,10 @@
+{
+  "project": "x-auto-bot",
+  "timestamp": "2026-02-18T14:57:50.176Z",
+  "headSha": "cbd0236",
+  "riskTier": "none",
+  "changedFiles": [],
+  "checks": {},
+  "gateResult": "pass",
+  "message": "変更ファイルなし — ゲート通過"
+}

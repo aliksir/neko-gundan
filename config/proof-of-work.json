@@ -1,0 +1,24 @@
+{
+  "gates": {
+    "test_pass": {
+      "required": true,
+      "commands": ["npm test", "python -m pytest", "cargo test"],
+      "description": "テストスイートが存在する場合、全テスト通過"
+    },
+    "build_success": {
+      "required": true,
+      "commands": ["npm run build", "python -m py_compile", "cargo build"],
+      "description": "ビルドコマンドがexit 0で完了"
+    },
+    "review_complete": {
+      "required": true,
+      "description": "実装者以外によるレビューが完了（edit:false）"
+    },
+    "no_regressions": {
+      "required": true,
+      "description": "既存テストが壊れていない"
+    }
+  },
+  "auto_detect_stack": true,
+  "skip_if_no_tests": false
+}

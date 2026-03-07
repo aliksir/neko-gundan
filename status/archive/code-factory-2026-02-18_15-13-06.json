@@ -1,0 +1,175 @@
+{
+  "project": "scratch-gui",
+  "timestamp": "2026-02-18T15:13:06.943Z",
+  "headSha": "4ed937871",
+  "riskTier": "high",
+  "changedFiles": [
+    {
+      "file": "package-lock.json",
+      "tier": "low"
+    },
+    {
+      "file": "package.json",
+      "tier": "low"
+    },
+    {
+      "file": "src/components/gui/gui.jsx",
+      "tier": "low"
+    },
+    {
+      "file": "src/containers/controls.jsx",
+      "tier": "medium"
+    },
+    {
+      "file": "src/containers/gui.jsx",
+      "tier": "medium"
+    },
+    {
+      "file": "src/index.js",
+      "tier": "low"
+    },
+    {
+      "file": "src/lib/app-state-hoc.jsx",
+      "tier": "medium"
+    },
+    {
+      "file": "src/lib/connected-intl-provider.jsx",
+      "tier": "medium"
+    },
+    {
+      "file": "src/lib/project-fetcher-hoc.jsx",
+      "tier": "medium"
+    },
+    {
+      "file": "src/lib/project-saver-hoc.jsx",
+      "tier": "medium"
+    },
+    {
+      "file": "src/lib/save-project-to-server.js",
+      "tier": "high"
+    },
+    {
+      "file": "src/lib/vm-listener-hoc.jsx",
+      "tier": "medium"
+    },
+    {
+      "file": "src/lib/vm-manager-hoc.jsx",
+      "tier": "medium"
+    },
+    {
+      "file": "src/playground/index.ejs",
+      "tier": "low"
+    },
+    {
+      "file": "src/playground/index.jsx",
+      "tier": "low"
+    },
+    {
+      "file": "src/playground/render-gui.jsx",
+      "tier": "low"
+    },
+    {
+      "file": "webpack.config.js",
+      "tier": "medium"
+    },
+    {
+      "file": ".browser-cli/refs/refs-2026-02-15T12-20-00.json",
+      "tier": "low"
+    },
+    {
+      "file": ".browser-cli/refs/refs-2026-02-15T12-29-02.json",
+      "tier": "low"
+    },
+    {
+      "file": ".browser-cli/screenshots/shot-2026-02-15T12-18-54.png",
+      "tier": "low"
+    },
+    {
+      "file": ".browser-cli/screenshots/shot-2026-02-15T12-21-00.png",
+      "tier": "low"
+    },
+    {
+      "file": ".browser-cli/screenshots/shot-2026-02-15T12-21-48.png",
+      "tier": "low"
+    },
+    {
+      "file": ".browser-cli/screenshots/shot-2026-02-15T12-28-30.png",
+      "tier": "low"
+    },
+    {
+      "file": ".browser-cli/session.json",
+      "tier": "low"
+    },
+    {
+      "file": ".browser-cli/snapshots/snap-2026-02-15T12-20-00.yaml",
+      "tier": "low"
+    },
+    {
+      "file": ".browser-cli/snapshots/snap-2026-02-15T12-29-02.yaml",
+      "tier": "low"
+    },
+    {
+      "file": ".env",
+      "tier": "high"
+    },
+    {
+      "file": ".env.development",
+      "tier": "high"
+    },
+    {
+      "file": "risk-tiers.json",
+      "tier": "low"
+    },
+    {
+      "file": "s3-bucket-policy.json",
+      "tier": "low"
+    },
+    {
+      "file": "src/components/manual-save-button/manual-save-button.css",
+      "tier": "medium"
+    },
+    {
+      "file": "src/components/manual-save-button/manual-save-button.jsx",
+      "tier": "medium"
+    },
+    {
+      "file": "src/components/project-list-modal/project-list-modal.css",
+      "tier": "medium"
+    },
+    {
+      "file": "src/components/project-list-modal/project-list-modal.jsx",
+      "tier": "medium"
+    },
+    {
+      "file": "src/lib/api-key.js",
+      "tier": "high"
+    },
+    {
+      "file": "src/lib/debug-log.js",
+      "tier": "medium"
+    },
+    {
+      "file": "src/lib/dev-config.js",
+      "tier": "medium"
+    },
+    {
+      "file": "src/lib/load-project-from-server.js",
+      "tier": "high"
+    },
+    {
+      "file": "src/lib/projectApi.js",
+      "tier": "high"
+    },
+    {
+      "file": "src/lib/runtime-config.js",
+      "tier": "high"
+    }
+  ],
+  "checks": {
+    "review": {
+      "status": "pending",
+      "note": "猫軍団レビュー待ち"
+    }
+  },
+  "gateResult": "pending"
+}

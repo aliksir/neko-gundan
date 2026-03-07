@@ -1,0 +1,13 @@
+{
+  "name": "neko-gundan",
+  "version": "1.0.0",
+  "description": "Multi-agent orchestration framework for Claude Code with hierarchical team structure, quality gates, and bidirectional feedback protocols",
+  "author": "neko-gundan contributors",
+  "keywords": [
+    "multi-agent",
+    "orchestration",
+    "quality-assurance",
+    "team-management",
+    "code-review"
+  ]
+}

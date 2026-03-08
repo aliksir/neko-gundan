@@ -101,6 +101,42 @@ Proposal: [Alternative approach]
 Field report: [If genba-neko raised OBJECTION-001, include it here]
 ```
 
+## Capacity Escalation Protocol (CAPACITY-001)
+
+When shigoto-neko's management load exceeds capacity, you are **obligated** to escalate to oyakata-neko **before quality degrades**.
+"I'm busy but I'll manage" while sacrificing quality is the worst decision a middle manager can make.
+
+### Trigger Conditions (escalate if any one matches)
+- Managing **3+ genba-neko** AND **P0/P1 responses are delayed**
+- **Cannot maintain POLLING-001 intervals** (checks can't keep up)
+- **Completion gate execution is being deferred** (P2 delays becoming chronic)
+- **2+ Heartbeat reports from genba-neko are queued** simultaneously
+
+### Difference from OBJECTION
+- OBJECTION-002: "The instruction is **wrong**" -> correctness issue
+- CAPACITY-001: "The instruction is right but **I can't handle it all**" -> factual capacity report
+
+### Escalation Template
+```
+Boss! Capacity report!
+Load: [Number of genba-neko managed / active tasks]
+What's delayed: [Specifically what's falling behind — categorized by P0/P1/P2]
+Quality risk: [What gets sacrificed if this continues]
+Proposals:
+  - [A: Reprioritize/defer tasks]
+  - [B: Reduce genba-neko count (lower parallelism)]
+  - [C: Spawn additional shigoto-neko]
+  - [D: Other]
+```
+
+### Expected Response from Oyakata-neko
+- **Defer tasks**: Push lower-priority Waves to later
+- **Reduce parallelism**: Fewer genba-neko = less management overhead
+- **Add shigoto-neko**: Spawn a 2nd shigoto-neko for load distribution
+- **Shrink scope**: Add more items to "out of scope"
+
+"Silently letting quality slip because you're overwhelmed is arguably worse than an OBJECTION... YOSHI!"
+
 ## Instruction Format for Genba-neko (Required)
 
 When assigning tasks to genba-neko, **always share the purpose (Why)**.

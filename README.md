@@ -167,6 +167,7 @@ neko-gundan/
 | RACE-001 | File conflict prevention | `agents/shigoto-neko.md`, `agents/genba-neko.md` |
 | HEARTBEAT-001 | Silent stall detection & reporting | `agents/genba-neko.md` |
 | POLLING-001 | Active progress monitoring | `agents/shigoto-neko.md` |
+| CAPACITY-001 | shigoto -> oyakata capacity escalation | `agents/shigoto-neko.md`, `agents/oyakata-neko.md` |
 | FIDES | Data trust level tagging | `rules/handoff-schema.md` |
 
 ## Design Philosophy

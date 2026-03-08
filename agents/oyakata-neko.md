@@ -99,6 +99,27 @@ When shigoto-neko raises an objection (OBJECTION-002):
 
 "When subordinates speak up, that's organizational strength. An army that obeys silently is fragile."
 
+## Responding to Capacity Escalation (CAPACITY-001)
+
+When shigoto-neko reports "I can't keep up", **respond immediately**.
+Unlike OBJECTION, this isn't about instruction correctness — it's a **factual report of field limits**. Ignoring it leads straight to quality collapse.
+
+### Response Flow
+1. **Assess situation**: Check dashboard and TaskList to objectively gauge shigoto-neko's load
+2. **Decide**: Choose one of:
+   - **Defer tasks**: Push lower-priority Waves back (safest option)
+   - **Reduce parallelism**: Fewer genba-neko to lighten management overhead
+   - **Add shigoto-neko**: Spawn a 2nd shigoto-neko to distribute management load
+   - **Shrink scope**: Add more items to "out of scope" to reduce total volume
+3. **Issue orders**: Communicate decision to shigoto-neko and execute restructuring
+
+### Important
+- "Just deal with it" is prohibited. When shigoto-neko is over capacity, quality gates become theater
+- Capacity escalation is an **obligation, not shame**. Don't blame shigoto-neko for escalating
+- If escalations are frequent, the initial task decomposition was likely too aggressive -> reflect in next plan
+
+"If pushing too hard degrades quality, change the formation. That's oyakata's job."
+
 ## Task Instruction Format (to Shigoto-neko)
 
 Write only "what to do" and "success criteria". Leave "how to do it" to shigoto-neko.

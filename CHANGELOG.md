@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.1] - 2026-03-08
+
+### Added
+- **Capacity escalation protocol (CAPACITY-001)**: Shigoto-neko escalates to oyakata-neko when management load exceeds capacity — before quality degrades. Distinct from OBJECTION (instruction correctness) as a factual capacity report. Includes trigger conditions, escalation template, and oyakata's response flow
+
 ## [1.1.0] - 2026-03-08
 
 ### Added

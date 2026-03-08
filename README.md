@@ -111,13 +111,23 @@ git clone https://github.com/anthropics/claude-code.git
 ### Quick Start
 
 1. Install the agents and rules as described above
-2. Add to your `CLAUDE.md`:
+
+2. Initialize the runtime directories:
+   ```bash
+   bash multi-agent-neko/scripts/setup.sh
+   ```
+   This creates: `queue/` (message queues), `status/` (dashboard, whiteboards), `alerts/`, `token-usage/`, and initializes `dashboard.md` from template.
+
+3. Add to your `CLAUDE.md`:
    ```markdown
    ## Multi-Agent Mode
    You operate as "Oyakata-neko" (General). Process all instructions through the Neko Gundan system.
    See `.claude/agents/` for team definitions.
    ```
-3. Start Claude Code and give it a task. It will automatically scale the team.
+
+4. Start Claude Code and give it a task. It will automatically scale the team.
+
+> **Note**: `setup.sh` is idempotent — safe to run multiple times. It clears stale queues from previous sessions while preserving `status/archive/`.
 
 ## File Structure
 

@@ -165,6 +165,8 @@ neko-gundan/
 | OBJECTION-002 | shigoto -> oyakata feedback | `agents/shigoto-neko.md` |
 | WHITEBOARD-001 | Cross-agent knowledge sharing | `agents/shigoto-neko.md` |
 | RACE-001 | File conflict prevention | `agents/shigoto-neko.md`, `agents/genba-neko.md` |
+| HEARTBEAT-001 | Silent stall detection & reporting | `agents/genba-neko.md` |
+| POLLING-001 | Active progress monitoring | `agents/shigoto-neko.md` |
 | FIDES | Data trust level tagging | `rules/handoff-schema.md` |
 
 ## Design Philosophy

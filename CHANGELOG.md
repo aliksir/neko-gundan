@@ -8,6 +8,9 @@
 - **Commit strategy guide**: Replaced "always commit immediately" with situational commit guidelines for genba-neko (new file / feature checkpoint / WIP)
 - **FIDES LOW→MEDIUM promotion**: Concrete verification procedures for elevating LOW trust data (independent source, local reproduction, schema validation, pattern matching, human confirmation)
 - **Quick Start init step**: Added `setup.sh` initialization step to README Quick Start section
+- **Heartbeat protocol (HEARTBEAT-001)**: Genba-neko must report when stuck for 5+ minutes, hitting 2 errors, or encountering unexpected state. Auto-escalation on 3 consecutive errors
+- **Polling protocol (POLLING-001)**: Shigoto-neko actively checks genba-neko progress (5min initial, then every 10min). Silent stall detection with 4 pattern types
+- **Watchdog-Heartbeat integration**: HEARTBEAT-001 escalations feed into the 3-layer Watchdog system (L1/L2 triggers)
 
 ### Improved
 - **Compaction Recovery (oyakata)**: Expanded from 4-step to 5-step recovery with full state reconstruction (TaskList, messages, whiteboards, OBJECTION status, dev-lessons)

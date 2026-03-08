@@ -1,0 +1,23 @@
+{
+  "project": "test-no-git",
+  "timestamp": "2026-02-18T13:40:07.175Z",
+  "headSha": "(no-git)",
+  "riskTier": "high",
+  "changedFiles": [
+    {
+      "file": "risk-tiers.json",
+      "tier": "low"
+    },
+    {
+      "file": "test.ts",
+      "tier": "high"
+    }
+  ],
+  "checks": {
+    "typecheck": {
+      "status": "pass",
+      "duration": 23
+    }
+  },
+  "gateResult": "pass"
+}

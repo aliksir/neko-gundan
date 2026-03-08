@@ -1,0 +1,7 @@
+{
+  "events": ["after_create", "before_run", "after_run", "on_stall", "before_remove"],
+  "log_file": "status/lifecycle-log.jsonl",
+  "auto_cleanup_worktree": true,
+  "stall_auto_recovery": true,
+  "max_recovery_attempts": 5
+}

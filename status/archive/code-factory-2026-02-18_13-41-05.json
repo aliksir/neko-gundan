@@ -1,0 +1,5808 @@
+{
+  "project": "jp-dashboard",
+  "timestamp": "2026-02-18T13:41:05.111Z",
+  "headSha": "(no-git)",
+  "riskTier": "low",
+  "changedFiles": [
+    {
+      "file": ".app_profile/Ad Blocking/blocklist",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Autofill/4.0.1.30/autofill_bypass_cache_forms.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Autofill/4.0.1.30/edge_autofill_global_block_list.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Autofill/4.0.1.30/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Autofill/4.0.1.30/regex_patterns.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Autofill/4.0.1.30/v1FieldTypes.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/AutoLaunchProtocolsComponent/1.0.0.10/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/AutoLaunchProtocolsComponent/1.0.0.10/protocols.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/BrowserMetrics/BrowserMetrics-6990A1DD-D6FC.pma",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/BrowserMetrics-spare.pma",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/CertificateRevocation/6498.2025.9.4/crl-set",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/CertificateRevocation/6498.2025.9.4/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/000ac7dc9366969db9d1e41810a3a27c747a7623535d856eecc2de86cfed80c7",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/00af3f07b5abb71f6d30337e1eef62fa280f06ef19485c0cf6b72171f92ccc0a",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/07e0ad6da3d30a27962c6e09da9798ba1745856eaad71a036e2f639e93ea0b27",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/1e1174204f8a0a13de2e224a1be882d2724a6fd13ba18a895fd5098fd5552460",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/2d2f683649600db91050fb41cd9ffea403ae024de38a0647b18e7f6106f6c55d",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/38b9a60260c000df8eadd64719d86020e30480df9afb893e60b5ef7d780616a5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/43e30b6e33b93800d39fd72fb641835e938cf575d9747079dae125e747cdca61",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/4a84f2bdd63dabe6abde22b9047a6942eeb7bdf93d8435cc4b188dbe72d9e30d",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/5945e1aaa5c5d16819d25521eff08f04dc9643a490bc6fc499b8df3eda2f446e",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/89f43cb3df807293de2772d5f01ac2fc1482b38ccc8fdaee859b80642b7a0487",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/8d64e3a35ee2c3e0b9e33afd63069fdc917a5647dd1e20c5ead97955fb6979f9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/95fd9d48e4fc245a3f3a99a3a16ecd1355050ba3f4afc555f19a97c7f9b49677",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/a00289af85d31d698a0f6753b6ce67dbab4bdff639bde5fc588a5d5d8a3885d5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/a81d1959892ae4180554347df1b97834abba2e1a5e6b9aeba000ecea26eabecc",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/b27bec7581505715364f132de1998818c82462dbf55a1f55f9b15e29e988d791",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/bcb93cba8636743d1fbd32be3bd8ce8ff602323895bf4d136c26b9bc64b0a6a4",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/c039d4b6c356d706a3251f7b89293840c0d8e845def2b28056762aa55a235b60",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/ca98905b356fe1891b054c419576ee86ba489a74a0cb9a720312ed4e9d6e8089",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/e0770b8d8d69ebb2a2be543d8ab5c90514db12c2c9812c1399a3f61983f8c0ed",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/e8ecb70a4c65bb099de40a99a4892b6758ac85d46caac82870b6adb6573466d9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/f081de18a604e95a175eaf4dd91b35b7f17ad4de24ee2f20eeb034c979bbcccb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/fa29a6d5775ff340900a65b39b02fc8b4b77d403c048d8debf22f2f5d09c61a0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/fbb2c0f4fad3b34b3ac7116d98f83638cf6f55a47992026a7abf944a759aa0ea",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/component_crx_cache/metadata.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Crashpad/metadata",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Crashpad/settings.dat",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Crashpad/throttle_store.dat",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/arbitration_service_config.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Asset Store/assets.db/000003.ldb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Asset Store/assets.db/000004.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Asset Store/assets.db/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Asset Store/assets.db/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Asset Store/assets.db/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Asset Store/assets.db/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Asset Store/assets.db/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/AutofillAiModelCache/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/AutofillAiModelCache/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/AutofillAiModelCache/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/AutofillStrikeDatabase/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/AutofillStrikeDatabase/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/AutofillStrikeDatabase/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/BookmarkMergedSurfaceOrdering",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Bookmarks",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Bookmarks.bak",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/BrowsingTopicsSiteData",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/BrowsingTopicsSiteData-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/BrowsingTopicsState",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/BudgetDatabase/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/BudgetDatabase/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/BudgetDatabase/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/data_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/data_1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/data_2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/data_3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000005",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000006",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000007",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000008",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000009",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00000a",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00000c",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000010",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000014",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000a0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000a1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000a4",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000a5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000a6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000a9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000aa",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000ab",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000ac",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000ad",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000ae",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000af",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000b0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000b1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000b2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000b3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000b4",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000b5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000b6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000b7",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000b8",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000b9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000ba",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000bb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000bc",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000bd",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000be",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000bf",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000c0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000cd",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000cf",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000dc",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000f0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000f1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000f2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000f3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000f4",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000f5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000f6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000f7",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000f8",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000f9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000fa",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000fb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000fc",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000fd",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000fe",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0000ff",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000100",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000101",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000102",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000103",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000104",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000105",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000106",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000107",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000108",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00018f",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000190",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000191",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000192",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000193",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000194",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000195",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000196",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000197",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000198",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000199",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00019a",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00019b",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00019c",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00019d",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00019e",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00019f",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001a0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001a1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001a2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001a3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001a4",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001a5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001a6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001a7",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001a8",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001a9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001aa",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001ab",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001ac",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001ad",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001ae",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001af",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001b0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001b1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001b2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001b3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001b4",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001b5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001b6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001b7",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001b8",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001b9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001ba",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001bb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001bc",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001bd",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001be",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001bf",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001c0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001c1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001c2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001c3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001c4",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001c5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001c6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001c7",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001c8",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0001c9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000207",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000216",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00077f",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000780",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000781",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000782",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000783",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000785",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000786",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000787",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000788",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000789",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00078a",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00078b",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00078c",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00078d",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00078e",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00078f",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000790",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000791",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000792",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000793",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000794",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000795",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000796",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000797",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000798",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000799",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00079a",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00079b",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00079c",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00079d",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00079e",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00079f",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007a0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007a1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007a2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007a3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007a4",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007a5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007a6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007a7",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007a8",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007a9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007aa",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007ab",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007ac",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007ad",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007ae",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007af",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007b0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007b3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007b6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007b7",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007b8",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007b9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007be",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007bf",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007c0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007c1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007c2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007c3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007c4",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007c5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007c6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007c7",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007c9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007ca",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007cb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007cc",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007cd",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007ce",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007cf",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007d0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007d1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007d2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007d3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007d4",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007d5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007d6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007d7",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007d8",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007d9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007da",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007db",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007dc",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007dd",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007de",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007df",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007e0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007e4",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007e5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007e6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007e7",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007e8",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007e9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007ea",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007eb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007ec",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007ed",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007ee",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007ef",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007f0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007f1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007f2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007f3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007f4",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007f5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007f6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007f7",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007f8",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007f9",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007fa",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007fb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0007fe",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000800",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000801",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000802",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000803",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000804",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000805",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000806",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000807",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000808",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00080b",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00080c",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00080d",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00080e",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00080f",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000810",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000811",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000812",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000813",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000814",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000815",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000816",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000817",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000818",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000819",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00081a",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00081b",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00081c",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00081d",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00081e",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00081f",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000820",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000821",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000822",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000823",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000824",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000825",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000826",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000827",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000828",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000829",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00082a",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00082b",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00082c",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00082d",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000831",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000832",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000833",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000834",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000893",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000894",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000895",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000896",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000897",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000898",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000899",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00089a",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_00089b",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0008f5",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0008f6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0008f7",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_0008f8",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000ae6",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000c5e",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000cac",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000cad",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000cae",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/f_000cba",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/Cache_Data/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/No_Vary_Search/journal.baj",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Cache/No_Vary_Search/snapshot.baf",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/ClientCertificates/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/ClientCertificates/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/ClientCertificates/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/0113febcc051d9a2_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/015b8dd235b2ca7a_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/0165e2a1fd93f63c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/01b6f64dd2556ad0_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/01dc45b1c8074db4_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/03b162ee7b642b83_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/03e2c0fdfe687849_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/0583dac834d43b40_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/059caf302de6504c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/062b2a0cb8dcbaaa_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/06eef08ceff29679_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/07d373ad5c6b6705_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/094a496811e29042_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/09d6c4f16014343c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/0dcd59cbfd9048a9_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/0e26f2dc3850ecbf_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/0e863c85fd002e8e_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/1030f66afd79d56d_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/106c732731cd8928_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/11e2f11496d5f85b_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/13806a807eeaa886_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/1438effe8ad02f3b_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/15ff9f2c2b5d0740_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/167ed27b0d8e6e71_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/16c924dcdf4fae4f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/178ac4162fe30fb8_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/18082e5723f059dd_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/18d669c1c406f647_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/193a61680ffd6537_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/1a6fcfc16f1db9f4_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/1cc6eb437e58f29b_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/1cce89b54e0b5694_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/1d847c8cfa34da6a_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/1e7b8867c9825dd3_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/1e7d1b53086a0274_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/1ef69c7691823f72_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/1fc3e25e6df1f6cd_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/1ffb12b4149203a3_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/206072f42a740798_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/20f5e889e149a7f4_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/2155c0df04c9d6dd_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/21937acef44fa438_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/21eefbf9f9c0dece_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/2212e82073081585_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/2381771d2d2e7b3e_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/244f72ec8479ba7f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/245fcbbd9cfda461_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/24b2e3e9cfe8bb5a_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/258575a7fee1a232_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/25c6f0d70aaef27f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/25e32d54b3b3f429_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/26fc9efd08670efe_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/27b49e8fa1a725c5_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/27e8355d9487df5c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/2910793157890b4f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/29961eb413b720b1_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/2a31a8c7d6b164e5_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/2a8a6f695a3ff316_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/2b220c1f47254d17_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/2bc2dc13c229724d_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/2cca9bc741a6516d_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/2d16c3b9b7ab5cb5_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/2d1e4a027faefa0f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/2dfe7190388b03c1_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/2f07a5c8cdbce9b6_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/30e333f97dd8dc72_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/315461711c16a158_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/32c566cf70a83b8c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/336a68eaaf209f48_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/3378729406efe172_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/3415d70eb00d49f7_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/34e3268623f0061f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/357efd7dc8d9697c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/367b4e56d216bc90_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/3c88712ab2ff1a3e_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/3caa0cd419ad98e2_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/3ce86a36996d0dc4_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/3dc9b687c11aa37c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/3f32075d7ef937f5_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/400186f4d61fdf5e_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/400c06766f44aae9_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/4060e4649ebcbee8_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/4184f564d1840b74_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/4285153ecd19943f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/442a7aae9e74a3c0_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/44ee73b7802e0e4b_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/45be114ec1b6b953_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/45fefe5e6c261ea4_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/4619599450f96bcd_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/4632079c42cb3585_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/46cfb3072883729f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/47449dfce26378f9_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/47bf267c3f650104_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/47f0dadeec77fa64_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/481c4ac7e7ba6c16_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/48f73bf90fae6d53_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/498be20e9a8d1c37_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/49e80c0d269dab44_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/49f14abd98087902_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/4a72efc78a9128c7_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/4b9451c2476e1bdd_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/4c1777db56e80a7b_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/4c9323c07b883f6f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/4c9da7fbab318034_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/4d2788f404bb7704_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/4eba8e47c73b0e77_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/4fc6f3f94b5de238_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/509bedb2857e1586_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/51092e8cb76d7cc5_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/52f7f5038b3a450d_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/542fedaeb520a8bd_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/54e23cac9afecf0b_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/5772d7e2f91906a1_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/5847da0b7623c6ff_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/5872f846edf5f757_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/593840c421833f9a_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/59d27c0ea6dac7f2_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/5a051774f61bf537_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/5ad8c8c41581e2d4_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/5c2ce5be3d541c76_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/5c8d44eb13d598d1_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/5cce1706364839f1_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/5d495e7ad862d1b3_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/5d9be227865dff27_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/5f17836c21337351_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/5fbb54f36261c413_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/5ff834f65c17480e_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6166edc552de5769_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/618c6242e8984c8f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/63d7b5a09647f384_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/65f67c3d3863a99a_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/66e99438c751f35c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6703f9ad4af5a7e2_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6859b43c7df02c3d_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/69460b567cfdd7d7_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6ab39f96775865a6_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6ae1a6cbf4e47c23_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6b6a06fd11ca92a2_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6baf4b3f3c05ce88_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6c75ff5b2dffd127_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6cdeaeb8c463b9be_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6d551421d0ee871b_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6dd801d3c370f365_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6ed57e7b0df81ac1_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6eea25b55d669ca4_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6f44e08b7f2602dc_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/6f9b9834294e02c9_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/708243291b3414af_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/723e502c98432b43_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/741ac7605e33f6a7_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/75a11902e89e0aa4_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/75ec5c028e1526d6_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/77a2f311eeeb3a9b_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/789aa88d4018f61b_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/78e9c67f579409bc_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/7935dabd9d663cf6_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/79586f1914095e68_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/79b1b9fdf4f0d2f3_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/7b2d60a150214801_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/7b30ab58f1e709c1_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/7b659fb1d0682038_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/7bb5f9eb82d60b02_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/7c2ab4477cb34343_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/7de0dc67a2b3a69c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/7e483af4602734c6_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/7f10c98011747ef6_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/8020acacb3d13763_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/80e5055d066b4adf_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/80fdb640c47c2348_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/815c14ec8259e871_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/82093f9603ae8669_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/82368d09dfecd72f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/83455179c9c0c528_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/839eee6cd589ded2_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/85c05efce568db21_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/85c2fd2880f7ecba_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/86fda85eac8e6a4a_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/876bd658b7dd77b1_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/87c124b1ba4ea624_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/899b7c32a752b02f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/89ba7300fda69fcf_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/8bb1867be67136eb_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/8c18fc939c437596_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/8cc905df041efa2d_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/8df74047afc054ed_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/8e4962f6ce2d1348_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/8eb5a2913b0d421f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/8eb611331569984b_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/91f5e048f49aaa0b_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/924d3d2c8c50d2de_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/926f35321e1b8d48_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/9293467eb82b19e2_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/92f70710e2eca7b9_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/945cb8fb56d09a8e_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/9494e83918f7cb5d_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/958aaf33200ad435_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/95ed7f252f3e8190_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/9663d51f528a7353_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/96f7f94dd6484cf1_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/9803eb1ee247504c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/9817ac6a8cb68450_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/9b2fa8661c042dff_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/9bb01b3fad10ed07_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/9bd4f5a2712d69f7_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/9d903d9c3d488ecd_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/a1c2a594151d0a08_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/a1ff92cd3fa369e8_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/a3401b9c8f80e983_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/a387f05c74841ee2_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/a3dae51941365ba1_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/a3f44f7967b1e15a_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/a956bedb7ccad87a_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/a9b7285a2ffdc52a_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/aaa39007d846d962_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/ac5cef503cf7c941_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/acf3631f40970d3b_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/ae038cab10e49bcd_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/af52e8f909bed079_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/b21fb45197b9c728_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/b2dc0dc6c53a5962_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/b4bb19c05d24dd10_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/b4c9d40071c027df_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/b5a501c9a8b8d2b6_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/b6ad5d7cceac48e7_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/b724c3754fc6bbe1_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/b733c7425e03faed_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/b796be6907d4937c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/b7e261924a91e310_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/b7e9cf608d58e61a_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/b862ee371d68b9a9_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/b8ab00d8c47a276d_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/ba678a2fbd8c358c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/baded5730168391f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/bbfafe9ccc99f425_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/bc692b4e22eeaffa_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/bcc05e31f87fc612_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/be0001d8a2b0a640_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/be1a3002ff1b577e_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/be7377dd8bdb3ca4_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/c102955607b36c22_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/c143a2336e8cd013_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/c1da0ab7cf6eb9d2_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/c21130536a277f60_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/c24eb1fd849219c1_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/c3f348a3942684a3_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/c43d92b5463eeead_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/c43f15261eb05402_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/c4944ace13478bdc_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/c4f132964876f882_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/c835d968efb9eb49_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/c9154e9477b4fd99_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/c9c5efb34b739971_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/cb64d33aa4f9ae7f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/cc1edd77b9debe7c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/cd03cfa8507dfc09_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/cd7ad2638fb38c20_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/ce12549f081b27a7_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/ce5cce247036de74_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/ce708bfe7a31fb1a_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/d0d1eb330fe1126e_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/d0ee07dd8e0d0461_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/d1237c4e43f52be0_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/d15ba1e875d55bad_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/d15c231a8d7f5ffd_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/d2f8c1d2b8ec1db0_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/d432b4881d8cdb11_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/d5d4c62c19d62c69_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/d6ba32be80ea091c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/d802a1b990bfa7bc_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/d8129c00f3378037_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/d94e70dee73931dc_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/da6d68e0725e515c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/dc28712870ef2eec_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/dd0cafccb8e7f7b1_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/dd94f8339dd9c728_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/de2a615729b4484c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/dfd916656a5bc02f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/dff6d4e2b2a8850a_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/e118172c87971c7d_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/e1429d12bf2d9eab_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/e1f8d2cc3376e44e_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/e3bb5875ea01f6d6_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/e3d77381cdbb825d_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/e3f3b2fbd4d36f41_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/e4025b63b7f9d7c4_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/e407c85ef4d21ecf_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/e5c107f2706b7bf9_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/e6c10d6613e01ca0_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/e8120227458b82bf_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/e94999eac39dfd99_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/e9a142a21b9ad9ef_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/ea0e705569692f6f_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/eb45865ecdd2d308_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/ebce9e52a869b921_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/eee4504cc3dabdc3_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/eeec48ecb095df3e_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/ef0fa9c8325e13e5_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/f0fd5c62a30ee221_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/f16d30b7713520e6_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/f2c545c42c961eb2_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/f3808073e165938d_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/f52b644f52e431be_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/f66ecae51246787a_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/f679f318754349ed_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/f7fcbe6262ad99fa_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/f8cc092af7b6f525_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/f9422c42309a9b35_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/f987f6f55c18e156_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/f9dfc4bdb6d646a9_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/fb96ade6b13cf976_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/fd35dcfeac1c5147_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/fea548e40efbe16c_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/js/index-dir/the-real-index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/wasm/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Code Cache/wasm/index-dir/the-real-index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Collections/collectionsSQLite",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Collections/collectionsSQLite-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/commerce_subscription_db/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/commerce_subscription_db/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/commerce_subscription_db/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DashTrackerDatabase",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DashTrackerDatabase-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DawnGraphiteCache/data_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DawnGraphiteCache/data_1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DawnGraphiteCache/data_2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DawnGraphiteCache/data_3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DawnGraphiteCache/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DawnWebGPUCache/data_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DawnWebGPUCache/data_1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DawnWebGPUCache/data_2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DawnWebGPUCache/data_3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DawnWebGPUCache/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/default_cloud_config.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DIPS",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DIPS-wal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/discounts_db/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/discounts_db/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/discounts_db/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/discount_infos_db/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/discount_infos_db/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/discount_infos_db/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DualEngine/SiteList-Consumer.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/DualEngine/SiteList-Enterprise.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Edge Profile Picture.png",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgeCoupons/coupons_data.db/000005.ldb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgeCoupons/coupons_data.db/000036.ldb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgeCoupons/coupons_data.db/000037.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgeCoupons/coupons_data.db/000038.ldb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgeCoupons/coupons_data.db/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgeCoupons/coupons_data.db/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgeCoupons/coupons_data.db/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgeCoupons/coupons_data.db/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgeCoupons/coupons_data.db/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgeEDrop/EdgeEDropSQLite.db",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgeEDrop/EdgeEDropSQLite.db-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgeHubAppUsage/EdgeHubAppUsageSQLite.db",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgeHubAppUsage/EdgeHubAppUsageSQLite.db-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgePushStorageWithConnectTokenAndKey/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgePushStorageWithConnectTokenAndKey/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgePushStorageWithConnectTokenAndKey/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgePushStorageWithConnectTokenAndKey/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgePushStorageWithConnectTokenAndKey/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EdgePushStorageWithConnectTokenAndKey/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EntityExtraction/domains_config.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EntityExtraction/EntityExtractionAssetStore.db/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EntityExtraction/EntityExtractionAssetStore.db/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EntityExtraction/EntityExtractionAssetStore.db/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EntityExtraction/EntityExtractionAssetStore.db/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EntityExtraction/EntityExtractionAssetStore.db/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/EntityExtraction/EntityExtractionAssetStore.db/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension Rules/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension Rules/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension Rules/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension Rules/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension Rules/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension Rules/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension Scripts/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension Scripts/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension Scripts/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension Scripts/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension Scripts/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension Scripts/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension State/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension State/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension State/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension State/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension State/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Extension State/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/ExtensionActivityComp",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/ExtensionActivityEdge",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/ExtensionActivityEdge-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Favicons",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Favicons-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/favorites_diagnostic.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Feature Engagement Tracker/AvailabilityDB/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Feature Engagement Tracker/AvailabilityDB/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Feature Engagement Tracker/AvailabilityDB/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Feature Engagement Tracker/EventDB/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Feature Engagement Tracker/EventDB/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Feature Engagement Tracker/EventDB/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/GPUCache/data_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/GPUCache/data_1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/GPUCache/data_2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/GPUCache/data_3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/GPUCache/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/heavy_ad_intervention_opt_out.db",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/heavy_ad_intervention_opt_out.db-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/History",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/History-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/HubApps",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/HubApps Icons",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/HubApps Icons-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/load_statistics.db",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/load_statistics.db-shm",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/load_statistics.db-wal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Local Extension Settings/jdiccldimpdaibmpdkjnbmckianbfold/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Local Extension Settings/jdiccldimpdaibmpdkjnbmckianbfold/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Local Extension Settings/jdiccldimpdaibmpdkjnbmckianbfold/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Local Extension Settings/jdiccldimpdaibmpdkjnbmckianbfold/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Local Extension Settings/jdiccldimpdaibmpdkjnbmckianbfold/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Local Storage/leveldb/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Local Storage/leveldb/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Local Storage/leveldb/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Local Storage/leveldb/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Local Storage/leveldb/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Local Storage/leveldb/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Login Data",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Login Data For Account",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Login Data For Account-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Login Data-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Network/Cookies",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Network/Cookies-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Network/Network Persistent State",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Network/NetworkDataMigrated",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Network/Reporting and NEL",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Network/Reporting and NEL-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Network/SCT Auditing Pending Reports",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Network/Sdch Dictionaries",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Network/TransportSecurity",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Network/Trust Tokens",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Network/Trust Tokens-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Network Action Predictor",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Network Action Predictor-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Nurturing/campaign_history",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Nurturing/campaign_history-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/optimization_guide_hint_cache_store/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/optimization_guide_hint_cache_store/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/optimization_guide_hint_cache_store/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/parcel_tracking_db/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/parcel_tracking_db/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/parcel_tracking_db/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Password_Diagnostics/PMLog_13415479658224840",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/PersistentOriginTrials/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/PersistentOriginTrials/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/PersistentOriginTrials/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Preferences",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/PreferredApps",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/README",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Safe Browsing Network/NetworkDataMigrated",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Safe Browsing Network/Safe Browsing Cookies",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Safe Browsing Network/Safe Browsing Cookies-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Secure Preferences",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Segmentation Platform/SegmentInfoDB/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Segmentation Platform/SegmentInfoDB/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Segmentation Platform/SegmentInfoDB/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Segmentation Platform/SignalDB/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Segmentation Platform/SignalDB/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Segmentation Platform/SignalDB/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Segmentation Platform/SignalStorageConfigDB/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Segmentation Platform/SignalStorageConfigDB/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Segmentation Platform/SignalStorageConfigDB/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/ServerCertificate",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/ServerCertificate-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/6331b51a4de2dc6f89147e9303f6af1909e186dd/33036651-c509-4c34-873f-4a507f7505d5/1f3208732177d9d7_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/6331b51a4de2dc6f89147e9303f6af1909e186dd/33036651-c509-4c34-873f-4a507f7505d5/219871cfb6a4f559_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/6331b51a4de2dc6f89147e9303f6af1909e186dd/33036651-c509-4c34-873f-4a507f7505d5/57e4c838acb65570_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/6331b51a4de2dc6f89147e9303f6af1909e186dd/33036651-c509-4c34-873f-4a507f7505d5/dfea47e6434041de_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/6331b51a4de2dc6f89147e9303f6af1909e186dd/33036651-c509-4c34-873f-4a507f7505d5/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/6331b51a4de2dc6f89147e9303f6af1909e186dd/33036651-c509-4c34-873f-4a507f7505d5/index-dir/the-real-index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/6331b51a4de2dc6f89147e9303f6af1909e186dd/index.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/ca9aa537f84da44e7a8613a19325b6cafa3a2a77/1f48d1e5-f4c2-42c9-930c-b0593b34f0af/82cbf7fa754d1b04_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/ca9aa537f84da44e7a8613a19325b6cafa3a2a77/1f48d1e5-f4c2-42c9-930c-b0593b34f0af/8312f9ec7e13a78d_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/ca9aa537f84da44e7a8613a19325b6cafa3a2a77/1f48d1e5-f4c2-42c9-930c-b0593b34f0af/d009df4e715b2237_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/ca9aa537f84da44e7a8613a19325b6cafa3a2a77/1f48d1e5-f4c2-42c9-930c-b0593b34f0af/ec65c5844cc2ac42_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/ca9aa537f84da44e7a8613a19325b6cafa3a2a77/1f48d1e5-f4c2-42c9-930c-b0593b34f0af/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/ca9aa537f84da44e7a8613a19325b6cafa3a2a77/1f48d1e5-f4c2-42c9-930c-b0593b34f0af/index-dir/the-real-index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/CacheStorage/ca9aa537f84da44e7a8613a19325b6cafa3a2a77/index.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/Database/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/Database/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/Database/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/Database/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/Database/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/Database/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/ScriptCache/2cc80dabc69f58b6_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/ScriptCache/2cc80dabc69f58b6_1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/ScriptCache/4cb013792b196a35_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/ScriptCache/4cb013792b196a35_1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/ScriptCache/f1cdccba37924bda_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/ScriptCache/f1cdccba37924bda_1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/ScriptCache/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Service Worker/ScriptCache/index-dir/the-real-index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Session Storage/000004.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Session Storage/000005.ldb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Session Storage/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Session Storage/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Session Storage/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Session Storage/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Session Storage/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sessions/Apps_13415554179755707",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sessions/Apps_13415643794393305",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sessions/Apps_13415651360467989",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sessions/Session_13415610346267808",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sessions/Session_13415701649465259",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sessions/Tabs_13415554179972738",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sessions/Tabs_13415559904288693",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Shared Dictionary/cache/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Shared Dictionary/cache/index-dir/the-real-index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Shared Dictionary/db",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Shared Dictionary/db-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/SharedStorage",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/SharedStorage-wal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/shared_proto_db/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/shared_proto_db/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/shared_proto_db/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/shared_proto_db/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/shared_proto_db/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/shared_proto_db/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/shared_proto_db/metadata/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/shared_proto_db/metadata/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/shared_proto_db/metadata/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/shared_proto_db/metadata/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/shared_proto_db/metadata/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/shared_proto_db/metadata/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Shortcuts",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Shortcuts-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Site Characteristics Database/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Site Characteristics Database/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Site Characteristics Database/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Site Characteristics Database/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Site Characteristics Database/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Site Characteristics Database/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Code Cache/js/6f3a0dc5e6916f1e_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Code Cache/js/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Code Cache/js/index-dir/the-real-index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Code Cache/wasm/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Code Cache/wasm/index-dir/the-real-index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/data_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/data_1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/data_2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/data_3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/data_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/data_1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/data_2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/data_3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/data_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/data_1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/data_2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/data_3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Local Storage/leveldb/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Local Storage/leveldb/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Local Storage/leveldb/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Local Storage/leveldb/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Local Storage/leveldb/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Network Persistent State",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/NetworkDataMigrated",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/SCT Auditing Pending Reports",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Sdch Dictionaries",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Trust Tokens",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Trust Tokens-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Session Storage/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Session Storage/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Session Storage/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Session Storage/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Session Storage/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Shared Dictionary/cache/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Shared Dictionary/cache/index-dir/the-real-index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Shared Dictionary/db",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Shared Dictionary/db-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/SharedStorage",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/SharedStorage-wal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Data/LevelDB/000005.ldb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Data/LevelDB/000036.ldb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Data/LevelDB/000037.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Data/LevelDB/000038.ldb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Data/LevelDB/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Data/LevelDB/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Data/LevelDB/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Data/LevelDB/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Data/LevelDB/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Data/Logs/cv_debug.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Data/Logs/sync_diagnostic.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Data/Nigori.bin",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Extension Settings/ahcikkljhmdmclmoilmiddekmjoafkkg/000003.log",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Extension Settings/ahcikkljhmdmclmoilmiddekmjoafkkg/CURRENT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Extension Settings/ahcikkljhmdmclmoilmiddekmjoafkkg/LOCK",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Extension Settings/ahcikkljhmdmclmoilmiddekmjoafkkg/LOG",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Extension Settings/ahcikkljhmdmclmoilmiddekmjoafkkg/LOG.old",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Sync Extension Settings/ahcikkljhmdmclmoilmiddekmjoafkkg/MANIFEST-000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Top Sites",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Top Sites-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/trusted_vault.pb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Vpn Tokens",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Vpn Tokens-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Web Applications/Manifest Resources/mdpkiolbdkhdjpekfbkbmhigcaggjagi/Icons/128.png",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Web Applications/Manifest Resources/mdpkiolbdkhdjpekfbkbmhigcaggjagi/Icons/16.png",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Web Applications/Manifest Resources/mdpkiolbdkhdjpekfbkbmhigcaggjagi/Icons/24.png",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Web Applications/Manifest Resources/mdpkiolbdkhdjpekfbkbmhigcaggjagi/Icons/256.png",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Web Applications/Manifest Resources/mdpkiolbdkhdjpekfbkbmhigcaggjagi/Icons/32.png",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Web Applications/Manifest Resources/mdpkiolbdkhdjpekfbkbmhigcaggjagi/Icons/48.png",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Web Applications/Manifest Resources/mdpkiolbdkhdjpekfbkbmhigcaggjagi/Icons/64.png",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Web Applications/Manifest Resources/mdpkiolbdkhdjpekfbkbmhigcaggjagi/Icons/96.png",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Web Data",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Web Data-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/WebStorage/QuotaManager",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/WebStorage/QuotaManager-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Default/Workspaces/Logs/Workspaces Internals Logs",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Domain Actions/3.0.0.16/domain_actions.dll",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Domain Actions/3.0.0.16/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/EADPData Component/4.0.4.0/data.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/EADPData Component/4.0.4.0/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Cloud Config/OperationConfig",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Data Protection Lists/2.0.0.0/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Data Protection Lists/2.0.0.0/office_endpoints_list.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Data Protection Lists/2.0.0.0/smart_switch_list.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Notifications/0.0.0.46/arbitration_metadata.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Notifications/0.0.0.46/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Shopping/2.1.95.0/auto_open_controller.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Shopping/2.1.95.0/edge_checkout_page_validator.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Shopping/2.1.95.0/edge_confirmation_page_validator.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Shopping/2.1.95.0/edge_driver.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Shopping/2.1.95.0/edge_tracking_page_validator.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Shopping/2.1.95.0/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Shopping/2.1.95.0/product_page.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Shopping/2.1.95.0/shopping.html",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Shopping/2.1.95.0/shopping.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Shopping/2.1.95.0/shopping_fre.html",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Shopping/2.1.95.0/shopping_iframe_driver.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/app-setup.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/bnpl/bnpl.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/bnpl/bnpl.bundle.js.LICENSE.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/bnpl/bnpl.html",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/bnpl_driver.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/buynow_driver.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/crypto.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/driver-signature.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/edge_driver.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/hub-signature.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/ar/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/cs/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/da/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/de/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/el/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/en-GB/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/es/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/fi/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/fr/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/fr-CA/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/hu/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/id/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/it/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/ja/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/ko/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/nl/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/pl/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/pt-BR/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/pt-PT/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/ru/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/sv/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/th/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/zh-Hans/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-ec/zh-Hant/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/ar/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/cs/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/da/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/de/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/el/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/en-GB/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/es/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/fi/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/fr/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/fr-CA/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/hu/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/id/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/it/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/ja/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/ko/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/nl/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/pl/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/pt-BR/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/pt-PT/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/ru/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/sv/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/th/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/zh-Hans/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-hub/zh-Hant/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/ar/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/de/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/en-GB/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/es/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/fr/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/fr-CA/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/id/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/it/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/ja/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/nl/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/pt-BR/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/pt-PT/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/ru/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/sv/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/zh-Hans/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-mobile-hub/zh-Hant/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/ar/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/de/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/el/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/en-GB/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/es/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/fi/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/fr/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/fr-CA/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/id/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/it/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/ja/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/ko/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/nl/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/pt-BR/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/pt-PT/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/ru/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/sv/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/zh-Hans/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification/zh-Hant/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/ar/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/de/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/el/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/en-GB/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/es/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/fi/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/fr/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/fr-CA/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/id/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/it/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/ja/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/ko/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/nl/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/pt-BR/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/pt-PT/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/ru/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/sv/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/zh-Hans/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-notification-shared/zh-Hant/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/ar/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/cs/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/da/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/de/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/el/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/en-GB/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/es/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/fi/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/fr/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/fr-CA/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/hu/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/id/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/it/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/ja/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/ko/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/nl/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/pl/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/pt-BR/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/pt-PT/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/ru/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/sv/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/th/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/zh-Hans/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-shared-components/zh-Hant/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/ar/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/de/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/en-GB/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/es/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/fr/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/fr-CA/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/id/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/it/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/ja/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/nl/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/pt-BR/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/pt-PT/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/ru/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/sv/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/zh-Hans/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/i18n-tokenized-card/zh-Hant/strings.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/wallet/README.md",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/wallet/super_coupon.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/wallet/wallet-checkout/checkoutdata.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/wallet/wallet-checkout/merchant-site-info.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/wallet/wallet-checkout-eligible-sites-pre-stable.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/wallet/wallet-checkout-eligible-sites.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/wallet/wallet-eligibile-aad-users.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/wallet/wallet-notification-config.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/wallet/wallet-pre-stable.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/wallet/wallet-stable.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/json/wallet/wallet-tokenization-config.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/load-hub-i18n.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/manifest.webapp.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Mini-Wallet/mini-wallet.html",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Mini-Wallet/miniwallet.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Mini-Wallet/miniwallet.bundle.js.LICENSE.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Notification/notification.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Notification/notification.bundle.js.LICENSE.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Notification/notification.html",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Notification/notification_fast.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Notification/notification_fast.bundle.js.LICENSE.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Notification/notification_fast.html",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/runtime.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/shopping_iframe_driver.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Tokenized-Card/tokenized-card.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Tokenized-Card/tokenized-card.bundle.js.LICENSE.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Tokenized-Card/tokenized-card.html",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/vendor.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/vendor.bundle.js.LICENSE.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Wallet-BuyNow/wallet-buynow.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Wallet-BuyNow/wallet-buynow.html",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Wallet-Checkout/app-setup.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Wallet-Checkout/load-ec-deps.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Wallet-Checkout/load-ec-i18n.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Wallet-Checkout/wallet-drawer.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Wallet-Checkout/wallet-drawer.bundle.js.LICENSE.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/Wallet-Checkout/wallet-drawer.html",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/wallet-crypto.html",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/wallet-icon.svg",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/wallet-webui-101.079f5d74a18127cd9d6a.chunk.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/wallet-webui-227.bb2c3c84778e2589775f.chunk.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/wallet-webui-560.da6c8914bf5007e1044c.chunk.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/wallet-webui-708.de49febeeb0e9c77883f.chunk.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/wallet-webui-792.b1180305c186d50631a2.chunk.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/wallet-webui-925.baa79171a74ad52b0a67.chunk.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/wallet-webui-992.268aa821c3090dce03cb.chunk.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/wallet.bundle.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/wallet.html",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/wallet_checkout_autofill_driver.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/wallet_donation_driver.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Edge Wallet/128.18367.18366.1/webui-setup.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/en-US-10-1.bdic",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/extensions_crx_cache/metadata.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/FirstLaunchAfterInstallation",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/FirstPartySetsPreloaded/2025.7.24.0/LICENSE",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/FirstPartySetsPreloaded/2025.7.24.0/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/FirstPartySetsPreloaded/2025.7.24.0/sets.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/FirstPartySetsPreloaded/2025.7.24.0/_metadata/verified_contents.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/first_party_sets.db",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/first_party_sets.db-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GraphiteDawnCache/data_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GraphiteDawnCache/data_1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GraphiteDawnCache/data_2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GraphiteDawnCache/data_3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GraphiteDawnCache/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/data_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/data_1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/data_2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/data_3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000001",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000002",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000003",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000004",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000005",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000006",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000007",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000008",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000009",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_00000a",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_00000b",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_00000c",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_00000d",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_00000e",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_00000f",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000010",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000011",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000012",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000013",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000014",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000015",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000016",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000017",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000018",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_000019",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_00001a",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_00001b",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_00001c",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_00001d",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/f_00001e",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/GrShaderCache/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-af.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-as.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-be.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-bg.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-bn.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-cs.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-cu.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-cy.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-da.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-de-1901.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-de-1996.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-de-ch-1901.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-el.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-en-gb.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-en-us.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-es.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-et.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-eu.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-fr.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-ga.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-gl.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-gu.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-hi.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-hr.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-hu.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-hy.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-it.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-ka.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-kn.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-la.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-lt.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-lv.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-ml.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-mn-cyrl.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-mr.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-mul-ethi.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-nb.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-nl.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-nn.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-or.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-pa.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-pt.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-ru.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-sk.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-sl.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-sq.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-sv.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-ta.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-te.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-tk.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-uk.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/hyph-und-ethi.hyb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/hyphen-data/120.0.6050.0/_metadata/verified_contents.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Last Browser",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Last Version",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Local State",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/lockfile",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Nurturing/campaign_history",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Nurturing/campaign_history-journal",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/OriginTrials/0.0.1.7/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ProvenanceData/2025.10.7.5/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ProvenanceData/2025.10.7.5/vti-b-p32-visual.quant.ort",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ProvenanceDataTensors/2026.1.27.1/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ProvenanceDataTensors/2026.1.27.1/provenance-data-vectors.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/RevisitationBloomfilter",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Safe Browsing/ChromeExtMalware.store",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Safe Browsing/ChromeExtMalware.store.32_13415819391576386",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Safe Browsing/ChromeExtMalware.store.32_13415884193075762",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SafetyTips/3057/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SafetyTips/3057/safety_tips.pb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SafetyTips/3057/typosquatting_list.pb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SafetyTips/3057/_metadata/verified_contents.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ShaderCache/data_0",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ShaderCache/data_1",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ShaderCache/data_2",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ShaderCache/data_3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ShaderCache/index",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SmartScreen/local/downloadCache",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SmartScreen/local/downloadCache_",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SmartScreen/local/uriCache",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SmartScreen/local/uriCache_",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SmartScreen/RemoteData/customSettings",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SmartScreen/RemoteData/customSettings_F95BA787499AB4FA9EFFF472CE383A14",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SmartScreen/RemoteData/edgeSettings",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SmartScreen/RemoteData/edgeSettings_2.0-a82cb2897a8bf9445d68dcc2be05af89ad4b2fda1fddb2952693be7cd5353ad3",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SmartScreen/RemoteData/topTraffic",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/SmartScreen/RemoteData/topTraffic_638004170464094982",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Speech Recognition/1.15.0.1/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Speech Recognition/1.15.0.1/Microsoft.CognitiveServices.Speech.core.dll",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Indexed Rules/37/10.34.0.81/LICENSE",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Indexed Rules/37/10.34.0.81/Ruleset Data",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Unindexed Rules/10.34.0.81/adblock_snippet.js",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Unindexed Rules/10.34.0.81/Filtering Rules",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Unindexed Rules/10.34.0.81/Filtering Rules-AA",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Unindexed Rules/10.34.0.81/Filtering Rules-CA",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Unindexed Rules/10.34.0.81/LICENSE",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Unindexed Rules/10.34.0.81/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Unindexed Rules/10.34.0.81/Part-DE",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Unindexed Rules/10.34.0.81/Part-ES",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Unindexed Rules/10.34.0.81/Part-FR",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Unindexed Rules/10.34.0.81/Part-IT",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Unindexed Rules/10.34.0.81/Part-NL",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Unindexed Rules/10.34.0.81/Part-RU",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Subresource Filter/Unindexed Rules/10.34.0.81/Part-ZH",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/TrustTokenKeyCommitments/2025.9.29.1/keys.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/TrustTokenKeyCommitments/2025.9.29.1/LICENSE",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/TrustTokenKeyCommitments/2025.9.29.1/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/TrustTokenKeyCommitments/2025.9.29.1/_metadata/verified_contents.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Typosquatting/2026.2.12.1/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Typosquatting/2026.2.12.1/typosquatting_list.pb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Typosquatting/2026.2.16.1/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Typosquatting/2026.2.16.1/typosquatting_list.pb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Typosquatting/2026.2.17.1/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Typosquatting/2026.2.17.1/typosquatting_list.pb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Typosquatting/2026.2.18.1/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Typosquatting/2026.2.18.1/typosquatting_list.pb",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Variations",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Web Notifications Deny List/2.0.0.143/deny_domains.list",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Web Notifications Deny List/2.0.0.143/deny_etld1_domains.list",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Web Notifications Deny List/2.0.0.143/deny_full_domains.list",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Web Notifications Deny List/2.0.0.143/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Well Known Domains/1.2.0.0/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/Well Known Domains/1.2.0.0/well_known_domains.dll",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/WidevineCdm/4.10.2934.0/LICENSE",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/WidevineCdm/4.10.2934.0/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/WidevineCdm/4.10.2934.0/_metadata/verified_contents.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/WidevineCdm/4.10.2934.0/_platform_specific/win_x64/widevinecdm.dll",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/WidevineCdm/4.10.2934.0/_platform_specific/win_x64/widevinecdm.dll.sig",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/WorkspacesNavigationComponent/1.0.0.5/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/WorkspacesNavigationComponent/1.0.0.5/nav_config.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ZxcvbnData/3.2.0.0/english_wikipedia.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ZxcvbnData/3.2.0.0/female_names.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ZxcvbnData/3.2.0.0/male_names.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ZxcvbnData/3.2.0.0/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ZxcvbnData/3.2.0.0/model.markov",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ZxcvbnData/3.2.0.0/passwords.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ZxcvbnData/3.2.0.0/ranked_dicts",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ZxcvbnData/3.2.0.0/surnames.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ZxcvbnData/3.2.0.0/test.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".app_profile/ZxcvbnData/3.2.0.0/us_tv_and_film.txt",
+      "tier": "low"
+    },
+    {
+      "file": ".gitignore",
+      "tier": "low"
+    },
+    {
+      "file": "app/games.py",
+      "tier": "low"
+    },
+    {
+      "file": "app/main.py",
+      "tier": "low"
+    },
+    {
+      "file": "app/news.py",
+      "tier": "low"
+    },
+    {
+      "file": "app/scraper.py",
+      "tier": "low"
+    },
+    {
+      "file": "app/static/icon-192.png",
+      "tier": "low"
+    },
+    {
+      "file": "app/static/icon-512.png",
+      "tier": "low"
+    },
+    {
+      "file": "app/static/manifest.json",
+      "tier": "low"
+    },
+    {
+      "file": "app/static/sw.js",
+      "tier": "low"
+    },
+    {
+      "file": "app/static/yoshicat.ico",
+      "tier": "low"
+    },
+    {
+      "file": "app/static/yoshicat.jpg",
+      "tier": "low"
+    },
+    {
+      "file": "app/stock.py",
+      "tier": "low"
+    },
+    {
+      "file": "app/templates/dashboard.html",
+      "tier": "low"
+    },
+    {
+      "file": "app/weather.py",
+      "tier": "low"
+    },
+    {
+      "file": "app/__init__.py",
+      "tier": "low"
+    },
+    {
+      "file": "create_shortcut.ps1",
+      "tier": "low"
+    },
+    {
+      "file": "data/game_cache.json",
+      "tier": "low"
+    },
+    {
+      "file": "debug2.log",
+      "tier": "low"
+    },
+    {
+      "file": "debug2.py",
+      "tier": "low"
+    },
+    {
+      "file": "debug3.log",
+      "tier": "low"
+    },
+    {
+      "file": "debug3.py",
+      "tier": "low"
+    },
+    {
+      "file": "launcher.py",
+      "tier": "low"
+    },
+    {
+      "file": "launcher_debug.py",
+      "tier": "low"
+    },
+    {
+      "file": "pythonw_test.txt",
+      "tier": "low"
+    },
+    {
+      "file": "README.md",
+      "tier": "low"
+    },
+    {
+      "file": "requirements.txt",
+      "tier": "low"
+    },
+    {
+      "file": "risk-tiers.json",
+      "tier": "low"
+    },
+    {
+      "file": "start.vbs",
+      "tier": "low"
+    },
+    {
+      "file": "start_debug.vbs",
+      "tier": "low"
+    },
+    {
+      "file": "test_pythonw.py",
+      "tier": "low"
+    },
+    {
+      "file": "test_wscript.vbs",
+      "tier": "low"
+    }
+  ],
+  "checks": {
+    "typecheck": {
+      "status": "fail",
+      "duration": 1044,
+      "error": "Command failed: npx tsc --noEmit"
+    }
+  },
+  "gateResult": "fail"
+}

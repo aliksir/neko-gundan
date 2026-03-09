@@ -121,6 +121,25 @@ Layer 1: Modes (install.sh)          Layer 2: Shitsuke (config.yaml)
 
 Start with modes. Add shitsuke later if you need finer control. [Shitsuke Guide](docs/shitsuke-guide.md).
 
+### Process Weight — Light to Strict
+
+Not every task needs the full process. Say "light mode" for quick fixes, or "strict" for releases:
+
+```
+"Fix this typo, light mode"  →  Quick gate only (test + diff + commit)
+"Add auth feature"           →  Standard (full gates, review, objections)
+"Deploy prep, strict"        →  Maximum verification (ensemble, ISV, arbitrator)
+```
+
+Agents can **escalate** if they judge a "light" task is actually risky:
+```
+ESCALATION-001: Process weight upgrade request
+Current: Light → Proposed: Standard
+Reason: "This touches 4 files including DB migration"
+```
+
+Safety protocols (race prevention, deletion safety) are **never reduced** — light mode makes the process lighter, not less safe.
+
 ### Why Not Just Standard Subagents?
 
 Claude Code's built-in subagents are powerful. Neko Gundan adds **operational guardrails** on top:
@@ -150,6 +169,7 @@ This framework wasn't designed in theory. It evolved from actual incidents — a
 ## Documentation
 
 - [Modes Guide](docs/modes.md) — Pick what you need, combine freely
+- [Process Weight](docs/process-weight.md) — Light / Standard / Strict process levels
 - [Architecture](docs/architecture.md) — System design and agent interactions
 - [Protocols Reference](docs/protocols.md) — All protocol definitions
 - [Shitsuke Guide](docs/shitsuke-guide.md) — Module system configuration

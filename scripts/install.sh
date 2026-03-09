@@ -133,6 +133,9 @@ for mode in "${MODES[@]}"; do
     esac
 done
 
+# 全モード共通モジュール
+MODULES="$MODULES process-weight.md"
+
 # 重複除去
 AGENTS=$(echo "$AGENTS" | tr ' ' '\n' | sort -u | tr '\n' ' ')
 RULES=$(echo "$RULES" | tr ' ' '\n' | sort -u | tr '\n' ' ')

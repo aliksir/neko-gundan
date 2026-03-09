@@ -66,7 +66,7 @@ Field report: [OBJECTION-001 from genba-neko, if applicable]
 
 ### Setup
 - Created by shigoto-neko for platoon+ missions
-- Location: `C:/work/whiteboard/whiteboard-{mission}.md`
+- Location: `{WHITEBOARD_DIR}/whiteboard-{mission}.md` (default: `whiteboard/` relative to project root)
 
 ### Writing Rules
 Key question: **"Would other agents need to know this?"**

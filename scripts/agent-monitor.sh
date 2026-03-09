@@ -6,6 +6,7 @@ TEAMS_DIR="$HOME/.claude/teams"
 TASKS_DIR="$HOME/.claude/tasks"
 STATUS_JSON="/mnt/c/work/multi-agent-neko/status/agent-status.json"
 DASHBOARD="/mnt/c/work/multi-agent-neko/status/dashboard.md"
+WHITEBOARD_DIR="${WHITEBOARD_DIR:-whiteboard}"
 
 # 色定義
 RED='\033[0;31m'
@@ -171,7 +172,7 @@ render() {
 
     # === ホワイトボード ===
     local wb_files
-    wb_files=$(ls /mnt/c/work/whiteboard/whiteboard-*.md 2>/dev/null)
+    wb_files=$(ls ${WHITEBOARD_DIR}/whiteboard-*.md 2>/dev/null)
     if [ -n "$wb_files" ]; then
         echo -e "\n${BOLD}📝 ホワイトボード${NC}"
         for wb in $wb_files; do

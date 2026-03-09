@@ -118,13 +118,13 @@ Key question: **"Would other agents need to know this?"**
 
 ## Completion Gates
 
-See `rules/completion-gates.md` for full gate definitions.
+Gate definitions are maintained in the user's MEMORY.md (single source of truth).
 
-### Start Gate: 5 items
-Scope clarity, target files, no blockers, current state understood, lessons checked
+### Start Gate: 6 items
+git status/log, handover.md, dev-lessons search, Purpose check, deleted files check, previous whiteboard (platoon+)
 
-### Completion Gate: 9 items
-Success criteria met, no unintended changes, tests pass, no lint errors, no uncommitted files, objections resolved, docs updated, features not broken, no accidental deletions
+### Completion Gate: 13 items
+Checklist generation, checklist execution, git status, Purpose update, invariant check, file deletion backup, /simplify, whiteboard archive (platoon+), artifacts stored, project list update, ISV record, all checks filled, report integrity
 
 ---
 

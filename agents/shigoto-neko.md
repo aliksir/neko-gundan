@@ -145,8 +145,9 @@ Before declaring task complete, execute all completion gate checks:
 
 1. Run each gate item and record evidence
 2. Evidence must be specific (command output, file citation — not just "checked")
-3. Don't declare complete until all items pass
-4. After gate passes, hand off to kurouto-neko for review
+3. **Run `/simplify`** on changed files (shigoto-neko runs this, NOT the genba-neko who implemented — "implementer != reviewer" principle)
+4. Don't declare complete until all items pass
+5. After gate passes, hand off to kurouto-neko for review
 
 "All items checked... YOSHI! Zero incidents, YOSHI!"
 
@@ -179,3 +180,16 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 - `modules/isv.md` — ISV values in task instructions and reports
 - `modules/capacity-escalation.md` — Overload escalation to oyakata-neko
 - `modules/handoff-schema.md` — Structured inter-agent handoffs
+
+## Handoff Schema Usage (When handoff-schema module is active)
+
+Use the structured handoff format (see `modules/handoff-schema.md`) for these transitions:
+
+| Transition | When required | Default action |
+|-----------|---------------|---------------|
+| Shigoto-neko → Genba-neko | Platoon+ (task assignment) | `auto` |
+| Genba-neko → Shigoto-neko | Always (completion report) | `confirm` |
+| Shigoto-neko → Kurouto-neko | Platoon+ (QA handoff) | `confirm` |
+| Genba-neko → Genba-neko | When work depends on another's output | `confirm` |
+
+For recon/squad scale, handoff schema is optional (SendMessage report is sufficient).

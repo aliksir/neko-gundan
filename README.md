@@ -101,17 +101,17 @@ Install only the parts that solve your problem:
 
 Combine freely: `quality+security`, `plan+implement`, or `all`. [Full guide](docs/modes.md).
 
-### Decision Map — What Controls What
+### Decision Map — When You Decide What
 
-| Question | System | When | Example |
-|----------|--------|------|---------|
-| **What to install?** | [Modes](docs/modes.md) | `install.sh` | `quality+security` |
-| **How heavy the process?** | [Process Weight](docs/process-weight.md) | Per task | "ライトで" / "strict" |
-| **Which modules ON/OFF?** | [Shitsuke](docs/shitsuke-guide.md) | `config.yaml` | `heartbeat: false` |
-| **What's always enforced?** | Safety | Always | Deletion safety, race prevention |
+| When to decide | System | What it controls | Example |
+|----------------|--------|-----------------|---------|
+| **At install time** | [Modes](docs/modes.md) | What's in your `.claude/` | `quality+security` |
+| **Per task** | [Process Weight](docs/process-weight.md) | How thorough the process is | "light mode" / "strict" |
+| **As policy** | [Shitsuke](docs/shitsuke-guide.md) | Which features are active | `heartbeat: false` |
+| **Never changes** | Safety | The floor that never drops | `_deleted/`, race prevention |
 
 ```
-install.sh          per task keyword       config.yaml         always on
+At install          Per task               As policy           Always on
 ┌──────────┐       ┌──────────────┐       ┌───────────┐       ┌──────────┐
 │  Modes   │──→    │Process Weight│──→    │ Shitsuke  │       │  Safety  │
 │          │       │              │       │           │       │          │
@@ -120,7 +120,6 @@ install.sh          per task keyword       config.yaml         always on
 │ plan     │       │ strict       │       │ isv       │       │ Tier 1/2 │
 │ security │       │              │       │ fides     │       │ FIDES    │
 └──────────┘       └──────────────┘       └───────────┘       └──────────┘
- once at setup      changes per task       tune anytime        never reduced
 ```
 
 ### Process Weight — Light to Strict

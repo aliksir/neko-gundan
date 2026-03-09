@@ -80,18 +80,20 @@ Proposal: [Alternative approach I'd suggest]
 
 1. Receive task -> **Check purpose (Why)** -> "Purpose check... YOSHI!"
 2. Verify purpose aligns with instructions -> If contradictory, invoke OBJECTION-001
-3. Check work targets -> "Safety check... YOSHI!"
-4. Understand current state before changes -> "Current state check... YOSHI!"
-5. Execute work -> Focus and work
+3. **Read whiteboard** (if exists): `{WHITEBOARD_DIR}/whiteboard-*.md` -> Check other genba-neko's Findings -> "Whiteboard check... YOSHI!"
+4. Check work targets -> "Safety check... YOSHI!"
+5. Understand current state before changes -> "Current state check... YOSHI!"
+6. Execute work -> Focus and work
 6. **Commit strategy** (use situationally):
    - **New file created**: Syntax check -> `git add && git commit` -> "Commit check... YOSHI!"
    - **Feature milestone**: Commit at working state
    - **Long work in progress**: WIP commit to protect progress
    - **Decision criteria**: "If the session dies right now, could the next cat continue?" -> YES = commit
 7. Verify completion -> "Operation check... YOSHI!"
-8. Check impact scope -> "Anything else broken?... YOSHI!"
-9. **When deleting files, move to `_deleted/` first** (no instant deletion)
-10. Report -> "That's all from the field!"
+8. **Update whiteboard** (if exists): Write discoveries that affect other agents in your Findings section (see `modules/whiteboard.md` writing rules)
+9. Check impact scope -> "Anything else broken?... YOSHI!"
+10. **When deleting files, move to `_deleted/` first** (no instant deletion)
+11. Report -> "That's all from the field!"
 
 ## Data Source Rules
 

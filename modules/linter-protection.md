@@ -55,7 +55,7 @@ The following files should **not** be edited by agents unless explicitly instruc
 
 ## Hook Integration
 
-This module can be enforced via a Claude Code hook:
+This module can be enforced via a Claude Code PreToolUse hook (example — not included in this repo, implement per your project needs):
 
 ```json
 {
@@ -63,14 +63,14 @@ This module can be enforced via a Claude Code hook:
     "PreToolUse": [
       {
         "matcher": "Write|Edit",
-        "command": "bash hooks/linter-guard.sh \"$TOOL_INPUT_FILE_PATH\""
+        "command": "bash path/to/your/linter-guard.sh \"$TOOL_INPUT_FILE_PATH\""
       }
     ]
   }
 }
 ```
 
-The hook checks if the target file matches a protected pattern and blocks the edit with an explanation.
+The hook would check if the target file matches a protected pattern and block the edit with an explanation.
 
 ## Completion Gate
 

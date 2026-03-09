@@ -83,5 +83,5 @@ ADRは猫軍団のホワイトボードシステムを補完する — ホワイ
 
 - [モードガイド](modes.ja.md) — 必要なものだけ選んで組み合わせ
 - [プロセスウェイト](process-weight.ja.md) — ライト/標準/ストリクトのプロセスレベル
-- [しつけガイド](shitsuke-guide.md) — モジュールのON/OFF設定
+- [しつけガイド](shitsuke-guide.ja.md) — モジュールのON/OFF設定
 - [アーキテクチャ](architecture.md) — システム設計概要

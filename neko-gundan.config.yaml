@@ -1,0 +1,75 @@
+# =============================================================================
+# Neko Gundan Shitsuke Configuration (猫軍団しつけ設定)
+# =============================================================================
+#
+# This file controls which optional modules are active in your Neko Gundan setup.
+# Core features (objection protocols, completion gates, separation of duties,
+# safety tiers) are always active and cannot be disabled.
+#
+# HOW TO USE:
+# 1. Set modules to true/false based on your needs
+# 2. Copy enabled modules from modules/ to your .claude/rules/ directory
+# 3. The agent definitions in agents/ reference active modules at the bottom
+#
+# PRESETS: See presets/ for ready-made configurations:
+#   - minimal.yaml    — Core only (lightweight, great for getting started)
+#   - recommended.yaml — Balanced setup for most teams
+#   - full.yaml       — Everything enabled (maximum quality control)
+#
+# =============================================================================
+
+shitsuke:
+
+  # ---------------------------------------------------------------------------
+  # Monitoring (監視系)
+  # ---------------------------------------------------------------------------
+  whiteboard: true          # WHITEBOARD-001: Cross-agent knowledge sharing
+                            # Recommended for: platoon+ (3+ files changed)
+
+  heartbeat: true           # HEARTBEAT-001 + POLLING-001: Stuck detection & active monitoring
+                            # Recommended for: platoon+ with parallel agents
+
+  race_prevention: true     # RACE-001: Prevent file conflicts between agents
+                            # Recommended for: platoon+ with parallel agents
+
+  # ---------------------------------------------------------------------------
+  # Quality Enhancement (品質強化系)
+  # ---------------------------------------------------------------------------
+  reflexion: true           # Structured reflection on task failure
+                            # Recommended for: all scales
+
+  isv: false                # Intent State Vector: Numerical intent tracking
+                            # Recommended for: teams wanting self-improvement data
+
+  fides: false              # FIDES: Data trust level tagging (HIGH/MEDIUM/LOW)
+                            # Recommended for: projects using external APIs/MCP tools
+
+  # ---------------------------------------------------------------------------
+  # Advanced Control (高度な制御系)
+  # ---------------------------------------------------------------------------
+  capacity_escalation: false  # CAPACITY-001: Shigoto-neko overload escalation
+                              # Recommended for: battalion (3+ parallel genba-neko)
+
+  arbitrator: false           # Formal mediation when review loops exceed 3 cycles
+                              # Recommended for: complex projects with frequent disputes
+
+  handoff_schema: false       # Structured YAML handoff between agents
+                              # Recommended for: platoon+ with strict handoff requirements
+
+  # ---------------------------------------------------------------------------
+  # Testing (テスト系)
+  # ---------------------------------------------------------------------------
+  jit_tests: false           # JiTTests: Disposable tests from PR diffs
+                             # Recommended for: projects with low test coverage
+
+  tdd_separation: false      # Separate test creation and implementation agents
+                             # Recommended for: platoon+ wanting Context Pollution prevention
+
+  # ---------------------------------------------------------------------------
+  # Review (レビュー系)
+  # ---------------------------------------------------------------------------
+  ensemble_judge: false      # SE-Jury: Multi-strategy evaluation
+                             # Recommended for: security-critical or complex reviews
+
+  spec_driven_review: false  # Verify code aligns with project spec
+                             # Recommended for: projects with formal requirements docs

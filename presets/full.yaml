@@ -1,0 +1,36 @@
+# =============================================================================
+# Full Preset — Everything enabled (maximum quality control)
+# =============================================================================
+# All modules active. Maximum quality assurance but highest overhead.
+# Best for large-scale, security-critical, or mission-critical projects.
+#
+# Modules to copy to .claude/rules/:
+#   - modules/whiteboard.md
+#   - modules/heartbeat.md
+#   - modules/race-prevention.md
+#   - modules/reflexion.md
+#   - modules/isv.md
+#   - modules/fides.md
+#   - modules/capacity-escalation.md
+#   - modules/arbitrator.md
+#   - modules/handoff-schema.md
+#   - modules/jit-tests.md
+#   - modules/tdd-separation.md
+#   - modules/ensemble-judge.md
+#   - modules/spec-driven-review.md
+# =============================================================================
+
+shitsuke:
+  whiteboard: true
+  heartbeat: true
+  race_prevention: true
+  reflexion: true
+  isv: true
+  fides: true
+  capacity_escalation: true
+  arbitrator: true
+  handoff_schema: true
+  jit_tests: true
+  tdd_separation: true
+  ensemble_judge: true
+  spec_driven_review: true

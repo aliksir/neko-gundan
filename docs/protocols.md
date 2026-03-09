@@ -66,7 +66,7 @@ Field report: [OBJECTION-001 from genba-neko, if applicable]
 
 ### Setup
 - Created by shigoto-neko for platoon+ missions
-- Location: `multi-agent-neko/status/whiteboard-{mission}.md`
+- Location: `C:/work/whiteboard/whiteboard-{mission}.md`
 
 ### Writing Rules
 Key question: **"Would other agents need to know this?"**

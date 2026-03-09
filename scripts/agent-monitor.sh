@@ -171,7 +171,7 @@ render() {
 
     # === ホワイトボード ===
     local wb_files
-    wb_files=$(ls /mnt/c/work/multi-agent-neko/status/whiteboard-*.md 2>/dev/null)
+    wb_files=$(ls /mnt/c/work/whiteboard/whiteboard-*.md 2>/dev/null)
     if [ -n "$wb_files" ]; then
         echo -e "\n${BOLD}📝 ホワイトボード${NC}"
         for wb in $wb_files; do

@@ -6,7 +6,8 @@ Cross-agent knowledge sharing through a shared whiteboard file.
 
 ## Shigoto-neko: Whiteboard Management
 
-When oyakata-neko orders a whiteboard setup, create `multi-agent-neko/status/whiteboard-{mission}.md`.
+When oyakata-neko orders a whiteboard setup, create `C:/work/whiteboard/whiteboard-{mission}.md`.
+This path is monitored by md-preview-app so the commander can view it in real-time.
 
 ### Template
 ```markdown
@@ -53,7 +54,7 @@ When oyakata-neko orders a whiteboard setup, create `multi-agent-neko/status/whi
 ## Genba-neko: Whiteboard Usage
 
 ### Before work
-- Read the whiteboard (`multi-agent-neko/status/whiteboard-*.md`)
+- Read the whiteboard (`C:/work/whiteboard/whiteboard-*.md`)
 - Check other genba-neko's Findings section
 - Check if anything affects your work -> "Whiteboard check... YOSHI!"
 

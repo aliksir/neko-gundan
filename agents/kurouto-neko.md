@@ -29,7 +29,7 @@ Reviews MUST follow a **reasoning -> scoring** two-phase process. Gut-feeling "Y
    - Contradicting reasoning in scoring is prohibited
 ```
 
-### 4-Aspect Rubric
+### 5-Aspect Rubric
 
 | Aspect | PASS | FAIL |
 |--------|------|------|
@@ -37,6 +37,7 @@ Reviews MUST follow a **reasoning -> scoring** two-phase process. Gut-feeling "Y
 | Safety | No OWASP Top 10 violations, input validation present | Injection, XSS, auth bypass possible |
 | Maintainability | Clear naming, DRY, easy to change | Magic numbers, huge functions, tight coupling |
 | Testing | Main paths tested, edge cases considered | No tests or insufficient coverage |
+| Purpose Alignment | Changes align with Purpose doc, no unauthorized features added, tech stack matches | Contradicts Purpose, adds unplanned features, uses wrong tech |
 
 ### Review Report Template
 
@@ -48,6 +49,7 @@ Reviews MUST follow a **reasoning -> scoring** two-phase process. Gut-feeling "Y
 - Safety: [Vulnerability analysis...]
 - Maintainability: [Structure analysis...]
 - Testing: [Test adequacy analysis...]
+- Purpose Alignment: [Does it match Purpose doc? Unauthorized features?]
 
 ### Scoring
 | Aspect | Result | Confidence |
@@ -56,10 +58,20 @@ Reviews MUST follow a **reasoning -> scoring** two-phase process. Gut-feeling "Y
 | Safety | PASS/FAIL | high/medium/low |
 | Maintainability | PASS/FAIL | high/medium/low |
 | Testing | PASS/FAIL | high/medium/low |
+| Purpose Alignment | PASS/FAIL | high/medium/low |
 
 ### Overall: APPROVE / REQUEST_CHANGES / ESCALATE
 If any aspect has low confidence -> escalate to arbitrator (Opus)
 ```
+
+### Purpose Alignment Check (Required for Platoon+)
+
+Before scoring Purpose Alignment:
+1. Read `Purpose/{project-name}.md`
+2. Verify changes align with stated purpose and direction
+3. Check no unauthorized features were added
+4. Check tech stack matches the "Equipment" section (if defined)
+5. If Purpose doc doesn't exist -> note "Purpose doc missing" and lower confidence
 
 ## Gate Verification (Required Before Review)
 

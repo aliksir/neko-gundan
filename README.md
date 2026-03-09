@@ -53,6 +53,16 @@ bash scripts/install.sh --update all ./your-project
 
 The updater shows a diff for each changed file and lets you choose per file — overwrite, keep yours, or see the full diff first. Files you haven't customized update silently.
 
+## What You Do (3 Steps)
+
+All the protocols, modules, and safety rules run automatically. You only do three things:
+
+1. **Install** — Pick modes and run the installer. Done in 30 seconds.
+2. **Give tasks** — Tell the agent what to do in plain language. Add "light mode" or "strict" to control thoroughness.
+3. **Review the proof** — The agent delivers evidence (test results, diffs), not just "I'm done." You check the proof, not the code.
+
+Everything else — role assignment, review separation, objection handling, safety checks — happens behind the scenes.
+
 ## How It Works
 
 ```
@@ -136,19 +146,8 @@ Combine freely: `quality+security`, `plan+implement`, or `all`. [Full guide](doc
 | **As policy** | [Shitsuke](docs/shitsuke-guide.md) | Which features are active | `heartbeat: false` |
 | **Never changes** | Safety | The floor that never drops | `_deleted/`, race prevention |
 
-```
-At install          Per task               As policy           Always on
-┌──────────┐       ┌──────────────┐       ┌───────────┐       ┌──────────┐
-│  Modes   │──→    │Process Weight│──→    │ Shitsuke  │       │  Safety  │
-│          │       │              │       │           │       │          │
-│ quality  │       │ light        │       │ whiteboard│       │ _deleted/│
-│ implement│       │ standard     │       │ heartbeat │       │ RACE-001 │
-│ plan     │       │ strict       │       │ isv       │       │ Tier 1/2 │
-│ security │       │              │       │ fides     │       │ FIDES    │
-└──────────┘       └──────────────┘       └───────────┘       └──────────┘
-```
-
-### Process Weight — Light to Strict
+<details>
+<summary>Process Weight — Light to Strict</summary>
 
 Not every task needs the full process. Say "light mode" for quick fixes, or "strict" for releases:
 
@@ -167,7 +166,12 @@ Reason: "This touches 4 files including DB migration"
 
 Safety protocols (race prevention, deletion safety) are **never reduced** — light mode makes the process lighter, not less safe.
 
-### Why Not Just Standard Subagents?
+</details>
+
+<details>
+<summary>Comparison: vs Standard Subagents / vs LangGraph & CrewAI</summary>
+
+#### Why Not Just Standard Subagents?
 
 Claude Code's built-in subagents are powerful. Neko Gundan adds **operational guardrails** on top:
 
@@ -181,7 +185,7 @@ Claude Code's built-in subagents are powerful. Neko Gundan adds **operational gu
 
 If standard subagents already work for you, great. Neko Gundan is for when you need **proof that things are correct**, not just that they're done.
 
-### Why Not LangGraph / CrewAI?
+#### Why Not LangGraph / CrewAI?
 
 Those are code-based orchestration frameworks — you write Python to define agent workflows. Neko Gundan takes a different approach: **rules, not code**.
 
@@ -194,6 +198,8 @@ Those are code-based orchestration frameworks — you write Python to define age
 | Customization | Modify Python code | Edit markdown files |
 
 Neko Gundan injects a "constitution" into Claude Code — operational rules that agents follow. No new runtime, no new dependencies. Your existing Claude Code setup gains a team structure.
+
+</details>
 
 ## Design Philosophy
 

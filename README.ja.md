@@ -143,7 +143,7 @@ bash scripts/install.sh --update all ./your-project
 |-------------|--------|---------------|---|
 | **導入時に** | [モード](docs/modes.ja.md) | `.claude/` に何を入れるか | `quality+security` |
 | **依頼ごとに** | [プロセスウェイト](docs/process-weight.ja.md) | どこまで厳密に回すか | 「ライトで」「厳密に」 |
-| **運用ポリシーとして** | [しつけ](docs/shitsuke-guide.md) | どの機能を有効にするか | `heartbeat: false` |
+| **運用ポリシーとして** | [しつけ](docs/shitsuke-guide.ja.md) | どの機能を有効にするか | `heartbeat: false` |
 | **絶対に崩さない** | 安全対策 | 下げてはいけない最低ライン | `_deleted/`、競合防止 |
 
 <details>

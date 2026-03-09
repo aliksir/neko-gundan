@@ -29,6 +29,7 @@ Every item must be checked with evidence. "I confirmed it" is not evidence — "
 | 7 | Documentation updated (if needed) | Check if README/docs need changes | N/A or updated file reference |
 | 8 | Existing features not broken | Run full test suite or smoke test | Test results |
 | 9 | Files not accidentally deleted | Compare with start state | `git status` / file listing |
+| 10 | ISV recorded | Record result dimensions, append to ISV log | ISV values in report (recon: N/A) |
 
 ## Gate Evidence Format
 

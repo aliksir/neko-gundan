@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0] - 2026-03-09
+
+### Added
+- **Intent State Vector (ISV)**: Multi-dimensional vector for recording task intent, state, and results. Makes action reasoning observable, enabling success/failure pattern comparison and self-improvement loops
+  - Intent dimensions (defined at task start): urgency, risk, complexity, novelty, purpose_alignment
+  - State dimensions (updated during execution): confidence, progress, watchdog_level, retry_count
+  - Result dimensions (recorded at completion): outcome, review_cycles, intervention_count
+  - Anchor points table for consistent scoring across agents
+  - Lite version (3 dimensions) for squad-level tasks
+- ISV field added to handoff schema (`rules/handoff-schema.md`)
+- ISV start values added to shigoto-neko task instruction format
+- ISV result values added to shigoto-neko report format
+- ISV recording added as completion gate item #10
+
 ## [1.1.1] - 2026-03-08
 
 ### Added

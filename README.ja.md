@@ -227,6 +227,7 @@ Claude Code標準のSubagentsは強力。猫軍団はその上に**運用ガー�
 - [プロトコル一覧](docs/protocols.md) — 全プロトコル定義
 - [しつけガイド](docs/shitsuke-guide.md) — モジュールシステムの設定方法
 - [ハーネスエンジニアリング](docs/harness-engineering.ja.md) — 設計原則とアンチパターン防御
+- [Auto Modeガイド](docs/auto-mode.ja.md) — Claude Codeの自動権限モードとの併用
 - [CLAUDE.md の例](examples/CLAUDE.md.example) — 完全な設定例
 
 ## コントリビュート

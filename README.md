@@ -101,25 +101,27 @@ Install only the parts that solve your problem:
 
 Combine freely: `quality+security`, `plan+implement`, or `all`. [Full guide](docs/modes.md).
 
-### Two Layers of Customization
+### Decision Map — What Controls What
 
-Neko Gundan has two independent layers — **Modes** control what you install, **Shitsuke** controls what's active.
+| Question | System | When | Example |
+|----------|--------|------|---------|
+| **What to install?** | [Modes](docs/modes.md) | `install.sh` | `quality+security` |
+| **How heavy the process?** | [Process Weight](docs/process-weight.md) | Per task | "ライトで" / "strict" |
+| **Which modules ON/OFF?** | [Shitsuke](docs/shitsuke-guide.md) | `config.yaml` | `heartbeat: false` |
+| **What's always enforced?** | Safety | Always | Deletion safety, race prevention |
 
 ```
-Layer 1: Modes (install.sh)          Layer 2: Shitsuke (config.yaml)
-┌─────────────────────────┐          ┌─────────────────────────┐
-│ What files to install   │          │ Which features are ON   │
-│                         │          │                         │
-│ quality+security        │   then   │ whiteboard: true        │
-│ → agents/, rules/,      │ ──────→  │ heartbeat: true         │
-│   modules/ copied       │          │ isv: false              │
-└─────────────────────────┘          └─────────────────────────┘
+install.sh          per task keyword       config.yaml         always on
+┌──────────┐       ┌──────────────┐       ┌───────────┐       ┌──────────┐
+│  Modes   │──→    │Process Weight│──→    │ Shitsuke  │       │  Safety  │
+│          │       │              │       │           │       │          │
+│ quality  │       │ light        │       │ whiteboard│       │ _deleted/│
+│ implement│       │ standard     │       │ heartbeat │       │ RACE-001 │
+│ plan     │       │ strict       │       │ isv       │       │ Tier 1/2 │
+│ security │       │              │       │ fides     │       │ FIDES    │
+└──────────┘       └──────────────┘       └───────────┘       └──────────┘
+ once at setup      changes per task       tune anytime        never reduced
 ```
-
-**Modes** = "Don't install what you don't need" (fewer files, smaller footprint)
-**Shitsuke** = "Fine-tune what you installed" (toggle features without removing files)
-
-Start with modes. Add shitsuke later if you need finer control. [Shitsuke Guide](docs/shitsuke-guide.md).
 
 ### Process Weight — Light to Strict
 

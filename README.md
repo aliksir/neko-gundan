@@ -205,6 +205,7 @@ This framework wasn't designed in theory. It evolved from actual incidents — a
 - [Architecture](docs/architecture.md) — System design and agent interactions
 - [Protocols Reference](docs/protocols.md) — All protocol definitions
 - [Shitsuke Guide](docs/shitsuke-guide.md) — Module system configuration
+- [Harness Engineering](docs/harness-engineering.md) — Design principles and anti-pattern defense
 - [Example CLAUDE.md](examples/CLAUDE.md.example) — Full configuration example
 
 ## Contributing

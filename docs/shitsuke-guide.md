@@ -37,6 +37,7 @@ Enable based on your needs:
 | `tdd_separation` | Separate test/impl agents | Context purity |
 | `ensemble_judge` | Multi-strategy evaluation | Security-critical |
 | `spec_driven_review` | Verify spec alignment | Formal requirements |
+| `linter_protection` | Block agents from weakening lint rules | Code quality enforcement |
 
 ## Quick Start
 

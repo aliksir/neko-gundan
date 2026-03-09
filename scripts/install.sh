@@ -89,7 +89,7 @@ CLAUDE_DIR="$TARGET_DIR/.claude"
 
 quality_agents="kurouto-neko.md"
 quality_rules="review-protocol.md completion-gates.md"
-quality_modules="ensemble-judge.md jit-tests.md reflexion.md"
+quality_modules="ensemble-judge.md jit-tests.md reflexion.md linter-protection.md"
 
 implement_agents="shigoto-neko.md genba-neko.md"
 implement_rules=""

@@ -5,6 +5,7 @@
 #
 # 使い方:
 #   bash neko-gundan/scripts/install.sh <mode> [target-dir]
+#   bash neko-gundan/scripts/install.sh --update <mode> [target-dir]
 #
 # モード:
 #   quality    - レビュー・品質検証（自己レビュー防止、証跡ベースのゲート）
@@ -15,6 +16,9 @@
 #
 # 組み合わせ:
 #   bash install.sh quality+security ./my-project
+#
+# 更新:
+#   bash install.sh --update all ./my-project
 #
 
 set -euo pipefail
@@ -27,11 +31,19 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
+BLUE='\033[0;34m'
 NC='\033[0m'
+
+# --- モード判定 ---
+UPDATE_MODE=false
+if [ "${1:-}" = "--update" ]; then
+    UPDATE_MODE=true
+    shift
+fi
 
 # --- ヘルプ ---
 usage() {
-    echo "Usage: bash install.sh <mode> [target-dir]"
+    echo "Usage: bash install.sh [--update] <mode> [target-dir]"
     echo ""
     echo "Modes:"
     echo "  quality     Review & quality gates (reviewer agent, completion gates)"
@@ -42,10 +54,15 @@ usage() {
     echo ""
     echo "Combine modes with '+': quality+security"
     echo ""
+    echo "Options:"
+    echo "  --update    Check for upstream changes in existing files"
+    echo "              Shows diff and lets you choose per file"
+    echo ""
     echo "Examples:"
     echo "  bash install.sh quality ./my-project"
     echo "  bash install.sh quality+security ."
     echo "  bash install.sh all ~/projects/my-app"
+    echo "  bash install.sh --update all ./my-project"
     exit 1
 }
 
@@ -145,11 +162,18 @@ SNIPPETS=$(echo "$SNIPPETS" | tr ' ' '\n' | sort -u | tr '\n' ' ')
 # --- インストール開始 ---
 echo ""
 echo -e "${CYAN}=========================================${NC}"
-echo -e "${CYAN}  Neko Gundan Installer${NC}"
+if [ "$UPDATE_MODE" = true ]; then
+    echo -e "${CYAN}  Neko Gundan Updater${NC}"
+else
+    echo -e "${CYAN}  Neko Gundan Installer${NC}"
+fi
 echo -e "${CYAN}=========================================${NC}"
 echo ""
 echo -e "Mode:   ${GREEN}${MODE_INPUT}${NC}"
 echo -e "Target: ${GREEN}${TARGET_DIR}${NC}"
+if [ "$UPDATE_MODE" = true ]; then
+    echo -e "Action: ${BLUE}Update (check upstream changes)${NC}"
+fi
 echo ""
 
 # ディレクトリ作成
@@ -160,7 +184,10 @@ mkdir -p "$CLAUDE_DIR/commands" 2>/dev/null || true
 
 copied=0
 skipped=0
+updated=0
+has_diff=0
 
+# --- ファイルコピー/更新関数 ---
 copy_file() {
     local src="$1"
     local dst="$2"
@@ -169,9 +196,51 @@ copy_file() {
         ((skipped++)) || true
         return
     fi
+
     if [ -f "$dst" ]; then
-        echo -e "  ${YELLOW}EXISTS${NC} $(basename "$dst")"
-        ((skipped++)) || true
+        if [ "$UPDATE_MODE" = true ]; then
+            # 更新モード: 差分チェック
+            if diff -q "$src" "$dst" > /dev/null 2>&1; then
+                echo -e "  ${GREEN}OK${NC} $(basename "$dst") (up to date)"
+            else
+                echo -e "  ${YELLOW}CHANGED${NC} $(basename "$dst")"
+                echo ""
+                diff --color=auto -u "$dst" "$src" 2>/dev/null | head -30 || true
+                echo ""
+                echo -n "  Overwrite with upstream? [y]es / [n]o / [d]iff full: "
+                read -r answer < /dev/tty
+                case "$answer" in
+                    y|Y|yes)
+                        cp "$src" "$dst"
+                        echo -e "  ${GREEN}UPDATED${NC} $(basename "$dst")"
+                        ((updated++)) || true
+                        ;;
+                    d|D|diff)
+                        diff --color=auto -u "$dst" "$src" 2>/dev/null || true
+                        echo ""
+                        echo -n "  Overwrite? [y/n]: "
+                        read -r answer2 < /dev/tty
+                        if [ "$answer2" = "y" ] || [ "$answer2" = "Y" ]; then
+                            cp "$src" "$dst"
+                            echo -e "  ${GREEN}UPDATED${NC} $(basename "$dst")"
+                            ((updated++)) || true
+                        else
+                            echo -e "  ${YELLOW}KEPT${NC} $(basename "$dst") (local version)"
+                            ((skipped++)) || true
+                        fi
+                        ;;
+                    *)
+                        echo -e "  ${YELLOW}KEPT${NC} $(basename "$dst") (local version)"
+                        ((skipped++)) || true
+                        ;;
+                esac
+                ((has_diff++)) || true
+            fi
+        else
+            # 通常モード: 既存ファイルはスキップ
+            echo -e "  ${YELLOW}EXISTS${NC} $(basename "$dst")"
+            ((skipped++)) || true
+        fi
         return
     fi
     cp "$src" "$dst"
@@ -213,27 +282,40 @@ if echo "$SNIPPETS" | grep -qE "(implement|plan)"; then
     echo ""
 fi
 
-# --- CLAUDE.md スニペット生成 ---
-echo -e "${CYAN}CLAUDE.md snippet:${NC}"
-echo ""
-echo "  Add the following to your CLAUDE.md:"
-echo "  ----------------------------------------"
-for snippet in $SNIPPETS; do
-    if [ -f "$NEKO_DIR/modes/$snippet.md" ]; then
-        sed 's/^/  /' "$NEKO_DIR/modes/$snippet.md"
-        echo ""
-    fi
-done
-echo "  ----------------------------------------"
-echo ""
+# --- CLAUDE.md スニペット生成（通常モードのみ） ---
+if [ "$UPDATE_MODE" = false ]; then
+    echo -e "${CYAN}CLAUDE.md snippet:${NC}"
+    echo ""
+    echo "  Add the following to your CLAUDE.md:"
+    echo "  ----------------------------------------"
+    for snippet in $SNIPPETS; do
+        if [ -f "$NEKO_DIR/modes/$snippet.md" ]; then
+            sed 's/^/  /' "$NEKO_DIR/modes/$snippet.md"
+            echo ""
+        fi
+    done
+    echo "  ----------------------------------------"
+    echo ""
+fi
 
 # --- 結果サマリ ---
 echo -e "${CYAN}=========================================${NC}"
-echo -e "  ${GREEN}$copied${NC} files copied, ${YELLOW}$skipped${NC} skipped"
+if [ "$UPDATE_MODE" = true ]; then
+    echo -e "  ${GREEN}$copied${NC} new, ${BLUE}$updated${NC} updated, ${YELLOW}$skipped${NC} unchanged"
+    if [ "$has_diff" -eq 0 ] && [ "$copied" -eq 0 ]; then
+        echo -e "  Everything is up to date!"
+    fi
+else
+    echo -e "  ${GREEN}$copied${NC} files copied, ${YELLOW}$skipped${NC} skipped"
+fi
 echo -e "${CYAN}=========================================${NC}"
 echo ""
 
-if [ "$copied" -gt 0 ]; then
+if [ "$UPDATE_MODE" = true ]; then
+    if [ "$updated" -gt 0 ]; then
+        echo -e "${GREEN}Update complete!${NC} Review changes with: git diff"
+    fi
+elif [ "$copied" -gt 0 ]; then
     echo -e "${GREEN}Installation complete!${NC}"
     echo ""
     echo "Next steps:"
@@ -244,5 +326,6 @@ if [ "$copied" -gt 0 ]; then
     fi
 else
     echo "All files already exist. Nothing to do."
+    echo "To check for upstream updates: bash install.sh --update ${MODE_INPUT} ${TARGET_DIR}"
 fi
 echo ""

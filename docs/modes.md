@@ -117,6 +117,22 @@ bash install.sh implement ./your-project
 bash install.sh plan ./your-project
 ```
 
+## Updating from Upstream
+
+When neko-gundan releases new versions, use `--update` to check what changed:
+
+```bash
+cd neko-gundan && git pull
+bash scripts/install.sh --update all ./your-project
+```
+
+For each file with upstream changes, you'll see a diff and choose:
+- **y** — Overwrite with the new version
+- **n** — Keep your local version
+- **d** — See the full diff before deciding
+
+Files you haven't customized show "up to date" and need no action.
+
 ## Where Modes Fit — The Full Picture
 
 Neko Gundan has 4 independent systems. Modes is one of them:

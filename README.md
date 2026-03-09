@@ -192,6 +192,12 @@ This framework wasn't designed in theory. It evolved from actual incidents — a
 | Accidental file deletion | `_deleted/` safety buffer |
 | Agent lost context mid-task | Whiteboard knowledge sharing |
 
+## Trade-offs
+
+**You are still the boss.** Neko Gundan adds AI-to-AI review, but it does not replace human judgment. The reviewer agent and the implementer agent share the same model family, so they can share the same blind spots. Evidence gates (`npm test`, `git diff`) catch mechanical errors, but architectural decisions and business logic still need a human's final call. Think of it as "better first draft" — not "no review needed."
+
+**More agents = more tokens.** Multi-agent orchestration costs more than a single agent. A platoon-scale task (3 agents) uses roughly 2-3x the tokens of doing it solo. Use [Process Weight](docs/process-weight.md) to keep costs in check — say "light mode" for quick fixes so you skip the full ceremony. The safety rules (deletion buffer, race prevention) add almost zero overhead since they're just prompt rules, not extra agent calls.
+
 ## Documentation
 
 - [Modes Guide](docs/modes.md) — Pick what you need, combine freely

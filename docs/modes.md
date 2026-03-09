@@ -117,27 +117,20 @@ bash install.sh implement ./your-project
 bash install.sh plan ./your-project
 ```
 
-## Modes vs Shitsuke — Two Layers
+## Where Modes Fit — The Full Picture
 
-These are **independent** customization layers that solve different problems:
+Neko Gundan has 4 independent systems. Modes is one of them:
 
-```
-Layer 1: Modes (install.sh)          Layer 2: Shitsuke (config.yaml)
-┌─────────────────────────┐          ┌─────────────────────────┐
-│ What files to install   │          │ Which features are ON   │
-│                         │          │                         │
-│ quality+security        │   then   │ whiteboard: true        │
-│ → agents/, rules/,      │ ──────→  │ heartbeat: true         │
-│   modules/ copied       │          │ isv: false              │
-└─────────────────────────┘          └─────────────────────────┘
-```
+| Question | System | When | Example |
+|----------|--------|------|---------|
+| **What to install?** | **Modes** (this page) | `install.sh` | `quality+security` |
+| **How heavy the process?** | [Process Weight](process-weight.md) | Per task | "light mode" / "strict" |
+| **Which modules ON/OFF?** | [Shitsuke](shitsuke-guide.md) | `config.yaml` | `heartbeat: false` |
+| **What's always enforced?** | Safety | Always | Deletion safety, race prevention |
 
-| | Modes | Shitsuke |
-|---|---|---|
-| **When** | At install time | After install |
-| **What it controls** | Which files exist in `.claude/` | Which features are active |
-| **How** | `bash install.sh quality+security` | Edit `neko-gundan.config.yaml` |
-| **Granularity** | Coarse (4 categories) | Fine (individual modules) |
+**Modes vs Shitsuke:**
+- Modes = which files exist in `.claude/` (coarse, at install time)
+- Shitsuke = which features are active (fine, anytime after install)
 
 **Example workflow:**
 1. Install `implement` mode → gets shigoto-neko, genba-neko, heartbeat, race-prevention, etc.

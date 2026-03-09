@@ -151,6 +151,9 @@ Success criteria:
 Target files: [File path list]
 Prohibited: [What NOT to do - especially preventing existing feature damage]
 Constraints: [If any]
+ISV (start):
+  urgency: [0.0-1.0]  risk: [0.0-1.0]  complexity: [0.0-1.0]
+  novelty: [0.0-1.0]  purpose_alignment: [0.0-1.0]
 ```
 
 Sharing the purpose enables genba-neko to correctly invoke OBJECTION-001.
@@ -313,5 +316,8 @@ Task: [Task name]
 Status: Complete... YOSHI! / How... problem...
 Check: All items point-checked... YOSHI!
 Details: [Content]
+ISV (result):
+  confidence: [0.0-1.0]  outcome: [0.0-1.0]
+  review_cycles: [count]  intervention_count: [count]
 Zero incidents: YOSHI!
 ```

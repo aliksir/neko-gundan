@@ -7,29 +7,25 @@
 ## Quick Start
 
 ```bash
-# 1. Clone
 git clone https://github.com/aliksir/neko-gundan.git
 
-# 2. Copy agents, rules, and commands into your project
-cp -r neko-gundan/agents/   your-project/.claude/agents/
-cp -r neko-gundan/rules/    your-project/.claude/rules/
-cp -r neko-gundan/commands/ your-project/.claude/commands/
+# Pick what you need (modes: quality, implement, plan, security)
+bash neko-gundan/scripts/install.sh quality+security ./your-project
 
-# 3. Initialize runtime directories
-bash neko-gundan/scripts/setup.sh
-
-# 4. Add to your CLAUDE.md
-cat >> your-project/CLAUDE.md << 'EOF'
-
-## Multi-Agent Mode
-You operate as "Oyakata-neko" (General). Process all instructions through the Neko Gundan system.
-See `.claude/agents/` for team definitions.
-EOF
+# Or install everything
+bash neko-gundan/scripts/install.sh all ./your-project
 ```
 
-Start Claude Code, give it a task, and the team scales automatically.
+The installer copies only the files you need and shows the CLAUDE.md snippet to add.
 
-> `setup.sh` is idempotent — safe to run multiple times.
+> **Don't want the full framework?** Start with just `security` (no agents, just safety rules) or `quality` (just a reviewer). [See all modes](docs/modes.md).
+
+### Full Install (all modes)
+
+```bash
+bash neko-gundan/scripts/install.sh all ./your-project
+bash neko-gundan/scripts/setup.sh  # Initialize runtime directories
+```
 
 ## How It Works
 
@@ -92,9 +88,22 @@ The 3 review principles that prevent self-approval:
 - **Trust levels (FIDES)**: External data is explicitly tagged as LOW trust
 - **Destructive operation tiers**: Tier 1 is absolutely prohibited, Tier 2 requires confirmation
 
-### Modular Configuration (Shitsuke)
+### Pick What You Need (Modes)
 
-Enable only what you need:
+Install only the parts that solve your problem:
+
+| Mode | What it solves | Agents needed? |
+|------|---------------|----------------|
+| **quality** | Self-review, unverified "done" | 1 (reviewer) |
+| **implement** | Large multi-file changes | 2 (manager + worker) |
+| **plan** | Complex task decomposition | 1 (general) |
+| **security** | Accidental deletion, unsafe operations | None (rules only) |
+
+Combine freely: `quality+security`, `plan+implement`, or `all`. [Full guide](docs/modes.md).
+
+### Fine-Tuning (Shitsuke)
+
+Within installed modes, toggle individual features:
 
 ```yaml
 # neko-gundan.config.yaml
@@ -102,11 +111,9 @@ shitsuke:
   whiteboard: true       # Cross-agent knowledge sharing
   heartbeat: true        # Stuck detection & monitoring
   isv: false             # Intent State Vector (advanced)
-  fides: false           # Data trust levels (advanced)
 ```
 
-3 presets: `minimal` (core only), `recommended` (balanced), `full` (everything).
-See [Shitsuke Guide](docs/shitsuke-guide.md) for details.
+3 presets: `minimal`, `recommended`, `full`. See [Shitsuke Guide](docs/shitsuke-guide.md).
 
 ## Design Philosophy
 
@@ -122,6 +129,7 @@ This framework wasn't designed in theory. It evolved from actual incidents — a
 
 ## Documentation
 
+- [Modes Guide](docs/modes.md) — Pick what you need, combine freely
 - [Architecture](docs/architecture.md) — System design and agent interactions
 - [Protocols Reference](docs/protocols.md) — All protocol definitions
 - [Shitsuke Guide](docs/shitsuke-guide.md) — Module system configuration

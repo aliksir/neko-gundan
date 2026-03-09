@@ -7,29 +7,25 @@
 ## クイックスタート
 
 ```bash
-# 1. クローン
 git clone https://github.com/aliksir/neko-gundan.git
 
-# 2. エージェント・ルール・コマンドをプロジェクトにコピー
-cp -r neko-gundan/agents/   your-project/.claude/agents/
-cp -r neko-gundan/rules/    your-project/.claude/rules/
-cp -r neko-gundan/commands/ your-project/.claude/commands/
+# 必要なモードだけ選んでインストール（quality, implement, plan, security）
+bash neko-gundan/scripts/install.sh quality+security ./your-project
 
-# 3. ランタイムディレクトリを初期化
-bash neko-gundan/scripts/setup.sh
-
-# 4. CLAUDE.md に追加
-cat >> your-project/CLAUDE.md << 'EOF'
-
-## マルチエージェントモード
-あなたは「親方猫」（将軍）として動作します。全ての指示を猫軍団システムで処理してください。
-エージェント定義は `.claude/agents/` を参照。
-EOF
+# または全部入り
+bash neko-gundan/scripts/install.sh all ./your-project
 ```
 
-Claude Codeを起動してタスクを指示すれば、自動的にチームが編成される。
+インストーラが必要なファイルだけコピーし、CLAUDE.mdに追加するスニペットを表示する。
 
-> `setup.sh` は冪等 — 何度実行しても安全。
+> **フレームワーク全体は要らない？** `security`（エージェント不要、安全ルールだけ）や `quality`（レビュアーだけ）から始められる。[全モード詳細](docs/modes.ja.md)
+
+### フルインストール（全モード）
+
+```bash
+bash neko-gundan/scripts/install.sh all ./your-project
+bash neko-gundan/scripts/setup.sh  # ランタイムディレクトリを初期化
+```
 
 ## 仕組み
 
@@ -92,9 +88,22 @@ Claude Codeを起動してタスクを指示すれば、自動的にチームが
 - **信頼レベル（FIDES）**: 外部データは明示的にLOW信頼としてタグ付け
 - **破壊操作Tier**: Tier 1は絶対禁止、Tier 2は要確認
 
-### モジュール設定（しつけ機能）
+### 必要なものだけ入れる（モード）
 
-必要なものだけ有効にできる:
+課題に合うパーツだけインストール:
+
+| モード | 何を解決するか | エージェント必要？ |
+|--------|--------------|------------------|
+| **quality** | 自己レビュー、未検証の「完了」 | 1体（レビュアー） |
+| **implement** | 大規模な複数ファイル変更 | 2体（マネージャー + ワーカー） |
+| **plan** | 複雑なタスク分解 | 1体（将軍） |
+| **security** | 誤削除、危険な操作 | 不要（ルールのみ） |
+
+自由に組み合わせ可: `quality+security`、`plan+implement`、`all`。[全モード詳細](docs/modes.ja.md)
+
+### 微調整（しつけ機能）
+
+インストール済みモード内で個別機能をON/OFF:
 
 ```yaml
 # neko-gundan.config.yaml
@@ -102,11 +111,9 @@ shitsuke:
   whiteboard: true       # ホワイトボード共有
   heartbeat: true        # スタック検出・監視
   isv: false             # Intent State Vector（上級者向け）
-  fides: false           # データ信頼レベル（上級者向け）
 ```
 
-プリセット3種: `minimal`（コアのみ）、`recommended`（バランス型）、`full`（全機能）。
-詳細は [しつけガイド](docs/shitsuke-guide.md) を参照。
+プリセット3種: `minimal`、`recommended`、`full`。詳細は [しつけガイド](docs/shitsuke-guide.md)。
 
 ## 設計思想
 
@@ -122,6 +129,7 @@ shitsuke:
 
 ## ドキュメント
 
+- [モードガイド](docs/modes.ja.md) — 必要なものだけ選んで組み合わせる
 - [アーキテクチャ](docs/architecture.md) — システム設計とエージェント間連携
 - [プロトコル一覧](docs/protocols.md) — 全プロトコル定義
 - [しつけガイド](docs/shitsuke-guide.md) — モジュールシステムの設定方法

@@ -143,7 +143,7 @@ bash scripts/install.sh --update all ./your-project
 |------|--------|------|---|
 | **何を入れる？** | **モード**（このページ） | `install.sh` | `quality+security` |
 | **どこまで回す？** | [プロセスウェイト](process-weight.ja.md) | タスクごと | 「ライトで」「厳密に」 |
-| **何をON/OFFする？** | [しつけ](shitsuke-guide.md) | `config.yaml` | `heartbeat: false` |
+| **何をON/OFFする？** | [しつけ](shitsuke-guide.ja.md) | `config.yaml` | `heartbeat: false` |
 | **何が常に守られる？** | 安全対策 | 常時 | 削除安全策、競合防止 |
 
 **モード vs しつけ:**

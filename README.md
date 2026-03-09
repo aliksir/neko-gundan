@@ -2,13 +2,36 @@
 
 **[日本語版 README はこちら](README.ja.md)**
 
-A hierarchical multi-agent framework for [Claude Code](https://github.com/anthropics/claude-code) that brings structured team management, quality gates, and bidirectional feedback to AI-powered software development.
+> One Claude Code agent can write code. But it can't catch its own mistakes, stop bad decisions, or coordinate across files safely. Neko Gundan splits the work into a team — so the agent that writes the code is never the one that reviews it.
 
-## What is Neko Gundan?
+## Quick Start
 
-Neko Gundan ("Cat Squad") organizes Claude Code agents into a team with clear roles, communication protocols, and quality assurance — turning a single AI assistant into a coordinated development team.
+```bash
+# 1. Clone
+git clone https://github.com/aliksir/neko-gundan.git
 
-Instead of one agent doing everything, Neko Gundan creates a hierarchy:
+# 2. Copy agents, rules, and commands into your project
+cp -r neko-gundan/agents/   your-project/.claude/agents/
+cp -r neko-gundan/rules/    your-project/.claude/rules/
+cp -r neko-gundan/commands/ your-project/.claude/commands/
+
+# 3. Initialize runtime directories
+bash neko-gundan/scripts/setup.sh
+
+# 4. Add to your CLAUDE.md
+cat >> your-project/CLAUDE.md << 'EOF'
+
+## Multi-Agent Mode
+You operate as "Oyakata-neko" (General). Process all instructions through the Neko Gundan system.
+See `.claude/agents/` for team definitions.
+EOF
+```
+
+Start Claude Code, give it a task, and the team scales automatically.
+
+> `setup.sh` is idempotent — safe to run multiple times.
+
+## How It Works
 
 ```
 Commander (Human)
@@ -22,23 +45,7 @@ Genba-neko (Worker / Sonnet) --- Implementation
 Kurouto-neko (Specialist / Opus) --- Independent review
 ```
 
-## Why?
-
-When AI agents work on complex tasks alone, they often:
-- Lose context in long sessions
-- Make mistakes without catching them
-- Delete files or break features without realizing
-- Can't verify their own work objectively
-
-Neko Gundan solves this with:
-- **Separation of concerns** - Strategy, implementation, and review by different agents
-- **Quality gates** - Mandatory checkpoints with evidence before declaring "done"
-- **Bidirectional feedback** - Lower-level agents can object to bad instructions
-- **Knowledge sharing** - Whiteboards for cross-agent discoveries
-
-## Key Features
-
-### Auto-Scaling
+The team auto-scales based on task size:
 
 | Scale | Criteria | Formation |
 |-------|----------|-----------|
@@ -47,18 +54,20 @@ Neko Gundan solves this with:
 | Platoon | 3-5 files / multiple tasks | shigoto + 1-2 genba-neko |
 | Battalion | 6+ files / large-scale | shigoto + 3 genba-neko |
 
-### Objection Protocols
+## Key Features
 
-Agents aren't just order-followers. They have an **obligation** to speak up:
+### Agents That Push Back
 
-- **OBJECTION-001** (genba -> shigoto): "This instruction will break things"
-- **OBJECTION-002** (shigoto -> oyakata): "This strategy contradicts our goal"
+Agents have an **obligation** to object to bad instructions — not just follow them.
+
+- **OBJECTION-001** (worker -> manager): "This instruction will break things"
+- **OBJECTION-002** (manager -> general): "This strategy contradicts our goal"
 
 Each objection requires: **Facts + Concerns + Alternative Proposal**
 
-### Completion Gates
+### Evidence-Based Quality Gates
 
-Every task must pass a gate with recorded evidence:
+Every task must pass a gate with recorded evidence. "I confirmed it" is not allowed — only "here's the proof."
 
 ```
 | # | Item              | Status | Evidence                              |
@@ -68,33 +77,24 @@ Every task must pass a gate with recorded evidence:
 | 3 | Objections resolved| PASS  | No [OBJECTION] tags on whiteboard     |
 ```
 
-"I confirmed it" is not evidence. "Here's the output proving it" is.
+### Implementer != Reviewer
 
-### Review Protocol (3 Principles)
+The 3 review principles that prevent self-approval:
 
-1. **Implementer != Reviewer** - The agent who wrote it doesn't review it
-2. **Reviewer is read-only** - No code modifications, only feedback
-3. **Loop limit 3** - After 3 review cycles, an arbitrator (Opus) decides
+1. The agent who wrote the code **never** reviews it
+2. Reviewers are **read-only** — feedback only, no code changes
+3. After 3 review cycles, an arbitrator (Opus) makes the final call
 
-### Whiteboard System
-
-For complex missions, agents share discoveries through a whiteboard:
-
-- Each agent writes findings with source citations
-- `[OBJECTION]` tags are visible to all agents
-- kurouto-neko checks unresolved objections before review
-- Cross-cutting observations prevent siloed thinking
-
-### Safety Measures
+### Safety Built In
 
 - **File deletion safety**: Files go to `_deleted/` first, never instant-deleted
-- **Race condition prevention**: No two agents edit the same file
+- **Race condition prevention**: No two agents edit the same file simultaneously
 - **Trust levels (FIDES)**: External data is explicitly tagged as LOW trust
-- **Safety tiers**: Tier 1 operations are absolutely prohibited, Tier 2 requires confirmation
+- **Destructive operation tiers**: Tier 1 is absolutely prohibited, Tier 2 requires confirmation
 
-### Shitsuke (Module System)
+### Modular Configuration (Shitsuke)
 
-Not every project needs every feature. Neko Gundan's **shitsuke** (しつけ / discipline) system lets you enable or disable optional modules:
+Enable only what you need:
 
 ```yaml
 # neko-gundan.config.yaml
@@ -103,134 +103,29 @@ shitsuke:
   heartbeat: true        # Stuck detection & monitoring
   isv: false             # Intent State Vector (advanced)
   fides: false           # Data trust levels (advanced)
-  # ... and 9 more modules
 ```
 
-**3 presets** included:
-- `minimal` — Core only (lightweight)
-- `recommended` — Balanced (monitoring + reflexion)
-- `full` — Everything enabled
-
+3 presets: `minimal` (core only), `recommended` (balanced), `full` (everything).
 See [Shitsuke Guide](docs/shitsuke-guide.md) for details.
-
-## Installation
-
-### As a Claude Code Plugin
-
-```bash
-# Clone the repository
-git clone https://github.com/anthropics/claude-code.git
-# Or install via the plugin command in Claude Code
-/plugin install neko-gundan
-```
-
-### Manual Installation
-
-1. Copy the `agents/` directory to your project's `.claude/agents/`
-2. Copy the `rules/` directory to your project's `.claude/rules/`
-3. Copy the `commands/` directory to your project's `.claude/commands/` or `~/.claude/commands/`
-4. Add the neko-gundan section to your `CLAUDE.md` (see `examples/CLAUDE.md.example`)
-
-### Quick Start
-
-1. Install the agents and rules as described above
-
-2. Initialize the runtime directories:
-   ```bash
-   bash multi-agent-neko/scripts/setup.sh
-   ```
-   This creates: `queue/` (message queues), `status/` (dashboard, whiteboards), `alerts/`, `token-usage/`, and initializes `dashboard.md` from template.
-
-3. Add to your `CLAUDE.md`:
-   ```markdown
-   ## Multi-Agent Mode
-   You operate as "Oyakata-neko" (General). Process all instructions through the Neko Gundan system.
-   See `.claude/agents/` for team definitions.
-   ```
-
-4. Start Claude Code and give it a task. It will automatically scale the team.
-
-> **Note**: `setup.sh` is idempotent — safe to run multiple times. It clears stale queues from previous sessions while preserving `status/archive/`.
-
-## File Structure
-
-```
-neko-gundan/
-+-- neko-gundan.config.yaml   # Shitsuke configuration
-+-- agents/                   # Core agent definitions
-|   +-- oyakata-neko.md       # General (strategy & delegation)
-|   +-- shigoto-neko.md       # Manager (task decomposition & QA)
-|   +-- genba-neko.md         # Worker (implementation)
-|   +-- kurouto-neko.md       # Specialist (independent review)
-+-- modules/                  # Optional feature modules
-|   +-- whiteboard.md         # WHITEBOARD-001
-|   +-- heartbeat.md          # HEARTBEAT-001 + POLLING-001
-|   +-- race-prevention.md    # RACE-001
-|   +-- reflexion.md          # Failure reflection
-|   +-- isv.md                # Intent State Vector
-|   +-- fides.md              # Data trust levels
-|   +-- capacity-escalation.md # CAPACITY-001
-|   +-- arbitrator.md         # Formal mediation
-|   +-- handoff-schema.md     # Structured handoffs
-|   +-- ensemble-judge.md     # SE-Jury Method
-|   +-- jit-tests.md          # Disposable tests
-|   +-- tdd-separation.md     # TDD agent separation
-|   +-- spec-driven-review.md # Spec alignment review
-+-- presets/                  # Ready-made configurations
-|   +-- minimal.yaml          # Core only
-|   +-- recommended.yaml      # Balanced setup
-|   +-- full.yaml             # Everything enabled
-+-- rules/                   # Core rules (always active)
-|   +-- review-protocol.md    # Review loop protocol
-|   +-- completion-gates.md   # Start/completion gate definitions
-+-- commands/
-|   +-- neko-gundan.md        # Team deployment command
-+-- docs/
-|   +-- architecture.md       # System architecture
-|   +-- protocols.md          # All protocols reference
-|   +-- shitsuke-guide.md     # Module system guide
-+-- examples/
-|   +-- CLAUDE.md.example     # Example CLAUDE.md configuration
-+-- README.md
-+-- LICENSE                   # MIT License
-+-- CHANGELOG.md
-```
-
-## Protocols Reference
-
-| Protocol | Purpose | Location | Type |
-|----------|---------|----------|------|
-| OBJECTION-001 | genba -> shigoto feedback | `agents/genba-neko.md` | Core |
-| OBJECTION-002 | shigoto -> oyakata feedback | `agents/shigoto-neko.md` | Core |
-| WHITEBOARD-001 | Cross-agent knowledge sharing | `modules/whiteboard.md` | Module |
-| RACE-001 | File conflict prevention | `modules/race-prevention.md` | Module |
-| HEARTBEAT-001 | Silent stall detection & reporting | `modules/heartbeat.md` | Module |
-| POLLING-001 | Active progress monitoring | `modules/heartbeat.md` | Module |
-| CAPACITY-001 | shigoto -> oyakata capacity escalation | `modules/capacity-escalation.md` | Module |
-| FIDES | Data trust level tagging | `modules/fides.md` | Module |
-| ISV | Intent State Vector recording | `modules/isv.md` | Module |
 
 ## Design Philosophy
 
-### Inspired by Real Organizations
+This framework wasn't designed in theory. It evolved from actual incidents — agents deleting production files, making unchecked bad decisions, breaking working features. Every protocol exists because something went wrong without it.
 
-Neko Gundan applies human organizational management patterns to AI agents:
+| Incident | Protocol |
+|----------|----------|
+| Agent couldn't catch its own mistakes | Independent reviewer requirement |
+| Bad instruction cascaded unchallenged | Bidirectional objection protocols |
+| "I checked" with no proof | Evidence-based completion gates |
+| Accidental file deletion | `_deleted/` safety buffer |
+| Agent lost context mid-task | Whiteboard knowledge sharing |
 
-- **Objection protocols** = Whistleblower systems / Speak-up culture
-- **Completion gates** = Quality inspection checkpoints
-- **Separation of duties** = Audit principles (maker != checker)
-- **Whiteboards** = Team standup / knowledge sharing
+## Documentation
 
-### Born from Real Incidents
-
-This framework wasn't designed in theory. It evolved from actual incidents where AI agents deleted production files, made wrong decisions, and broke working features. Every protocol exists because something went wrong without it.
-
-Key learnings:
-1. **Agents without purpose context can't catch mistakes** -> Mandatory purpose sharing
-2. **One-way command chains can't stop bad orders** -> Bidirectional objections
-3. **Self-review is unreliable** -> Independent reviewer requirement
-4. **"I checked" without evidence is meaningless** -> Evidence-based gates
-5. **Instant file deletion is irreversible** -> `_deleted/` safety buffer
+- [Architecture](docs/architecture.md) — System design and agent interactions
+- [Protocols Reference](docs/protocols.md) — All protocol definitions
+- [Shitsuke Guide](docs/shitsuke-guide.md) — Module system configuration
+- [Example CLAUDE.md](examples/CLAUDE.md.example) — Full configuration example
 
 ## Contributing
 

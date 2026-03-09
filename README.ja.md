@@ -101,19 +101,39 @@ bash neko-gundan/scripts/setup.sh  # ランタイムディレクトリを初期�
 
 自由に組み合わせ可: `quality+security`、`plan+implement`、`all`。[全モード詳細](docs/modes.ja.md)
 
-### 微調整（しつけ機能）
+### 2層のカスタマイズ
 
-インストール済みモード内で個別機能をON/OFF:
+猫軍団には2つの独立したレイヤーがある — **モード**で何を入れるか、**しつけ**で何を有効にするか。
 
-```yaml
-# neko-gundan.config.yaml
-shitsuke:
-  whiteboard: true       # ホワイトボード共有
-  heartbeat: true        # スタック検出・監視
-  isv: false             # Intent State Vector（上級者向け）
+```
+レイヤー1: モード (install.sh)         レイヤー2: しつけ (config.yaml)
+┌─────────────────────────┐          ┌─────────────────────────┐
+│ どのファイルを入れるか   │          │ どの機能をONにするか    │
+│                         │          │                         │
+│ quality+security        │   then   │ whiteboard: true        │
+│ → agents/, rules/,      │ ──────→  │ heartbeat: true         │
+│   modules/ にコピー     │          │ isv: false              │
+└─────────────────────────┘          └─────────────────────────┘
 ```
 
-プリセット3種: `minimal`、`recommended`、`full`。詳細は [しつけガイド](docs/shitsuke-guide.md)。
+**モード** = 「不要なものはそもそも入れない」（ファイル数を最小化）
+**しつけ** = 「入れた機能を微調整する」（ファイルを消さずにON/OFF）
+
+まずモードで始める。しつけは必要に応じて後から。[しつけガイド](docs/shitsuke-guide.md)
+
+### 標準Subagentsとの違い
+
+Claude Code標準のSubagentsは強力。猫軍団はその上に**運用ガードレール**を載せる:
+
+| | 標準Subagents | 猫軍団 |
+|---|---|---|
+| 自己レビュー | 自分で書いたコードを自分でレビュー可能 | **実装者≠レビュアーを強制** |
+| 品質の証明 | 「確認した」で通る | **証跡が必要**（テスト結果、git diff） |
+| 不適切な指示 | そのまま実行される | **異議申立義務**（OBJECTIONプロトコル） |
+| ファイル削除 | 即削除、復元不可 | **`_deleted/` に退避** |
+| 並列編集 | 調整なし | **競合防止** |
+
+標準Subagentsで十分ならそれでいい。猫軍団は「完了した」ではなく**「正しいと証明された」**が必要な時のためにある。
 
 ## 設計思想
 

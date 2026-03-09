@@ -152,6 +152,7 @@ echo ""
 # ディレクトリ作成
 mkdir -p "$CLAUDE_DIR/agents" 2>/dev/null || true
 mkdir -p "$CLAUDE_DIR/rules" 2>/dev/null || true
+mkdir -p "$CLAUDE_DIR/modules" 2>/dev/null || true
 mkdir -p "$CLAUDE_DIR/commands" 2>/dev/null || true
 
 copied=0
@@ -193,11 +194,11 @@ if [ -n "$(echo "$RULES" | tr -d ' ')" ]; then
     echo ""
 fi
 
-# Modules (-> rules/ as they function as rules)
+# Modules (separate directory for clarity)
 if [ -n "$(echo "$MODULES" | tr -d ' ')" ]; then
     echo -e "${CYAN}Modules:${NC}"
     for f in $MODULES; do
-        copy_file "$NEKO_DIR/modules/$f" "$CLAUDE_DIR/rules/$f"
+        copy_file "$NEKO_DIR/modules/$f" "$CLAUDE_DIR/modules/$f"
     done
     echo ""
 fi

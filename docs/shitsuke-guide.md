@@ -54,14 +54,15 @@ Available presets:
 
 ### 2. Copy enabled modules
 
-Based on your config, copy the corresponding module files to your `.claude/rules/` directory:
+Based on your config, copy the corresponding module files to your `.claude/modules/` directory:
 
 ```bash
 # Example for recommended preset
-cp modules/whiteboard.md .claude/rules/
-cp modules/heartbeat.md .claude/rules/
-cp modules/race-prevention.md .claude/rules/
-cp modules/reflexion.md .claude/rules/
+mkdir -p .claude/modules
+cp modules/whiteboard.md .claude/modules/
+cp modules/heartbeat.md .claude/modules/
+cp modules/race-prevention.md .claude/modules/
+cp modules/reflexion.md .claude/modules/
 ```
 
 ### 3. Install agents and core rules
@@ -80,12 +81,12 @@ The agent definitions reference active modules at the bottom. Agents will check 
 ### Enable a single module
 
 1. Edit `neko-gundan.config.yaml` and set the module to `true`
-2. Copy the module file: `cp modules/{module}.md .claude/rules/`
+2. Copy the module file: `cp modules/{module}.md .claude/modules/`
 
 ### Disable a module
 
 1. Edit `neko-gundan.config.yaml` and set the module to `false`
-2. Remove from rules: `rm .claude/rules/{module}.md`
+2. Remove from modules: `rm .claude/modules/{module}.md`
 
 ### Create your own module
 

@@ -117,11 +117,31 @@ bash install.sh implement ./your-project
 bash install.sh plan ./your-project
 ```
 
-## Relationship to Shitsuke (Module System)
+## Modes vs Shitsuke — Two Layers
 
-Modes control **which files are installed**. Shitsuke controls **which features are active** within those files.
+These are **independent** customization layers that solve different problems:
 
-- Modes = what's in your `.claude/` directory
-- Shitsuke = fine-tuning within `neko-gundan.config.yaml`
+```
+Layer 1: Modes (install.sh)          Layer 2: Shitsuke (config.yaml)
+┌─────────────────────────┐          ┌─────────────────────────┐
+│ What files to install   │          │ Which features are ON   │
+│                         │          │                         │
+│ quality+security        │   then   │ whiteboard: true        │
+│ → agents/, rules/,      │ ──────→  │ heartbeat: true         │
+│   modules/ copied       │          │ isv: false              │
+└─────────────────────────┘          └─────────────────────────┘
+```
 
-If you install `implement` mode, you can still use shitsuke to toggle heartbeat monitoring on/off without removing the file.
+| | Modes | Shitsuke |
+|---|---|---|
+| **When** | At install time | After install |
+| **What it controls** | Which files exist in `.claude/` | Which features are active |
+| **How** | `bash install.sh quality+security` | Edit `neko-gundan.config.yaml` |
+| **Granularity** | Coarse (4 categories) | Fine (individual modules) |
+
+**Example workflow:**
+1. Install `implement` mode → gets shigoto-neko, genba-neko, heartbeat, race-prevention, etc.
+2. Later, disable heartbeat via shitsuke → file stays, but agents skip the protocol
+3. Even later, add `quality` mode → kurouto-neko and review protocols are added
+
+You don't need shitsuke to get started. Modes alone give you a working setup.

@@ -101,19 +101,39 @@ Install only the parts that solve your problem:
 
 Combine freely: `quality+security`, `plan+implement`, or `all`. [Full guide](docs/modes.md).
 
-### Fine-Tuning (Shitsuke)
+### Two Layers of Customization
 
-Within installed modes, toggle individual features:
+Neko Gundan has two independent layers — **Modes** control what you install, **Shitsuke** controls what's active.
 
-```yaml
-# neko-gundan.config.yaml
-shitsuke:
-  whiteboard: true       # Cross-agent knowledge sharing
-  heartbeat: true        # Stuck detection & monitoring
-  isv: false             # Intent State Vector (advanced)
+```
+Layer 1: Modes (install.sh)          Layer 2: Shitsuke (config.yaml)
+┌─────────────────────────┐          ┌─────────────────────────┐
+│ What files to install   │          │ Which features are ON   │
+│                         │          │                         │
+│ quality+security        │   then   │ whiteboard: true        │
+│ → agents/, rules/,      │ ──────→  │ heartbeat: true         │
+│   modules/ copied       │          │ isv: false              │
+└─────────────────────────┘          └─────────────────────────┘
 ```
 
-3 presets: `minimal`, `recommended`, `full`. See [Shitsuke Guide](docs/shitsuke-guide.md).
+**Modes** = "Don't install what you don't need" (fewer files, smaller footprint)
+**Shitsuke** = "Fine-tune what you installed" (toggle features without removing files)
+
+Start with modes. Add shitsuke later if you need finer control. [Shitsuke Guide](docs/shitsuke-guide.md).
+
+### Why Not Just Standard Subagents?
+
+Claude Code's built-in subagents are powerful. Neko Gundan adds **operational guardrails** on top:
+
+| | Standard Subagents | Neko Gundan |
+|---|---|---|
+| Self-review | Agent can review its own code | **Implementer ≠ Reviewer enforced** |
+| Quality proof | "I checked" is accepted | **Evidence required** (test output, git diff) |
+| Bad instructions | Silently executed | **Agents must object** (OBJECTION protocol) |
+| File deletion | Instant, irreversible | **Moved to `_deleted/` first** |
+| Parallel editing | No coordination | **Race condition prevention** |
+
+If standard subagents already work for you, great. Neko Gundan is for when you need **proof that things are correct**, not just that they're done.
 
 ## Design Philosophy
 

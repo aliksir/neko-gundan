@@ -92,6 +92,27 @@ For complex missions, agents share discoveries through a whiteboard:
 - **Trust levels (FIDES)**: External data is explicitly tagged as LOW trust
 - **Safety tiers**: Tier 1 operations are absolutely prohibited, Tier 2 requires confirmation
 
+### Shitsuke (Module System)
+
+Not every project needs every feature. Neko Gundan's **shitsuke** (しつけ / discipline) system lets you enable or disable optional modules:
+
+```yaml
+# neko-gundan.config.yaml
+shitsuke:
+  whiteboard: true       # Cross-agent knowledge sharing
+  heartbeat: true        # Stuck detection & monitoring
+  isv: false             # Intent State Vector (advanced)
+  fides: false           # Data trust levels (advanced)
+  # ... and 9 more modules
+```
+
+**3 presets** included:
+- `minimal` — Core only (lightweight)
+- `recommended` — Balanced (monitoring + reflexion)
+- `full` — Everything enabled
+
+See [Shitsuke Guide](docs/shitsuke-guide.md) for details.
+
 ## Installation
 
 ### As a Claude Code Plugin
@@ -135,23 +156,39 @@ git clone https://github.com/anthropics/claude-code.git
 
 ```
 neko-gundan/
-+-- .claude-plugin/
-|   +-- plugin.json           # Plugin metadata
-+-- agents/
++-- neko-gundan.config.yaml   # Shitsuke configuration
++-- agents/                   # Core agent definitions
 |   +-- oyakata-neko.md       # General (strategy & delegation)
 |   +-- shigoto-neko.md       # Manager (task decomposition & QA)
 |   +-- genba-neko.md         # Worker (implementation)
 |   +-- kurouto-neko.md       # Specialist (independent review)
++-- modules/                  # Optional feature modules
+|   +-- whiteboard.md         # WHITEBOARD-001
+|   +-- heartbeat.md          # HEARTBEAT-001 + POLLING-001
+|   +-- race-prevention.md    # RACE-001
+|   +-- reflexion.md          # Failure reflection
+|   +-- isv.md                # Intent State Vector
+|   +-- fides.md              # Data trust levels
+|   +-- capacity-escalation.md # CAPACITY-001
+|   +-- arbitrator.md         # Formal mediation
+|   +-- handoff-schema.md     # Structured handoffs
+|   +-- ensemble-judge.md     # SE-Jury Method
+|   +-- jit-tests.md          # Disposable tests
+|   +-- tdd-separation.md     # TDD agent separation
+|   +-- spec-driven-review.md # Spec alignment review
++-- presets/                  # Ready-made configurations
+|   +-- minimal.yaml          # Core only
+|   +-- recommended.yaml      # Balanced setup
+|   +-- full.yaml             # Everything enabled
++-- rules/                   # Core rules (always active)
+|   +-- review-protocol.md    # Review loop protocol
+|   +-- completion-gates.md   # Start/completion gate definitions
 +-- commands/
 |   +-- neko-gundan.md        # Team deployment command
-+-- rules/
-|   +-- review-protocol.md    # Review loop protocol
-|   +-- handoff-schema.md     # Agent handoff data schema
-|   +-- completion-gates.md   # Start/completion gate definitions
-|   +-- spec-driven-review.md # Spec-driven review process
 +-- docs/
 |   +-- architecture.md       # System architecture
 |   +-- protocols.md          # All protocols reference
+|   +-- shitsuke-guide.md     # Module system guide
 +-- examples/
 |   +-- CLAUDE.md.example     # Example CLAUDE.md configuration
 +-- README.md
@@ -161,16 +198,17 @@ neko-gundan/
 
 ## Protocols Reference
 
-| Protocol | Purpose | Defined In |
-|----------|---------|-----------|
-| OBJECTION-001 | genba -> shigoto feedback | `agents/genba-neko.md` |
-| OBJECTION-002 | shigoto -> oyakata feedback | `agents/shigoto-neko.md` |
-| WHITEBOARD-001 | Cross-agent knowledge sharing | `agents/shigoto-neko.md` |
-| RACE-001 | File conflict prevention | `agents/shigoto-neko.md`, `agents/genba-neko.md` |
-| HEARTBEAT-001 | Silent stall detection & reporting | `agents/genba-neko.md` |
-| POLLING-001 | Active progress monitoring | `agents/shigoto-neko.md` |
-| CAPACITY-001 | shigoto -> oyakata capacity escalation | `agents/shigoto-neko.md`, `agents/oyakata-neko.md` |
-| FIDES | Data trust level tagging | `rules/handoff-schema.md` |
+| Protocol | Purpose | Location | Type |
+|----------|---------|----------|------|
+| OBJECTION-001 | genba -> shigoto feedback | `agents/genba-neko.md` | Core |
+| OBJECTION-002 | shigoto -> oyakata feedback | `agents/shigoto-neko.md` | Core |
+| WHITEBOARD-001 | Cross-agent knowledge sharing | `modules/whiteboard.md` | Module |
+| RACE-001 | File conflict prevention | `modules/race-prevention.md` | Module |
+| HEARTBEAT-001 | Silent stall detection & reporting | `modules/heartbeat.md` | Module |
+| POLLING-001 | Active progress monitoring | `modules/heartbeat.md` | Module |
+| CAPACITY-001 | shigoto -> oyakata capacity escalation | `modules/capacity-escalation.md` | Module |
+| FIDES | Data trust level tagging | `modules/fides.md` | Module |
+| ISV | Intent State Vector recording | `modules/isv.md` | Module |
 
 ## Design Philosophy
 

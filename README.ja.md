@@ -113,6 +113,27 @@ isv:
 - **信頼レベル（FIDES）**: 外部データは明示的にLOW信頼としてタグ付け
 - **安全Tier**: Tier 1操作は絶対禁止、Tier 2は要確認
 
+### しつけ機能（モジュールシステム）
+
+全プロジェクトに全機能が必要なわけではありません。**しつけ機能**でオプションモジュールのON/OFFを設定できます：
+
+```yaml
+# neko-gundan.config.yaml
+shitsuke:
+  whiteboard: true       # ホワイトボード共有
+  heartbeat: true        # スタック検出・監視
+  isv: false             # Intent State Vector（上級者向け）
+  fides: false           # データ信頼レベル（上級者向け）
+  # ... 他9モジュール
+```
+
+**プリセット3種**：
+- `minimal` — コアのみ（軽量・入門向け）
+- `recommended` — バランス型（監視系+振り返り）
+- `full` — 全機能ON（最大品質管理）
+
+詳細は [しつけガイド](docs/shitsuke-guide.md) を参照。
+
 ## インストール
 
 ### 手動インストール
@@ -142,17 +163,17 @@ isv:
 
 ## プロトコル一覧
 
-| プロトコル | 目的 | 定義場所 |
-|-----------|------|---------|
-| OBJECTION-001 | 現場猫 → 仕事猫への異議 | `agents/genba-neko.md` |
-| OBJECTION-002 | 仕事猫 → 親方猫への異議 | `agents/shigoto-neko.md` |
-| WHITEBOARD-001 | エージェント間知識共有 | `agents/shigoto-neko.md` |
-| RACE-001 | ファイル競合防止 | `agents/shigoto-neko.md`, `agents/genba-neko.md` |
-| HEARTBEAT-001 | 沈黙ストール検出・報告 | `agents/genba-neko.md` |
-| POLLING-001 | 能動的進捗監視 | `agents/shigoto-neko.md` |
-| CAPACITY-001 | 仕事猫 → 親方猫への負荷上申 | `agents/shigoto-neko.md`, `agents/oyakata-neko.md` |
-| FIDES | データ信頼レベルタグ付け | `rules/handoff-schema.md` |
-| ISV | 意図状態ベクトル記録 | `rules/handoff-schema.md` |
+| プロトコル | 目的 | 定義場所 | 種別 |
+|-----------|------|---------|------|
+| OBJECTION-001 | 現場猫 → 仕事猫への異議 | `agents/genba-neko.md` | コア |
+| OBJECTION-002 | 仕事猫 → 親方猫への異議 | `agents/shigoto-neko.md` | コア |
+| WHITEBOARD-001 | エージェント間知識共有 | `modules/whiteboard.md` | モジュール |
+| RACE-001 | ファイル競合防止 | `modules/race-prevention.md` | モジュール |
+| HEARTBEAT-001 | 沈黙ストール検出・報告 | `modules/heartbeat.md` | モジュール |
+| POLLING-001 | 能動的進捗監視 | `modules/heartbeat.md` | モジュール |
+| CAPACITY-001 | 仕事猫 → 親方猫への負荷上申 | `modules/capacity-escalation.md` | モジュール |
+| FIDES | データ信頼レベルタグ付け | `modules/fides.md` | モジュール |
+| ISV | 意図状態ベクトル記録 | `modules/isv.md` | モジュール |
 
 ## 設計思想
 

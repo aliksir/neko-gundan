@@ -1,5 +1,44 @@
 # Changelog
 
+## [1.3.0] - 2026-03-09
+
+### Added
+- **Shitsuke (Module System)**: Feature toggle system for optional protocols
+  - `neko-gundan.config.yaml` configuration file with 13 toggleable modules
+  - `modules/` directory with extracted optional protocols
+  - 3 presets: `minimal`, `recommended`, `full`
+  - `docs/shitsuke-guide.md` with setup instructions and FAQ
+- **Presets**: Ready-made configurations for different project scales
+
+### Changed
+- **Agent definitions refactored**: Core-only agent files (~100-130 lines each, down from 104-323)
+  - oyakata-neko: 185 -> ~110 lines (optional: arbitrator, capacity-escalation)
+  - shigoto-neko: 323 -> ~150 lines (optional: whiteboard, heartbeat, polling, ISV, capacity, handoff)
+  - genba-neko: 219 -> ~120 lines (optional: heartbeat, whiteboard, race-prevention, reflexion)
+  - kurouto-neko: 104 -> ~85 lines (optional: ensemble-judge)
+- **Rules slimmed**: Moved optional content to modules
+  - `completion-gates.md`: Core 7 items (module-specific items in respective modules)
+  - `review-protocol.md`: Core 3 principles + self-verification (TDD/JiT/ensemble/spec in modules)
+  - `handoff-schema.md`: Moved to `modules/handoff-schema.md`
+  - `spec-driven-review.md`: Moved to `modules/spec-driven-review.md`
+
+### Module Catalog
+| Module | Protocol | Default |
+|--------|----------|---------|
+| whiteboard | WHITEBOARD-001 | ON |
+| heartbeat | HEARTBEAT-001 + POLLING-001 | ON |
+| race_prevention | RACE-001 | ON |
+| reflexion | Failure reflection | ON |
+| isv | Intent State Vector | OFF |
+| fides | Trust levels (FIDES) | OFF |
+| capacity_escalation | CAPACITY-001 | OFF |
+| arbitrator | Formal mediation | OFF |
+| handoff_schema | Structured handoffs | OFF |
+| ensemble_judge | SE-Jury Method | OFF |
+| jit_tests | JiTTests | OFF |
+| tdd_separation | TDD agent separation | OFF |
+| spec_driven_review | Spec alignment review | OFF |
+
 ## [1.2.0] - 2026-03-09
 
 ### Added

@@ -1,8 +1,8 @@
-# Spec-Driven Review
+# Spec-Driven Review Module
 
-## Overview
+> **Module**: `spec_driven_review` | **Default**: OFF | **Scale**: Platoon+ (recommended for squad with specs)
 
-During code review, verify not just "does the code work correctly" but also "does it align with the project spec/requirements."
+Verifies not just "does the code work" but also "does it align with the project spec/requirements."
 
 ## Flow
 
@@ -18,8 +18,3 @@ During code review, verify not just "does the code work correctly" but also "doe
 - [ ] Are changes related to the spec's stated main features?
 - [ ] No unauthorized new features added beyond the spec?
 - [ ] Does the tech stack align with the spec?
-
-## Scope
-
-- Required for platoon+ reviews
-- Recommended for squad reviews when a project spec exists

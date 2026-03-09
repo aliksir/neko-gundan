@@ -2,7 +2,7 @@
 
 Quality assurance flow applied at all scales.
 
-## 3 Principles
+## 3 Principles (Core — Always Active)
 
 1. **Implementer != Reviewer**: The agent who wrote it doesn't review it
 2. **Reviewer is read-only**: No code modifications. Point out issues only, return to implementer for fixes
@@ -19,24 +19,6 @@ implement -> review(edit:false) -> [issues found] -> fix -> review -> ... (max 3
 
 During fix phases, don't carry over previous session responses. Share information via review report files.
 
-## TDD Separation Principle
-
-Running test creation and implementation in the same context causes Context Pollution (the test creator's analysis leaks to the implementer).
-
-For platoon+, **separate test creation and implementation to different agents**:
-```
-genba-neko A: Create tests -> handoff(action:auto) -> genba-neko B: Implement -> kurouto-neko: Review
-```
-
-## External Tool Integration for Judge
-
-Before kurouto-neko's rubric judgment, feed these external tool results as structured input:
-- Lint/type check results
-- Test execution results (pass/fail/coverage)
-- Security scan results (gitleaks, semgrep, etc.)
-
-Eliminates gut-feeling "YOSHI" without tool evidence.
-
 ## Agent-as-a-Judge (Structured Review)
 
 Reviewer (kurouto-neko/QA) uses the rubric defined in `agents/kurouto-neko.md`.
@@ -52,16 +34,10 @@ When confidence is `low`, escalate to arbitrator (Opus).
 | Screenshot verification | For UI changes, use browser tools for visual check |
 | Lint/type check | `tsc --noEmit` / `ruff check` for static verification |
 
-## JiTTests - Just-in-Time Disposable Tests
+## Optional Extensions
 
-Disposable tests auto-generated from PR diffs. Used as review aid.
-
-### When to use
-- 3+ files changed AND existing tests don't cover the changes
-- Reviewer judges "insufficient test coverage"
-
-### Procedure
-1. Identify changed functions/methods from `git diff`
-2. Generate boundary/error case tests (disposable)
-3. Run tests -> feed failures back to implementer
-4. After review passes, disposable tests can be deleted (permanent tests are separate)
+The following features are available as modules. Check `neko-gundan.config.yaml`:
+- `modules/tdd-separation.md` — Separate test creation and implementation to different agents
+- `modules/jit-tests.md` — Just-in-Time disposable tests from PR diffs
+- `modules/ensemble-judge.md` — Multi-strategy evaluation (SE-Jury Method)
+- `modules/spec-driven-review.md` — Verify alignment with project spec

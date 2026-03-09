@@ -12,24 +12,22 @@ Execute before starting any platoon+ mission:
 | 2 | Target files identified | File list exists |
 | 3 | No unresolved blockers | Check dashboard/whiteboard |
 | 4 | Current state understood | Read target files, `git status` |
-| 5 | Related lessons checked | Search dev-lessons for project/tech tags |
 
 ## Completion Gate (Before Saying "Done")
 
 Every item must be checked with evidence. "I confirmed it" is not evidence — "Here's the command output showing it works" is.
 
 | # | Check | How to verify | Evidence format |
-|---|-------|---------------|-----------------|
+|---|-------|---------------|--------------------|
 | 1 | All success criteria met | Run tests, verify output | Test results / command output |
 | 2 | No unintended changes | `git diff` review | Diff output showing only intended changes |
 | 3 | Tests pass | Run test suite | Test pass/fail output |
 | 4 | No new lint errors | Run linter | Linter output |
 | 5 | No uncommitted new files | `git status` | Status output showing clean state |
-| 6 | Whiteboard objections resolved | Check `[OBJECTION]` tags | Resolution notes or "no objections" |
-| 7 | Documentation updated (if needed) | Check if README/docs need changes | N/A or updated file reference |
-| 8 | Existing features not broken | Run full test suite or smoke test | Test results |
-| 9 | Files not accidentally deleted | Compare with start state | `git status` / file listing |
-| 10 | ISV recorded | Record result dimensions, append to ISV log | ISV values in report (recon: N/A) |
+| 6 | Existing features not broken | Run full test suite or smoke test | Test results |
+| 7 | Files not accidentally deleted | Compare with start state | `git status` / file listing |
+
+> **Note**: Additional gate items may be added by active modules (e.g., ISV recording, whiteboard archival). Check `neko-gundan.config.yaml` for your configuration.
 
 ## Gate Evidence Format
 
@@ -56,4 +54,3 @@ When deleting files:
 1. Move to `_deleted/` directory first (never instant-delete)
 2. Verify no references to the file remain
 3. Next session can confirm and permanently remove
-4. This prevents irreversible file loss from AI mistakes

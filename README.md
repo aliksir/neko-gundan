@@ -4,6 +4,21 @@
 
 > One Claude Code agent can write code. But it can't catch its own mistakes, stop bad decisions, or coordinate across files safely. Neko Gundan splits the work into a team — so the agent that writes the code is never the one that reviews it.
 
+## Who This Is For
+
+**Good fit:**
+- You've had an agent delete the wrong file, break working code, or ship something "it checked itself"
+- You're working on a product where quality accidents cost real time — not a throwaway prototype
+- You want a second pair of eyes on AI-generated code, but don't want to review every line yourself
+- You're coordinating multi-file changes and need agents that don't step on each other
+
+**Not a good fit:**
+- You're prototyping or doing quick experiments where speed matters more than correctness
+- You want a library of 100+ specialized agents — try [VoltAgent](https://github.com/VoltAgent/core) or [wshobson/agents](https://github.com/wshobson/agents) instead
+- A single `quality` or `security` mode feels like too much — standard Claude Code subagents may be all you need
+
+Neko Gundan is not a universal tool. It's opinionated about one thing: **proving that work is correct, not just done.**
+
 ## Quick Start
 
 ```bash

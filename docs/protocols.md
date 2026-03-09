@@ -128,6 +128,24 @@ Checklist generation, checklist execution, git status, Purpose update, invariant
 
 ---
 
+## MODULE-001: Module Addition Checklist
+
+**Purpose**: Prevent "wrote the doc = done" anti-pattern when adding new modules/protocols.
+
+When adding a new module to the Neko Gundan system, complete ALL of the following:
+
+| # | Step | Details |
+|---|------|---------|
+| 1 | **Create module document** | Write protocol definition in `modules/` or `docs/` |
+| 2 | **Integrate into agent workflow** | Identify which agent's action step the module affects, add to `agents/*.md` at the specific step number |
+| 3 | **Update gates** | Add verification items to start/completion gates (if applicable) |
+| 4 | **Define SSOT** | Explicitly state where the single source of truth is. Reference copies must point to SSOT |
+| 5 | **Git commit** | Commit all changes as "module introduction complete" |
+
+"No workflow integration, no module deployment!"
+
+---
+
 ## Review Loop (3 Principles)
 
 See `rules/review-protocol.md` for full details.

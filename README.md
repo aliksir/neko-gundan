@@ -166,6 +166,20 @@ Claude Code's built-in subagents are powerful. Neko Gundan adds **operational gu
 
 If standard subagents already work for you, great. Neko Gundan is for when you need **proof that things are correct**, not just that they're done.
 
+### Why Not LangGraph / CrewAI?
+
+Those are code-based orchestration frameworks — you write Python to define agent workflows. Neko Gundan takes a different approach: **rules, not code**.
+
+| | Code-based Frameworks | Neko Gundan |
+|---|---|---|
+| How it works | Python code defines agent graphs | Prompt rules define agent behavior |
+| Integration | Separate system alongside your app | Lives inside Claude Code's config (`.claude/`) |
+| Setup | Install packages, write orchestration code | Copy files, add a snippet to CLAUDE.md |
+| Partial adoption | All or nothing | Pick one mode and add more later |
+| Customization | Modify Python code | Edit markdown files |
+
+Neko Gundan injects a "constitution" into Claude Code — operational rules that agents follow. No new runtime, no new dependencies. Your existing Claude Code setup gains a team structure.
+
 ## Design Philosophy
 
 This framework wasn't designed in theory. It evolved from actual incidents — agents deleting production files, making unchecked bad decisions, breaking working features. Every protocol exists because something went wrong without it.

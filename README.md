@@ -27,6 +27,17 @@ bash neko-gundan/scripts/install.sh all ./your-project
 bash neko-gundan/scripts/setup.sh  # Initialize runtime directories
 ```
 
+### Updating
+
+Already installed? Pull the latest neko-gundan and check what changed:
+
+```bash
+cd neko-gundan && git pull
+bash scripts/install.sh --update all ./your-project
+```
+
+The updater shows a diff for each changed file and lets you choose per file — overwrite, keep yours, or see the full diff first. Files you haven't customized update silently.
+
 ## How It Works
 
 ```

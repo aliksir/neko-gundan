@@ -117,6 +117,22 @@ bash install.sh implement ./your-project
 bash install.sh plan ./your-project
 ```
 
+## アップストリームからの更新
+
+neko-gundanの新バージョンがリリースされたら、`--update`で差分確認:
+
+```bash
+cd neko-gundan && git pull
+bash scripts/install.sh --update all ./your-project
+```
+
+変更があるファイルごとにdiffを表示し、選択できる:
+- **y** — 新バージョンで上書き
+- **n** — 手元のバージョンを維持
+- **d** — フルdiffを見てから判断
+
+カスタマイズしていないファイルは「up to date」と表示され、操作不要。
+
 ## モードの位置づけ — 全体像
 
 猫軍団には4つの独立した仕組みがある。モードはその1つ:

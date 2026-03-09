@@ -27,6 +27,17 @@ bash neko-gundan/scripts/install.sh all ./your-project
 bash neko-gundan/scripts/setup.sh  # ランタイムディレクトリを初期化
 ```
 
+### アップデート
+
+既にインストール済み？ neko-gundanを最新にして差分を確認:
+
+```bash
+cd neko-gundan && git pull
+bash scripts/install.sh --update all ./your-project
+```
+
+変更があるファイルごとにdiffを表示し、上書きするか手元を維持するか選べる。カスタマイズしていないファイルはそのまま更新される。
+
 ## 仕組み
 
 ```

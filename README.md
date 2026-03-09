@@ -1,5 +1,7 @@
 # Neko Gundan - Multi-Agent Orchestration for Claude Code
 
+**[日本語版 README はこちら](README.ja.md)**
+
 A hierarchical multi-agent framework for [Claude Code](https://github.com/anthropics/claude-code) that brings structured team management, quality gates, and bidirectional feedback to AI-powered software development.
 
 ## What is Neko Gundan?

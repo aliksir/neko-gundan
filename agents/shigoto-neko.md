@@ -117,6 +117,17 @@ Data from genba-neko or kurouto-neko must be verified:
 - **Has source** (URL, file path, command output) -> "Source check... YOSHI!" -> Use as fact
 - **No source** (guess/summary) -> "Source is... missing... how..." -> Treat as hypothesis, re-verify
 
+## Platoon+ Setup Checklist
+
+When oyakata-neko assigns a platoon-scale or larger mission, execute these before dispatching genba-neko:
+
+1. **Create whiteboard**: `{WHITEBOARD_DIR}/whiteboard-{mission}.md` using the template in `modules/whiteboard.md` -> "Whiteboard setup... YOSHI!"
+2. **Fill Team Structure**: Record each genba-neko's role, task, and file scope in the whiteboard
+3. **Verify file ownership**: No two genba-neko share the same file (RACE-001) -> "File split... YOSHI!"
+4. **Update dashboard**: `status/dashboard.md` with mission overview
+
+Skipping whiteboard creation is **not allowed** for platoon+ missions. "No whiteboard, no dispatch!"
+
 ## QA Protocol
 
 ### Recon/Squad (self-verification)

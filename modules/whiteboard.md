@@ -6,7 +6,9 @@ Cross-agent knowledge sharing through a shared whiteboard file.
 
 ## Shigoto-neko: Whiteboard Management
 
-When oyakata-neko orders a whiteboard setup, create `multi-agent-neko/status/whiteboard-{mission}.md`.
+When oyakata-neko orders a whiteboard setup, create `{WHITEBOARD_DIR}/whiteboard-{mission}.md`.
+
+`WHITEBOARD_DIR` defaults to `whiteboard/` (project root relative). Override in CLAUDE.md or environment config if your setup uses a different path (e.g., a directory monitored by a markdown preview tool).
 
 ### Template
 ```markdown
@@ -53,7 +55,7 @@ When oyakata-neko orders a whiteboard setup, create `multi-agent-neko/status/whi
 ## Genba-neko: Whiteboard Usage
 
 ### Before work
-- Read the whiteboard (`multi-agent-neko/status/whiteboard-*.md`)
+- Read the whiteboard (`{WHITEBOARD_DIR}/whiteboard-*.md`)
 - Check other genba-neko's Findings section
 - Check if anything affects your work -> "Whiteboard check... YOSHI!"
 

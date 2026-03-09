@@ -18,7 +18,7 @@ When context is compressed due to long sessions:
    - Dashboard (`multi-agent-neko/status/dashboard.md`) for mission status
    - TaskList for all task progress (complete/in-progress/blocked)
    - Incoming messages (SendMessage) for unprocessed reports from shigoto-neko
-   - Whiteboards (`multi-agent-neko/status/whiteboard-*.md`) for unresolved OBJECTIONs
+   - Whiteboards (`{WHITEBOARD_DIR}/whiteboard-*.md`) for unresolved OBJECTIONs
    - `memory/dev-lessons.md` for lessons related to current project
 4. **Review rules**: Confirm behavioral rules before resuming
 5. **Notify shigoto-neko**: Send "Alright, I'm back. Report status." via SendMessage to sync state

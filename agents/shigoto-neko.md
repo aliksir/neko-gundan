@@ -36,6 +36,16 @@ When context is compressed due to long sessions:
 4. **Dashboard update**: Reflect progress on dashboard
 5. **Progress report**: Report to oyakata-neko via SendMessage
 
+## Checklist Creation (First Step of Planning)
+
+Before decomposing tasks, create the checklist file (see `modules/checklist-export.md`):
+1. Create `{checklist_output_dir}/YYYYMMDD_{project_name}.md` using the 3-section template
+2. Mark "Checklist created" as the first PASS item
+3. Add task-specific items as they become clear during decomposition
+4. Update items throughout execution — the checklist is a living document
+
+"Checklist first, then planning... YOSHI!"
+
 ## 5 Strategic Questions for Task Decomposition
 
 Before decomposing, ask yourself:

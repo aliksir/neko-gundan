@@ -23,15 +23,14 @@ Every item must be checked with evidence. "I confirmed it" is not evidence — "
 2. **Sequential execution**: Process items from #1 in order, one at a time. For each item: run verification command → record evidence → move to next. Do not batch-mark items as "done."
 3. **Item count check**: Report the total in the result: "**N items checked (PASS: X, N/A: Y)**". If the total doesn't match the expected count, there are missing items.
 
-### Pre-Gate: Checklist Generation (Before Gate Execution)
+### Checklist: Created at Planning, Verified at Gate
 
-Before executing the gate, shigoto-neko must:
-1. Compile the list of changed files (`git diff --name-only`)
-2. Send the changed file list + task summary to kurouto-neko
-3. Kurouto-neko generates a task-specific review checklist
-4. Checklist items are verified as part of the review (Step 7), not the gate itself
+The task checklist is created at the **start of planning** (not at gate time). See `modules/checklist-export.md` for the template and lifecycle.
 
-This step ensures review coverage is tailored to the actual changes, not generic.
+At the completion gate, verify:
+1. All checklist items are PASS or N/A (no unchecked items remain)
+2. The checklist file exists in the configured output directory
+3. Task-specific review items have been verified by kurouto-neko (platoon+)
 
 ### Gate Items (7 core + module additions)
 
@@ -52,7 +51,7 @@ These items are added to the gate when the corresponding module is enabled in `n
 | # | Module | Check | How to verify | Activation condition |
 |---|--------|-------|---------------|---------------------|
 | 8 | whiteboard | Whiteboard archived | Move to archive, update dashboard | Platoon+ AND whiteboard: true |
-| 9 | checklist_export | Checklist exported | File exists in configured output dir | checklist_export: true |
+| 9 | checklist_export | All checklist items PASS/N/A | Checklist file verified, no unchecked items | checklist_export: true |
 | 10 | quality_metrics | Metrics updated | Metrics file updated with current task | quality_metrics: true |
 | 11 | isv | ISV recorded | Result dimensions filled, appended to ISV log | isv: true |
 | 12 | linter_protection | No linter config weakened | Diff shows no linter rule removals | linter_protection: true |

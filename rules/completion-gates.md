@@ -47,6 +47,7 @@ These items are added to the gate when the corresponding module is enabled in `n
 | 11 | isv | ISV recorded | Result dimensions filled, appended to ISV log | isv: true |
 | 12 | linter_protection | No linter config weakened | Diff shows no linter rule removals | linter_protection: true |
 | 13 | reflexion | Failure reflection recorded (if applicable) | Reflexion section in report | reflexion: true AND task had failures |
+| 14 | progress_visibility | Dashboard finalized | `status/dashboard.md` has final status, completion %, "Mission: COMPLETE" | Platoon+ AND progress_visibility: true |
 
 > **Total item count** = 7 (core) + active module items. Verify your count matches `neko-gundan.config.yaml` active modules.
 

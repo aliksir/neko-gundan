@@ -18,6 +18,7 @@ shitsuke:
   whiteboard: true        # ホワイトボード共有（WHITEBOARD-001）— Gate item #8 (platoon+)
   heartbeat: true         # スタック検出・進捗監視（HEARTBEAT-001 + POLLING-001）— No gate item (process module)
   race_prevention: true   # ファイル競合防止（RACE-001）— No gate item (process module)
+  progress_visibility: true  # ダッシュボード進捗見える化（DASHBOARD-001）— Gate item #14 (platoon+)
 
   # --- 品質強化系 ---
   reflexion: true         # 失敗時の振り返り — Gate item #13 (on failure)

@@ -48,6 +48,28 @@ For multiple concurrent missions, use sections within the same file.
 | shigoto-neko | Completion | Final update with results |
 | oyakata-neko | Monitoring | Read dashboard for situation awareness |
 
+## Scale Variants
+
+| Scale | Dashboard | Progress Reporting |
+|-------|-----------|-------------------|
+| **Platoon+** | Full dashboard (`status/dashboard.md`) — create at start, update during, finalize at end | Shigoto-neko manages |
+| **Squad** | Optional — SendMessage reports are sufficient | Shigoto-neko or oyakata-neko |
+| **Koneko** | No dashboard — progress reported via SendMessage to user directly | Single agent reports to user |
+| **Light mode** | No dashboard — but SendMessage progress reports remain mandatory | Implementer reports via SendMessage |
+
+### Koneko / Light Mode Progress Protocol
+
+When dashboard is not used, progress remains visible through:
+1. **SendMessage on milestone completion** — report what was done, what's next
+2. **SendMessage on blocker discovery** — report immediately, don't wait
+3. **Completion report** — final summary of all work done
+
+"No dashboard doesn't mean no visibility. Report your progress."
+
 ## Completion Gate
 
-This module does NOT add a completion gate item (dashboard update is part of the existing pre-dispatch gate and ongoing management responsibility, not a final checkpoint).
+| # | Check | How to verify | Activation condition |
+|---|-------|---------------|---------------------|
+| 14 | Dashboard finalized | `status/dashboard.md` has final status for all tasks, completion %, and "Mission: COMPLETE" | Platoon+ AND progress_visibility: true |
+
+For koneko/Light mode, this gate item is N/A (no dashboard).

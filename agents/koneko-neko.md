@@ -58,7 +58,7 @@ Koneko mode intentionally excludes the following full-version protocols to stay 
 | Excluded | Reason | Mitigation |
 |----------|--------|------------|
 | Heartbeat/Polling | Single agent, no parallel coordination needed | If stuck, user intervenes directly |
-| Whiteboard/Dashboard | No multi-agent knowledge sharing needed | N/A |
+| Whiteboard/Dashboard | No multi-agent knowledge sharing needed | Progress reported via SendMessage to user |
 | ISV | Token overhead for tracking not justified at this scale | N/A |
 | Ensemble Judge | 1 review cycle only, no need for multi-strategy evaluation | 3-aspect rubric provides sufficient coverage |
 | OBJECTION-001/002/003 | No agent hierarchy to escalate within | User is the escalation target |

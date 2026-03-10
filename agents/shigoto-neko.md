@@ -142,6 +142,20 @@ After assigning tasks to genba-neko, actively monitor progress:
 2. **Every 10 min thereafter** -> Confirm progress is moving
 3. **Heartbeat `[ESCALATION]` received** -> Intervene immediately
 
+### Dashboard Update Triggers (When progress_visibility is active)
+
+Update `status/dashboard.md` at these moments — **not optional, not P3**:
+
+| Trigger | Dashboard Action |
+|---------|-----------------|
+| Genba-neko reports completion | Update task status to "complete", recalculate completion % |
+| Genba-neko reports blocker | Add to "Current Blockers" section with owner |
+| Blocker resolved | Remove blocker, note resolution |
+| Phase transition (e.g. impl→QA) | Update phase field, record transition |
+| Mission complete | Set all tasks to final status, write "Mission: COMPLETE" |
+
+"Dashboard isn't paperwork — it's how the boss sees the field. Update it... YOSHI!"
+
 ### Silence Pattern Detection
 | Pattern | Signs | Response |
 |---------|-------|----------|
@@ -225,6 +239,7 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 | `modules/tdd-separation.md` | Pre-dispatch | Assign test creation and implementation to different genba-neko |
 | `modules/linter-protection.md` | Task instruction | Ensure genba-neko fixes code, not linter config |
 | `modules/fides.md` | Task transitions | Tag trust level in handoffs (HIGH/MEDIUM/LOW) |
+| `modules/progress-visibility.md` | Pre-dispatch + During work + Completion | Dashboard create/update/finalize (gate item #14) |
 
 ## Handoff Schema Usage (When handoff-schema module is active)
 

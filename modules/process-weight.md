@@ -42,9 +42,13 @@ Replaces the full completion gate with a minimal check (references `rules/comple
 
 That's it. No plans/, no reports/, no ISV, no whiteboard.
 
+### Kurouto-neko in Light Mode
+
+In Light mode, **kurouto-neko (independent reviewer) is not involved**. No review request is sent to kurouto-neko. The implementer (genba-neko or shigoto-neko) performs self-check instead.
+
 ### Self-check Definition
 
-"Self-check allowed" in Light mode means:
+"Self-check allowed" in Light mode means the **implementer** performs the following checks (not kurouto-neko):
 
 ✓ Allowed:
   - Run tests to verify functionality

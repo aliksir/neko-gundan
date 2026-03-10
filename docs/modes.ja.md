@@ -127,6 +127,16 @@ bash install.sh all ./your-project
 | 「計画から実装まで」 | `plan+implement+quality` | 戦略 + ワーカー + レビュー |
 | 「全部入り」 | `all` | 4モード全部 |
 
+## ダウングレード
+
+MAXからPROに切り替え？安全にダウングレードできる:
+
+```bash
+bash install.sh --downgrade koneko ./your-project
+```
+
+不要ファイルは `_deleted/` に退避される（即削除しない）。ダウングレード後にCLAUDE.mdのスニペットを更新すること。
+
 ## 後から追加OK
 
 小さく始めて、必要に応じてモードを追加できる。インストーラは既存ファイルをスキップするので、安全に再実行可能:

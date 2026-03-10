@@ -21,6 +21,9 @@
 # 更新:
 #   bash install.sh --update all ./my-project
 #
+# ダウングレード:
+#   bash install.sh --downgrade koneko ./my-project
+#
 
 set -euo pipefail
 
@@ -37,14 +40,18 @@ NC='\033[0m'
 
 # --- モード判定 ---
 UPDATE_MODE=false
+DOWNGRADE_MODE=false
 if [ "${1:-}" = "--update" ]; then
     UPDATE_MODE=true
+    shift
+elif [ "${1:-}" = "--downgrade" ]; then
+    DOWNGRADE_MODE=true
     shift
 fi
 
 # --- ヘルプ ---
 usage() {
-    echo "Usage: bash install.sh [--update] <mode> [target-dir]"
+    echo "Usage: bash install.sh [--update|--downgrade] <mode> [target-dir]"
     echo ""
     echo "Modes:"
     echo "  koneko      Lite version for PRO-tier (1 reviewer + safety rules)"
@@ -59,12 +66,15 @@ usage() {
     echo "Options:"
     echo "  --update    Check for upstream changes in existing files"
     echo "              Shows diff and lets you choose per file"
+    echo "  --downgrade Downgrade to target mode, retiring unneeded files to _deleted/"
+    echo "              Safely moves excess files instead of deleting them"
     echo ""
     echo "Examples:"
     echo "  bash install.sh quality ./my-project"
     echo "  bash install.sh quality+security ."
     echo "  bash install.sh all ~/projects/my-app"
     echo "  bash install.sh --update all ./my-project"
+    echo "  bash install.sh --downgrade koneko ./my-project"
     exit 1
 }
 
@@ -108,6 +118,12 @@ security_modules="fides.md race-prevention.md"
 koneko_agents="koneko-neko.md"
 koneko_rules="koneko-gates.md safety-tiers.md"
 koneko_modules=""
+
+# 全猫軍団ファイルのマスターリスト（ダウングレード用）
+all_agents="oyakata-neko.md shigoto-neko.md genba-neko.md kurouto-neko.md koneko-neko.md"
+all_rules="review-protocol.md completion-gates.md safety-tiers.md koneko-gates.md"
+all_modules="ensemble-judge.md jit-tests.md reflexion.md linter-protection.md race-prevention.md heartbeat.md tdd-separation.md whiteboard.md isv.md spec-driven-review.md fides.md process-weight.md arbitrator.md capacity-escalation.md handoff-schema.md checklist-export.md quality-metrics.md"
+all_commands="neko-gundan.md"
 
 # --- モード解析（+で結合可能） ---
 IFS='+' read -ra MODES <<< "$MODE_INPUT"
@@ -170,6 +186,152 @@ AGENTS=$(echo "$AGENTS" | tr ' ' '\n' | sort -u | tr '\n' ' ')
 RULES=$(echo "$RULES" | tr ' ' '\n' | sort -u | tr '\n' ' ')
 MODULES=$(echo "$MODULES" | tr ' ' '\n' | sort -u | tr '\n' ' ')
 SNIPPETS=$(echo "$SNIPPETS" | tr ' ' '\n' | sort -u | tr '\n' ' ')
+
+# --- ダウングレードモード ---
+if [ "$DOWNGRADE_MODE" = true ]; then
+    echo ""
+    echo -e "${CYAN}=========================================${NC}"
+    echo -e "${CYAN}  Neko Gundan Downgrade${NC}"
+    echo -e "${CYAN}=========================================${NC}"
+    echo ""
+    echo -e "Target mode: ${GREEN}${MODE_INPUT}${NC}"
+    echo -e "Target dir:  ${GREEN}${TARGET_DIR}${NC}"
+    echo ""
+
+    DELETED_DIR="$TARGET_DIR/_deleted/neko-gundan-$(date +%Y%m%d)"
+    retired=0
+    installed=0
+
+    # ヘルパー: ファイルがターゲットモードに必要かチェック
+    is_needed() {
+        local file="$1"
+        local list="$2"
+        echo "$list" | tr ' ' '\n' | grep -qx "$file"
+    }
+
+    # ヘルパー: 不要ファイルを _deleted/ に退避
+    retire_file() {
+        local filepath="$1"
+        local subdir="$2"
+        local filename
+        filename="$(basename "$filepath")"
+        if [ -f "$filepath" ]; then
+            mkdir -p "$DELETED_DIR/$subdir"
+            mv "$filepath" "$DELETED_DIR/$subdir/$filename"
+            echo -e "  ${YELLOW}RETIRE${NC} $subdir/$filename -> _deleted/"
+            ((retired++)) || true
+        fi
+    }
+
+    # エージェントの退避
+    echo -e "${CYAN}Checking agents:${NC}"
+    for f in $all_agents; do
+        if [ -f "$CLAUDE_DIR/agents/$f" ]; then
+            if is_needed "$f" "$AGENTS"; then
+                echo -e "  ${GREEN}KEEP${NC} $f"
+            else
+                retire_file "$CLAUDE_DIR/agents/$f" "agents"
+            fi
+        fi
+    done
+    echo ""
+
+    # ルールの退避
+    echo -e "${CYAN}Checking rules:${NC}"
+    for f in $all_rules; do
+        if [ -f "$CLAUDE_DIR/rules/$f" ]; then
+            if is_needed "$f" "$RULES"; then
+                echo -e "  ${GREEN}KEEP${NC} $f"
+            else
+                retire_file "$CLAUDE_DIR/rules/$f" "rules"
+            fi
+        fi
+    done
+    echo ""
+
+    # モジュールの退避
+    echo -e "${CYAN}Checking modules:${NC}"
+    for f in $all_modules; do
+        if [ -f "$CLAUDE_DIR/modules/$f" ]; then
+            if is_needed "$f" "$MODULES"; then
+                echo -e "  ${GREEN}KEEP${NC} $f"
+            else
+                retire_file "$CLAUDE_DIR/modules/$f" "modules"
+            fi
+        fi
+    done
+    echo ""
+
+    # コマンドの退避（koneko等ではコマンド不要）
+    if ! echo "$SNIPPETS" | grep -qE "(implement|plan)"; then
+        echo -e "${CYAN}Checking commands:${NC}"
+        for f in $all_commands; do
+            if [ -f "$CLAUDE_DIR/commands/$f" ]; then
+                retire_file "$CLAUDE_DIR/commands/$f" "commands"
+            fi
+        done
+        echo ""
+    fi
+
+    # ターゲットモードに必要だが未インストールのファイルを追加
+    missing=0
+    echo -e "${CYAN}Installing missing files:${NC}"
+    for f in $AGENTS; do
+        if [ -n "$f" ] && [ ! -f "$CLAUDE_DIR/agents/$f" ] && [ -f "$NEKO_DIR/agents/$f" ]; then
+            mkdir -p "$CLAUDE_DIR/agents"
+            cp "$NEKO_DIR/agents/$f" "$CLAUDE_DIR/agents/$f"
+            echo -e "  ${GREEN}ADD${NC} agents/$f"
+            ((missing++)) || true
+        fi
+    done
+    for f in $RULES; do
+        if [ -n "$f" ] && [ ! -f "$CLAUDE_DIR/rules/$f" ] && [ -f "$NEKO_DIR/rules/$f" ]; then
+            mkdir -p "$CLAUDE_DIR/rules"
+            cp "$NEKO_DIR/rules/$f" "$CLAUDE_DIR/rules/$f"
+            echo -e "  ${GREEN}ADD${NC} rules/$f"
+            ((missing++)) || true
+        fi
+    done
+    for f in $MODULES; do
+        if [ -n "$f" ] && [ ! -f "$CLAUDE_DIR/modules/$f" ] && [ -f "$NEKO_DIR/modules/$f" ]; then
+            mkdir -p "$CLAUDE_DIR/modules"
+            cp "$NEKO_DIR/modules/$f" "$CLAUDE_DIR/modules/$f"
+            echo -e "  ${GREEN}ADD${NC} modules/$f"
+            ((missing++)) || true
+        fi
+    done
+    if [ "$missing" -eq 0 ]; then
+        echo -e "  (none needed)"
+    fi
+    echo ""
+
+    # サマリ
+    echo -e "${CYAN}=========================================${NC}"
+    echo -e "  ${YELLOW}$retired${NC} files retired to _deleted/"
+    echo -e "  ${GREEN}$missing${NC} files added"
+    echo -e "${CYAN}=========================================${NC}"
+    echo ""
+    if [ "$retired" -gt 0 ]; then
+        echo -e "Retired files are in: ${YELLOW}$DELETED_DIR${NC}"
+        echo "You can restore them if needed, or delete them permanently later."
+        echo ""
+    fi
+    echo -e "${CYAN}CLAUDE.md snippet for ${MODE_INPUT}:${NC}"
+    echo ""
+    echo "  Replace your current Neko Gundan snippet with:"
+    echo "  ----------------------------------------"
+    for snippet in $SNIPPETS; do
+        if [ -f "$NEKO_DIR/modes/$snippet.md" ]; then
+            sed 's/^/  /' "$NEKO_DIR/modes/$snippet.md"
+            echo ""
+        fi
+    done
+    echo "  ----------------------------------------"
+    echo ""
+    echo -e "${GREEN}Downgrade complete!${NC}"
+    echo ""
+    exit 0
+fi
 
 # --- インストール開始 ---
 echo ""

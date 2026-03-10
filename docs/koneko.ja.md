@@ -51,6 +51,18 @@ koneko-nekoを起動してレビュー（Agent呼び出し1回）
 
 比較: 猫軍団フル版（中隊）= タスクあたり3-5回のAgent呼び出し。
 
+## フル版猫軍団からのダウングレード
+
+既にフル版を使っていて、konekoに切り替えたい場合:
+
+```bash
+bash neko-gundan/scripts/install.sh --downgrade koneko ./your-project
+```
+
+不要なファイルは `_deleted/neko-gundan-YYYYMMDD/` に安全退避される（即削除しない）。気が変わったらいつでも復元可能。
+
+ダウングレード後、CLAUDE.mdのスニペットを更新すること。スクリプトが新しいスニペットを表示する。
+
 ## フル版猫軍団へのアップグレード
 
 MAX 5+に移行したら、モードを追加してアップグレード:

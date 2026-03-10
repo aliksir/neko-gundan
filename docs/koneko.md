@@ -51,6 +51,18 @@ No hierarchy, no ceremony. Just: **implement → gate → review → done.**
 
 Compare: full Neko Gundan platoon = 3-5 agent calls per task.
 
+## Downgrading from Full Neko Gundan
+
+Already using the full framework and want to switch to koneko?
+
+```bash
+bash neko-gundan/scripts/install.sh --downgrade koneko ./your-project
+```
+
+This safely moves unneeded files to `_deleted/neko-gundan-YYYYMMDD/` (never deletes them). You can restore any file if you change your mind.
+
+After downgrading, update your CLAUDE.md snippet — the script shows the new one to use.
+
 ## Upgrading to Full Neko Gundan
 
 When you move to MAX 5+, upgrade by adding more modes:

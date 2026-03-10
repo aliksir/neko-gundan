@@ -1,6 +1,6 @@
 # Neko Gundan - Multi-Agent Orchestration for Claude Code
 
-**[日本語版 README はこちら](README.ja.md)**
+**[日本語版 README はこちら](README.ja.md)** | **On PRO plan? → [Koneko Gundan (Lite version)](README.koneko.md)**
 
 > One Claude Code agent can write code. But it can't catch its own mistakes, stop bad decisions, or coordinate across files safely. Neko Gundan splits the work into a team — so the agent that writes the code is never the one that reviews it.
 
@@ -24,10 +24,7 @@ Neko Gundan is not a universal tool. It's opinionated about one thing: **proving
 ```bash
 git clone https://github.com/aliksir/neko-gundan.git
 
-# PRO plan? Start here (lightweight, 1 agent call per task)
-bash neko-gundan/scripts/install.sh koneko ./your-project
-
-# MAX 5+? Pick what you need (modes: quality, implement, plan, security)
+# Pick what you need (modes: quality, implement, plan, security)
 bash neko-gundan/scripts/install.sh quality+security ./your-project
 
 # Or install everything
@@ -36,9 +33,7 @@ bash neko-gundan/scripts/install.sh all ./your-project
 
 The installer copies only the files you need and shows the CLAUDE.md snippet to add.
 
-> **On PRO plan?** Try `koneko` — same quality principles, sized for PRO-tier token budgets. [Learn more](docs/koneko.md).
->
-> **On MAX 5+ but don't want the full framework?** Start with just `security` (no agents, just safety rules) or `quality` (just a reviewer). [See all modes](docs/modes.md).
+> **Don't want the full framework?** Start with just `security` (no agents, just safety rules) or `quality` (just a reviewer). [See all modes](docs/modes.md).
 
 ### Full Install (all modes)
 

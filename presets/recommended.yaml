@@ -9,6 +9,7 @@
 #   - modules/heartbeat.md
 #   - modules/race-prevention.md
 #   - modules/reflexion.md
+#   - modules/checklist-export.md
 # =============================================================================
 
 shitsuke:
@@ -25,4 +26,4 @@ shitsuke:
   tdd_separation: false
   ensemble_judge: false
   spec_driven_review: false
-  checklist_export: false
+  checklist_export: true

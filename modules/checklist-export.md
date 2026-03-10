@@ -1,6 +1,6 @@
 # Checklist Export Module
 
-> **Module**: `checklist_export` | **Default**: OFF | **Scale**: All
+> **Module**: `checklist_export` | **Default**: ON (recommended+) | **Scale**: All
 
 Exports completion gate checklists to external files for human review and record keeping.
 

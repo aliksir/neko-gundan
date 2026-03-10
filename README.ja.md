@@ -118,7 +118,7 @@ _checklist/
   20260310_my-project.md   ← ゲート結果と証跡
 ```
 
-`checklist_export` を有効にし（`full` プリセットではデフォルトON）、CLAUDE.mdで出力先を設定:
+`checklist_export` を有効にし（`recommended`・`full` プリセットではデフォルトON）、CLAUDE.mdで出力先を設定:
 
 ```yaml
 checklist_output_dir: "./_checklist/"

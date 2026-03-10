@@ -62,6 +62,8 @@ Commander's instruction
   |
 1. Execute start gate (check all items with evidence)
   |
+1.5. Create checklist (first deliverable — see modules/checklist-export.md)
+  |
 2. Scale assessment (recon/squad/platoon/battalion)
   |
 3. Parallelization check (are subtasks independent?)

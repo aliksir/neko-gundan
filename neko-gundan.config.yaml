@@ -29,6 +29,9 @@ shitsuke:
   arbitrator: true            # 仲裁プロセス（3回ループ超過時）— No gate item (process module)
   handoff_schema: true        # 構造化ハンドオフ — No gate item (handoff format)
 
+  # --- コード保護系 ---
+  linter_protection: true   # リンター設定変更禁止（コードを直せ、設定を弱めるな）— Gate item #12
+
   # --- テスト系 ---
   jit_tests: true         # 使い捨てテスト（JiTTests）— No gate item (review aid)
   tdd_separation: true    # TDD分離原則（テスト作成≠実装）— No gate item (process module)

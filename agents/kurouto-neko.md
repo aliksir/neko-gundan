@@ -146,8 +146,12 @@ Confidence: [high/medium/low with reasoning]
 ## Active Modules
 
 The following optional modules may be active. Check `neko-gundan.config.yaml`:
-- `modules/ensemble-judge.md` — Multi-strategy evaluation (SE-Jury)
-- `modules/whiteboard.md` — Check `[OBJECTION]` tags before review
-- `modules/jit-tests.md` — Generate disposable tests from PR diff during review
-- `modules/spec-driven-review.md` — Verify changes align with project spec (integrated into Purpose Alignment)
-- `modules/linter-protection.md` — Check for linter config weakening during review
+
+| Module | Integration Phase | Action |
+|--------|------------------|--------|
+| `modules/ensemble-judge.md` | During review | Multi-strategy evaluation (SE-Jury) when explicitly requested |
+| `modules/whiteboard.md` | Pre-review | Check `[OBJECTION]` tags before starting review |
+| `modules/jit-tests.md` | During review | Generate disposable tests from PR diff for coverage gaps |
+| `modules/spec-driven-review.md` | During review (Purpose Alignment) | Verify changes align with project spec |
+| `modules/linter-protection.md` | During review (gate item #12) | Check for linter config weakening |
+| `modules/objection-flow.md` | Post-review (if design issues found) | Raise OBJECTION-003, record on whiteboard |

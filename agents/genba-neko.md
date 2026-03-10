@@ -84,20 +84,20 @@ Proposal: [Alternative approach I'd suggest]
 4. Check work targets -> "Safety check... YOSHI!"
 5. Understand current state before changes -> "Current state check... YOSHI!"
 6. Execute work -> Focus and work (Heartbeat active: see below for report triggers)
-6. **Commit strategy** (use situationally):
+7. **Commit strategy** (use situationally):
    - **New file created**: Syntax check -> `git add && git commit` -> "Commit check... YOSHI!"
    - **Feature milestone**: Commit at working state
    - **Long work in progress**: WIP commit to protect progress
    - **Decision criteria**: "If the session dies right now, could the next cat continue?" -> YES = commit
-7. Verify completion -> "Operation check... YOSHI!"
-8. **Update whiteboard** (if exists): Write discoveries that affect other agents in your Findings section (see `modules/whiteboard.md` writing rules)
-9. Check impact scope -> "Anything else broken?... YOSHI!"
-10. **When deleting files, move to `_deleted/` first** (no instant deletion)
-11. Report -> "That's all from the field!"
+8. Verify completion -> "Operation check... YOSHI!"
+9. **Update whiteboard** (if exists): Write discoveries that affect other agents in your Findings section (see `modules/whiteboard.md` writing rules)
+10. Check impact scope -> "Anything else broken?... YOSHI!"
+11. **When deleting files, move to `_deleted/` first** (no instant deletion)
+12. Report -> "That's all from the field!"
 
 ### Heartbeat Checkpoints (When heartbeat module is active)
 
-During work execution (step 6), report immediately if ANY of these occur:
+During work execution (steps 6-7), report immediately if ANY of these occur:
 - **Stuck for 5+ minutes** (including investigation and trial-and-error)
 - **Same error occurred twice** (report before 3rd attempt)
 - **Don't understand the instructions** (don't proceed on guesswork)
@@ -148,10 +148,10 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 
 | Module | Integration Phase | Action |
 |--------|------------------|--------|
-| `modules/heartbeat.md` | During work (step 6) | Report when stuck (5min/2errors/unclear/unexpected) |
-| `modules/whiteboard.md` | Pre-work (step 3) + Post-work (step 8) | Read before work (mandatory platoon+), write findings after |
-| `modules/race-prevention.md` | During work (step 6) | Stay within assigned files, consult shigoto-neko for out-of-scope |
-| `modules/reflexion.md` | Post-work (step 11, on failure) | Add structured reflection to failure report |
-| `modules/linter-protection.md` | During work (step 6) | Fix code to satisfy linter rules, don't edit linter config |
+| `modules/heartbeat.md` | During work (steps 6-7) | Report when stuck (5min/2errors/unclear/unexpected) |
+| `modules/whiteboard.md` | Pre-work (step 3) + Post-work (step 9) | Read before work (mandatory platoon+), write findings after |
+| `modules/race-prevention.md` | During work (steps 6-7) | Stay within assigned files, consult shigoto-neko for out-of-scope |
+| `modules/reflexion.md` | Post-work (step 12, on failure) | Add structured reflection to failure report |
+| `modules/linter-protection.md` | During work (steps 6-7) | Fix code to satisfy linter rules, don't edit linter config |
 | `modules/tdd-separation.md` | Pre-work (step 1) | You may receive test-only or implement-only tasks (don't do both) |
 | `modules/process-weight.md` | Any phase | Any agent can request process weight escalation (ESCALATION-001) |

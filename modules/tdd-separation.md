@@ -17,3 +17,12 @@ genba-neko A: Create tests -> handoff(action:auto) -> genba-neko B: Implement ->
 ```
 
 This ensures the implementer works independently from the test creator's assumptions.
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| shigoto-neko | Task splitting (platoon+) | Assign test creation and implementation to different genba-neko |
+| genba-neko A | Test creation | Write tests, handoff to genba-neko B (action: auto) |
+| genba-neko B | Implementation | Implement against tests without reading test creator's analysis |
+| kurouto-neko | Review | Review both tests and implementation independently |

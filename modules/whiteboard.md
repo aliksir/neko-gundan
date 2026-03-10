@@ -77,4 +77,4 @@ For platoon+ missions, create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` as part
 |-------|-------|--------|
 | shigoto-neko | Pre-dispatch gate | Create whiteboard, fill team structure (mandatory, no skip) |
 | genba-neko | Pre-work (step 3) | Read whiteboard (mandatory for platoon+, check if exists for squad) |
-| genba-neko | Post-work (step 8) | Write findings that affect other agents |
+| genba-neko | Post-work (step 9) | Write findings that affect other agents |

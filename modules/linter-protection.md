@@ -75,3 +75,11 @@ The hook would check if the target file matches a protected pattern and block th
 ## Completion Gate
 
 When this module is active, add gate item: "No linter config weakened — verify no linter rules disabled without justification"
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| genba-neko | During implementation | Do not edit protected linter config files; fix code instead |
+| kurouto-neko | During review | Verify no linter rules disabled/weakened in diff |
+| shigoto-neko | Completion gate | Check gate item #12 (no linter config weakened) |

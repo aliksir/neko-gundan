@@ -32,13 +32,13 @@ Users trigger process weight with natural language:
 
 ## Light Mode — Quick Gate
 
-Replaces the full completion gate with a minimal check:
+Replaces the full completion gate with a minimal check (references `rules/completion-gates.md` gate item numbers):
 
-| # | Check | How to verify |
-|---|-------|---------------|
-| 1 | Tests pass | Run test suite |
-| 2 | No unintended diff | `git diff` shows only target files |
-| 3 | Committed | `git status` is clean |
+| Gate # | Check | How to verify |
+|--------|-------|---------------|
+| #1 | Tests pass (all success criteria met) | Run test suite |
+| #2 | No unintended diff | `git diff` shows only target files |
+| #5 | Committed (no uncommitted new files) | `git status` is clean |
 
 That's it. No plans/, no reports/, no ISV, no whiteboard.
 
@@ -126,3 +126,13 @@ Strict mode activates: ensemble judge, mandatory ISV, full evidence gates, arbit
 > Safety protocols (RACE-001, HEARTBEAT-001, safety tiers) are **never reduced** by process weight. Light mode makes the process lighter, not less safe.
 
 > **SSOT**: The canonical gate item list is in `rules/completion-gates.md`. This module defines which SUBSET of items to check for each weight level.
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| oyakata-neko | Task assignment | Set initial process weight based on activation keywords |
+| shigoto-neko | Pre-dispatch | Pass process weight to genba-neko in task instructions |
+| genba-neko | During work | Monitor escalation triggers, file ESCALATION-001 if needed |
+| kurouto-neko | Review start | Check process weight to determine review depth (self-check vs independent) |
+| oyakata-neko | On ESCALATION-001 | Decide ACCEPT/REJECT/MODIFY for weight upgrade requests |

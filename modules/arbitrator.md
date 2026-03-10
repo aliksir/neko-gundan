@@ -34,3 +34,12 @@ Order: [What to do next]
 ```
 
 "Arbitration is the last resort. But don't shy away when it's needed."
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| oyakata-neko | On trigger (review 3+ cycles / confidence: low / ensemble split / unresolvable OBJECTION) | Intervene as arbitrator: gather info, identify dispute, issue ruling |
+| oyakata-neko | Post-ruling | Record ruling in dashboard "Decisions" section |
+| kurouto-neko | Review judgment | Escalate to arbitrator when confidence: low or ensemble result is 1:1:1 split |
+| shigoto-neko | Review loop monitoring | Escalate to arbitrator when review loop exceeds 3 cycles |

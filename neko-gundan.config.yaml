@@ -14,6 +14,13 @@
 # =============================================================================
 
 shitsuke:
+  # Module types:
+  #   - Always active (not listed here): objection-flow.md (core protocol)
+  #   - Configurable (listed below): enable/disable per project
+  #
+  # Naming convention: config key uses underscores (e.g., race_prevention)
+  #                    file name uses hyphens (e.g., race-prevention.md)
+
   # --- 監視系 ---
   whiteboard: true        # ホワイトボード共有（WHITEBOARD-001）— Gate item #8 (platoon+)
   heartbeat: true         # スタック検出・進捗監視（HEARTBEAT-001 + POLLING-001）— No gate item (process module)

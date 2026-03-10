@@ -14,6 +14,8 @@ For platoon+ missions, create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` as part
 ```markdown
 # Whiteboard: {Mission Name}
 
+> **SSOT Rule**: The whiteboard is the single source of truth for *execution state* (who does what, current progress, findings). The plan document (`plans/`) is the source of truth for *decisions and rationale* (why this approach, what's in/out of scope). When both contain the same information (e.g., file ownership table), the whiteboard takes precedence during execution.
+
 ## Goal
 [What to achieve in this mission]
 
@@ -28,6 +30,13 @@ For platoon+ missions, create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` as part
 - [ ] [Unresolved questions spanning multiple areas]
 
 ## Findings
+
+### Shigoto-neko — Decomposition Rationale
+1. **Purpose**: [Why is this task needed?]
+2. **Decomposition**: [Why this split? Alternatives considered?]
+3. **Headcount**: [Why this many genba-neko?]
+4. **Perspective**: [Other approaches considered?]
+5. **Risk**: [What could fail?]
 
 ### {Agent 1}
 - [Discovery with source citation]

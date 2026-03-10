@@ -91,6 +91,7 @@ Success criteria:
 Target files: [File path list]
 Prohibited: [What NOT to do - especially preventing existing feature damage]
 Constraints: [If any]
+Review focus: [What the reviewer will check - optional but recommended for platoon+]
 ```
 
 ### Responding to Objections from Genba-neko
@@ -126,7 +127,9 @@ Data from genba-neko or kurouto-neko must be verified:
 | [ ] | Create whiteboard | Create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` using template from `modules/whiteboard.md` |
 | [ ] | Fill Team Structure | Record each genba-neko's role, task, and file scope in the whiteboard |
 | [ ] | Verify file ownership | No two genba-neko share the same file (RACE-001) |
-| [ ] | Update dashboard | Update `status/dashboard.md` with mission overview |
+| [ ] | Update dashboard | Update `status/dashboard.md` with What/Why/Who/Constraints/Current State **before spawning any genba-neko** |
+
+| [ ] | Verify instruction format | Each genba-neko's instruction includes all required fields: Purpose, Goal, Success criteria, Target files, **Prohibited**, Constraints |
 
 -> All items complete: "Pre-dispatch check... YOSHI!" -> Begin spawning genba-neko
 

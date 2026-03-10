@@ -17,3 +17,11 @@ Disposable tests auto-generated from PR diffs. Used as review aid.
 ## Rules
 - Disposable tests are NOT committed to the repository (output to `tmp/jit-tests/`)
 - These are NOT a substitute for permanent tests. They are a review accuracy aid
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| kurouto-neko | Review (3+ files changed or insufficient coverage) | Generate disposable tests from `git diff`, run them, feed failures back to implementer |
+| genba-neko | Post-review fix | Fix issues identified by JiT test failures |
+| kurouto-neko | Post-review pass | Delete disposable tests from `tmp/jit-tests/` (not committed) |

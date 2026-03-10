@@ -4,6 +4,28 @@ Neko Gundan is designed for partial adoption. You don't need the full framework 
 
 ## Available Modes
 
+### koneko — "Same principles, PRO-tier budget"
+
+A lightweight version designed for PRO plan users. Gives you independent review and evidence-based gates with minimal token cost.
+
+**What you get:**
+- `koneko-neko` (lightweight reviewer — 1 agent call per task)
+- Koneko gates (3-item simplified completion check)
+- Safety tiers (Tier 1 prohibited, Tier 2 requires confirmation)
+- File deletion safety (`_deleted/` buffer)
+
+**What you don't get:** Multi-agent hierarchy, parallel execution, modules, whiteboard.
+
+**Best for:** PRO-tier users who want quality guardrails without the token cost of full Neko Gundan.
+
+```bash
+bash neko-gundan/scripts/install.sh koneko ./your-project
+```
+
+[Full guide](koneko.md)
+
+---
+
 ### quality — "Stop self-reviewing"
 
 Adds an independent reviewer agent and evidence-based completion gates. The agent who writes the code never reviews it.
@@ -97,6 +119,7 @@ bash install.sh all ./your-project
 
 | Goal | Modes | What it gives you |
 |------|-------|-------------------|
+| "Quality on a PRO budget" | `koneko` | Lightweight reviewer + safety rules |
 | "Just review my code better" | `quality` | Independent reviewer + evidence gates |
 | "Stop deleting things by accident" | `security` | Safety tiers + _deleted/ buffer |
 | "I want code review AND safety" | `quality+security` | Both, no team hierarchy |

@@ -8,6 +8,7 @@
 #   bash neko-gundan/scripts/install.sh --update <mode> [target-dir]
 #
 # モード:
+#   koneko     - PRO向け軽量版（レビュー1回＋安全ルールのみ）
 #   quality    - レビュー・品質検証（自己レビュー防止、証跡ベースのゲート）
 #   implement  - 並列実装・チーム編成（ワーカー管理、競合防止）
 #   plan       - 戦略立案・タスク分解（ホワイトボード、意図記録）
@@ -46,6 +47,7 @@ usage() {
     echo "Usage: bash install.sh [--update] <mode> [target-dir]"
     echo ""
     echo "Modes:"
+    echo "  koneko      Lite version for PRO-tier (1 reviewer + safety rules)"
     echo "  quality     Review & quality gates (reviewer agent, completion gates)"
     echo "  implement   Parallel implementation (worker agents, race prevention)"
     echo "  plan        Strategy & task decomposition (whiteboard, ISV)"
@@ -103,6 +105,10 @@ security_agents=""
 security_rules="safety-tiers.md"
 security_modules="fides.md race-prevention.md"
 
+koneko_agents="koneko-neko.md"
+koneko_rules="koneko-gates.md safety-tiers.md"
+koneko_modules=""
+
 # --- モード解析（+で結合可能） ---
 IFS='+' read -ra MODES <<< "$MODE_INPUT"
 
@@ -130,6 +136,12 @@ for mode in "${MODES[@]}"; do
             RULES="$RULES $plan_rules"
             MODULES="$MODULES $plan_modules"
             SNIPPETS="$SNIPPETS plan"
+            ;;
+        koneko)
+            AGENTS="$AGENTS $koneko_agents"
+            RULES="$RULES $koneko_rules"
+            MODULES="$MODULES $koneko_modules"
+            SNIPPETS="$SNIPPETS koneko"
             ;;
         security)
             AGENTS="$AGENTS $security_agents"

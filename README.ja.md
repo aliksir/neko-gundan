@@ -24,7 +24,10 @@
 ```bash
 git clone https://github.com/aliksir/neko-gundan.git
 
-# 必要なモードだけ選んでインストール（quality, implement, plan, security）
+# PROプラン？ ここから（軽量版、タスクあたりAgent呼び出し1回）
+bash neko-gundan/scripts/install.sh koneko ./your-project
+
+# MAX 5+？ 必要なモードだけ選んでインストール（quality, implement, plan, security）
 bash neko-gundan/scripts/install.sh quality+security ./your-project
 
 # または全部入り
@@ -33,7 +36,9 @@ bash neko-gundan/scripts/install.sh all ./your-project
 
 インストーラが必要なファイルだけコピーし、CLAUDE.mdに追加するスニペットを表示する。
 
-> **フレームワーク全体は要らない？** `security`（エージェント不要、安全ルールだけ）や `quality`（レビュアーだけ）から始められる。[全モード詳細](docs/modes.ja.md)
+> **PROプラン？** `koneko` を試してみて — 猫軍団の品質原則をPROのトークン予算に収まるサイズで。[詳細](docs/koneko.ja.md)
+>
+> **MAX 5+だけどフレームワーク全体は要らない？** `security`（エージェント不要、安全ルールだけ）や `quality`（レビュアーだけ）から始められる。[全モード詳細](docs/modes.ja.md)
 
 ### フルインストール（全モード）
 
@@ -163,12 +168,13 @@ metrics_output_dir: "./_metrics/"
 
 課題に合うパーツだけインストール:
 
-| モード | 何を解決するか | エージェント必要？ |
-|--------|--------------|------------------|
-| **quality** | 自己レビュー、未検証の「完了」 | 1体（レビュアー） |
-| **implement** | 大規模な複数ファイル変更 | 2体（マネージャー + ワーカー） |
-| **plan** | 複雑なタスク分解 | 1体（将軍） |
-| **security** | 誤削除、危険な操作 | 不要（ルールのみ） |
+| モード | 何を解決するか | エージェント必要？ | プラン |
+|--------|--------------|------------------|--------|
+| **koneko** | 低予算で品質を確保 | 1体（軽量レビュアー） | PRO |
+| **quality** | 自己レビュー、未検証の「完了」 | 1体（レビュアー） | MAX 5+ |
+| **implement** | 大規模な複数ファイル変更 | 2体（マネージャー + ワーカー） | MAX 5+ |
+| **plan** | 複雑なタスク分解 | 1体（将軍） | MAX 5+ |
+| **security** | 誤削除、危険な操作 | 不要（ルールのみ） | 全プラン |
 
 自由に組み合わせ可: `quality+security`、`plan+implement`、`all`。[全モード詳細](docs/modes.ja.md)
 

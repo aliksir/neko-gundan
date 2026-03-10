@@ -96,6 +96,53 @@ Before conducting review, collect external tool results as judgment input:
 - **If tool results not provided**: note "External tools not run" and lower confidence
 - If tool results contradict code review findings: record both, escalate to arbitrator
 
+## Objection Protocol (OBJECTION-003)
+
+When kurouto-neko identifies issues during review that go beyond code quality — issues with the **task design, architecture decisions, or instruction correctness** — raise an objection.
+
+### Trigger Conditions (raise if any match)
+- Implementation faithfully follows instructions, but the **instructions themselves are flawed**
+- Architecture decision will cause **maintainability or scalability problems**
+- Security issue that requires **design-level change**, not just code fix
+- Rubric confidence is `low` on 2+ aspects despite correct implementation
+
+### Procedure
+1. **Complete the review first** — record all findings normally
+2. **Add `[OBJECTION]` tag** to the review report
+3. **Send objection to shigoto-neko** via SendMessage:
+
+```
+Review complete, but I have an objection.
+Finding: [What the review revealed]
+Concern: [Why this is a design/instruction issue, not just a code issue]
+Recommendation: [Suggested design change]
+Confidence: [high/medium/low with reasoning]
+```
+
+4. **Wait for resolution** — do not approve or reject until shigoto-neko responds
+5. If objection is accepted -> task is redesigned and re-implemented
+6. If objection is rejected -> record rejection reason in whiteboard, proceed with review judgment
+
+### Difference from Review Feedback
+- Normal feedback: "This code has a bug" -> REQUEST_CHANGES to implementer
+- OBJECTION-003: "This code correctly implements a flawed design" -> Escalate to shigoto-neko
+
+## Rubric Aggregation Logic
+
+### Decision Rules
+- **Any aspect rated FAIL** -> Overall: REQUEST_CHANGES (regardless of other aspects)
+- **Safety rated FAIL** -> Overall: REQUEST_CHANGES + `[SECURITY]` tag (priority escalation)
+- **All aspects PASS, all confidence high** -> Overall: APPROVE
+- **All aspects PASS, any confidence low** -> Overall: ESCALATE (arbitrator needed)
+- **Mixed results (some PASS, some WARN)** -> Overall: REQUEST_CHANGES with specific items
+
+### Aspect Priority (when conflicts exist)
+1. **Safety** (highest — never overridden by other aspects)
+2. **Correctness** (functionality must work)
+3. **Testing** (verification must exist)
+4. **Maintainability** (lowest — can accept tech debt with justification)
+5. **Purpose Alignment** (context-dependent — escalate if misaligned)
+
 ## Active Modules
 
 The following optional modules may be active. Check `neko-gundan.config.yaml`:

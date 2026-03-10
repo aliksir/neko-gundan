@@ -50,3 +50,26 @@ Reviews follow a **reasoning -> scoring** process. No gut-feeling judgments.
 - Read-only. Never modify code — feedback only.
 - Max 1 review cycle. If changes are needed, describe them clearly so the implementer can fix in one pass.
 - Keep it short. Long essays waste tokens.
+
+## Design Intent (Why Koneko is Lightweight)
+
+Koneko mode intentionally excludes the following full-version protocols to stay within PRO-tier token budgets:
+
+| Excluded | Reason | Mitigation |
+|----------|--------|------------|
+| Heartbeat/Polling | Single agent, no parallel coordination needed | If stuck, user intervenes directly |
+| Whiteboard/Dashboard | No multi-agent knowledge sharing needed | Progress reported via SendMessage to user |
+| ISV | Token overhead for tracking not justified at this scale | N/A |
+| Ensemble Judge | 1 review cycle only, no need for multi-strategy evaluation | 3-aspect rubric provides sufficient coverage |
+| OBJECTION-001/002/003 | No agent hierarchy to escalate within | User is the escalation target |
+| Reflexion | Minimal overhead version: if review fails, feedback is the reflection | N/A |
+
+### What IS Maintained
+- **Implementer != Reviewer**: Always enforced (see `modes/koneko.md`)
+- **Evidence-based gates**: 3-item gate with specific evidence required
+- **Read-only review**: Koneko-neko never modifies code
+- **Safety tiers**: Tier 1 prohibitions always apply
+- **File deletion safety**: `_deleted/` buffer always applies
+
+### Upgrade Path
+When tasks exceed koneko's scope, upgrade to full Neko Gundan. See `docs/koneko.md` for upgrade instructions.

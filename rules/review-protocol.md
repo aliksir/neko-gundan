@@ -8,6 +8,15 @@ Quality assurance flow applied at all scales.
 2. **Reviewer is read-only**: No code modifications. Point out issues only, return to implementer for fixes
 3. **Loop limit 3 cycles**: After 3 cycles, arbitrator (Opus) intervenes to decide continue or abort
 
+### Process Weight Exception
+
+The "implementer ≠ reviewer" principle has one defined exception:
+- **Light mode** (see `modules/process-weight.md`): Self-check is allowed for simple, low-risk changes
+- Light mode includes ESCALATION-001: if complexity exceeds expectations, the process weight is upgraded and independent review becomes mandatory
+- This exception does NOT apply to Standard or Strict modes
+
+All other principles (reviewer is read-only, loop limit 3) apply regardless of process weight.
+
 ## Flow
 
 ```

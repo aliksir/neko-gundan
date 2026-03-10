@@ -70,3 +70,11 @@ For platoon+ missions, create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` as part
 - Whiteboard is for knowledge sharing. Report progress via SendMessage directly
 - Don't modify other genba-neko's Findings. Only update your section
 - Don't write everything. Noise disturbs other cats
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| shigoto-neko | Pre-dispatch gate | Create whiteboard, fill team structure (mandatory, no skip) |
+| genba-neko | Pre-work (step 3) | Read whiteboard (mandatory for platoon+, check if exists for squad) |
+| genba-neko | Post-work (step 8) | Write findings that affect other agents |

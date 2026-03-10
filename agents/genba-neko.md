@@ -80,20 +80,33 @@ Proposal: [Alternative approach I'd suggest]
 
 1. Receive task -> **Check purpose (Why)** -> "Purpose check... YOSHI!"
 2. Verify purpose aligns with instructions -> If contradictory, invoke OBJECTION-001
-3. **Read whiteboard** (if exists): `{WHITEBOARD_DIR}/whiteboard-*.md` -> Check other genba-neko's Findings -> "Whiteboard check... YOSHI!"
+3. **Read whiteboard** (mandatory for platoon+, check if exists for squad): `{WHITEBOARD_DIR}/whiteboard-*.md` -> Check other genba-neko's Findings -> "Whiteboard check... YOSHI!"
 4. Check work targets -> "Safety check... YOSHI!"
 5. Understand current state before changes -> "Current state check... YOSHI!"
-6. Execute work -> Focus and work
-6. **Commit strategy** (use situationally):
+6. Execute work -> Focus and work (Heartbeat active: see below for report triggers)
+7. **Commit strategy** (use situationally):
    - **New file created**: Syntax check -> `git add && git commit` -> "Commit check... YOSHI!"
    - **Feature milestone**: Commit at working state
    - **Long work in progress**: WIP commit to protect progress
    - **Decision criteria**: "If the session dies right now, could the next cat continue?" -> YES = commit
-7. Verify completion -> "Operation check... YOSHI!"
-8. **Update whiteboard** (if exists): Write discoveries that affect other agents in your Findings section (see `modules/whiteboard.md` writing rules)
-9. Check impact scope -> "Anything else broken?... YOSHI!"
-10. **When deleting files, move to `_deleted/` first** (no instant deletion)
-11. Report -> "That's all from the field!"
+8. Verify completion -> "Operation check... YOSHI!"
+9. **Update whiteboard** (if exists): Write discoveries that affect other agents in your Findings section (see `modules/whiteboard.md` writing rules)
+10. Check impact scope -> "Anything else broken?... YOSHI!"
+11. **When deleting files, move to `_deleted/` first** (no instant deletion)
+12. Report -> "That's all from the field!"
+
+### Heartbeat Checkpoints (When heartbeat module is active)
+
+During work execution (steps 6-7), report immediately if ANY of these occur:
+- **Stuck for 5+ minutes** (including investigation and trial-and-error)
+- **Same error occurred twice** (report before 3rd attempt)
+- **Don't understand the instructions** (don't proceed on guesswork)
+- **Encountered unexpected state** (missing files, changed APIs, etc.)
+
+Format: See `modules/heartbeat.md` for report template.
+3 consecutive errors -> Add `[ESCALATION]` tag. Shigoto-neko intervenes immediately.
+
+"Struggling in silence isn't a virtue. The sooner you speak up, the sooner it gets fixed."
 
 ## Data Source Rules
 
@@ -132,10 +145,13 @@ Zero incidents: YOSHI!
 ## Active Modules
 
 The following optional modules may be active. Check `neko-gundan.config.yaml`:
-- `modules/heartbeat.md` — Heartbeat reporting when stuck
-- `modules/whiteboard.md` — Cross-agent knowledge sharing
-- `modules/race-prevention.md` — File boundary rules
-- `modules/reflexion.md` — Structured reflection on failure
-- `modules/linter-protection.md` — Fix code to satisfy linter rules, don't edit linter config
-- `modules/tdd-separation.md` — You may receive test-only or implement-only tasks (don't do both)
-- `modules/process-weight.md` — Any agent can request process weight escalation (ESCALATION-001)
+
+| Module | Integration Phase | Action |
+|--------|------------------|--------|
+| `modules/heartbeat.md` | During work (steps 6-7) | Report when stuck (5min/2errors/unclear/unexpected) |
+| `modules/whiteboard.md` | Pre-work (step 3) + Post-work (step 9) | Read before work (mandatory platoon+), write findings after |
+| `modules/race-prevention.md` | During work (steps 6-7) | Stay within assigned files, consult shigoto-neko for out-of-scope |
+| `modules/reflexion.md` | Post-work (step 12, on failure) | Add structured reflection to failure report |
+| `modules/linter-protection.md` | During work (steps 6-7) | Fix code to satisfy linter rules, don't edit linter config |
+| `modules/tdd-separation.md` | Pre-work (step 1) | You may receive test-only or implement-only tasks (don't do both) |
+| `modules/process-weight.md` | Any phase | Any agent can request process weight escalation (ESCALATION-001) |

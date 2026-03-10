@@ -15,28 +15,32 @@
 
 shitsuke:
   # --- 監視系 ---
-  whiteboard: true        # ホワイトボード共有（WHITEBOARD-001）
-  heartbeat: true         # スタック検出・進捗監視（HEARTBEAT-001 + POLLING-001）
-  race_prevention: true   # ファイル競合防止（RACE-001）
+  whiteboard: true        # ホワイトボード共有（WHITEBOARD-001）— Gate item #8 (platoon+)
+  heartbeat: true         # スタック検出・進捗監視（HEARTBEAT-001 + POLLING-001）— No gate item (process module)
+  race_prevention: true   # ファイル競合防止（RACE-001）— No gate item (process module)
+  progress_visibility: true  # ダッシュボード進捗見える化（DASHBOARD-001）— Gate item #14 (platoon+)
 
   # --- 品質強化系 ---
-  reflexion: true         # 失敗時の振り返り
-  isv: true               # Intent State Vector — 意図の数値化（上級者向け）
-  fides: true              # データ信頼レベル FIDES（上級者向け）
+  reflexion: true         # 失敗時の振り返り — Gate item #13 (on failure)
+  isv: true               # Intent State Vector — 意図の数値化（上級者向け）— Gate item #11
+  fides: true              # データ信頼レベル FIDES（上級者向け）— No gate item (trust tagging)
 
   # --- 高度な制御系 ---
-  capacity_escalation: true   # 容量エスカレーション（CAPACITY-001）
-  arbitrator: true            # 仲裁プロセス（3回ループ超過時）
-  handoff_schema: true        # 構造化ハンドオフ
+  capacity_escalation: true   # 容量エスカレーション（CAPACITY-001）— No gate item (process module)
+  arbitrator: true            # 仲裁プロセス（3回ループ超過時）— No gate item (process module)
+  handoff_schema: true        # 構造化ハンドオフ — No gate item (handoff format)
+
+  # --- コード保護系 ---
+  linter_protection: true   # リンター設定変更禁止（コードを直せ、設定を弱めるな）— Gate item #12
 
   # --- テスト系 ---
-  jit_tests: true         # 使い捨てテスト（JiTTests）
-  tdd_separation: true    # TDD分離原則（テスト作成≠実装）
+  jit_tests: true         # 使い捨てテスト（JiTTests）— No gate item (review aid)
+  tdd_separation: true    # TDD分離原則（テスト作成≠実装）— No gate item (process module)
 
   # --- レビュー系 ---
-  ensemble_judge: true     # Ensemble Judge（SE-Jury複合評価）
-  spec_driven_review: true  # 仕様駆動レビュー（Purpose照合）
+  ensemble_judge: true     # Ensemble Judge（SE-Jury複合評価）— No gate item (review method)
+  spec_driven_review: true  # 仕様駆動レビュー（Purpose照合）— No gate item (review method)
 
   # --- 出力系 ---
-  checklist_export: true    # 完了ゲートチェックリストを外部ファイルに出力
-  quality_metrics: true     # 品質メトリクス累積レポート出力
+  checklist_export: true    # 完了ゲートチェックリストを外部ファイルに出力 — Gate item #9
+  quality_metrics: true     # 品質メトリクス累積レポート出力 — Gate item #10

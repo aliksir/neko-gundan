@@ -68,7 +68,11 @@ Commander's instruction
   |-- YES -> Parallel execution (spawn multiple agents)
   |-- NO  -> Sequential execution
   |
-4. QA check (platoon or larger?)
+4. Whiteboard + Dashboard (platoon or larger?)
+  |-- YES -> Instruct shigoto-neko to set up whiteboard AND dashboard (mandatory, no skip)
+  |-- NO  -> Dashboard only (optional for squad)
+  |
+5. QA check (platoon or larger?)
   |-- YES -> Add QA phase after implementation
   |-- NO  -> Shigoto-neko's checklist is sufficient
 ```

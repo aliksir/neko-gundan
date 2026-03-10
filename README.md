@@ -19,6 +19,16 @@
 
 Neko Gundan is not a universal tool. It's opinionated about one thing: **proving that work is correct, not just done.**
 
+## Quick Pick — "Just Tell Me What to Install"
+
+| Your situation | Recommended install | Why |
+|----------------|-------------------|-----|
+| Solo dev, want a safety net | `security` | Zero agents. Just rules that prevent accidental deletion and unsafe operations |
+| Small product, quality matters | `quality+security` | 1 reviewer agent + safety rules. Best cost/benefit starting point |
+| Multi-file features, team-scale changes | `all` | Full team structure. Standard weight for most tasks, strict for releases |
+
+Start light, add more later. You can always run `install.sh` again with additional modes.
+
 ## Quick Start
 
 ```bash
@@ -52,6 +62,17 @@ bash scripts/install.sh --update all ./your-project
 ```
 
 The updater shows a diff for each changed file and lets you choose per file — overwrite, keep yours, or see the full diff first. Files you haven't customized update silently.
+
+**Recommended merge strategy by file type:**
+
+| File type | Strategy | Reason |
+|-----------|----------|--------|
+| `rules/*.md` | Accept upstream | Protocol improvements; your customizations go in config, not rules |
+| `agents/*.md` | Accept upstream | Agent behavior updates; project-specific tweaks go in CLAUDE.md |
+| `modules/*.md` | Accept upstream | Module definitions are framework-managed |
+| `neko-gundan.config.yaml` | **Keep yours** | Your project's module ON/OFF choices |
+| `CLAUDE.md` snippet | **Manual review** | Merge new features with your project-specific instructions |
+| `scripts/*.sh` | Accept upstream | Bug fixes and new features |
 
 ## What You Do (3 Steps)
 
@@ -140,6 +161,17 @@ AI-generated code grows faster than human review capacity. Without visibility in
 
 When agents run the completion gate, they calculate these metrics and flag alerts if thresholds are exceeded — skip rate climbing, all reviews passing first try, zero human interventions for too long.
 
+**Reference thresholds** (starting points — adjust per project):
+
+| Metric | Healthy | Watch | Action needed |
+|--------|---------|-------|---------------|
+| Gate pass rate | 70-95% | 50-70% | < 50% |
+| Skip rate | < 20% | 20-35% | > 35% |
+| Avg review cycles | 1.2-2.0 | 1.0 (all first-pass) or > 2.5 | > 3.0 or sustained 1.0 |
+| Human interventions | 0.2-1.0/task | 0 for 10+ tasks | Sustained 0 (no oversight?) |
+
+*A sustained 1.0 review cycle average is suspicious — it may mean reviews aren't substantive. Some pushback is healthy.*
+
 Enable `quality_metrics` in your config (ON in `full` preset) and set the output path in CLAUDE.md:
 
 ```yaml
@@ -204,6 +236,16 @@ Reason: "This touches 4 files including DB migration"
 
 Safety protocols (race prevention, deletion safety) are **never reduced** — light mode makes the process lighter, not less safe.
 
+#### When Light Is Enough
+
+Typo fixes, comment edits, log message changes, CSS tweaks, test renames, config value updates, dependency version bumps, README edits, import reordering, dead code removal.
+
+#### When to Use Standard or Higher
+
+Database migrations, new API endpoints, authentication changes, file deletion logic, multi-service integration, deployment config, permission/access control, data model changes.
+
+If in doubt, start light — agents will escalate if they spot risk (ESCALATION-001).
+
 </details>
 
 <details>
@@ -237,6 +279,19 @@ Those are code-based orchestration frameworks — you write Python to define age
 
 Neko Gundan injects a "constitution" into Claude Code — operational rules that agents follow. No new runtime, no new dependencies. Your existing Claude Code setup gains a team structure.
 
+#### Where Neko Gundan Loses
+
+Being honest about trade-offs:
+
+| Dimension | Neko Gundan loses to | Why |
+|-----------|---------------------|-----|
+| **Role variety** | VoltAgent, wshobson/agents | We have 4 roles. They offer 100+. If you need a specialized "data analyst" or "DevOps" agent, look there |
+| **Flow flexibility** | LangGraph, CrewAI | We enforce a fixed hierarchy (general → manager → worker → reviewer). If you need arbitrary DAG workflows, code-based frameworks win |
+| **Lightweight speed** | Standard Claude Code subagents | Any framework adds overhead. For quick one-off tasks, raw subagents are faster and cheaper |
+| **Language/runtime support** | Code-based frameworks | We're Claude Code only. They support multiple LLM providers and runtimes |
+
+We optimize for one thing: **proof that the work is correct**. If that's not your bottleneck, simpler tools are better tools.
+
 </details>
 
 ## Design Philosophy
@@ -251,11 +306,89 @@ This framework wasn't designed in theory. It evolved from actual incidents — a
 | Accidental file deletion | `_deleted/` safety buffer |
 | Agent lost context mid-task | Whiteboard knowledge sharing |
 
+## Case Studies
+
+Real examples from projects using Neko Gundan (details anonymized).
+
+<details>
+<summary>Case A: Adding authentication — how a platoon-scale task flows</summary>
+
+**Task:** Add user authentication to a web dashboard (new API endpoints + UI + DB changes).
+
+**What happened:**
+1. Oyakata-neko assessed: 5 files, DB migration, new API — platoon scale (standard weight)
+2. DB design gate caught a missing index on `users.email` before any code was written
+3. Shigoto-neko split work: genba-neko A (API + DB), genba-neko B (UI components)
+4. Race prevention: API routes assigned to A, React components to B — no file overlap
+5. Kurouto-neko review found a session token stored in localStorage (security risk) — sent back for fix
+6. Second review cycle: PASS. Total: 2 review cycles, 0 human interventions
+
+**Without the framework:** The localStorage issue would likely have shipped. A single agent reviewing its own auth implementation tends to miss the same security assumptions it made while writing.
+
+</details>
+
+<details>
+<summary>Case B: "Just a config change" that wasn't — process weight escalation</summary>
+
+**Task:** "Update the database connection config, light mode."
+
+**What happened:**
+1. Started as light weight (config value update — should be simple)
+2. Genba-neko discovered the config change required a DB migration (schema version bump)
+3. Filed ESCALATION-001: Light → Standard, reason: "DB migration affects 3 tables"
+4. Shigoto-neko approved. Full gates activated — migration tested with rollback verification
+5. Completion gate caught an issue: migration worked forward but rollback dropped a column with data
+
+**Without the framework:** "Config change" → quick edit → deployed → migration fails in production → manual rollback → data questions. The escalation protocol turned a potential incident into a clean, verified change.
+
+</details>
+
+<details>
+<summary>Case C: Gate catches a silent breakage</summary>
+
+**Task:** Refactor utility functions across 4 files (standard weight).
+
+**What happened:**
+1. Genba-neko completed the refactor. All target files updated, code looked clean
+2. Completion gate item #2: `git diff` check — revealed an unintended change in an unrelated test file (auto-import rewrite by the editor)
+3. Gate status: FAIL. Genba-neko reverted the unintended change
+4. Second gate pass: PASS. The unrelated test file was confirmed unchanged
+
+**Without the framework:** The extra diff would have been committed silently. It might have been harmless — or it might have broken a test that someone else was depending on. The gate caught it in 30 seconds; debugging it later would have taken much longer.
+
+</details>
+
+## What Changes
+
+Here's what adopting Neko Gundan actually looks like in practice, based on real usage across multiple projects:
+
+| | Without (single agent) | With Neko Gundan |
+|---|---|---|
+| **Self-review** | Agent checks its own work — misses its own mistakes | Independent reviewer catches what the implementer missed |
+| **"I'm done"** | You take the agent's word for it | You get test output, git diff, checklist with evidence |
+| **Bad instruction** | Silently executed, discovered later | Agent objects before executing (OBJECTION protocol) |
+| **Accidental deletion** | File gone, hope you have git history | File in `_deleted/`, easy recovery |
+| **Multi-file coordination** | Agents overwrite each other's changes | File ownership prevents conflicts |
+| **Quality trends** | No visibility until something breaks | Metrics track gate pass rate, skip rate, review cycles |
+
+**The trade:** You spend ~2-3x more tokens per task (platoon scale) and get a slower first response. In return, you spend less time debugging agent mistakes, recovering from bad changes, and re-reviewing "completed" work. For quick prototypes, that trade isn't worth it. For products where bugs cost real time, it usually is.
+
 ## Trade-offs
 
 **You are still the boss.** Neko Gundan adds AI-to-AI review, but it does not replace human judgment. The reviewer agent and the implementer agent share the same model family, so they can share the same blind spots. Evidence gates (`npm test`, `git diff`) catch mechanical errors, but architectural decisions and business logic still need a human's final call. Think of it as "better first draft" — not "no review needed."
 
 **More agents = more tokens.** Multi-agent orchestration costs more than a single agent. A platoon-scale task (3 agents) uses roughly 2-3x the tokens of doing it solo. Use [Process Weight](docs/process-weight.md) to keep costs in check — say "light mode" for quick fixes so you skip the full ceremony. The safety rules (deletion buffer, race prevention) add almost zero overhead since they're just prompt rules, not extra agent calls.
+
+**What you gain vs. what you spend:**
+
+| You spend more on | You spend less on |
+|---|---|
+| Tokens (2-3x at platoon scale) | Debugging agent-introduced bugs |
+| Initial response time | Recovering from accidental file deletion |
+| Prompt complexity in `.claude/` | Re-reviewing "completed" work that wasn't actually verified |
+| Learning the mode/weight system | Figuring out what went wrong after a bad change |
+
+The safety rules (`security` mode) cost almost nothing — they're prompt rules, not extra agent calls. Start there if you want the safety net without the token cost.
 
 ## Documentation
 

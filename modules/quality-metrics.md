@@ -80,6 +80,22 @@ Files changed repeatedly may indicate unstable design.
 - `→` stable
 - `⚠️` appended when trend is concerning (skip rate up, confidence down, etc.)
 
+### Reference Thresholds
+
+Starting points for interpretation. Adjust per project — a research prototype and a production API will have different baselines.
+
+| Metric | Healthy | Watch | Action needed |
+|--------|---------|-------|---------------|
+| Gate pass rate | 70-95% | 50-70% | < 50% |
+| Skip rate | < 20% | 20-35% | > 35% |
+| Avg review cycles | 1.2-2.0 | 1.0 (sustained) or > 2.5 | > 3.0 or sustained 1.0 for 5+ tasks |
+| Human interventions | 0.2-1.0/task | 0 for 10+ tasks | Sustained 0 (no oversight?) |
+| Confidence | > 0.7 | 0.6-0.7 | < 0.6 |
+
+**Why sustained 1.0 review cycles are suspicious:** Some pushback is healthy. If every task passes review on the first try for an extended period, reviews may not be substantive — the reviewer might be rubber-stamping.
+
+**Why 100% gate pass rate is suspicious:** If nothing ever fails, gates may be too lenient or teams may be unconsciously avoiding challenging tasks. A healthy process has occasional failures that get caught and fixed.
+
 ### Alert Triggers
 | Condition | Alert |
 |-----------|-------|

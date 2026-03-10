@@ -27,3 +27,4 @@ shitsuke:
   ensemble_judge: false
   spec_driven_review: false
   checklist_export: true
+  quality_metrics: false

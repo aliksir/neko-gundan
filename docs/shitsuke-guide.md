@@ -38,6 +38,7 @@ Enable based on your needs:
 | `ensemble_judge` | Multi-strategy evaluation | Security-critical |
 | `spec_driven_review` | Verify spec alignment | Formal requirements |
 | `checklist_export` | Export gate checklists to files | Human review & auditing |
+| `quality_metrics` | Cumulative quality trend report | Detecting gate theater & quality drift |
 | `linter_protection` | Block agents from weakening lint rules | Code quality enforcement |
 
 ## Quick Start

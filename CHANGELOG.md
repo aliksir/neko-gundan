@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.5.0] - 2026-03-10
+
+### Added
+- **quality_metrics module**: Cumulative quality trend report per project
+  - Tracks gate pass/skip rates, review cycles, human interventions, confidence trends
+  - Hotspot detection (files changed repeatedly = unstable design)
+  - Alert triggers for gate theater detection (skip rate >30%, all-1-cycle reviews, zero interventions)
+  - Self-contained format: all metric meanings are inline, no external references needed
+  - Configurable output path via `metrics_output_dir` in CLAUDE.md (default: `{project_root}/_metrics/`)
+  - Added to presets: full=ON, recommended/minimal=OFF
+
+### Changed
+- **checklist_export**: Changed default from OFF to ON in recommended preset
+
 ## [1.4.0] - 2026-03-10
 
 ### Added

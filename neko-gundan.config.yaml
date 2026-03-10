@@ -39,3 +39,4 @@ shitsuke:
 
   # --- 出力系 ---
   checklist_export: true    # 完了ゲートチェックリストを外部ファイルに出力
+  quality_metrics: true     # 品質メトリクス累積レポート出力

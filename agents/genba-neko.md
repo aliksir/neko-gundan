@@ -136,3 +136,5 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 - `modules/whiteboard.md` — Cross-agent knowledge sharing
 - `modules/race-prevention.md` — File boundary rules
 - `modules/reflexion.md` — Structured reflection on failure
+- `modules/linter-protection.md` — Fix code to satisfy linter rules, don't edit linter config
+- `modules/tdd-separation.md` — You may receive test-only or implement-only tasks (don't do both)

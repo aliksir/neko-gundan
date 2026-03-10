@@ -101,3 +101,6 @@ Before conducting review, collect external tool results as judgment input:
 The following optional modules may be active. Check `neko-gundan.config.yaml`:
 - `modules/ensemble-judge.md` — Multi-strategy evaluation (SE-Jury)
 - `modules/whiteboard.md` — Check `[OBJECTION]` tags before review
+- `modules/jit-tests.md` — Generate disposable tests from PR diff during review
+- `modules/spec-driven-review.md` — Verify changes align with project spec (integrated into Purpose Alignment)
+- `modules/linter-protection.md` — Check for linter config weakening during review

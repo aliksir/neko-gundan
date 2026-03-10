@@ -9,7 +9,7 @@ Combines multiple evaluation strategies for important reviews.
 For important reviews (platoon+ or security-related), combine **multiple evaluation strategies**.
 
 ### 3 Strategies
-1. **Rubric scoring**: 4-aspect rubric (correctness, safety, maintainability, testing)
+1. **Rubric scoring**: 5-aspect rubric (correctness, safety, maintainability, testing, purpose alignment)
 2. **Comparative judgment**: Compare before/after, judge if "improved"
 3. **Checklist judgment**: Check OWASP/maintainability items one by one
 

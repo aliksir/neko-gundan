@@ -141,7 +141,17 @@ Follow the 3 principles:
 
 ## Completion Gate (Required - Shigoto-neko's Responsibility)
 
-Before declaring task complete, execute all completion gate checks:
+Gate scope varies by process weight (see `modules/process-weight.md`):
+
+| Process Weight | Gate Scope |
+|---------------|------------|
+| **Light** | Quick gate only: tests pass + no unintended diff + committed |
+| **Standard** | Full completion gate (all items with evidence) |
+| **Strict** | Full gate + ensemble judge + mandatory ISV |
+
+Default is **Standard** unless oyakata-neko or the commander specifies otherwise.
+
+Before declaring task complete, execute the applicable gate checks:
 
 1. Run each gate item and record evidence
 2. Evidence must be specific (command output, file citation — not just "checked")
@@ -180,6 +190,10 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 - `modules/isv.md` — ISV values in task instructions and reports
 - `modules/capacity-escalation.md` — Overload escalation to oyakata-neko
 - `modules/handoff-schema.md` — Structured inter-agent handoffs
+- `modules/process-weight.md` — Dynamic process weight. Adjusts gate scope and review requirements
+- `modules/tdd-separation.md` — Assign test creation and implementation to different genba-neko
+- `modules/linter-protection.md` — Ensure genba-neko fixes code, not linter config
+- `modules/fides.md` — Tag trust level in handoffs (HIGH/MEDIUM/LOW)
 
 ## Handoff Schema Usage (When handoff-schema module is active)
 

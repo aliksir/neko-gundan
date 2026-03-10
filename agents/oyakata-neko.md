@@ -147,3 +147,4 @@ Shigoto-neko spawns genba-neko (field workers) as needed.
 The following optional modules may be active. Check `neko-gundan.config.yaml` for your configuration:
 - `modules/arbitrator.md` — Formal mediation when reviews exceed 3 cycles
 - `modules/capacity-escalation.md` — Response to shigoto-neko overload reports
+- `modules/process-weight.md` — Dynamic process weight (Light/Standard/Strict). Oyakata decides on ESCALATION-001 requests

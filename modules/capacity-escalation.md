@@ -54,3 +54,10 @@ Unlike OBJECTION, this isn't about instruction correctness — it's a **factual 
 - If escalations are frequent, the initial task decomposition was likely too aggressive -> reflect in next plan
 
 "If pushing too hard degrades quality, change the formation. That's oyakata's job."
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| shigoto-neko | During work (on trigger: 3+ genba-neko with delays / polling can't keep up / gates deferred / 2+ queued heartbeats) | Send CAPACITY-001 escalation report to oyakata-neko |
+| oyakata-neko | On CAPACITY-001 from shigoto-neko | Assess load, decide response (defer/reduce/add/shrink), issue orders |

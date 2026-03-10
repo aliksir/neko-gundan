@@ -45,3 +45,11 @@ handoff:
 | `propose_only` | Proposal only, don't execute | High-risk changes |
 
 Default: `confirm` (fail-safe)
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| genba-neko | Post-work (handoff to next agent) | Include structured handoff data (from, to, status, completed, pending, files_modified, blockers) |
+| shigoto-neko | Handoff review | Validate handoff fields (from/to required, status valid, completed non-empty, action field appropriate) |
+| shigoto-neko | Task routing | Use `action` field to decide: auto (proceed), confirm (approve first), propose_only (review only) |

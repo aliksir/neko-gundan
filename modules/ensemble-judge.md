@@ -17,4 +17,21 @@ For important reviews (platoon+ or security-related), combine **multiple evaluat
 - 2+ strategies FAIL -> REQUEST_CHANGES
 - 2+ strategies PASS -> APPROVE
 - 1:1:1 split -> ESCALATE (arbitrator Opus)
-- Normal reviews use strategy 1 only. Ensemble only when shigoto-neko explicitly requests
+### Trigger Conditions
+
+| Process Weight | Trigger | Who decides |
+|---------------|---------|-------------|
+| **Light** | Never triggered (kurouto-neko review is skipped entirely in Light mode) | N/A |
+| **Standard** | Only when shigoto-neko **explicitly requests** ensemble review | shigoto-neko |
+| **Strict** | **Automatically activated** for all reviews (no explicit request needed) | Automatic |
+
+Normal (Standard) reviews use strategy 1 only. Ensemble is used when shigoto-neko explicitly requests OR when Strict mode is active
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| kurouto-neko | Review (when ensemble triggered) | Run all 3 strategies (rubric, comparative, checklist), integrate results |
+| shigoto-neko | Pre-review (Standard weight) | Explicitly request ensemble review when needed |
+| kurouto-neko | Review (Strict weight) | Automatically activate ensemble for all reviews |
+| kurouto-neko | Post-ensemble (1:1:1 split) | Escalate to arbitrator (oyakata-neko / Opus) |

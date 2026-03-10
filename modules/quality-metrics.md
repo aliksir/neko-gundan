@@ -95,3 +95,11 @@ Files changed repeatedly may indicate unstable design.
 - Hotspots are calculated from git log of the last 30 days
 - If ISV module is not enabled, omit confidence/outcome columns and related metrics
 - The file must be self-contained — all metric meanings are inline, no external references needed
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| shigoto-neko / oyakata-neko | Completion gate (after checklist export, before result report) | Append task metrics row to `{metrics_output_dir}/{project_name}_metrics.md`, recalculate summary |
+| shigoto-neko / oyakata-neko | Completion gate | Check alert triggers; flag concerning trends |
+| shigoto-neko / oyakata-neko | Periodic review | Review hotspots (files changed 5+ times in 30 days) for design instability |

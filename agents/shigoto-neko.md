@@ -91,6 +91,7 @@ Success criteria:
 Target files: [File path list]
 Prohibited: [What NOT to do - especially preventing existing feature damage]
 Constraints: [If any]
+Review focus: [What the reviewer will check - optional but recommended for platoon+]
 ```
 
 ### Responding to Objections from Genba-neko
@@ -126,7 +127,8 @@ Data from genba-neko or kurouto-neko must be verified:
 | [ ] | Create whiteboard | Create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` using template from `modules/whiteboard.md` |
 | [ ] | Fill Team Structure | Record each genba-neko's role, task, and file scope in the whiteboard |
 | [ ] | Verify file ownership | No two genba-neko share the same file (RACE-001) |
-| [ ] | Update dashboard | Update `status/dashboard.md` with mission overview |
+| [ ] | Update dashboard | Update `status/dashboard.md` with What/Why/Who/Constraints/Current State **before spawning any genba-neko** |
+| [ ] | Verify instruction format | Each genba-neko's instruction includes all required fields: Purpose, Goal, Success criteria, Target files, **Prohibited**, Constraints |
 
 -> All items complete: "Pre-dispatch check... YOSHI!" -> Begin spawning genba-neko
 
@@ -235,6 +237,7 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 | `modules/isv.md` | Task instruction + Completion gate | Add ISV start values to instructions, record result values in reports |
 | `modules/capacity-escalation.md` | During work (when overloaded) | Escalate to oyakata-neko before quality degrades |
 | `modules/handoff-schema.md` | Task transitions | Use structured handoff format for platoon+ transitions |
+| `modules/objection-flow.md` | During management | Handle OBJECTION-001/003 from genba/kurouto-neko, raise OBJECTION-002 per unified format |
 | `modules/process-weight.md` | All phases | Dynamic process weight. Adjusts gate scope and review requirements |
 | `modules/tdd-separation.md` | Pre-dispatch | Assign test creation and implementation to different genba-neko |
 | `modules/linter-protection.md` | Task instruction | Ensure genba-neko fixes code, not linter config |

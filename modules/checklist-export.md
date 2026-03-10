@@ -62,3 +62,10 @@ Same-day duplicates: append `_2.md`, `_3.md`, etc. (same convention as result re
 - Every checked item must have evidence (no empty evidence fields)
 - FAIL items must include what went wrong
 - Link the checklist file from the result report: `チェックリスト: {path}`
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| shigoto-neko / oyakata-neko | Completion gate (after all items checked, before result report) | Export checklist to `{checklist_output_dir}/YYYYMMDD_{project_name}.md` |
+| shigoto-neko / oyakata-neko | Result report writing | Link exported checklist file from the result report |

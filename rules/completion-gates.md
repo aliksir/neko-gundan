@@ -23,6 +23,16 @@ Every item must be checked with evidence. "I confirmed it" is not evidence — "
 2. **Sequential execution**: Process items from #1 in order, one at a time. For each item: run verification command → record evidence → move to next. Do not batch-mark items as "done."
 3. **Item count check**: Report the total in the result: "**N items checked (PASS: X, N/A: Y)**". If the total doesn't match the expected count, there are missing items.
 
+### Pre-Gate: Checklist Generation (Before Gate Execution)
+
+Before executing the gate, shigoto-neko must:
+1. Compile the list of changed files (`git diff --name-only`)
+2. Send the changed file list + task summary to kurouto-neko
+3. Kurouto-neko generates a task-specific review checklist
+4. Checklist items are verified as part of the review (Step 7), not the gate itself
+
+This step ensures review coverage is tailored to the actual changes, not generic.
+
 ### Gate Items (7 core + module additions)
 
 | # | Check | How to verify | Evidence format |

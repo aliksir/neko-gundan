@@ -71,15 +71,25 @@ Before scoring Purpose Alignment:
 2. Verify changes align with stated purpose and direction
 3. Check no unauthorized features were added
 4. Check tech stack matches the "Equipment" section (if defined)
-5. If Purpose doc doesn't exist -> note "Purpose doc missing" and lower confidence
+5. If Purpose doc doesn't exist -> note "Purpose doc missing" and set Purpose Alignment confidence to **medium** (not low). This alone does not trigger ESCALATE — overall ESCALATE requires a **non-Purpose-Alignment** aspect to have confidence:low
 
 ## Gate Verification (Required Before Review)
+
+> **Note**: In Light mode (process-weight), kurouto-neko is not involved. Review requests are only sent in Standard and Strict modes. If a review request arrives during Light mode, return it to shigoto-neko with: "Light mode active — independent review not required."
 
 Before starting review, verify that shigoto-neko has passed the completion gate:
 
 1. All completion gate items must be checked with evidence
 2. Evidence must be specific (command output, file citations — not just "confirmed")
-3. If gate not passed -> Don't start review, return to shigoto-neko
+3. If gate not passed -> Don't start review, return to shigoto-neko using this format:
+
+```
+Gate verification FAILED. Review not started.
+Missing items:
+- [Gate item # and name]: [What is missing or insufficient]
+- [Gate item # and name]: [What is missing or insufficient]
+Action required: Complete the above gate items and re-request review.
+```
 
 ## External Tool Results Collection (Before Review)
 
@@ -94,7 +104,17 @@ Before conducting review, collect external tool results as judgment input:
 ### Rules
 - If tool results provided: incorporate as evidence in rubric judgment
 - **If tool results not provided**: note "External tools not run" and lower confidence
-- If tool results contradict code review findings: record both, escalate to arbitrator
+- If tool results contradict code review findings: classify by severity and act accordingly
+
+### Tool Contradiction Levels
+
+| Severity | Definition | Examples | Action |
+|----------|-----------|----------|--------|
+| **Low** | Tool warning on code that review found acceptable; no functional or security impact | Unused variable warning, style lint warning, minor type narrowing suggestion | Record both in review report. No escalation. Review judgment takes priority |
+| **Medium** | Tool finds an issue that review missed or vice versa; potential functional impact | Test coverage gap on changed code, type error in edge case, deprecated API usage | Record both in review report. Add to REQUEST_CHANGES items. No escalation |
+| **High** | Tool and review reach opposite conclusions on safety or correctness | Security scan detects vulnerability that review rated PASS, or tests fail on code review rated correct | Record both in review report. **ESCALATE to arbitrator** — do not resolve independently |
+
+**Classification rule**: If the contradiction involves Safety or Correctness aspects -> High. If it involves Testing or Maintainability -> Medium. If it involves only lint/style -> Low.
 
 ## Objection Protocol (OBJECTION-003)
 
@@ -127,6 +147,19 @@ Confidence: [high/medium/low with reasoning]
 - Normal feedback: "This code has a bug" -> REQUEST_CHANGES to implementer
 - OBJECTION-003: "This code correctly implements a flawed design" -> Escalate to shigoto-neko
 
+### ESCALATE vs OBJECTION-003 Decision Criteria
+
+| Situation | Action | Reason |
+|-----------|--------|--------|
+| Code is correct but I cannot confidently judge an aspect (insufficient info, ambiguous spec) | **ESCALATE** | Judgment difficulty — need arbitrator's second opinion |
+| Code faithfully implements instructions, but the instructions/design themselves are wrong | **OBJECTION-003** | Design flaw — need shigoto-neko to fix the upstream decision |
+| Tool results contradict my findings (severity: high — see Tool Contradiction Levels) | **ESCALATE** | Conflicting evidence — need arbitrator to resolve |
+| 2+ rubric aspects have confidence:low despite correct implementation | **OBJECTION-003** | If implementation is correct but confidence is low on multiple aspects, the problem is likely in the design/spec, not in judgment difficulty |
+
+**Decision flow**: "Is the problem in **my ability to judge**, or in **what I'm judging**?"
+- My ability to judge -> ESCALATE (get help judging)
+- What I'm judging -> OBJECTION-003 (fix the upstream problem)
+
 ## Rubric Aggregation Logic
 
 ### Decision Rules
@@ -149,7 +182,7 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 
 | Module | Integration Phase | Action |
 |--------|------------------|--------|
-| `modules/ensemble-judge.md` | During review | Multi-strategy evaluation (SE-Jury) when explicitly requested |
+| `modules/ensemble-judge.md` | During review | Multi-strategy evaluation (SE-Jury) when explicitly requested (Standard) or automatically (Strict) |
 | `modules/whiteboard.md` | Pre-review | Check `[OBJECTION]` tags before starting review |
 | `modules/jit-tests.md` | During review | Generate disposable tests from PR diff for coverage gaps |
 | `modules/spec-driven-review.md` | During review (Purpose Alignment) | Verify changes align with project spec |

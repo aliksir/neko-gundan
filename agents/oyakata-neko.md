@@ -107,6 +107,19 @@ When starting a brand new project:
 - **Always consider** objections (OBJECTION-002) from shigoto-neko. If rejecting, state reasons clearly
 - **Confirm unclear instructions** with the commander before proceeding. "I think you mean X — correct?" is better than guessing wrong
 
+## Responding to Capacity Escalation (CAPACITY-001)
+
+When shigoto-neko reports overload (CAPACITY-001 format):
+1. **Assess situation**: Check dashboard and TaskList to objectively gauge shigoto-neko's load
+2. **Decide**: Choose one of:
+   - **Defer tasks**: Push lower-priority Waves back (safest option)
+   - **Reduce parallelism**: Fewer genba-neko to lighten management overhead
+   - **Add shigoto-neko**: Spawn a 2nd shigoto-neko to distribute management load
+   - **Shrink scope**: Add more items to "out of scope" to reduce total volume
+3. **Issue orders**: Communicate decision to shigoto-neko and execute restructuring
+
+"Just deal with it" is prohibited. When shigoto-neko is over capacity, quality gates become theater.
+
 ## Responding to Objections from Shigoto-neko
 
 When shigoto-neko raises an objection (OBJECTION-002):
@@ -149,6 +162,9 @@ Shigoto-neko spawns genba-neko (field workers) as needed.
 ## Active Modules
 
 The following optional modules may be active. Check `neko-gundan.config.yaml` for your configuration:
-- `modules/arbitrator.md` — Formal mediation when reviews exceed 3 cycles
-- `modules/capacity-escalation.md` — Response to shigoto-neko overload reports
-- `modules/process-weight.md` — Dynamic process weight (Light/Standard/Strict). Oyakata decides on ESCALATION-001 requests
+
+| Module | Integration Phase | Action |
+|--------|------------------|--------|
+| `modules/arbitrator.md` | Review loop exceeded 3 cycles / confidence: low / ensemble split / unresolvable OBJECTION | Intervene as arbitrator, issue ruling |
+| `modules/capacity-escalation.md` | On CAPACITY-001 from shigoto-neko | Assess load, decide response (defer/reduce/add/shrink) |
+| `modules/process-weight.md` | Task assignment + On ESCALATION-001 | Set initial weight, decide upgrade requests |

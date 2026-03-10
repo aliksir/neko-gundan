@@ -19,6 +19,7 @@
 #   - modules/ensemble-judge.md
 #   - modules/spec-driven-review.md
 #   - modules/checklist-export.md
+#   - modules/quality-metrics.md
 # =============================================================================
 
 shitsuke:
@@ -36,3 +37,4 @@ shitsuke:
   ensemble_judge: true
   spec_driven_review: true
   checklist_export: true
+  quality_metrics: true

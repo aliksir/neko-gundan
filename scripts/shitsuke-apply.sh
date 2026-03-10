@@ -39,6 +39,7 @@ MODULE_FILES=(
     [tdd_separation]="tdd-separation.md"
     [spec_driven_review]="spec-driven-review.md"
     [checklist_export]="checklist-export.md"
+    [quality_metrics]="quality-metrics.md"
 )
 
 # 全モジュールファイル名の配列（クリーンアップ用）
@@ -47,6 +48,7 @@ ALL_MODULE_FILES=(
     "isv.md" "fides.md" "capacity-escalation.md" "arbitrator.md"
     "handoff-schema.md" "ensemble-judge.md" "jit-tests.md"
     "tdd-separation.md" "spec-driven-review.md" "checklist-export.md"
+    "quality-metrics.md"
 )
 
 # --- 引数処理 ---

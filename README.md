@@ -24,7 +24,10 @@ Neko Gundan is not a universal tool. It's opinionated about one thing: **proving
 ```bash
 git clone https://github.com/aliksir/neko-gundan.git
 
-# Pick what you need (modes: quality, implement, plan, security)
+# PRO plan? Start here (lightweight, 1 agent call per task)
+bash neko-gundan/scripts/install.sh koneko ./your-project
+
+# MAX 5+? Pick what you need (modes: quality, implement, plan, security)
 bash neko-gundan/scripts/install.sh quality+security ./your-project
 
 # Or install everything
@@ -33,7 +36,9 @@ bash neko-gundan/scripts/install.sh all ./your-project
 
 The installer copies only the files you need and shows the CLAUDE.md snippet to add.
 
-> **Don't want the full framework?** Start with just `security` (no agents, just safety rules) or `quality` (just a reviewer). [See all modes](docs/modes.md).
+> **On PRO plan?** Try `koneko` — same quality principles, sized for PRO-tier token budgets. [Learn more](docs/koneko.md).
+>
+> **On MAX 5+ but don't want the full framework?** Start with just `security` (no agents, just safety rules) or `quality` (just a reviewer). [See all modes](docs/modes.md).
 
 ### Full Install (all modes)
 
@@ -165,12 +170,13 @@ The 3 review principles that prevent self-approval:
 
 Install only the parts that solve your problem:
 
-| Mode | What it solves | Agents needed? |
-|------|---------------|----------------|
-| **quality** | Self-review, unverified "done" | 1 (reviewer) |
-| **implement** | Large multi-file changes | 2 (manager + worker) |
-| **plan** | Complex task decomposition | 1 (general) |
-| **security** | Accidental deletion, unsafe operations | None (rules only) |
+| Mode | What it solves | Agents needed? | Plan |
+|------|---------------|----------------|------|
+| **koneko** | Quality on a budget | 1 (lightweight reviewer) | PRO |
+| **quality** | Self-review, unverified "done" | 1 (reviewer) | MAX 5+ |
+| **implement** | Large multi-file changes | 2 (manager + worker) | MAX 5+ |
+| **plan** | Complex task decomposition | 1 (general) | MAX 5+ |
+| **security** | Accidental deletion, unsafe operations | None (rules only) | Any |
 
 Combine freely: `quality+security`, `plan+implement`, or `all`. [Full guide](docs/modes.md).
 

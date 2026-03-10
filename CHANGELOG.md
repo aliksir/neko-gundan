@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.6.0] - 2026-03-10
+
+### Added
+- **koneko mode**: Lightweight version for PRO-tier Claude Code users
+  - `koneko-neko` agent: Simplified 3-aspect reviewer (correctness, safety, testing)
+  - `koneko-gates` rule: 3-item completion check (vs 7 items in full version)
+  - 1 agent call per task (vs 3-5 in full Neko Gundan)
+  - Safety tiers and `_deleted/` buffer included
+  - No multi-agent hierarchy, no parallel execution, no modules
+  - Upgrade path documented: koneko → quality+security → all
+  - `docs/koneko.md` / `docs/koneko.ja.md` — full guide
+  - Added to installer: `bash install.sh koneko ./your-project`
+
 ## [1.5.0] - 2026-03-10
 
 ### Added

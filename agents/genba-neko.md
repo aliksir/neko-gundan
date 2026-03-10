@@ -138,3 +138,4 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 - `modules/reflexion.md` — Structured reflection on failure
 - `modules/linter-protection.md` — Fix code to satisfy linter rules, don't edit linter config
 - `modules/tdd-separation.md` — You may receive test-only or implement-only tasks (don't do both)
+- `modules/process-weight.md` — Any agent can request process weight escalation (ESCALATION-001)

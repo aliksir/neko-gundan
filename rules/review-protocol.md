@@ -22,7 +22,7 @@ During fix phases, don't carry over previous session responses. Share informatio
 ## Agent-as-a-Judge (Structured Review)
 
 Reviewer (kurouto-neko/QA) uses the rubric defined in `agents/kurouto-neko.md`.
-Eliminates subjective "YOSHI!" with 4-aspect structured judgment (correctness, safety, maintainability, testing).
+Eliminates subjective "YOSHI!" with 5-aspect structured judgment (correctness, safety, maintainability, testing, purpose alignment).
 When confidence is `low`, escalate to arbitrator (Opus).
 
 ## Self-Verification Methods

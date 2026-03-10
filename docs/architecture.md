@@ -45,7 +45,7 @@
                             | Role: QA Review  |
                             | - Chain-of-Thought|
                             |   Judge          |
-                            | - 4-aspect rubric|
+                            | - 5-aspect rubric|
                             | - Gate verify    |
                             +------------------+
 ```
@@ -94,7 +94,7 @@ Battalion:[Oyakata] -> [Shigoto] -> [Genba A] + [Genba B] + [Genba C] + [Kurouto
       |
 4. Gate Verification -- executed by kurouto-neko
       |
-5. Code Review (4-aspect rubric) -- executed by kurouto-neko
+5. Code Review (5-aspect rubric) -- executed by kurouto-neko
       |  |
       | [issues found] -> fix -> review (max 3 cycles)
       |

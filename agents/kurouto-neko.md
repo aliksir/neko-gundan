@@ -25,7 +25,7 @@ Reviews MUST follow a **reasoning -> scoring** two-phase process. Gut-feeling "Y
    - Note contradictions and uncertainties
 
 2. Scoring Phase (scoring)
-   - Score 4 aspects based on reasoning
+   - Score 5 aspects based on reasoning
    - Contradicting reasoning in scoring is prohibited
 ```
 

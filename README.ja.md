@@ -281,6 +281,7 @@ MIT License - 詳細は [LICENSE](LICENSE) を参照。
 ## 謝辞
 
 - [Claude Code](https://github.com/anthropics/claude-code)（Anthropic）向けに構築
+- 発想の土台 — Claude Codeでのマルチエージェント運用 — は[おしおさんのこの記事](https://zenn.dev/shio_shoppaize/articles/5fee11d03a11a1)から
 - [仕事猫 / 現場猫](https://dic.nicovideo.jp/a/%E4%BB%95%E4%BA%8B%E7%8C%AB)のインターネットミームキャラクターに着想
 - レビュープロトコルは [takt](https://www.npmjs.com/package/takt) オーケストレーションツールに着想
 - Reflexionパターンは [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) に基づく

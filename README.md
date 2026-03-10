@@ -283,6 +283,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 ## Acknowledgments
 
 - Built for [Claude Code](https://github.com/anthropics/claude-code) by Anthropic
+- The foundational idea — multi-agent orchestration with Claude Code — came from [this article by おしお](https://zenn.dev/shio_shoppaize/articles/5fee11d03a11a1)
 - Inspired by the [Shigoto-neko / Genba-neko](https://dic.nicovideo.jp/a/%E4%BB%95%E4%BA%8B%E7%8C%AB) internet meme characters
 - Review protocol inspired by [takt](https://www.npmjs.com/package/takt) orchestration tool
 - Reflexion pattern from [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366)

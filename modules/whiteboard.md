@@ -14,8 +14,8 @@ For platoon+ missions, create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` as part
 ```markdown
 # Whiteboard: {Mission Name}
 
-**作成日時**: YYYY-MM-DD
-**更新日時**: YYYY-MM-DD
+**作成日時**: YYYY-MM-DD HH:MM
+**更新日時**: YYYY-MM-DD HH:MM
 
 > **SSOT Rule**: The whiteboard is the single source of truth for *execution state* (who does what, current progress, findings). The plan document (`plans/`) is the source of truth for *decisions and rationale* (why this approach, what's in/out of scope). When both contain the same information (e.g., file ownership table), the whiteboard takes precedence during execution.
 

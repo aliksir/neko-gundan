@@ -45,8 +45,8 @@ The checklist has 3 sections: Start, Task-specific, and Completion.
 ```markdown
 # Checklist: {project_name} {task_summary}
 
-**作成日時**: YYYY-MM-DD
-**更新日時**: YYYY-MM-DD
+**作成日時**: YYYY-MM-DD HH:MM
+**更新日時**: YYYY-MM-DD HH:MM
 **Task**: {task summary}
 **Plan**: {link to plan file}
 

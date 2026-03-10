@@ -62,19 +62,19 @@ Commander's instruction
   |
 1. Execute start gate (check all items with evidence)
   |
-1.5. Create checklist (first deliverable — see modules/checklist-export.md)
+2. Create checklist (first deliverable — see modules/checklist-export.md)
   |
-2. Scale assessment (recon/squad/platoon/battalion)
+3. Scale assessment (recon/squad/platoon/battalion)
   |
-3. Parallelization check (are subtasks independent?)
+4. Parallelization check (are subtasks independent?)
   |-- YES -> Parallel execution (spawn multiple agents)
   |-- NO  -> Sequential execution
   |
-4. Whiteboard + Dashboard (platoon or larger?)
+5. Whiteboard + Dashboard (platoon or larger?)
   |-- YES -> Instruct shigoto-neko to set up whiteboard AND dashboard (mandatory, no skip)
   |-- NO  -> Dashboard only (optional for squad)
   |
-5. QA check (platoon or larger?)
+6. QA check (platoon or larger?)
   |-- YES -> Add QA phase after implementation
   |-- NO  -> Shigoto-neko's checklist is sufficient
 ```

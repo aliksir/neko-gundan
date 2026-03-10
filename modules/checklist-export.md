@@ -1,6 +1,6 @@
 # Checklist Export Module
 
-> **Module**: `checklist_export` | **Default**: ON (recommended+) | **Scale**: All
+> **Module**: `checklist_export` | **Default**: ON (recommended+) | **Scale**: Squad+
 
 Exports task checklists to external files for progress tracking, human review, and record keeping.
 
@@ -61,11 +61,9 @@ The checklist has 3 sections: Start, Task-specific, and Completion.
 - [ ] ...
 
 ## Completion
-- [ ] Metrics collected
-- [ ] Plan document stored
-- [ ] Result report created
-- [ ] Whiteboard archived (if applicable, otherwise N/A)
-- [ ] All checklist items PASS or N/A
+- [ ] All gate items PASS or N/A (see rules/completion-gates.md)
+- [ ] Plan document stored (plans/)
+- [ ] Result report created (result/)
 ```
 
 ### Section Descriptions
@@ -78,7 +76,7 @@ The checklist has 3 sections: Start, Task-specific, and Completion.
 
 ### Updating the Checklist
 
-- Update the `**Updated**` timestamp each time items are checked off
+- Update the `**Updated**` timestamp at phase transitions (planning complete, implementation complete, gate complete)
 - Mark items `[x]` as they are completed during work (not just at the end)
 - Add items to Task-Specific if new requirements emerge during execution
 - Items that become irrelevant: mark as `[N/A] {reason}`
@@ -101,6 +99,6 @@ This replaces the previous "Pre-Gate: Checklist Generation" step — the checkli
 
 | Agent | Phase | Action |
 |-------|-------|--------|
-| oyakata-neko (recon/squad) / shigoto-neko (platoon+) | Planning start | Create checklist file with Start + Task-Specific + Completion sections |
-| oyakata-neko / shigoto-neko / genba-neko | During work | Update checklist items as work progresses |
+| oyakata-neko (squad) / shigoto-neko (platoon+) | Planning start | Create checklist file with Start + Task-Specific + Completion sections |
+| shigoto-neko / oyakata-neko | During work | Update checklist items as work progresses (genba-neko reports via SendMessage, shigoto-neko updates the file) |
 | shigoto-neko / oyakata-neko | Completion gate | Verify all items PASS or N/A, link from result report |

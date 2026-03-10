@@ -35,7 +35,40 @@ Every item must be checked with evidence. "I confirmed it" is not evidence — "
 | 6 | Existing features not broken | Run full test suite or smoke test | Test results |
 | 7 | Files not accidentally deleted | Compare with start state | `git status` / file listing |
 
-> **Note**: Additional gate items may be added by active modules (e.g., checklist export, metrics, ISV recording, whiteboard archival). Check your project's CLAUDE.md and `neko-gundan.config.yaml` for the full list. **Always verify the total item count matches your configuration.**
+### Module-Specific Gate Items (When Active)
+
+These items are added to the gate when the corresponding module is enabled in `neko-gundan.config.yaml`.
+
+| # | Module | Check | How to verify | Activation condition |
+|---|--------|-------|---------------|---------------------|
+| 8 | whiteboard | Whiteboard archived | Move to archive, update dashboard | Platoon+ AND whiteboard: true |
+| 9 | checklist_export | Checklist exported | File exists in configured output dir | checklist_export: true |
+| 10 | quality_metrics | Metrics updated | Metrics file updated with current task | quality_metrics: true |
+| 11 | isv | ISV recorded | Result dimensions filled, appended to ISV log | isv: true |
+| 12 | linter_protection | No linter config weakened | Diff shows no linter rule removals | linter_protection: true |
+| 13 | reflexion | Failure reflection recorded (if applicable) | Reflexion section in report | reflexion: true AND task had failures |
+
+> **Total item count** = 7 (core) + active module items. Verify your count matches `neko-gundan.config.yaml` active modules.
+
+## Process Weight Variants
+
+Completion gate scope varies by process weight (see `modules/process-weight.md`):
+
+| Weight | Gate Scope | Review |
+|--------|-----------|--------|
+| **Light** | Quick gate: items #1, #2, #5 only (tests pass + no unintended diff + clean state) | Self-check allowed |
+| **Standard** | Full gate: all core items (#1-#7) + active module items | Independent reviewer required |
+| **Strict** | Full gate + ensemble judge + mandatory ISV | Independent reviewer + ensemble |
+
+Default is **Standard** unless specified otherwise.
+
+### Light Mode and Review Protocol
+
+Light mode allows self-check as an **exception** to the "implementer ≠ reviewer" principle (see `rules/review-protocol.md`).
+This exception applies ONLY to Light mode. Standard and Strict modes enforce independent review without exception.
+
+Light mode includes automatic escalation (ESCALATION-001): if the task turns out to be more complex than expected,
+the process weight is upgraded to Standard, and independent review becomes mandatory.
 
 ## Gate Evidence Format
 

@@ -42,6 +42,21 @@ Replaces the full completion gate with a minimal check:
 
 That's it. No plans/, no reports/, no ISV, no whiteboard.
 
+### Self-check Definition
+
+"Self-check allowed" in Light mode means:
+
+✓ Allowed:
+  - Run tests to verify functionality
+  - Run lint/type checks for static quality
+  - `git diff` to verify no unintended changes
+  - Basic logic check ("is this if-branch correct?")
+
+✗ Not allowed (requires Standard/Strict mode):
+  - Critical review from alternative perspectives
+  - Security deep-dive
+  - Maintainability/architecture evaluation
+
 ## Escalation Protocol (ESCALATION-001)
 
 **Any agent** can request a process weight upgrade. This is an **obligation, not a suggestion** — if an agent sees risk that exceeds the current weight, they must speak up.
@@ -109,3 +124,5 @@ Strict mode activates: ensemble judge, mandatory ISV, full evidence gates, arbit
 | Reflexion | On failure only | On failure | Always (even on success) |
 
 > Safety protocols (RACE-001, HEARTBEAT-001, safety tiers) are **never reduced** by process weight. Light mode makes the process lighter, not less safe.
+
+> **SSOT**: The canonical gate item list is in `rules/completion-gates.md`. This module defines which SUBSET of items to check for each weight level.

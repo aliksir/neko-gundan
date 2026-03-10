@@ -25,3 +25,4 @@ shitsuke:
   tdd_separation: false
   ensemble_judge: false
   spec_driven_review: false
+  checklist_export: false

@@ -1,5 +1,48 @@
 # Changelog
 
+## [1.7.0] - 2026-03-10
+
+### Added
+- **OBJECTION-003 protocol**: Kurouto-neko can now raise design-level objections during review
+  - Trigger conditions: flawed instructions, architecture problems, security design issues
+  - Distinct from review feedback: "code correctly implements a flawed design" → escalate
+- **Rubric Aggregation Logic**: Explicit decision rules for kurouto-neko's 5-aspect rubric
+  - Aspect priority: Safety > Correctness > Testing > Maintainability > Purpose Alignment
+  - Any FAIL → REQUEST_CHANGES, confidence low → ESCALATE
+- **Progress Visibility module** (`modules/progress-visibility.md`): Dashboard update protocol
+  - Defines what/when/who for dashboard updates
+  - Structured update triggers (mission start, task assignment, completion, blockers)
+- **Objection Flow module** (`modules/objection-flow.md`): Unified OBJECTION recording format
+  - Whiteboard recording template for all OBJECTION types (001/002/003)
+  - Resolution tracking (OPEN/ACCEPTED/REJECTED)
+- **Koneko-neko Design Intent section**: Documents intentional protocol exclusions with rationale
+  - Explicit "What IS Maintained" list (implementer≠reviewer, evidence gates, safety tiers)
+
+### Changed
+- **Module-to-action integration**: All modules now specify Integration Points (agent/phase/action)
+  - genba-neko: Whiteboard read mandatory for platoon+ (was "if exists"), Heartbeat checkpoints in work procedure
+  - shigoto-neko: Progress Monitoring section with polling protocol and silence pattern detection
+  - Active Modules sections converted from bullet lists to tables with Integration Phase column
+- **SSOT unification**: Completion gate items centralized in `rules/completion-gates.md`
+  - Module-specific gate items (#8-#13) documented in single canonical table
+  - Process Weight Variants section added (Light/Standard/Strict scope definitions)
+  - `neko-gundan.config.yaml` annotated with gate item numbers
+- **Light mode clarification**: Self-check definition explicitly documented
+  - What's allowed (tests, lint, diff check) vs what requires independent review
+  - Exception to "implementer ≠ reviewer" limited to Light mode only, with ESCALATION-001 safety net
+- **Review protocol**: Process Weight Exception section added to `rules/review-protocol.md`
+
+### Fixed
+- **H3**: Modules existed as documents but weren't integrated into agent action steps
+- **H5**: Whiteboard read was conditional ("if exists") despite mandatory creation in pre-dispatch gate
+- **H6**: HEARTBEAT-001 listed as module but not in genba-neko's work procedure
+- **H7**: POLLING-001 defined in module but not in shigoto-neko's behavioral flow
+- **M5→H**: Kurouto-neko had no way to raise objections (OBJECTION-003 added)
+- **M11→H**: Progress visibility had no structured protocol (module added)
+- **H1**: Light mode "self-check allowed" contradicted "implementer ≠ reviewer" (scope clarified)
+- **H4**: Gate definitions scattered across 4 files (SSOT unified in completion-gates.md)
+- **H8**: Koneko protocol exclusions were undocumented (Design Intent section added)
+
 ## [1.6.1] - 2026-03-10
 
 ### Changed

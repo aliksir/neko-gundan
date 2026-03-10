@@ -17,6 +17,14 @@ Execute before starting any platoon+ mission:
 
 Every item must be checked with evidence. "I confirmed it" is not evidence — "Here's the command output showing it works" is.
 
+### Gate Execution Protocol (Mandatory)
+
+1. **Forced Read**: Read this section before starting the gate. **Memory-based gate execution is prohibited.** A gate started without reading the source of truth is invalid.
+2. **Sequential execution**: Process items from #1 in order, one at a time. For each item: run verification command → record evidence → move to next. Do not batch-mark items as "done."
+3. **Item count check**: Report the total in the result: "**N items checked (PASS: X, N/A: Y)**". If the total doesn't match the expected count, there are missing items.
+
+### Gate Items (7 core + module additions)
+
 | # | Check | How to verify | Evidence format |
 |---|-------|---------------|--------------------|
 | 1 | All success criteria met | Run tests, verify output | Test results / command output |
@@ -27,7 +35,7 @@ Every item must be checked with evidence. "I confirmed it" is not evidence — "
 | 6 | Existing features not broken | Run full test suite or smoke test | Test results |
 | 7 | Files not accidentally deleted | Compare with start state | `git status` / file listing |
 
-> **Note**: Additional gate items may be added by active modules (e.g., ISV recording, whiteboard archival). Check `neko-gundan.config.yaml` for your configuration.
+> **Note**: Additional gate items may be added by active modules (e.g., checklist export, metrics, ISV recording, whiteboard archival). Check your project's CLAUDE.md and `neko-gundan.config.yaml` for the full list. **Always verify the total item count matches your configuration.**
 
 ## Gate Evidence Format
 

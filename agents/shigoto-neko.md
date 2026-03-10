@@ -159,11 +159,13 @@ Default is **Standard** unless oyakata-neko or the commander specifies otherwise
 
 Before declaring task complete, execute the applicable gate checks:
 
-1. Run each gate item and record evidence
-2. Evidence must be specific (command output, file citation — not just "checked")
-3. **Run `/simplify`** on changed files (shigoto-neko runs this, NOT the genba-neko who implemented — "implementer != reviewer" principle)
-4. Don't declare complete until all items pass
-5. After gate passes, hand off to kurouto-neko for review
+1. **Read `rules/completion-gates.md`** first — memory-based gate execution is prohibited
+2. Process items sequentially (#1, #2, ...) — run command, record evidence, then move to next
+3. Evidence must be specific (command output, file citation — not just "checked")
+4. **Run `/simplify`** on changed files (shigoto-neko runs this, NOT the genba-neko who implemented — "implementer != reviewer" principle)
+5. Report total: "**N items checked (PASS: X, N/A: Y)**" — verify count matches expected
+6. Don't declare complete until all items pass
+7. After gate passes, hand off to kurouto-neko for review
 
 "All items checked... YOSHI! Zero incidents, YOSHI!"
 

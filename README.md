@@ -109,6 +109,23 @@ Every task must pass a gate with recorded evidence. "I confirmed it" is not allo
 | 3 | Objections resolved| PASS  | No [OBJECTION] tags on whiteboard     |
 ```
 
+### Checklist Export — Visible Proof
+
+Completion gate checklists can be exported to markdown files for human review and record keeping.
+
+```
+_checklist/
+  20260310_my-project.md   ← gate results with evidence
+```
+
+Enable `checklist_export` in your config (ON by default in `full` preset) and set the output path in CLAUDE.md:
+
+```yaml
+checklist_output_dir: "./_checklist/"
+```
+
+Each file records what was checked, the result, and the evidence — so you can review quality decisions after the session ends.
+
 ### Implementer != Reviewer
 
 The 3 review principles that prevent self-approval:

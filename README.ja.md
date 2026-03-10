@@ -109,6 +109,21 @@ bash scripts/install.sh --update all ./your-project
 | 3 | 異議解決済み       | PASS | ホワイトボードに未解決異議なし         |
 ```
 
+### チェックリスト外出し — 見える化
+
+完了ゲートのチェックリストをmarkdownファイルとして外部出力できる。セッション終了後でも品質判断の経緯を振り返れる。
+
+```
+_checklist/
+  20260310_my-project.md   ← ゲート結果と証跡
+```
+
+`checklist_export` を有効にし（`full` プリセットではデフォルトON）、CLAUDE.mdで出力先を設定:
+
+```yaml
+checklist_output_dir: "./_checklist/"
+```
+
 ### 実装者 != レビュアー
 
 自己承認を防ぐ3原則:

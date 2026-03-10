@@ -93,6 +93,15 @@ def extract_active_modules_from_agents(agents_dir: Path) -> Dict[str, List[Tuple
                     if mod_path not in module_refs:
                         module_refs[mod_path] = []
                     module_refs[mod_path].append((agent_file.name, i))
+                continue
+
+            # Parse bullet list lines (e.g., "- `modules/xxx.md`...")
+            if not in_table:
+                matches = re.findall(r"`(modules/[^`]+\.md)`", line)
+                for mod_path in matches:
+                    if mod_path not in module_refs:
+                        module_refs[mod_path] = []
+                    module_refs[mod_path].append((agent_file.name, i))
 
     return module_refs
 

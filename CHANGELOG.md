@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.4.0] - 2026-03-10
+
+### Added
+- **checklist_export module**: Export completion gate checklists to external markdown files for human review and record keeping
+  - Configurable output path via `checklist_output_dir` in CLAUDE.md (default: `{project_root}/_checklist/`)
+  - Output format: `YYYYMMDD_{project_name}.md`
+  - Added to all 3 presets (full=ON, recommended/minimal=OFF)
+
+### Fixed
+- **Whiteboard not created in practice**: Root cause was 3-fold:
+  1. Oyakata-neko's conditional branch allowed skipping whiteboard for "independent tasks"
+  2. Shigoto-neko's trigger depended on explicit oyakata instruction
+  3. Path mismatch between agent definitions and whiteboard module
+  - **Fix**: Pre-dispatch hard gate (4-item checklist) — platoon+ missions cannot spawn genba-neko without completing whiteboard + dashboard setup
+  - Unified whiteboard path to `{WHITEBOARD_DIR}` variable
+
+### Changed
+- **Scaling table**: Added complexity axis to scale judgment
+  - Squad: 1-2 files, OR 3-5 files of simple refactoring (move/rename/DRY)
+  - Platoon: 3-5 files AND involves design decisions (new API/DB change/architecture)
+
 ## [1.3.0] - 2026-03-09
 
 ### Added

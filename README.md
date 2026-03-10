@@ -138,7 +138,7 @@ AI-generated code grows faster than human review capacity. Without visibility in
 | Avg review cycles   | 1.3   | ↓     | Review rounds per task. All 1 = reviews may be lenient |
 ```
 
-Alerts fire automatically when patterns suggest problems — skip rate climbing, all reviews passing first try, zero human interventions for too long.
+When agents run the completion gate, they calculate these metrics and flag alerts if thresholds are exceeded — skip rate climbing, all reviews passing first try, zero human interventions for too long.
 
 Enable `quality_metrics` in your config (ON in `full` preset) and set the output path in CLAUDE.md:
 

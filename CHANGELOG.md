@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.6.1] - 2026-03-10
+
+### Changed
+- **Completion gate enforcement**: Added mandatory Gate Execution Protocol
+  - Forced Read: agents must read `completion-gates.md` before starting — memory-based execution is prohibited
+  - Sequential execution: items processed one at a time with evidence recorded per step
+  - Item count check: total item count reported and verified to prevent skipped items
+  - Updated `shigoto-neko.md` with enforced gate procedure
+
 ## [1.6.0] - 2026-03-10
 
 ### Added

@@ -118,7 +118,7 @@ _checklist/
   20260310_my-project.md   ← gate results with evidence
 ```
 
-Enable `checklist_export` in your config (ON by default in `full` preset) and set the output path in CLAUDE.md:
+Enable `checklist_export` in your config (ON by default in `recommended` and `full` presets) and set the output path in CLAUDE.md:
 
 ```yaml
 checklist_output_dir: "./_checklist/"

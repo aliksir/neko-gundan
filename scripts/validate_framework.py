@@ -6,8 +6,8 @@ Validates cross-file consistency across the neko-gundan framework documents.
 Detects 5 patterns of inconsistency that were originally found via manual E2E testing.
 
 Exit codes:
-    0 - All checks passed (no issues found)
-    1 - One or more issues detected
+    0 - No errors found (warnings may exist)
+    1 - One or more errors detected
 
 Usage:
     python scripts/validate_framework.py [project_root]

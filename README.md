@@ -126,6 +126,26 @@ checklist_output_dir: "./_checklist/"
 
 Each file records what was checked, the result, and the evidence — so you can review quality decisions after the session ends.
 
+### Quality Metrics — Are Your Gates Working?
+
+AI-generated code grows faster than human review capacity. Without visibility into quality trends, gates become theater. This module tracks whether your quality process is actually working.
+
+```markdown
+| Metric              | Value | Trend | What it means                                       |
+|---------------------|-------|-------|-----------------------------------------------------|
+| Gate pass rate      | 87%   | →     | Completion gate PASS ratio. Low = quality gaps       |
+| Skip rate           | 23%   | ↑ ⚠️  | N/A skip ratio. High = gates becoming theater        |
+| Avg review cycles   | 1.3   | ↓     | Review rounds per task. All 1 = reviews may be lenient |
+```
+
+Alerts fire automatically when patterns suggest problems — skip rate climbing, all reviews passing first try, zero human interventions for too long.
+
+Enable `quality_metrics` in your config (ON in `full` preset) and set the output path in CLAUDE.md:
+
+```yaml
+metrics_output_dir: "./_metrics/"
+```
+
 ### Implementer != Reviewer
 
 The 3 review principles that prevent self-approval:

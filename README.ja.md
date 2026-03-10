@@ -1,6 +1,6 @@
 # 猫軍団 - Claude Code マルチエージェントオーケストレーション
 
-**[English README](README.md)**
+**[English README](README.md)** | **PROプラン？ → [子猫軍団（ライト版）](README.koneko.ja.md)**
 
 > Claude Codeは1体でもコードを書ける。でも自分のミスを自分で見つけたり、悪い判断を止めたり、複数ファイルを安全に協調して変更することはできない。猫軍団は作業をチームに分割する — コードを書いた猫がレビューすることは絶対にない。
 
@@ -24,10 +24,7 @@
 ```bash
 git clone https://github.com/aliksir/neko-gundan.git
 
-# PROプラン？ ここから（軽量版、タスクあたりAgent呼び出し1回）
-bash neko-gundan/scripts/install.sh koneko ./your-project
-
-# MAX 5+？ 必要なモードだけ選んでインストール（quality, implement, plan, security）
+# 必要なモードだけ選んでインストール（quality, implement, plan, security）
 bash neko-gundan/scripts/install.sh quality+security ./your-project
 
 # または全部入り
@@ -36,9 +33,7 @@ bash neko-gundan/scripts/install.sh all ./your-project
 
 インストーラが必要なファイルだけコピーし、CLAUDE.mdに追加するスニペットを表示する。
 
-> **PROプラン？** `koneko` を試してみて — 猫軍団の品質原則をPROのトークン予算に収まるサイズで。[詳細](docs/koneko.ja.md)
->
-> **MAX 5+だけどフレームワーク全体は要らない？** `security`（エージェント不要、安全ルールだけ）や `quality`（レビュアーだけ）から始められる。[全モード詳細](docs/modes.ja.md)
+> **フレームワーク全体は要らない？** `security`（エージェント不要、安全ルールだけ）や `quality`（レビュアーだけ）から始められる。[全モード詳細](docs/modes.ja.md)
 
 ### フルインストール（全モード）
 

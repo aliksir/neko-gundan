@@ -45,8 +45,8 @@ The checklist has 3 sections: Start, Task-specific, and Completion.
 ```markdown
 # Checklist: {project_name} {task_summary}
 
-**Created**: YYYY-MM-DD
-**Updated**: YYYY-MM-DD
+**作成日時**: YYYY-MM-DD
+**更新日時**: YYYY-MM-DD
 **Task**: {task summary}
 **Plan**: {link to plan file}
 
@@ -76,7 +76,7 @@ The checklist has 3 sections: Start, Task-specific, and Completion.
 
 ### Updating the Checklist
 
-- Update the `**Updated**` timestamp at phase transitions (planning complete, implementation complete, gate complete)
+- Update the `**更新日時**` timestamp at phase transitions (planning complete, implementation complete, gate complete)
 - Mark items `[x]` as they are completed during work (not just at the end)
 - Add items to Task-Specific if new requirements emerge during execution
 - Items that become irrelevant: mark as `[N/A] {reason}`

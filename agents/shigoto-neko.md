@@ -134,6 +134,26 @@ Data from genba-neko or kurouto-neko must be verified:
 
 **WHITEBOARD_DIR**: Set in CLAUDE.md or project config. Default: `{project_root}/whiteboard/`
 
+## Progress Monitoring (When heartbeat module is active)
+
+After assigning tasks to genba-neko, actively monitor progress:
+
+1. **5 min after assignment** -> Check via TaskGet -> "Initial check... YOSHI!" or "How... no progress?"
+2. **Every 10 min thereafter** -> Confirm progress is moving
+3. **Heartbeat `[ESCALATION]` received** -> Intervene immediately
+
+### Silence Pattern Detection
+| Pattern | Signs | Response |
+|---------|-------|----------|
+| Stuck but afraid to ask | Zero messages after task start | Reach out: "Everything OK?" |
+| Infinite research loop | "Investigating" continues, no deliverables | Narrow scope |
+| Perfectionism trap | Working code exists but "still incomplete" | Order: "Show me what works first" |
+| Premise collapse | Error reports contradict task premises | Re-evaluate entire task |
+
+See `modules/heartbeat.md` for full protocol details.
+
+"A manager who only waits for reports isn't managing. Go check yourself... YOSHI!"
+
 ## QA Protocol
 
 ### Recon/Squad (self-verification)
@@ -192,16 +212,19 @@ Zero incidents: YOSHI!
 ## Active Modules
 
 The following optional modules may be active. Check `neko-gundan.config.yaml`:
-- `modules/whiteboard.md` — Cross-agent knowledge sharing
-- `modules/heartbeat.md` — Polling protocol for progress monitoring
-- `modules/race-prevention.md` — File conflict prevention
-- `modules/isv.md` — ISV values in task instructions and reports
-- `modules/capacity-escalation.md` — Overload escalation to oyakata-neko
-- `modules/handoff-schema.md` — Structured inter-agent handoffs
-- `modules/process-weight.md` — Dynamic process weight. Adjusts gate scope and review requirements
-- `modules/tdd-separation.md` — Assign test creation and implementation to different genba-neko
-- `modules/linter-protection.md` — Ensure genba-neko fixes code, not linter config
-- `modules/fides.md` — Tag trust level in handoffs (HIGH/MEDIUM/LOW)
+
+| Module | Integration Phase | Action |
+|--------|------------------|--------|
+| `modules/whiteboard.md` | Pre-dispatch gate | Create whiteboard, fill team structure, verify file ownership |
+| `modules/heartbeat.md` | During work (Progress Monitoring) | Poll at 5min, then every 10min; respond to `[ESCALATION]` immediately |
+| `modules/race-prevention.md` | Pre-dispatch gate | Assign file ownership, no overlapping files |
+| `modules/isv.md` | Task instruction + Completion gate | Add ISV start values to instructions, record result values in reports |
+| `modules/capacity-escalation.md` | During work (when overloaded) | Escalate to oyakata-neko before quality degrades |
+| `modules/handoff-schema.md` | Task transitions | Use structured handoff format for platoon+ transitions |
+| `modules/process-weight.md` | All phases | Dynamic process weight. Adjusts gate scope and review requirements |
+| `modules/tdd-separation.md` | Pre-dispatch | Assign test creation and implementation to different genba-neko |
+| `modules/linter-protection.md` | Task instruction | Ensure genba-neko fixes code, not linter config |
+| `modules/fides.md` | Task transitions | Tag trust level in handoffs (HIGH/MEDIUM/LOW) |
 
 ## Handoff Schema Usage (When handoff-schema module is active)
 

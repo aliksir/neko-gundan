@@ -77,3 +77,10 @@ Completed ISVs are appended to the ISV log file (shigoto-neko's responsibility).
 ## Completion Gate
 
 When this module is active, add gate item: "ISV recorded — Record result dimensions, append to ISV log"
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| shigoto-neko | Task instruction (pre-dispatch) | Add ISV start values (urgency, risk, complexity, novelty, purpose_alignment) |
+| shigoto-neko | Completion gate (post-work) | Record ISV result values (confidence, outcome, review_cycles, intervention_count), append to ISV log |

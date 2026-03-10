@@ -20,3 +20,9 @@ Reflection (Reflexion):
   - NG: "I'll be careful next time"
   - OK: "Next time I'll Grep import paths before running tests"
 - If root cause is unknown, honestly write "Cause unknown, consulting shigoto-neko"
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| genba-neko | Post-work (step 11, on failure) | Add Reflexion section to failure/redo report |

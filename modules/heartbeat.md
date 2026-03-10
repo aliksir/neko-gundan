@@ -60,3 +60,10 @@ Shigoto-neko has an **obligation to actively check** genba-neko's progress, not 
 | **Premise collapse** | Error reports contradict task premises | Re-evaluate entire task |
 
 "A manager who only waits for reports isn't managing. Go check yourself... YOSHI!"
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| genba-neko | During work (step 6) | Report when stuck (5min/2errors/unclear/unexpected). 3 consecutive errors -> `[ESCALATION]` |
+| shigoto-neko | After assignment (Progress Monitoring) | Poll at 5min, then every 10min. Respond to `[ESCALATION]` immediately |

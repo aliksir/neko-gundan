@@ -13,3 +13,10 @@ Prevents file conflicts when multiple agents work in parallel.
 - **Never edit the same file as another genba-neko simultaneously**
 - Stay within your assigned files
 - If you need to change a file outside your scope, consult shigoto-neko
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| shigoto-neko | Pre-dispatch gate | Assign file ownership, verify no overlapping files between genba-neko |
+| genba-neko | During work (step 6) | Stay within assigned files, consult shigoto-neko for out-of-scope changes |

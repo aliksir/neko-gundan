@@ -18,6 +18,7 @@
 #   - modules/tdd-separation.md
 #   - modules/ensemble-judge.md
 #   - modules/spec-driven-review.md
+#   - modules/checklist-export.md
 # =============================================================================
 
 shitsuke:
@@ -34,3 +35,4 @@ shitsuke:
   tdd_separation: true
   ensemble_judge: true
   spec_driven_review: true
+  checklist_export: true

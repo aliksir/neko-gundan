@@ -38,6 +38,7 @@ MODULE_FILES=(
     [jit_tests]="jit-tests.md"
     [tdd_separation]="tdd-separation.md"
     [spec_driven_review]="spec-driven-review.md"
+    [checklist_export]="checklist-export.md"
 )
 
 # 全モジュールファイル名の配列（クリーンアップ用）
@@ -45,7 +46,7 @@ ALL_MODULE_FILES=(
     "whiteboard.md" "heartbeat.md" "race-prevention.md" "reflexion.md"
     "isv.md" "fides.md" "capacity-escalation.md" "arbitrator.md"
     "handoff-schema.md" "ensemble-judge.md" "jit-tests.md"
-    "tdd-separation.md" "spec-driven-review.md"
+    "tdd-separation.md" "spec-driven-review.md" "checklist-export.md"
 )
 
 # --- 引数処理 ---

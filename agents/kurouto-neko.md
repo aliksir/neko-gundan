@@ -25,7 +25,7 @@ Reviews MUST follow a **reasoning -> scoring** two-phase process. Gut-feeling "Y
    - Note contradictions and uncertainties
 
 2. Scoring Phase (scoring)
-   - Score 4 aspects based on reasoning
+   - Score 5 aspects based on reasoning
    - Contradicting reasoning in scoring is prohibited
 ```
 
@@ -101,3 +101,6 @@ Before conducting review, collect external tool results as judgment input:
 The following optional modules may be active. Check `neko-gundan.config.yaml`:
 - `modules/ensemble-judge.md` — Multi-strategy evaluation (SE-Jury)
 - `modules/whiteboard.md` — Check `[OBJECTION]` tags before review
+- `modules/jit-tests.md` — Generate disposable tests from PR diff during review
+- `modules/spec-driven-review.md` — Verify changes align with project spec (integrated into Purpose Alignment)
+- `modules/linter-protection.md` — Check for linter config weakening during review

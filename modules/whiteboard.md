@@ -6,7 +6,7 @@ Cross-agent knowledge sharing through a shared whiteboard file.
 
 ## Shigoto-neko: Whiteboard Management
 
-When oyakata-neko orders a whiteboard setup, create `{WHITEBOARD_DIR}/whiteboard-{mission}.md`.
+For platoon+ missions, create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` as part of the pre-dispatch hard gate (mandatory — no skip).
 
 `WHITEBOARD_DIR` defaults to `whiteboard/` (project root relative). Override in CLAUDE.md or environment config if your setup uses a different path (e.g., a directory monitored by a markdown preview tool).
 

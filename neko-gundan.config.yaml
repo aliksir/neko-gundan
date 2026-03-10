@@ -36,3 +36,6 @@ shitsuke:
   # --- レビュー系 ---
   ensemble_judge: true     # Ensemble Judge（SE-Jury複合評価）
   spec_driven_review: true  # 仕様駆動レビュー（Purpose照合）
+
+  # --- 出力系 ---
+  checklist_export: true    # 完了ゲートチェックリストを外部ファイルに出力

@@ -68,7 +68,11 @@ Commander's instruction
   |-- YES -> Parallel execution (spawn multiple agents)
   |-- NO  -> Sequential execution
   |
-4. QA check (platoon or larger?)
+4. Whiteboard + Dashboard (platoon or larger?)
+  |-- YES -> Instruct shigoto-neko to set up whiteboard AND dashboard (mandatory, no skip)
+  |-- NO  -> Dashboard only (optional for squad)
+  |
+5. QA check (platoon or larger?)
   |-- YES -> Add QA phase after implementation
   |-- NO  -> Shigoto-neko's checklist is sufficient
 ```
@@ -147,3 +151,4 @@ Shigoto-neko spawns genba-neko (field workers) as needed.
 The following optional modules may be active. Check `neko-gundan.config.yaml` for your configuration:
 - `modules/arbitrator.md` — Formal mediation when reviews exceed 3 cycles
 - `modules/capacity-escalation.md` — Response to shigoto-neko overload reports
+- `modules/process-weight.md` — Dynamic process weight (Light/Standard/Strict). Oyakata decides on ESCALATION-001 requests

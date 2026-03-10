@@ -10,6 +10,8 @@
   - Safety tiers and `_deleted/` buffer included
   - No multi-agent hierarchy, no parallel execution, no modules
   - Upgrade path documented: koneko → quality+security → all
+  - `--downgrade` flag: safely retire unneeded files to `_deleted/` when switching modes
+  - Downgrade preserves directory structure in `_deleted/neko-gundan-YYYYMMDD/`
   - `docs/koneko.md` / `docs/koneko.ja.md` — full guide
   - Added to installer: `bash install.sh koneko ./your-project`
 

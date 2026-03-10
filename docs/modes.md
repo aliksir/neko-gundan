@@ -127,6 +127,16 @@ bash install.sh all ./your-project
 | "Full project with planning" | `plan+implement+quality` | Strategy + workers + review |
 | "Give me everything" | `all` | All 4 modes |
 
+## Downgrading
+
+Switching from MAX to PRO? Downgrade safely:
+
+```bash
+bash install.sh --downgrade koneko ./your-project
+```
+
+Unneeded files are moved to `_deleted/` (not deleted). Update your CLAUDE.md snippet after.
+
 ## Upgrading Later
 
 Start small and add modes as needed. The installer skips files that already exist, so you can safely run it again with additional modes:

@@ -86,7 +86,7 @@ Starting points for interpretation. Adjust per project — a research prototype 
 
 | Metric | Healthy | Watch | Action needed |
 |--------|---------|-------|---------------|
-| Gate pass rate | 70-95% | 50-70% | < 50% |
+| Gate pass rate | 70-95% | 50-70% or >95% | < 50% |
 | Skip rate | < 20% | 20-35% | > 35% |
 | Avg review cycles | 1.2-2.0 | 1.0 (sustained) or > 2.5 | > 3.0 or sustained 1.0 for 5+ tasks |
 | Human interventions | 0.2-1.0/task | 0 for 10+ tasks | Sustained 0 (no oversight?) |

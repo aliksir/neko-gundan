@@ -165,9 +165,9 @@ When agents run the completion gate, they calculate these metrics and flag alert
 
 | Metric | Healthy | Watch | Action needed |
 |--------|---------|-------|---------------|
-| Gate pass rate | 70-95% | 50-70% | < 50% |
+| Gate pass rate | 70-95% | 50-70% or >95% | < 50% |
 | Skip rate | < 20% | 20-35% | > 35% |
-| Avg review cycles | 1.2-2.0 | 1.0 (all first-pass) or > 2.5 | > 3.0 or sustained 1.0 |
+| Avg review cycles | 1.2-2.0 | 1.0 (sustained) or > 2.5 | > 3.0 or sustained 1.0 for 5+ tasks |
 | Human interventions | 0.2-1.0/task | 0 for 10+ tasks | Sustained 0 (no oversight?) |
 
 *A sustained 1.0 review cycle average is suspicious — it may mean reviews aren't substantive. Some pushback is healthy.*
@@ -262,6 +262,7 @@ Claude Code's built-in subagents are powerful. Neko Gundan adds **operational gu
 | Bad instructions | Silently executed | **Agents must object** (OBJECTION protocol) |
 | File deletion | Instant, irreversible | **Moved to `_deleted/` first** |
 | Parallel editing | No coordination | **Race condition prevention** |
+| Quality trends | No visibility until something breaks | **Metrics track** gate pass rate, skip rate, review cycles |
 
 If standard subagents already work for you, great. Neko Gundan is for when you need **proof that things are correct**, not just that they're done.
 
@@ -358,26 +359,11 @@ Real examples from projects using Neko Gundan (details anonymized).
 
 </details>
 
-## What Changes
-
-Here's what adopting Neko Gundan actually looks like in practice, based on real usage across multiple projects:
-
-| | Without (single agent) | With Neko Gundan |
-|---|---|---|
-| **Self-review** | Agent checks its own work — misses its own mistakes | Independent reviewer catches what the implementer missed |
-| **"I'm done"** | You take the agent's word for it | You get test output, git diff, checklist with evidence |
-| **Bad instruction** | Silently executed, discovered later | Agent objects before executing (OBJECTION protocol) |
-| **Accidental deletion** | File gone, hope you have git history | File in `_deleted/`, easy recovery |
-| **Multi-file coordination** | Agents overwrite each other's changes | File ownership prevents conflicts |
-| **Quality trends** | No visibility until something breaks | Metrics track gate pass rate, skip rate, review cycles |
-
-**The trade:** You spend ~2-3x more tokens per task (platoon scale) and get a slower first response. In return, you spend less time debugging agent mistakes, recovering from bad changes, and re-reviewing "completed" work. For quick prototypes, that trade isn't worth it. For products where bugs cost real time, it usually is.
-
 ## Trade-offs
 
 **You are still the boss.** Neko Gundan adds AI-to-AI review, but it does not replace human judgment. The reviewer agent and the implementer agent share the same model family, so they can share the same blind spots. Evidence gates (`npm test`, `git diff`) catch mechanical errors, but architectural decisions and business logic still need a human's final call. Think of it as "better first draft" — not "no review needed."
 
-**More agents = more tokens.** Multi-agent orchestration costs more than a single agent. A platoon-scale task (3 agents) uses roughly 2-3x the tokens of doing it solo. Use [Process Weight](docs/process-weight.md) to keep costs in check — say "light mode" for quick fixes so you skip the full ceremony. The safety rules (deletion buffer, race prevention) add almost zero overhead since they're just prompt rules, not extra agent calls.
+**More agents = more tokens.** A platoon-scale task (3 agents) uses roughly 2-3x the tokens of doing it solo. Use [Process Weight](docs/process-weight.md) to keep costs in check — say "light mode" for quick fixes so you skip the full ceremony.
 
 **What you gain vs. what you spend:**
 

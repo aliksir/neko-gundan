@@ -24,6 +24,10 @@ from pathlib import Path
 from typing import Dict, List, NamedTuple, Optional, Set, Tuple
 
 
+# Shared regex pattern for module references in backticks
+MODULE_REF_PATTERN = r"`(modules/[^`]+\.md)`"
+
+
 class Issue(NamedTuple):
     """A single validation issue."""
     pattern: str
@@ -85,23 +89,13 @@ def extract_active_modules_from_agents(agents_dir: Path) -> Dict[str, List[Tuple
                 in_table = True
                 continue
 
-            # Parse table rows
-            if in_table and line.startswith("|"):
-                # Extract module path from backtick-quoted references like `modules/heartbeat.md`
-                matches = re.findall(r"`(modules/[^`]+\.md)`", line)
+            # Parse table rows and bullet list lines
+            if (in_table and line.startswith("|")) or not in_table:
+                matches = re.findall(MODULE_REF_PATTERN, line)
                 for mod_path in matches:
-                    if mod_path not in module_refs:
-                        module_refs[mod_path] = []
-                    module_refs[mod_path].append((agent_file.name, i))
-                continue
-
-            # Parse bullet list lines (e.g., "- `modules/xxx.md`...")
-            if not in_table:
-                matches = re.findall(r"`(modules/[^`]+\.md)`", line)
-                for mod_path in matches:
-                    if mod_path not in module_refs:
-                        module_refs[mod_path] = []
-                    module_refs[mod_path].append((agent_file.name, i))
+                    module_refs.setdefault(mod_path, []).append((agent_file.name, i))
+                if in_table:
+                    continue
 
     return module_refs
 
@@ -234,7 +228,7 @@ def extract_step_refs_from_active_modules(content: str) -> List[Tuple[str, str, 
 
         if in_table and line.startswith("|"):
             # Extract module path
-            mod_matches = re.findall(r"`(modules/[^`]+\.md)`", line)
+            mod_matches = re.findall(MODULE_REF_PATTERN, line)
             if not mod_matches:
                 continue
 

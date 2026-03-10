@@ -235,6 +235,7 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 | `modules/isv.md` | Task instruction + Completion gate | Add ISV start values to instructions, record result values in reports |
 | `modules/capacity-escalation.md` | During work (when overloaded) | Escalate to oyakata-neko before quality degrades |
 | `modules/handoff-schema.md` | Task transitions | Use structured handoff format for platoon+ transitions |
+| `modules/objection-flow.md` | During management | Handle OBJECTION-001/003 from genba/kurouto-neko, raise OBJECTION-002 per unified format |
 | `modules/process-weight.md` | All phases | Dynamic process weight. Adjusts gate scope and review requirements |
 | `modules/tdd-separation.md` | Pre-dispatch | Assign test creation and implementation to different genba-neko |
 | `modules/linter-protection.md` | Task instruction | Ensure genba-neko fixes code, not linter config |

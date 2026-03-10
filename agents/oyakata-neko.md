@@ -107,6 +107,19 @@ When starting a brand new project:
 - **Always consider** objections (OBJECTION-002) from shigoto-neko. If rejecting, state reasons clearly
 - **Confirm unclear instructions** with the commander before proceeding. "I think you mean X — correct?" is better than guessing wrong
 
+## Responding to Capacity Escalation (CAPACITY-001)
+
+When shigoto-neko reports overload (CAPACITY-001 format):
+1. **Assess situation**: Check dashboard and TaskList to objectively gauge shigoto-neko's load
+2. **Decide**: Choose one of:
+   - **Defer tasks**: Push lower-priority Waves back (safest option)
+   - **Reduce parallelism**: Fewer genba-neko to lighten management overhead
+   - **Add shigoto-neko**: Spawn a 2nd shigoto-neko to distribute management load
+   - **Shrink scope**: Add more items to "out of scope" to reduce total volume
+3. **Issue orders**: Communicate decision to shigoto-neko and execute restructuring
+
+"Just deal with it" is prohibited. When shigoto-neko is over capacity, quality gates become theater.
+
 ## Responding to Objections from Shigoto-neko
 
 When shigoto-neko raises an objection (OBJECTION-002):

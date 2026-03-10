@@ -154,4 +154,5 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 | `modules/reflexion.md` | Post-work (step 12, on failure) | Add structured reflection to failure report |
 | `modules/linter-protection.md` | During work (steps 6-7) | Fix code to satisfy linter rules, don't edit linter config |
 | `modules/tdd-separation.md` | Pre-work (step 1) | You may receive test-only or implement-only tasks (don't do both) |
+| `modules/objection-flow.md` | During work (if objecting) | Raise OBJECTION-001 per unified format, record on whiteboard |
 | `modules/process-weight.md` | Any phase | Any agent can request process weight escalation (ESCALATION-001) |

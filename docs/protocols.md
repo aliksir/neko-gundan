@@ -120,11 +120,11 @@ Key question: **"Would other agents need to know this?"**
 
 Gate definitions are maintained in the user's MEMORY.md (single source of truth).
 
-### Start Gate: 6 items
-git status/log, handover.md, dev-lessons search, Purpose check, deleted files check, previous whiteboard (platoon+)
+### Start Gate: 9 items
+git status/log, handover.md, dev-lessons search, Purpose check, deleted files check, whiteboard check (reuse existing or create new), task checklist, dashboard init (platoon+), QA checklist generation (output to checklist dir)
 
 ### Completion Gate: 13 items
-Checklist generation, checklist execution, git status, Purpose update, invariant check, file deletion backup, /simplify, whiteboard archive (platoon+), artifacts stored, project list update, ISV record, all checks filled, report integrity
+Checklist execution, git status, Purpose update, invariant check, file deletion backup, /simplify, whiteboard archive, metrics update, artifacts stored, ISV record, all checks filled, project list update, report integrity
 
 ---
 

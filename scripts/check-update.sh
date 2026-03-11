@@ -55,6 +55,12 @@ if ! command -v curl > /dev/null 2>&1; then
     die_silent
 fi
 
+# Windows (schannel) では証明書失効チェックが失敗するため --ssl-no-revoke を付与
+CURL_OPTS="--max-time 10"
+if [ "$(uname -s | cut -c1-5)" = "MINGW" ] || [ "$(uname -s | cut -c1-4)" = "MSYS" ] || [ -n "${MSYSTEM:-}" ]; then
+    CURL_OPTS="${CURL_OPTS} --ssl-no-revoke"
+fi
+
 # --- キャッシュチェック（--forceでスキップ） ---
 if [ "$FORCE" = false ] && [ -f "$CACHE_FILE" ]; then
     now=$(date +%s 2>/dev/null || echo "0")
@@ -97,7 +103,7 @@ if [ -z "$local_version" ]; then
 fi
 
 # --- リモートバージョン取得 ---
-remote_version=$(curl -sL --max-time 10 "$GITHUB_RAW" 2>/dev/null | grep -m1 '^## \[' | sed 's/.*\[\([^]]*\)\].*/\1/' || echo "")
+remote_version=$(curl -sL ${CURL_OPTS} "$GITHUB_RAW" 2>/dev/null | grep -m1 '^## \[' | sed 's/.*\[\([^]]*\)\].*/\1/' || echo "")
 if [ -z "$remote_version" ]; then
     die_silent
 fi

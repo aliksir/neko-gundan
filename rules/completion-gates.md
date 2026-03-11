@@ -50,7 +50,7 @@ These items are added to the gate when the corresponding module is enabled in `n
 
 | # | Module | Check | How to verify | Activation condition |
 |---|--------|-------|---------------|---------------------|
-| 8 | whiteboard | Whiteboard archived | Move to archive, update dashboard | Platoon+ AND whiteboard: true |
+| 8 | whiteboard | Whiteboard archived | Move to archive, update dashboard | whiteboard: true |
 | 9 | checklist_export | All checklist items PASS/N/A | Checklist file verified, no unchecked items | checklist_export: true |
 | 10 | quality_metrics | Metrics updated | Metrics file updated with current task | quality_metrics: true |
 | 11 | isv | ISV recorded | Result dimensions filled, appended to ISV log | isv: true |

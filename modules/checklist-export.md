@@ -53,7 +53,7 @@ The checklist has 3 sections: Start, Task-specific, and Completion.
 ## Start
 - [x] Checklist created
 - [ ] Plan document created
-- [ ] Whiteboard created (platoon+, otherwise N/A)
+- [ ] Whiteboard created (reuse existing if same project name)
 
 ## Task-Specific
 - [ ] {item defined during planning by oyakata/shigoto-neko}

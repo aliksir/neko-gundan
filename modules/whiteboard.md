@@ -1,12 +1,12 @@
 # Whiteboard Module (WHITEBOARD-001)
 
-> **Module**: `whiteboard` | **Default**: ON | **Scale**: Platoon+
+> **Module**: `whiteboard` | **Default**: ON | **Scale**: All
 
-Cross-agent knowledge sharing through a shared whiteboard file.
+Cross-agent knowledge sharing and context persistence through a shared whiteboard file.
 
 ## Shigoto-neko: Whiteboard Management
 
-For platoon+ missions, create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` as part of the pre-dispatch hard gate (mandatory — no skip).
+For all missions, create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` as part of the pre-dispatch hard gate (mandatory — no skip). If a whiteboard with the same project name already exists, reuse it instead of creating a new one.
 
 `WHITEBOARD_DIR` defaults to `whiteboard/` (project root relative). Override in CLAUDE.md or environment config if your setup uses a different path (e.g., a directory monitored by a markdown preview tool).
 

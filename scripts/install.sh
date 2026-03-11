@@ -96,6 +96,58 @@ fi
 
 CLAUDE_DIR="$TARGET_DIR/.claude"
 
+# --- マニフェスト生成関数（インストール/ダウングレード共用） ---
+_to_json_array() {
+    local items="$1"
+    local first=true
+    printf '['
+    for item in $items; do
+        [ -z "$item" ] && continue
+        if [ "$first" = true ]; then
+            printf '"%s"' "$item"
+            first=false
+        else
+            printf ', "%s"' "$item"
+        fi
+    done
+    printf ']'
+}
+
+_write_manifest() {
+    local version=""
+    local installed_at=""
+
+    if [ -f "$NEKO_DIR/CHANGELOG.md" ]; then
+        version=$(grep -m1 '^## \[' "$NEKO_DIR/CHANGELOG.md" 2>/dev/null | sed 's/.*\[\([^]]*\)\].*/\1/' || echo "unknown")
+    else
+        version="unknown"
+    fi
+    installed_at=$(date -u "+%Y-%m-%dT%H:%M:%S" 2>/dev/null || date "+%Y-%m-%dT%H:%M:%S" 2>/dev/null || echo "unknown")
+
+    local agents_json rules_json modules_json commands_json
+    agents_json="$(_to_json_array "$AGENTS")"
+    rules_json="$(_to_json_array "$RULES")"
+    modules_json="$(_to_json_array "$MODULES")"
+    if echo "$SNIPPETS" | grep -qE "(implement|plan)"; then
+        commands_json='["neko-gundan.md"]'
+    else
+        commands_json='[]'
+    fi
+
+    printf '{\n'
+    printf '  "version": "%s",\n' "$version"
+    printf '  "mode": "%s",\n' "$MODE_INPUT"
+    printf '  "installed_at": "%s",\n' "$installed_at"
+    printf '  "neko_dir": "%s",\n' "$NEKO_DIR"
+    printf '  "files": {\n'
+    printf '    "agents": %s,\n' "$agents_json"
+    printf '    "rules": %s,\n' "$rules_json"
+    printf '    "modules": %s,\n' "$modules_json"
+    printf '    "commands": %s\n' "$commands_json"
+    printf '  }\n'
+    printf '}\n'
+}
+
 # --- モード定義 ---
 # 各モードが必要とするファイルを定義
 
@@ -330,6 +382,13 @@ if [ "$DOWNGRADE_MODE" = true ]; then
     echo ""
     echo -e "${GREEN}Downgrade complete!${NC}"
     echo ""
+
+    # マニフェスト更新（共通関数を呼び出し）
+    if _write_manifest > "$CLAUDE_DIR/.neko-gundan-manifest.json" 2>/dev/null; then
+        echo -e "  ${CYAN}Manifest:${NC} .claude/.neko-gundan-manifest.json (updated)"
+        echo ""
+    fi
+
     exit 0
 fi
 
@@ -503,3 +562,9 @@ else
     echo "To check for upstream updates: bash install.sh --update ${MODE_INPUT} ${TARGET_DIR}"
 fi
 echo ""
+
+# --- マニフェスト書き込み（共通関数を呼び出し） ---
+if _write_manifest > "$CLAUDE_DIR/.neko-gundan-manifest.json" 2>/dev/null; then
+    echo -e "  ${CYAN}Manifest:${NC} .claude/.neko-gundan-manifest.json (created)"
+    echo ""
+fi

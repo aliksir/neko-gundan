@@ -103,6 +103,46 @@ bash neko-gundan/scripts/install.sh --downgrade koneko ./your-project
 
 不要ファイルは `_deleted/neko-gundan-YYYYMMDD/` に安全退避（即削除しない）。戻したくなったらいつでも復元可能。
 
+## アップデート確認
+
+子猫軍団をインストールすると、インストーラが `~/.claude/.neko-gundan-manifest.json`（mode: `koneko`）にセットアップ情報を記録する。アップデート確認スクリプトはこれを使って新バージョンを通知する。
+
+**手動チェック:**
+
+```bash
+bash neko-gundan/scripts/check-update.sh
+# キャッシュを無視して即時チェック:
+bash neko-gundan/scripts/check-update.sh --force
+```
+
+新バージョンがある場合:
+
+```
+🔔 猫軍団: 新バージョン v1.8.0 が利用可能です（現在: v1.7.0）
+   インストール済みモード: koneko
+   → bash neko-gundan/scripts/install.sh --update koneko ./your-project
+```
+
+**セッション開始時の自動チェック（オプトイン）:**
+
+Claude Codeの設定ファイル（`~/.claude/settings.json`）に追加:
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "bash ~/.claude/neko-gundan/scripts/check-update.sh &",
+        "timeout": 10000
+      }
+    ]
+  }
+}
+```
+
+バックグラウンドで実行され、更新がある場合のみ通知する。デフォルトはOFF。
+
 ## 制限事項
 
 - **並列エージェントなし** — 全作業は逐次実行

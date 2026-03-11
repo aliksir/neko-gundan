@@ -103,6 +103,46 @@ bash neko-gundan/scripts/install.sh --downgrade koneko ./your-project
 
 Unneeded files are safely moved to `_deleted/neko-gundan-YYYYMMDD/` (not deleted). Restore anytime if you switch back.
 
+## Update Checker
+
+When you install Koneko, the installer records your setup in `~/.claude/.neko-gundan-manifest.json` (mode: `koneko`). The update checker uses this to notify you when a new version is available.
+
+**Manual check:**
+
+```bash
+bash neko-gundan/scripts/check-update.sh
+# Force-check (skip 24h cache):
+bash neko-gundan/scripts/check-update.sh --force
+```
+
+If a new version is available:
+
+```
+🔔 猫軍団: 新バージョン v1.8.0 が利用可能です（現在: v1.7.0）
+   インストール済みモード: koneko
+   → bash neko-gundan/scripts/install.sh --update koneko ./your-project
+```
+
+**Automatic check at session start (opt-in):**
+
+Add to your Claude Code settings (`~/.claude/settings.json`):
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "bash ~/.claude/neko-gundan/scripts/check-update.sh &",
+        "timeout": 10000
+      }
+    ]
+  }
+}
+```
+
+Runs in the background — only notifies when an update exists. Default is OFF.
+
 ## Limitations
 
 - **No parallel agents** — all work is sequential

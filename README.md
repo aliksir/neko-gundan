@@ -74,6 +74,51 @@ The updater shows a diff for each changed file and lets you choose per file — 
 | `CLAUDE.md` snippet | **Manual review** | Merge new features with your project-specific instructions |
 | `scripts/*.sh` | Accept upstream | Bug fixes and new features |
 
+## Update Checker
+
+The installer records which modes and files you installed in `~/.claude/.neko-gundan-manifest.json`. The update checker uses this to tell you when a new version is available.
+
+**Manual check:**
+
+```bash
+bash neko-gundan/scripts/check-update.sh
+# or force-check (skip 24h cache):
+bash neko-gundan/scripts/check-update.sh --force
+```
+
+If a new version is available:
+
+```
+🔔 猫軍団: 新バージョン v1.8.0 が利用可能です（現在: v1.7.0）
+   インストール済みモード: quality+implement
+   → bash neko-gundan/scripts/install.sh --update quality+implement ./your-project
+```
+
+**Automatic check at session start (opt-in):**
+
+Add to your Claude Code settings (`~/.claude/settings.json`):
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "bash ~/.claude/neko-gundan/scripts/check-update.sh &",
+        "timeout": 10000
+      }
+    ]
+  }
+}
+```
+
+The check runs in the background and only notifies you when an update exists. No automatic updates — just a notification.
+
+**Notes:**
+- Results are cached for 24 hours (`~/.claude/.neko-gundan-update-cache`)
+- No network call if curl is not available — fails silently
+- The manifest (`~/.claude/.neko-gundan-manifest.json`) is created automatically by the installer
+
 ## What You Do (3 Steps)
 
 All the protocols, modules, and safety rules run automatically. You only do three things:

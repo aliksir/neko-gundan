@@ -74,6 +74,51 @@ bash scripts/install.sh --update all ./your-project
 | `CLAUDE.md` スニペット | **手動確認** | 新機能とPJ固有の指示をマージ |
 | `scripts/*.sh` | upstream優先 | バグ修正と新機能 |
 
+## アップデート確認
+
+インストーラは `~/.claude/.neko-gundan-manifest.json` にインストール済みのモードとファイル一覧を記録する。アップデート確認スクリプトはこれを使って新バージョンを通知する。
+
+**手動チェック:**
+
+```bash
+bash neko-gundan/scripts/check-update.sh
+# キャッシュを無視して即時チェック:
+bash neko-gundan/scripts/check-update.sh --force
+```
+
+新バージョンがある場合:
+
+```
+🔔 猫軍団: 新バージョン v1.8.0 が利用可能です（現在: v1.7.0）
+   インストール済みモード: quality+implement
+   → bash neko-gundan/scripts/install.sh --update quality+implement ./your-project
+```
+
+**セッション開始時の自動チェック（オプトイン）:**
+
+Claude Codeの設定ファイル（`~/.claude/settings.json`）に追加:
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "bash ~/.claude/neko-gundan/scripts/check-update.sh &",
+        "timeout": 10000
+      }
+    ]
+  }
+}
+```
+
+バックグラウンドで実行され、更新がある場合のみ通知する。自動更新はしない。
+
+**注意事項:**
+- チェック結果は24時間キャッシュ（`~/.claude/.neko-gundan-update-cache`）
+- curlが使えない環境はサイレント終了（エラーにならない）
+- マニフェスト（`~/.claude/.neko-gundan-manifest.json`）はインストーラが自動生成する
+
 ## あなたがやることは3つだけ
 
 プロトコルもモジュールも安全ルールも、全部自動で動く。あなたがやるのは3つだけ:

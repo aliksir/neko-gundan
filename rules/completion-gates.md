@@ -4,7 +4,7 @@ Quality checkpoints that must be passed before declaring any task complete. No e
 
 ## Start Gate (Before Beginning Work)
 
-Execute before starting any platoon+ mission:
+Execute before starting any platoon+ mission. The gate is **not complete until all artifacts exist**.
 
 | # | Check | How to verify |
 |---|-------|---------------|
@@ -12,6 +12,10 @@ Execute before starting any platoon+ mission:
 | 2 | Target files identified | File list exists |
 | 3 | No unresolved blockers | Check dashboard/whiteboard |
 | 4 | Current state understood | Read target files, `git status` |
+| 5 | Plan document created | `plans/{project}_*.md` exists with scope, steps, success criteria |
+| 6 | QA/Work checklist created | `checklist/{date}_{project}.md` exists with work items + QA items derived from the plan |
+| 7 | Dashboard initialized (Platoon+) | `status/dashboard.md` populated with What/Why/Who/Constraints/Current State |
+| 8 | **Artifact existence confirmed** | `ls` confirms plan + checklist (+ dashboard for Platoon+) all exist. **Gate incomplete until all artifacts are present** |
 
 ## Completion Gate (Before Saying "Done")
 

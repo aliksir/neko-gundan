@@ -15,10 +15,11 @@ PLAN → DESIGN → SETUP → EXECUTE → REVIEW → VERIFY → REPORT
 | 項目 | 内容 |
 |------|------|
 | 担当 | 親方猫 (oyakata-neko) |
-| 開始条件 | 総司令からのタスク受領 |
-| 終了条件 | Milestone / Wave / Task に分解完了、成功基準定義済み |
-| 成果物 | `status/dashboard.md`、TaskCreate 完了 |
+| 開始条件 | 総司令からのタスク受領 + Start Gate通過 |
+| 終了条件 | Milestone / Wave / Task に分解完了、成功基準定義済み、**全成果物が存在** |
+| 成果物 | `plans/{プロジェクト名}_*.md`（計画書）、`checklist/{日付}_{プロジェクト名}.md`（QA/作業チェックリスト）、`status/dashboard.md`（中隊以上）、TaskCreate 完了 |
 | 計画ゲート | スコープ外の明示 + 定量的な成功基準（CLAUDE.md参照） |
+| 完了確認 | `ls` で計画書・チェックリスト（・ダッシュボード）の存在を確認。**全て揃って初めてPLANフェーズ完了** |
 
 ### DESIGN（設計フェーズ）
 

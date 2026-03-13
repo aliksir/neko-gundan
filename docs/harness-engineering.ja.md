@@ -19,8 +19,8 @@ AIエージェントを取り巻くシステム — プロンプト、ツール�
 | **異議を申し立てるエージェント** | OBJECTIONプロトコル | エージェント定義 |
 | **安全な削除** | `_deleted/` バッファ | `rules/safety-tiers.md` |
 | **競合防止** | ファイル所有権管理 | `modules/race-prevention.md` |
-| **スタック検出** | Heartbeat + 3層Watchdog | `modules/heartbeat.md`、`rules/takt-ralph.md` |
-| **構造化ハンドオフ** | YAMLスキーマ + FIDES | `rules/handoff-schema.md`、`modules/fides.md` |
+| **スタック検出** | Heartbeat + 3層Watchdog | `modules/heartbeat.md` |
+| **構造化ハンドオフ** | YAMLスキーマ + FIDES | `modules/handoff-schema.md`、`modules/fides.md` |
 | **指示を集中させる** | プロセスウェイト（ライト/標準/ストリクト） | `modules/process-weight.md` |
 
 ## ユーザー向けの重要な知見

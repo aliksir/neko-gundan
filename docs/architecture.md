@@ -86,11 +86,11 @@ Battalion:[Oyakata] -> [Shigoto] -> [Genba A] + [Genba B] + [Genba C] + [Kurouto
 ## Quality Assurance Pipeline
 
 ```
-1. Start Gate (5 checks with evidence)
+1. Start Gate (see rules/completion-gates.md for items)
       |
 2. Implementation (genba-neko)
       |
-3. Completion Gate (9 checks with evidence) -- executed by shigoto-neko
+3. Completion Gate (see rules/completion-gates.md for items) -- executed by shigoto-neko
       |
 4. Gate Verification -- executed by kurouto-neko
       |
@@ -100,6 +100,8 @@ Battalion:[Oyakata] -> [Shigoto] -> [Genba A] + [Genba B] + [Genba C] + [Kurouto
       |
 6. APPROVE -> Report to oyakata -> Report to commander
 ```
+
+> **SSOT**: Gate definitions (item counts, check details) are maintained in `rules/completion-gates.md`. Do not hardcode counts elsewhere.
 
 ## Protocol Summary
 

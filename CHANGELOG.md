@@ -178,7 +178,7 @@
   - Result dimensions (recorded at completion): outcome, review_cycles, intervention_count
   - Anchor points table for consistent scoring across agents
   - Lite version (3 dimensions) for squad-level tasks
-- ISV field added to handoff schema (`rules/handoff-schema.md`)
+- ISV field added to handoff schema (`modules/handoff-schema.md`)
 - ISV start values added to shigoto-neko task instruction format
 - ISV result values added to shigoto-neko report format
 - ISV recording added as completion gate item #10

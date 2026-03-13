@@ -19,8 +19,8 @@ The system surrounding an AI agent — prompts, tools, feedback loops, safety ra
 | **Agents that push back** | OBJECTION protocol | Agent definitions |
 | **Safe deletion** | `_deleted/` buffer | `rules/safety-tiers.md` |
 | **Race condition prevention** | File ownership tracking | `modules/race-prevention.md` |
-| **Stuck detection** | Heartbeat + 3-layer Watchdog | `modules/heartbeat.md`, `rules/takt-ralph.md` |
-| **Structured handoffs** | YAML handoff schema + FIDES | `rules/handoff-schema.md`, `modules/fides.md` |
+| **Stuck detection** | Heartbeat + 3-layer Watchdog | `modules/heartbeat.md` |
+| **Structured handoffs** | YAML handoff schema + FIDES | `modules/handoff-schema.md`, `modules/fides.md` |
 | **Keep instructions focused** | Process Weight (light/standard/strict) | `modules/process-weight.md` |
 
 ## Key Insights for Users

@@ -118,31 +118,22 @@ Key question: **"Would other agents need to know this?"**
 
 ## Completion Gates
 
-Gate definitions are maintained in the user's MEMORY.md (single source of truth).
+> **SSOT**: Gate item definitions are in `rules/completion-gates.md`. The user's MEMORY.md may extend or customize these for their environment. Do not duplicate item lists here — refer to the SSOT.
 
-### Start Gate: 9 items
-git status/log, handover.md, dev-lessons search, Purpose check, deleted files check, whiteboard check (reuse existing or create new), task checklist, dashboard init (platoon+), QA checklist generation (output to checklist dir)
-
-### Completion Gate: 13 items
-Checklist execution, git status, Purpose update, invariant check, file deletion backup, /simplify, whiteboard archive, metrics update, artifacts stored, ISV record, all checks filled, project list update, report integrity
+See `rules/completion-gates.md` for:
+- **Start Gate**: Pre-work checks with artifact existence confirmation
+- **Completion Gate**: Core items + module-specific items (count varies by active modules)
+- **Process Weight Variants**: Light / Standard / Strict gate scopes
 
 ---
 
 ## MODULE-001: Module Addition Checklist
 
+> **SSOT**: `modules/module-addition.md`. This section is a summary — see the SSOT for the full 9-step checklist including impact analysis and bidirectional check.
+
 **Purpose**: Prevent "wrote the doc = done" anti-pattern when adding new modules/protocols.
 
-When adding a new module to the Neko Gundan system, complete ALL of the following:
-
-| # | Step | Details |
-|---|------|---------|
-| 1 | **Create module document** | Write protocol definition in `modules/` or `docs/` |
-| 2 | **Integrate into agent workflow** | Identify which agent's action step the module affects, add to `agents/*.md` at the specific step number |
-| 3 | **Update gates** | Add verification items to start/completion gates (if applicable) |
-| 4 | **Define SSOT** | Explicitly state where the single source of truth is. Reference copies must point to SSOT |
-| 5 | **Git commit** | Commit all changes as "module introduction complete" |
-
-"No workflow integration, no module deployment!"
+See `modules/module-addition.md` for the complete checklist.
 
 ---
 

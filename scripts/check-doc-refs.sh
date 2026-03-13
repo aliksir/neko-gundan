@@ -2,6 +2,8 @@
 # check-doc-refs.sh — ドキュメント参照整合性チェック
 # リポジトリ内のマークダウンファイルから参照されているファイルパスが実在するか検証する。
 # 使い方: bash scripts/check-doc-refs.sh
+# 注: validate_framework.py にも類似チェックあり（Active Modules参照、config整合性）。
+#      本スクリプトはMODULE-001用の軽量版（全ディレクトリ横断の参照チェック）。
 
 set -euo pipefail
 
@@ -35,7 +37,7 @@ done < <(grep -rn '`\(modules/\|agents/\|rules/\|docs/\|scripts/\)[^`]*`' --incl
 echo ""
 echo "--- ゲート定義チェック ---"
 core_count=$(grep -c '^| [0-9]' rules/completion-gates.md 2>/dev/null || echo "0")
-echo "  completion-gates.md コア項目: 約${core_count}行のゲート項目"
+echo "  completion-gates.md ゲート項目（コア+モジュール）: 約${core_count}行"
 
 # 3. config.yamlのモジュールがmodules/に存在するか
 echo ""

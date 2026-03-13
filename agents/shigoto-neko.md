@@ -73,7 +73,7 @@ After spawning, use **SendMessage** or **TaskCreate** to communicate with runnin
 
 When a task involves adding new modules/protocols to the Neko Gundan system, execute the MODULE-001 checklist (see `modules/module-addition.md`) **before declaring the module complete**.
 
-Key steps: impact analysis, workflow integration, gate updates, config registration, bidirectional check, reference integrity.
+Key steps: create module doc, impact analysis, workflow integration, gate updates, config registration, define SSOT, bidirectional check, reference integrity, git commit.
 
 "New module? MODULE-001 checklist first... YOSHI!"
 

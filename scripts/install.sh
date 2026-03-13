@@ -174,7 +174,7 @@ koneko_modules=""
 # 全猫軍団ファイルのマスターリスト（ダウングレード用）
 all_agents="oyakata-neko.md shigoto-neko.md genba-neko.md kurouto-neko.md koneko-neko.md"
 all_rules="review-protocol.md completion-gates.md safety-tiers.md koneko-gates.md"
-all_modules="ensemble-judge.md jit-tests.md reflexion.md linter-protection.md race-prevention.md heartbeat.md tdd-separation.md whiteboard.md isv.md spec-driven-review.md fides.md process-weight.md arbitrator.md capacity-escalation.md handoff-schema.md checklist-export.md quality-metrics.md"
+all_modules="ensemble-judge.md jit-tests.md reflexion.md linter-protection.md race-prevention.md heartbeat.md tdd-separation.md whiteboard.md isv.md spec-driven-review.md fides.md process-weight.md arbitrator.md capacity-escalation.md handoff-schema.md checklist-export.md quality-metrics.md module-addition.md"
 all_commands="neko-gundan.md"
 
 # --- モード解析（+で結合可能） ---

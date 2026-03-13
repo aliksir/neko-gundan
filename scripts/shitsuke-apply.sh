@@ -40,6 +40,11 @@ MODULE_FILES=(
     [spec_driven_review]="spec-driven-review.md"
     [checklist_export]="checklist-export.md"
     [quality_metrics]="quality-metrics.md"
+    [faceted_prompting]="faceted-prompting.md"
+    [linter_protection]="linter-protection.md"
+    [module_addition]="module-addition.md"
+    [process_weight]="process-weight.md"
+    [progress_visibility]="progress-visibility.md"
 )
 
 # 全モジュールファイル名の配列（クリーンアップ用）
@@ -48,7 +53,8 @@ ALL_MODULE_FILES=(
     "isv.md" "fides.md" "capacity-escalation.md" "arbitrator.md"
     "handoff-schema.md" "ensemble-judge.md" "jit-tests.md"
     "tdd-separation.md" "spec-driven-review.md" "checklist-export.md"
-    "quality-metrics.md"
+    "quality-metrics.md" "faceted-prompting.md" "linter-protection.md"
+    "module-addition.md" "process-weight.md" "progress-visibility.md"
 )
 
 # --- 引数処理 ---

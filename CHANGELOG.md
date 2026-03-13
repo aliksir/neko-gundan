@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.7.2] - 2026-03-13
+
+### Added
+- **Faceted Prompting module** (`modules/faceted-prompting.md`): Prompt design guideline based on Separation of Concerns
+  - 5 facets: Persona, Knowledge, Instruction, Output Contract, Policy
+  - Recency Effect placement strategy: Policy/constraints at the END of agent definitions for stronger LLM adherence
+  - Mapping to Neko Gundan's existing agent structure
+  - Guidelines for creating and modifying agent definitions
+
+### Changed
+- **All 4 agent definitions restructured** to follow Faceted Prompting order
+  - Behavioral Rules, Safety Tiers, OBJECTION protocols moved to `## Policy (Recency Zone)` section at file end
+  - All existing content preserved — section order change only, no content modifications
+  - Each Policy section includes reference note to `modules/faceted-prompting.md`
+- **neko-gundan.config.yaml**: Added `faceted_prompting` module under new "プロンプト設計系" category
+
+### Thanks
+- Inspired by nrslib's [TAKT SpeakerDeck presentation](https://speakerdeck.com/nrslib/) on AI coding agent quality assurance
+
 ## [1.7.1] - 2026-03-13
 
 ### Added

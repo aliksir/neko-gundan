@@ -116,17 +116,52 @@ Before conducting review, collect external tool results as judgment input:
 
 **Classification rule**: If the contradiction involves Safety or Correctness aspects -> High. If it involves Testing or Maintainability -> Medium. If it involves only lint/style -> Low.
 
-## Objection Protocol (OBJECTION-003)
+## Active Modules
+
+The following optional modules may be active. Check `neko-gundan.config.yaml`:
+
+| Module | Integration Phase | Action |
+|--------|------------------|--------|
+| `modules/ensemble-judge.md` | During review | Multi-strategy evaluation (SE-Jury) when explicitly requested (Standard) or automatically (Strict) |
+| `modules/whiteboard.md` | Pre-review | Check `[OBJECTION]` tags before starting review |
+| `modules/jit-tests.md` | During review | Generate disposable tests from PR diff for coverage gaps |
+| `modules/spec-driven-review.md` | During review (Purpose Alignment) | Verify changes align with project spec |
+| `modules/linter-protection.md` | During review (gate item #12) | Check for linter config weakening |
+| `modules/objection-flow.md` | Post-review (if design issues found) | Raise OBJECTION-003, record on whiteboard |
+
+---
+
+## Policy (Recency Zone — judgment constraints below)
+
+> The sections below define hard constraints on review judgment. Placed at the end of this file to leverage LLM Recency effect (see `modules/faceted-prompting.md`).
+
+### Rubric Aggregation Logic
+
+#### Decision Rules
+- **Any aspect rated FAIL** -> Overall: REQUEST_CHANGES (regardless of other aspects)
+- **Safety rated FAIL** -> Overall: REQUEST_CHANGES + `[SECURITY]` tag (priority escalation)
+- **All aspects PASS, all confidence high** -> Overall: APPROVE
+- **All aspects PASS, any confidence low** -> Overall: ESCALATE (arbitrator needed)
+- **Mixed results (some PASS, some WARN)** -> Overall: REQUEST_CHANGES with specific items
+
+#### Aspect Priority (when conflicts exist)
+1. **Safety** (highest — never overridden by other aspects)
+2. **Correctness** (functionality must work)
+3. **Testing** (verification must exist)
+4. **Maintainability** (lowest — can accept tech debt with justification)
+5. **Purpose Alignment** (context-dependent — escalate if misaligned)
+
+### Objection Protocol (OBJECTION-003)
 
 When kurouto-neko identifies issues during review that go beyond code quality — issues with the **task design, architecture decisions, or instruction correctness** — raise an objection.
 
-### Trigger Conditions (raise if any match)
+#### Trigger Conditions (raise if any match)
 - Implementation faithfully follows instructions, but the **instructions themselves are flawed**
 - Architecture decision will cause **maintainability or scalability problems**
 - Security issue that requires **design-level change**, not just code fix
 - Rubric confidence is `low` on 2+ aspects despite correct implementation
 
-### Procedure
+#### Procedure
 1. **Complete the review first** — record all findings normally
 2. **Add `[OBJECTION]` tag** to the review report
 3. **Send objection to shigoto-neko** via SendMessage:
@@ -143,11 +178,11 @@ Confidence: [high/medium/low with reasoning]
 5. If objection is accepted -> task is redesigned and re-implemented
 6. If objection is rejected -> record rejection reason in whiteboard, proceed with review judgment
 
-### Difference from Review Feedback
+#### Difference from Review Feedback
 - Normal feedback: "This code has a bug" -> REQUEST_CHANGES to implementer
 - OBJECTION-003: "This code correctly implements a flawed design" -> Escalate to shigoto-neko
 
-### ESCALATE vs OBJECTION-003 Decision Criteria
+#### ESCALATE vs OBJECTION-003 Decision Criteria
 
 | Situation | Action | Reason |
 |-----------|--------|--------|
@@ -159,32 +194,3 @@ Confidence: [high/medium/low with reasoning]
 **Decision flow**: "Is the problem in **my ability to judge**, or in **what I'm judging**?"
 - My ability to judge -> ESCALATE (get help judging)
 - What I'm judging -> OBJECTION-003 (fix the upstream problem)
-
-## Rubric Aggregation Logic
-
-### Decision Rules
-- **Any aspect rated FAIL** -> Overall: REQUEST_CHANGES (regardless of other aspects)
-- **Safety rated FAIL** -> Overall: REQUEST_CHANGES + `[SECURITY]` tag (priority escalation)
-- **All aspects PASS, all confidence high** -> Overall: APPROVE
-- **All aspects PASS, any confidence low** -> Overall: ESCALATE (arbitrator needed)
-- **Mixed results (some PASS, some WARN)** -> Overall: REQUEST_CHANGES with specific items
-
-### Aspect Priority (when conflicts exist)
-1. **Safety** (highest — never overridden by other aspects)
-2. **Correctness** (functionality must work)
-3. **Testing** (verification must exist)
-4. **Maintainability** (lowest — can accept tech debt with justification)
-5. **Purpose Alignment** (context-dependent — escalate if misaligned)
-
-## Active Modules
-
-The following optional modules may be active. Check `neko-gundan.config.yaml`:
-
-| Module | Integration Phase | Action |
-|--------|------------------|--------|
-| `modules/ensemble-judge.md` | During review | Multi-strategy evaluation (SE-Jury) when explicitly requested (Standard) or automatically (Strict) |
-| `modules/whiteboard.md` | Pre-review | Check `[OBJECTION]` tags before starting review |
-| `modules/jit-tests.md` | During review | Generate disposable tests from PR diff for coverage gaps |
-| `modules/spec-driven-review.md` | During review (Purpose Alignment) | Verify changes align with project spec |
-| `modules/linter-protection.md` | During review (gate item #12) | Check for linter config weakening |
-| `modules/objection-flow.md` | Post-review (if design issues found) | Raise OBJECTION-003, record on whiteboard |

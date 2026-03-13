@@ -32,6 +32,9 @@ shitsuke:
   isv: true               # Intent State Vector — 意図の数値化（上級者向け）— Gate item #11
   fides: true              # データ信頼レベル FIDES（上級者向け）— No gate item (trust tagging)
 
+  # --- プロンプト設計系 ---
+  faceted_prompting: true  # Faceted Prompting — プロンプトのSoC設計・Recency Effect活用 — No gate item (design guideline)
+
   # --- 高度な制御系 ---
   capacity_escalation: true   # 容量エスカレーション（CAPACITY-001）— No gate item (process module)
   arbitrator: true            # 仲裁プロセス（3回ループ超過時）— No gate item (process module)

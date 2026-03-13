@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.7.1] - 2026-03-13
+
+### Added
+- **Gate Guard hook** (`hooks/gate-guard.mjs`): PreToolUse hook that enforces start gate compliance
+  - Blocks Edit/Write on project source code when `plans/` or `checklist/` files are missing
+  - Mechanically prevents gate skipping — LLM interpretation alone is no longer sufficient
+  - Auto-skips meta directories (plans/, checklist/, result/, etc.) and meta files (CLAUDE.md, handover.md)
+  - Cross-platform: Windows + Unix compatible (uses `process.stdin.fd`)
+
 ## [1.7.0] - 2026-03-10
 
 ### Added

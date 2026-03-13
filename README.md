@@ -119,6 +119,29 @@ The check runs in the background and only notifies you when an update exists. No
 - No network call if curl is not available — fails silently
 - The manifest (`~/.claude/.neko-gundan-manifest.json`) is created automatically by the installer
 
+### Gate Guard Hook (opt-in)
+
+Mechanically enforces start gate compliance. Blocks `Edit`/`Write` on project source code when `plans/` or `checklist/` files are missing — prevents the agent from skipping the planning phase.
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [{ "type": "command", "command": "node path/to/hooks/gate-guard.mjs", "timeout": 3 }]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [{ "type": "command", "command": "node path/to/hooks/gate-guard.mjs", "timeout": 3 }]
+      }
+    ]
+  }
+}
+```
+
+The hook checks `plans/` and `checklist/` directories for files matching the project name. Meta directories and meta files (CLAUDE.md, handover.md, etc.) are excluded so gate artifacts can still be created.
+
 ## What You Do (3 Steps)
 
 All the protocols, modules, and safety rules run automatically. You only do three things:

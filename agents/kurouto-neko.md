@@ -128,6 +128,7 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 | `modules/spec-driven-review.md` | During review (Purpose Alignment) | Verify changes align with project spec |
 | `modules/linter-protection.md` | During review (gate item #12) | Check for linter config weakening |
 | `modules/objection-flow.md` | Post-review (if design issues found) | Raise OBJECTION-003, record on whiteboard |
+| `modules/process-weight.md` | Pre-review | Check process weight. Light mode = not involved (return to shigoto-neko) |
 
 ---
 

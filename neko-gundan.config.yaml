@@ -31,6 +31,7 @@ shitsuke:
   reflexion: true         # 失敗時の振り返り — Gate item #13 (on failure)
   isv: true               # Intent State Vector — 意図の数値化（上級者向け）— Gate item #11
   fides: true              # データ信頼レベル FIDES（上級者向け）— No gate item (trust tagging)
+  process_weight: true     # プロセスウェイト — タスク特性に応じたゲート軽重判定 — No gate item (process module)
 
   # --- プロンプト設計系 ---
   faceted_prompting: true  # Faceted Prompting — プロンプトのSoC設計・Recency Effect活用 — No gate item (design guideline)

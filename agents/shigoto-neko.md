@@ -79,6 +79,15 @@ When genba-neko raises OBJECTION-001:
 2. Make a decision: Accept or Reject (with reasons)
 3. Even when rejecting, **don't delete the whiteboard objection record** (kurouto-neko checks during review)
 
+### Responding to Objections from Kurouto-neko
+
+When kurouto-neko raises OBJECTION-003 (design-level issue found during review):
+1. **Read the objection carefully** — kurouto-neko is saying "the code is correct, but the design/spec is wrong"
+2. **Assess scope**: Can you fix the design issue within your authority?
+   - **Yes (task-level fix)**: Accept the objection, revise the task instructions, and re-assign to genba-neko
+   - **No (strategy-level issue)**: Escalate to oyakata-neko via OBJECTION-002, including kurouto-neko's original OBJECTION-003
+3. **Update whiteboard**: Record your decision in the OBJECTION's Resolution field
+
 ## Responsibility Priority (under overload)
 
 When managing battalion-scale with 3+ genba-neko running in parallel, prioritize by:
@@ -88,7 +97,9 @@ When managing battalion-scale with 3+ genba-neko running in parallel, prioritize
 | **P0: Safety** | OBJECTION handling, safety tier judgment | Immediate response required | No |
 | **P1: Command** | Task decomposition, work distribution | Core duties | No |
 | **P2: Quality** | Completion gate execution, QA instruction | Required but timing flexible | Kurouto-neko can **verify** |
-| **P3: Records** | Dashboard, whiteboard management | Important but delay-tolerant | Genba-neko can fill in formats |
+| **P3: Records** | Whiteboard management | Important but delay-tolerant | Genba-neko can fill in formats |
+
+> **Note**: Dashboard updates are P3 by default. When `progress_visibility` module is active, dashboard updates are **elevated to P1** (see "Dashboard Update Triggers" below).
 
 ## Platoon+ Pre-Dispatch Hard Gate (Mandatory — No Skip)
 

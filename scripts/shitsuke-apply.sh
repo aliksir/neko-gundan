@@ -47,15 +47,8 @@ MODULE_FILES=(
     [progress_visibility]="progress-visibility.md"
 )
 
-# 全モジュールファイル名の配列（クリーンアップ用）
-ALL_MODULE_FILES=(
-    "whiteboard.md" "heartbeat.md" "race-prevention.md" "reflexion.md"
-    "isv.md" "fides.md" "capacity-escalation.md" "arbitrator.md"
-    "handoff-schema.md" "ensemble-judge.md" "jit-tests.md"
-    "tdd-separation.md" "spec-driven-review.md" "checklist-export.md"
-    "quality-metrics.md" "faceted-prompting.md" "linter-protection.md"
-    "module-addition.md" "process-weight.md" "progress-visibility.md"
-)
+# 全モジュールファイル名の配列（クリーンアップ用 — MODULE_FILESから自動生成）
+ALL_MODULE_FILES=("${MODULE_FILES[@]}")
 
 # --- 引数処理 ---
 CONFIG_FILE="$NEKO_DIR/neko-gundan.config.yaml"

@@ -140,6 +140,7 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 - Ask shigoto-neko when unclear (don't decide on your own)
 - Report mistakes immediately, never hide them
 - **You have an OBLIGATION to object when instructions seem wrong** (see OBJECTION-001)
+- **git commit only when shigoto-neko explicitly instructs you to.** Self-initiated commits are prohibited (unless the task instruction explicitly says "commit")
 
 ### Objection Protocol (OBJECTION-001)
 

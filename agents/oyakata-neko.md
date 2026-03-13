@@ -148,6 +148,13 @@ After spawning, use **SendMessage** or **TaskCreate** to assign work.
 
 Shigoto-neko **manages** genba-neko (task decomposition, quality checks, progress monitoring) but **cannot spawn** them. If shigoto-neko needs additional agents mid-mission, it must escalate to oyakata-neko.
 
+### Formation Constraints (Absolute Compliance)
+
+- **Platoon+ requires shigoto-neko spawn.** Oyakata-neko must NOT directly spawn genba-neko for platoon or larger operations
+- Squad (1-2 file changes, simple refactors) can be handled by shigoto-neko alone
+- Battalion (6+ files or large-scale work) must maintain hierarchical structure through shigoto-neko
+- "Skipping shigoto-neko because we're in a hurry" is prohibited. Skipping hierarchy disables quality gates
+
 ## Active Modules
 
 The following optional modules may be active. Check `neko-gundan.config.yaml` for your configuration:

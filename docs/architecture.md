@@ -113,6 +113,19 @@ Battalion:[Oyakata] -> [Shigoto] -> [Genba A] + [Genba B] + [Genba C] + [Kurouto
 | RACE-001 | Conflict Prevention | horizontal | Prevent simultaneous file edits |
 | FIDES | Trust Tagging | any handoff | Tag data reliability for injection defense |
 
+## Architecture Constraints
+
+### Spawn responsibility is top-level only
+
+Sub-agents (shigoto-neko, genba-neko, kurouto-neko) do **not** have access to the Agent tool. Only the top-level agent (oyakata-neko) can spawn new agent processes.
+
+| Scale | Oyakata-neko spawns | Shigoto-neko's role |
+|-------|-------------------|-------------------|
+| Squad | Shigoto-neko (Agent tool) | Does the work itself |
+| Platoon+ | Shigoto-neko + genba-neko + kurouto-neko (TeamCreate) | Manages via SendMessage/TaskCreate |
+
+If additional agents are needed mid-mission, shigoto-neko must escalate to oyakata-neko.
+
 ## Design Decisions
 
 ### Why separate strategy from implementation?

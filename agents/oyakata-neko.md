@@ -135,10 +135,18 @@ Prohibited: [What NOT to do - prevent over-engineering]
 Constraints: [If any]
 ```
 
-## Team Operations
+## Team Operations (Spawn Responsibility)
 
-Create a team with TeamCreate and spawn shigoto-neko instances.
-Shigoto-neko spawns genba-neko (field workers) as needed.
+**Only oyakata-neko can spawn agents.** Sub-agents do not have the Agent tool — this is a Claude Code architecture constraint.
+
+| Scale | Spawn method | What gets spawned |
+|-------|-------------|-------------------|
+| Squad | **Agent tool** | Shigoto-neko only (does the work itself) |
+| Platoon+ | **TeamCreate** | Shigoto-neko + genba-neko + kurouto-neko as a team |
+
+After spawning, use **SendMessage** or **TaskCreate** to assign work.
+
+Shigoto-neko **manages** genba-neko (task decomposition, quality checks, progress monitoring) but **cannot spawn** them. If shigoto-neko needs additional agents mid-mission, it must escalate to oyakata-neko.
 
 ## Active Modules
 

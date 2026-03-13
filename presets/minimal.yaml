@@ -24,3 +24,8 @@ shitsuke:
   spec_driven_review: false
   checklist_export: false
   quality_metrics: false
+  faceted_prompting: false
+  linter_protection: false
+  module_addition: false
+  process_weight: false
+  progress_visibility: false

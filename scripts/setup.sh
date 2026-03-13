@@ -136,7 +136,7 @@ check_config "config/concurrency.json"   "Concurrency設定"
 check_config "config/thresholds.json"    "Stall閾値設定"
 check_config "config/lifecycle.json"     "ライフサイクル設定"
 check_config "config/proof-of-work.json" "PoW設定"
-check_config "WORKFLOW.md"               "ワークフロー定義"
+check_config "docs/WORKFLOW.md"          "ワークフロー定義"
 echo ""
 
 # 8. ゾンビエージェント回収

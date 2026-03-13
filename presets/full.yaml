@@ -20,6 +20,11 @@
 #   - modules/spec-driven-review.md
 #   - modules/checklist-export.md
 #   - modules/quality-metrics.md
+#   - modules/faceted-prompting.md
+#   - modules/linter-protection.md
+#   - modules/module-addition.md
+#   - modules/process-weight.md
+#   - modules/progress-visibility.md
 # =============================================================================
 
 shitsuke:
@@ -38,3 +43,8 @@ shitsuke:
   spec_driven_review: true
   checklist_export: true
   quality_metrics: true
+  faceted_prompting: true
+  linter_protection: true
+  module_addition: true
+  process_weight: true
+  progress_visibility: true

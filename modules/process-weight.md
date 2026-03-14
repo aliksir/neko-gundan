@@ -16,6 +16,34 @@ Dynamic process weight selection. Start light, escalate when needed.
 | **Plans/Reports** | 1-line summary | Standard | Detailed |
 | **ISV** | Skip | Optional | Required |
 
+## Dynamic Topology Selection (arXiv:2602.16873)
+
+Task topology (how agents are connected) matters more than model choice. Select topology based on task dependency structure:
+
+### Topology Selection Guide
+
+| Topology | When to Use | Neko Gundan Mapping |
+|----------|------------|-------------------|
+| **Chain** (sequential) | Tasks have strict ordering dependencies (A→B→C) | Squad: single worker, sequential steps |
+| **Star** (hub-spoke) | Independent subtasks coordinated by a central manager | Platoon: shigoto-neko coordinates independent genba-neko |
+| **Hierarchical** | Complex tasks with sub-managers needed | Battalion: oyakata → shigoto → genba layers |
+| **Hybrid** | Mix of dependent and independent subtasks | Platoon+: some parallel, some sequential waves |
+
+### Task Dependency Analysis (before team formation)
+
+Before selecting scale and topology, analyze the task's dependency graph:
+
+1. **List all subtasks** from the plan
+2. **Identify dependencies**: Which subtasks require output from others?
+3. **Calculate parallelism potential**: Max independent subtasks at any point
+4. **Select topology**:
+   - Parallelism = 1 → Chain
+   - Parallelism > 1, no sub-management needed → Star
+   - Parallelism > 1, sub-management needed → Hierarchical
+   - Mixed → Hybrid (waves of parallel + sequential)
+
+This analysis replaces pure file-count-based scaling with dependency-aware scaling.
+
 ## Activation Keywords
 
 Users trigger process weight with natural language:

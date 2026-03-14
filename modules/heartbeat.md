@@ -30,6 +30,39 @@ What I need: [Decision / Information / Alternative approach suggestion / Nothing
 
 "Struggling in silence isn't a virtue. The sooner you speak up, the sooner it gets fixed."
 
+## Causal Failure Attribution (arXiv:2602.23701)
+
+When a task fails or gets stuck, identify **root cause vs. symptoms** before taking action.
+
+### Attribution Steps (for shigoto-neko on L2+ escalation)
+
+1. **Collect timeline**: List all actions taken by the stuck agent in order
+2. **Identify the first deviation**: When did actual behavior diverge from expected?
+3. **Trace causality backward**:
+   - Was the deviation caused by incorrect input (upstream agent's fault)?
+   - Was it caused by incorrect instructions (shigoto-neko's fault)?
+   - Was it caused by environmental issues (missing files, API failures)?
+   - Was it caused by the agent's own logic error?
+4. **Classify**:
+   | Root Cause | Responsibility | Action |
+   |-----------|---------------|--------|
+   | Upstream agent error | Upstream agent | Fix upstream, re-run downstream |
+   | Instruction error | Shigoto-neko | Revise instructions, re-assign |
+   | Environmental issue | No agent at fault | Fix environment, retry |
+   | Agent logic error | Current agent | Re-approach with different strategy |
+
+5. **Record** in Reflexion format with causal chain:
+   ```
+   Reflexion:
+     What happened: [symptom]
+     Root cause: [actual cause, traced back]
+     Causal chain: [upstream event] → [intermediate] → [observed failure]
+     Next time: [specific preventive action targeting root cause]
+   ```
+
+### Why This Matters
+Without causal attribution, the same root cause produces repeated failures across different agents. "Fix the symptom" leaves the root cause intact.
+
 ## Shigoto-neko: Polling Protocol (POLLING-001)
 
 Shigoto-neko has an **obligation to actively check** genba-neko's progress, not just wait for reports.

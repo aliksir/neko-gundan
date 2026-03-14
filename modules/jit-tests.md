@@ -18,6 +18,28 @@ Disposable tests auto-generated from PR diffs. Used as review aid.
 - Disposable tests are NOT committed to the repository (output to `tmp/jit-tests/`)
 - These are NOT a substitute for permanent tests. They are a review accuracy aid
 
+## Mutation-Guided Test Generation (arXiv:2501.12862, arXiv:2503.08182)
+
+When standard JiT tests provide insufficient fault detection, use mutation-guided generation:
+
+1. Generate mutants from changed code (simple mutations: negate conditions, swap operators, remove statements)
+2. For each surviving mutant (not caught by existing tests), generate a targeted test
+3. Run targeted tests — surviving mutants indicate gaps in test quality
+4. Feed results to implementer for review
+
+### When to Use
+- Standard JiT tests all pass but reviewer suspects edge cases
+- Changed code has complex branching logic
+- Security-sensitive changes where completeness matters
+
+### Mutation Operators (lightweight set)
+| Operator | Example | Targets |
+|----------|---------|---------|
+| Negate condition | `if (x > 0)` → `if (x <= 0)` | Off-by-one, boundary errors |
+| Remove statement | Delete a line | Dead code, missing side effects |
+| Swap return value | `return true` → `return false` | Logic inversions |
+| Change operator | `+` → `-`, `&&` → `\|\|` | Arithmetic/logic errors |
+
 ## Integration Points
 
 | Agent | Phase | Action |

@@ -254,6 +254,33 @@ Enable `quality_metrics` in your config (ON in `full` preset) and set the output
 metrics_output_dir: "./_metrics/"
 ```
 
+### Raw Log — Full Audit Trail
+
+"What did you check before saying YOSHI?" Raw logs record **every action** an agent took — every file read, every edit with the full diff, every command with its output, and every decision with its reasoning.
+
+```markdown
+### [09:41:03] Edit src/checks/inbound.js:31
+```diff
++ /\b(?:Invoke-Expression|IEX)\s*[\s(]/i,
++ /\bStart-Process\b/i,
+```
+
+### [09:41:05] Bash node -e "const {CHECKS}..."
+```
+IN-002 patterns: 16
+```
+exit: 0
+```
+
+Logs are generated **after work is complete** (not during execution) by cross-referencing `git diff` with agent-reported actions. No runtime overhead — just a full record when you need it.
+
+Enable `raw_log` in your config (ON in `full` preset):
+
+```yaml
+shitsuke:
+  raw_log: true
+```
+
 ### Implementer != Reviewer
 
 The 3 review principles that prevent self-approval:

@@ -47,6 +47,7 @@ MODULE_FILES=(
     [progress_visibility]="progress-visibility.md"
     [objection_flow]="objection-flow.md"
     [raw_log]="raw-log.md"
+    [audit_trail]="audit-trail.md"
 )
 
 # 全モジュールファイル名の配列（クリーンアップ用 — MODULE_FILESから自動生成）

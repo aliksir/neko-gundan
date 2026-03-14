@@ -27,6 +27,7 @@
 #   - modules/progress-visibility.md
 #   - modules/objection-flow.md
 #   - modules/raw-log.md
+#   - modules/audit-trail.md
 # =============================================================================
 
 shitsuke:
@@ -52,3 +53,4 @@ shitsuke:
   module_addition: true
   process_weight: true
   progress_visibility: true
+  audit_trail: true

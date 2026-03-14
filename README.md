@@ -291,6 +291,35 @@ Includes: every file edit with full diff, bash commands with output, decision ra
 
 </details>
 
+### Audit Trail — Development Audit Evidence
+
+"Can you prove who approved what, and when?" The audit trail module records four types of structured evidence that persist beyond conversation context:
+
+| Record | What it captures | File |
+|--------|-----------------|------|
+| **Traceability matrix** | Requirement → Design → Commit → Test | `audit/{project}_traceability.md` |
+| **Approval log** | Who approved what, when, and why | `audit/{project}_approvals.md` |
+| **Change ledger** | Scope changes with reason and impact | `audit/{project}_changes.md` |
+| **Audit summary** | Consolidated view of all evidence | `audit/{project}_audit-report.md` |
+
+Traceability uses REQ-IDs assigned during task decomposition. Each requirement is tracked from definition through implementation and test verification:
+
+```markdown
+| ID | Requirement | Commit | Test | Status |
+|----|-------------|--------|------|--------|
+| REQ-001 | User auth | abc1234 | test_auth.py:TestLogin | VERIFIED |
+| REQ-002 | Data export | — | — | PENDING |
+```
+
+Approval records capture what currently vanishes in conversation context — review verdicts, design sign-offs, and commander approvals, all with timestamps and basis.
+
+Enable `audit_trail` in your config (ON in `full` preset):
+
+```yaml
+shitsuke:
+  audit_trail: true
+```
+
 ### Implementer != Reviewer
 
 The 3 review principles that prevent self-approval:

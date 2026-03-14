@@ -254,6 +254,7 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 | `modules/progress-visibility.md` | Pre-dispatch + During work + Completion | Dashboard create/update/finalize (gate item #14) |
 | `modules/module-addition.md` | When adding new modules | Execute MODULE-001 checklist: impact analysis, workflow integration, gate/config updates |
 | `modules/raw-log.md` | Pre-completion-gate | Collect action lists from genba-neko, run `git diff`, generate `logs/raw-{mission}-{YYYYMMDD}.md` |
+| `modules/audit-trail.md` | Pre-dispatch + During work + Completion gate | Create traceability matrix (REQ-IDs), record changes, verify all REQs, generate audit summary (platoon+) |
 
 ## Handoff Schema Usage (When handoff-schema module is active)
 

@@ -137,6 +137,16 @@ See `modules/module-addition.md` for the complete checklist.
 
 ---
 
+## AUDIT-001: Audit Trail
+
+> **SSOT**: `modules/audit-trail.md`
+
+Records structured audit evidence: traceability matrix (REQ → commit → test), approval log, change management ledger, and audit summary report.
+
+See `modules/audit-trail.md` for templates, lifecycle, and integration points.
+
+---
+
 ## Review Loop (3 Principles)
 
 See `rules/review-protocol.md` for full details.

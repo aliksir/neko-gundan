@@ -253,6 +253,7 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 | `modules/fides.md` | Task transitions | Tag trust level in handoffs (HIGH/MEDIUM/LOW) |
 | `modules/progress-visibility.md` | Pre-dispatch + During work + Completion | Dashboard create/update/finalize (gate item #14) |
 | `modules/module-addition.md` | When adding new modules | Execute MODULE-001 checklist: impact analysis, workflow integration, gate/config updates |
+| `modules/raw-log.md` | Pre-completion-gate | Collect action lists from genba-neko, run `git diff`, generate `logs/raw-{mission}-{YYYYMMDD}.md` |
 
 ## Handoff Schema Usage (When handoff-schema module is active)
 

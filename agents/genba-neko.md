@@ -123,6 +123,7 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`:
 | `modules/tdd-separation.md` | Pre-work (step 1) | You may receive test-only or implement-only tasks (don't do both) |
 | `modules/objection-flow.md` | During work (if objecting) | Raise OBJECTION-001 per unified format, record on whiteboard |
 | `modules/process-weight.md` | Any phase | Any agent can request process weight escalation (ESCALATION-001) |
+| `modules/raw-log.md` | Post-work (completion report) | Include structured action list (tool, file, diff, output) in handoff |
 
 ---
 

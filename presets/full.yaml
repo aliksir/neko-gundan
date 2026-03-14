@@ -26,6 +26,7 @@
 #   - modules/process-weight.md
 #   - modules/progress-visibility.md
 #   - modules/objection-flow.md
+#   - modules/raw-log.md
 # =============================================================================
 
 shitsuke:
@@ -45,6 +46,7 @@ shitsuke:
   spec_driven_review: true
   checklist_export: true
   quality_metrics: true
+  raw_log: true
   faceted_prompting: true
   linter_protection: true
   module_addition: true

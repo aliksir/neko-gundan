@@ -153,7 +153,7 @@ _write_manifest() {
 
 quality_agents="kurouto-neko.md"
 quality_rules="review-protocol.md completion-gates.md"
-quality_modules="ensemble-judge.md jit-tests.md reflexion.md linter-protection.md objection-flow.md process-weight.md checklist-export.md quality-metrics.md arbitrator.md"
+quality_modules="ensemble-judge.md jit-tests.md reflexion.md linter-protection.md objection-flow.md process-weight.md checklist-export.md quality-metrics.md arbitrator.md raw-log.md"
 
 implement_agents="shigoto-neko.md genba-neko.md"
 implement_rules=""
@@ -174,7 +174,7 @@ koneko_modules=""
 # 全猫軍団ファイルのマスターリスト（ダウングレード用）
 all_agents="oyakata-neko.md shigoto-neko.md genba-neko.md kurouto-neko.md koneko-neko.md"
 all_rules="review-protocol.md completion-gates.md safety-tiers.md koneko-gates.md"
-all_modules="ensemble-judge.md jit-tests.md reflexion.md linter-protection.md race-prevention.md heartbeat.md tdd-separation.md whiteboard.md isv.md spec-driven-review.md fides.md process-weight.md arbitrator.md capacity-escalation.md handoff-schema.md checklist-export.md quality-metrics.md module-addition.md faceted-prompting.md progress-visibility.md objection-flow.md"
+all_modules="ensemble-judge.md jit-tests.md reflexion.md linter-protection.md race-prevention.md heartbeat.md tdd-separation.md whiteboard.md isv.md spec-driven-review.md fides.md process-weight.md arbitrator.md capacity-escalation.md handoff-schema.md checklist-export.md quality-metrics.md module-addition.md faceted-prompting.md progress-visibility.md objection-flow.md raw-log.md"
 all_commands="neko-gundan.md"
 
 # --- モード解析（+で結合可能） ---

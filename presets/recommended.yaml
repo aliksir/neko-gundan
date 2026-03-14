@@ -13,6 +13,7 @@
 # =============================================================================
 
 shitsuke:
+  objection_flow: true
   whiteboard: true
   heartbeat: true
   race_prevention: true

@@ -9,6 +9,7 @@
 # =============================================================================
 
 shitsuke:
+  objection_flow: false
   whiteboard: false
   heartbeat: false
   race_prevention: false

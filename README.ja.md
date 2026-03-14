@@ -271,6 +271,15 @@ shitsuke:
   raw_log: true
 ```
 
+<details>
+<summary>出力サンプルを見る →</summary>
+
+[logs/raw-raw-log-module-20260314.md](logs/raw-raw-log-module-20260314.md) — このモジュール自体を追加した際の実際の生ログ。
+
+全Editのdiff全文、Bashコマンドの出力、判断の理由、git diffとのクロスチェックを含む。
+
+</details>
+
 ### 実装者 != レビュアー
 
 自己承認を防ぐ3原則:

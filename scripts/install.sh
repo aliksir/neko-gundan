@@ -565,9 +565,9 @@ elif [ "$copied" -gt 0 ]; then
         echo "  3. Run: bash neko-gundan/scripts/setup.sh  (for runtime dirs)"
     fi
     echo ""
-    echo -e "${CYAN}Recommended: Gate Guard Hook${NC}"
+    echo -e "${CYAN}Required: Gate Guard Hook${NC}"
     echo "  Prevents skipping the planning phase (blocks Edit/Write until"
-    echo "  plans/ and checklist/ files exist). Add to settings.json:"
+    echo "  plans/ and checklist/ files exist). Add to your settings.json:"
     echo ""
     echo '  "hooks": {'
     echo '    "PreToolUse": ['
@@ -578,7 +578,7 @@ elif [ "$copied" -gt 0 ]; then
     echo '    ]'
     echo '  }'
     echo ""
-    echo "  Skip this if you prefer to rely on agent instructions alone."
+    echo "  Without this hook, agents may skip planning after context compaction."
 else
     echo "All files already exist. Nothing to do."
     echo "To check for upstream updates: bash install.sh --update ${MODE_INPUT} ${TARGET_DIR}"

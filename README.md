@@ -55,10 +55,10 @@ bash neko-gundan/scripts/setup.sh            # Initialize runtime directories
 
 ### Post-Install Setup
 
-The installer copies files and shows recommended settings. Two things to configure:
+The installer copies files and shows required settings. Two things to configure:
 
 1. **Add the CLAUDE.md snippet** the installer shows you
-2. **Enable the Gate Guard hook** (recommended) — prevents agents from skipping the planning phase by blocking code edits until `plans/` and `checklist/` files exist. The installer prints the exact JSON to add to your `settings.json`. [Details below](#gate-guard-hook-opt-in).
+2. **Enable the Gate Guard hook** (required) — prevents agents from skipping the planning phase by blocking code edits until `plans/` and `checklist/` files exist. Without this hook, gate compliance depends entirely on agent instructions, which can be forgotten after context compaction. The installer prints the exact JSON to add to your `settings.json`. [Details below](#gate-guard-hook).
 
 ### Updating
 
@@ -127,9 +127,9 @@ The check runs in the background and only notifies you when an update exists. No
 - No network call if curl is not available — fails silently
 - The manifest (`~/.claude/.neko-gundan-manifest.json`) is created automatically by the installer
 
-### Gate Guard Hook (opt-in)
+### Gate Guard Hook
 
-Mechanically enforces start gate compliance. Blocks `Edit`/`Write` on project source code when `plans/` or `checklist/` files are missing — prevents the agent from skipping the planning phase.
+**Required.** Mechanically enforces start gate compliance. Blocks `Edit`/`Write` on project source code when `plans/` or `checklist/` files are missing — prevents the agent from skipping the planning phase. Without this hook, agents may skip planning after context compaction.
 
 ```json
 {

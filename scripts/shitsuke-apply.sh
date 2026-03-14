@@ -12,6 +12,11 @@
 #   bash multi-agent-neko/scripts/shitsuke-apply.sh --preset recommended
 #   bash multi-agent-neko/scripts/shitsuke-apply.sh --preset full
 #
+# Progressive Disclosure（3層分離）:
+#   - modules/ の全文をコピーせず、スタブ（要約+参照パス）を生成
+#   - エージェントは必要時に Read で全文を取得
+#   - 常時ロードのトークン量を約85%削減
+#
 # 安全性:
 #   - 既存のモジュールファイルを全てクリアしてから再配置
 #   - コアファイル（agents/, rules/）は変更しない
@@ -21,6 +26,56 @@ NEKO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PROJECT_DIR="$(cd "$NEKO_DIR/.." && pwd)"
 RULES_DIR="$PROJECT_DIR/.claude/rules"
 MODULES_DIR="$NEKO_DIR/modules"
+
+# --- スタブ生成関数 (Progressive Disclosure) ---
+# モジュール全文の代わりに、ヘッダー+概要+Integration Pointsの要約スタブを生成
+# エージェントは必要時に Read で modules/*.md の全文を取得する
+generate_stub() {
+    local src="$1"    # modules/*.md のフルパス
+    local dst="$2"    # .claude/rules/*.md のフルパス
+    local neko="$3"   # neko-gundan ディレクトリ
+
+    local filename
+    filename="$(basename "$src")"
+
+    # ヘッダー行（# Title）を取得
+    local title
+    title="$(head -1 "$src")"
+
+    # > **Module**: ... 行を取得
+    local module_line
+    module_line="$(grep -m1 '^>' "$src")"
+
+    # ヘッダー直後の概要行（最初の空でない非ヘッダー非引用行）を取得
+    local summary
+    summary="$(awk 'NR>1 && /^[^>#|]/ && !/^\s*$/ && !/^---/ && !/^\*\*/ {print; exit}' "$src")"
+
+    # Integration Points テーブルを抽出（ヘッダー行〜次の空行 or セクションまで）
+    local integration
+    integration="$(awk '
+        /^## Integration Points/ { found=1; next }
+        found && /^\|/ { print; printed=1 }
+        found && printed && !/^\|/ && !/^\s*$/ { exit }
+        found && /^#/ { exit }
+    ' "$src")"
+
+    # スタブを生成
+    {
+        echo "$title"
+        echo ""
+        echo "$module_line"
+        echo ""
+        echo "$summary"
+        echo ""
+        echo "**Full definition**: \`modules/$filename\` — Read this file when you need the module's procedures, templates, or detailed rules."
+        echo ""
+        if [ -n "$integration" ]; then
+            echo "## Integration Points"
+            echo ""
+            echo "$integration"
+        fi
+    } > "$dst"
+}
 
 # モジュール名とファイルの対応表
 declare -A MODULE_FILES
@@ -102,7 +157,9 @@ for module in "${!MODULE_FILES[@]}"; do
 
     if [ "$value" = "true" ]; then
         if [ -f "$MODULES_DIR/$file" ]; then
-            cp "$MODULES_DIR/$file" "$RULES_DIR/$file"
+            # --- Progressive Disclosure: スタブ生成 ---
+            # モジュール全文ではなく、ヘッダー+概要+Integration Pointsのスタブを生成
+            generate_stub "$MODULES_DIR/$file" "$RULES_DIR/$file" "$NEKO_DIR"
             echo "   ✅ $module ($file) → ON ニャ！"
             ENABLED=$((ENABLED + 1))
         else

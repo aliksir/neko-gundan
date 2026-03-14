@@ -118,7 +118,8 @@ Before conducting review, collect external tool results as judgment input:
 
 ## Active Modules
 
-The following optional modules may be active. Check `neko-gundan.config.yaml`:
+The following optional modules may be active. Check `neko-gundan.config.yaml`.
+**Important**: `.claude/rules/` contains stubs only. **Read the full module** (`modules/*.md`) before using its procedures or templates.
 
 | Module | Integration Phase | Action |
 |--------|------------------|--------|

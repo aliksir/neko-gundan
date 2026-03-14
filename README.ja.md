@@ -268,7 +268,7 @@ metrics_output_dir: "./_metrics/"
 | **koneko** | 低予算で品質を確保 | 1体（軽量レビュアー） | PRO |
 | **quality** | 自己レビュー、未検証の「完了」 | 1体（レビュアー） | MAX 5+ |
 | **implement** | 大規模な複数ファイル変更 | 2体（マネージャー + ワーカー） | MAX 5+ |
-| **plan** | 複雑なタスク分解 | 1体（将軍） | MAX 5+ |
+| **plan** | 複雑なタスク分解 | 1体（親方猫） | MAX 5+ |
 | **security** | 誤削除、危険な操作 | 不要（ルールのみ） | 全プラン |
 
 自由に組み合わせ可: `quality+security`、`plan+implement`、`all`。[全モード詳細](docs/modes.ja.md)

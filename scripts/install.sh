@@ -153,15 +153,15 @@ _write_manifest() {
 
 quality_agents="kurouto-neko.md"
 quality_rules="review-protocol.md completion-gates.md"
-quality_modules="ensemble-judge.md jit-tests.md reflexion.md linter-protection.md"
+quality_modules="ensemble-judge.md jit-tests.md reflexion.md linter-protection.md objection-flow.md process-weight.md checklist-export.md quality-metrics.md arbitrator.md"
 
 implement_agents="shigoto-neko.md genba-neko.md"
 implement_rules=""
-implement_modules="race-prevention.md heartbeat.md reflexion.md tdd-separation.md"
+implement_modules="race-prevention.md heartbeat.md reflexion.md tdd-separation.md objection-flow.md capacity-escalation.md handoff-schema.md progress-visibility.md"
 
 plan_agents="oyakata-neko.md"
 plan_rules=""
-plan_modules="whiteboard.md isv.md spec-driven-review.md"
+plan_modules="whiteboard.md isv.md spec-driven-review.md module-addition.md faceted-prompting.md"
 
 security_agents=""
 security_rules="safety-tiers.md"
@@ -174,7 +174,7 @@ koneko_modules=""
 # 全猫軍団ファイルのマスターリスト（ダウングレード用）
 all_agents="oyakata-neko.md shigoto-neko.md genba-neko.md kurouto-neko.md koneko-neko.md"
 all_rules="review-protocol.md completion-gates.md safety-tiers.md koneko-gates.md"
-all_modules="ensemble-judge.md jit-tests.md reflexion.md linter-protection.md race-prevention.md heartbeat.md tdd-separation.md whiteboard.md isv.md spec-driven-review.md fides.md process-weight.md arbitrator.md capacity-escalation.md handoff-schema.md checklist-export.md quality-metrics.md module-addition.md faceted-prompting.md progress-visibility.md"
+all_modules="ensemble-judge.md jit-tests.md reflexion.md linter-protection.md race-prevention.md heartbeat.md tdd-separation.md whiteboard.md isv.md spec-driven-review.md fides.md process-weight.md arbitrator.md capacity-escalation.md handoff-schema.md checklist-export.md quality-metrics.md module-addition.md faceted-prompting.md progress-visibility.md objection-flow.md"
 all_commands="neko-gundan.md"
 
 # --- モード解析（+で結合可能） ---
@@ -508,6 +508,12 @@ if [ -n "$(echo "$MODULES" | tr -d ' ')" ]; then
     echo ""
 fi
 
+# Hooks (gate-guard)
+echo -e "${CYAN}Hooks:${NC}"
+mkdir -p "$CLAUDE_DIR/hooks" 2>/dev/null || true
+copy_file "$NEKO_DIR/hooks/gate-guard.mjs" "$CLAUDE_DIR/hooks/gate-guard.mjs"
+echo ""
+
 # Commands (implement/plan/all モードのみ)
 if echo "$SNIPPETS" | grep -qE "(implement|plan)"; then
     echo -e "${CYAN}Commands:${NC}"
@@ -553,10 +559,26 @@ elif [ "$copied" -gt 0 ]; then
     echo ""
     echo "Next steps:"
     echo "  1. Add the snippet above to your CLAUDE.md"
-    echo "  2. Start Claude Code and try it out"
+    echo "  2. Run: bash neko-gundan/scripts/shitsuke-apply.sh"
+    echo "     (Syncs enabled modules to .claude/rules/)"
     if echo "$SNIPPETS" | grep -qE "(implement|plan)"; then
         echo "  3. Run: bash neko-gundan/scripts/setup.sh  (for runtime dirs)"
     fi
+    echo ""
+    echo -e "${CYAN}Recommended: Gate Guard Hook${NC}"
+    echo "  Prevents skipping the planning phase (blocks Edit/Write until"
+    echo "  plans/ and checklist/ files exist). Add to settings.json:"
+    echo ""
+    echo '  "hooks": {'
+    echo '    "PreToolUse": ['
+    echo '      { "matcher": "Edit",'
+    echo "        \"hooks\": [{ \"type\": \"command\", \"command\": \"node $(echo "$CLAUDE_DIR/hooks" | sed 's|\\|/|g')/gate-guard.mjs\", \"timeout\": 3 }] },"
+    echo '      { "matcher": "Write",'
+    echo "        \"hooks\": [{ \"type\": \"command\", \"command\": \"node $(echo "$CLAUDE_DIR/hooks" | sed 's|\\|/|g')/gate-guard.mjs\", \"timeout\": 3 }] }"
+    echo '    ]'
+    echo '  }'
+    echo ""
+    echo "  Skip this if you prefer to rely on agent instructions alone."
 else
     echo "All files already exist. Nothing to do."
     echo "To check for upstream updates: bash install.sh --update ${MODE_INPUT} ${TARGET_DIR}"

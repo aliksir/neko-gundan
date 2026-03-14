@@ -45,6 +45,7 @@ MODULE_FILES=(
     [module_addition]="module-addition.md"
     [process_weight]="process-weight.md"
     [progress_visibility]="progress-visibility.md"
+    [objection_flow]="objection-flow.md"
 )
 
 # 全モジュールファイル名の配列（クリーンアップ用 — MODULE_FILESから自動生成）

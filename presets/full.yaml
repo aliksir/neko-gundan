@@ -25,9 +25,11 @@
 #   - modules/module-addition.md
 #   - modules/process-weight.md
 #   - modules/progress-visibility.md
+#   - modules/objection-flow.md
 # =============================================================================
 
 shitsuke:
+  objection_flow: true
   whiteboard: true
   heartbeat: true
   race_prevention: true

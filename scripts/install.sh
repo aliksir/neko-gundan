@@ -508,6 +508,12 @@ if [ -n "$(echo "$MODULES" | tr -d ' ')" ]; then
     echo ""
 fi
 
+# Hooks (gate-guard)
+echo -e "${CYAN}Hooks:${NC}"
+mkdir -p "$CLAUDE_DIR/hooks" 2>/dev/null || true
+copy_file "$NEKO_DIR/hooks/gate-guard.mjs" "$CLAUDE_DIR/hooks/gate-guard.mjs"
+echo ""
+
 # Commands (implement/plan/all モードのみ)
 if echo "$SNIPPETS" | grep -qE "(implement|plan)"; then
     echo -e "${CYAN}Commands:${NC}"
@@ -553,10 +559,26 @@ elif [ "$copied" -gt 0 ]; then
     echo ""
     echo "Next steps:"
     echo "  1. Add the snippet above to your CLAUDE.md"
-    echo "  2. Start Claude Code and try it out"
+    echo "  2. Run: bash neko-gundan/scripts/shitsuke-apply.sh"
+    echo "     (Syncs enabled modules to .claude/rules/)"
     if echo "$SNIPPETS" | grep -qE "(implement|plan)"; then
         echo "  3. Run: bash neko-gundan/scripts/setup.sh  (for runtime dirs)"
     fi
+    echo ""
+    echo -e "${CYAN}Recommended: Gate Guard Hook${NC}"
+    echo "  Prevents skipping the planning phase (blocks Edit/Write until"
+    echo "  plans/ and checklist/ files exist). Add to settings.json:"
+    echo ""
+    echo '  "hooks": {'
+    echo '    "PreToolUse": ['
+    echo '      { "matcher": "Edit",'
+    echo "        \"hooks\": [{ \"type\": \"command\", \"command\": \"node $(echo "$CLAUDE_DIR/hooks" | sed 's|\\|/|g')/gate-guard.mjs\", \"timeout\": 3 }] },"
+    echo '      { "matcher": "Write",'
+    echo "        \"hooks\": [{ \"type\": \"command\", \"command\": \"node $(echo "$CLAUDE_DIR/hooks" | sed 's|\\|/|g')/gate-guard.mjs\", \"timeout\": 3 }] }"
+    echo '    ]'
+    echo '  }'
+    echo ""
+    echo "  Skip this if you prefer to rely on agent instructions alone."
 else
     echo "All files already exist. Nothing to do."
     echo "To check for upstream updates: bash install.sh --update ${MODE_INPUT} ${TARGET_DIR}"

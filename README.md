@@ -49,8 +49,16 @@ The installer copies only the files you need and shows the CLAUDE.md snippet to 
 
 ```bash
 bash neko-gundan/scripts/install.sh all ./your-project
-bash neko-gundan/scripts/setup.sh  # Initialize runtime directories
+bash neko-gundan/scripts/shitsuke-apply.sh  # Sync modules to .claude/rules/
+bash neko-gundan/scripts/setup.sh            # Initialize runtime directories
 ```
+
+### Post-Install Setup
+
+The installer copies files and shows recommended settings. Two things to configure:
+
+1. **Add the CLAUDE.md snippet** the installer shows you
+2. **Enable the Gate Guard hook** (recommended) — prevents agents from skipping the planning phase by blocking code edits until `plans/` and `checklist/` files exist. The installer prints the exact JSON to add to your `settings.json`. [Details below](#gate-guard-hook-opt-in).
 
 ### Updating
 

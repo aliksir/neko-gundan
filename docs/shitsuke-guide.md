@@ -40,6 +40,7 @@ Enable based on your needs:
 | `checklist_export` | Export gate checklists to files | Human review & auditing |
 | `quality_metrics` | Cumulative quality trend report | Detecting gate theater & quality drift |
 | `raw_log` | Full audit trail of every agent action | Stakeholder accountability & compliance |
+| `audit_trail` | Traceability matrix, approval log, change ledger, audit summary | Development audits & compliance evidence |
 | `linter_protection` | Block agents from weakening lint rules | Code quality enforcement |
 
 ## Quick Start

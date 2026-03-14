@@ -37,6 +37,7 @@ bash neko-gundan/scripts/install.sh koneko ./your-project
 - Reflexion（構造化された失敗分析）
 - Linter設定保護（エージェントはコードを直す。lint設定を直さない）
 - 生ログ（エージェントの全行動の監査証跡 — opt-in）
+- 監査証跡（トレーサビリティ・承認ログ・変更管理・監査サマリー — opt-in）
 - PostToolUse自動lintフック（書き込み時にミリ秒レベルのフィードバック）
 
 **こんな人向け:** セカンドオピニオンが欲しいソロ開発者、形骸化したレビューに疲れたチーム。

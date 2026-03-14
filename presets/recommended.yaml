@@ -35,3 +35,4 @@ shitsuke:
   module_addition: false
   process_weight: false
   progress_visibility: false
+  audit_trail: false

@@ -280,6 +280,41 @@ shitsuke:
 
 </details>
 
+### 監査証跡 — 開発監査エビデンス
+
+「誰がいつ何を承認したか、証明できますか？」監査証跡モジュールは、会話コンテキストを超えて永続化する4種の構造化エビデンスを記録する:
+
+| 記録 | 内容 | ファイル |
+|------|------|---------|
+| **トレーサビリティマトリクス** | 要件 → 設計 → コミット → テスト | `audit/{project}_traceability.md` |
+| **承認ログ** | 誰が・いつ・何を・なぜ承認したか | `audit/{project}_approvals.md` |
+| **変更管理台帳** | スコープ変更の理由と影響 | `audit/{project}_changes.md` |
+| **監査サマリー** | 全エビデンスの集約ビュー | `audit/{project}_audit-report.md` |
+
+トレーサビリティはタスク分解時に発番されるREQ-IDで追跡。各要件を定義→実装→テスト検証まで追う:
+
+```markdown
+| ID | Requirement | Commit | Test | Status |
+|----|-------------|--------|------|--------|
+| REQ-001 | ユーザー認証 | abc1234 | test_auth.py:TestLogin | VERIFIED |
+| REQ-002 | データ出力 | — | — | PENDING |
+```
+
+後からログが必要になった場合も、rebuild機能でgit履歴・報告書・生ログから再構築できる:
+
+```
+承認ログ再構築:      result/ + raw-log + git履歴 → approvals_rebuilt.md
+トレーサビリティ再構築: plans/ + git log + テスト → traceability_rebuilt.md
+ファイル追跡:        git log --follow + _deleted/ → 移動・削除履歴
+```
+
+設定で `audit_trail` を有効化（`full` プリセットでON）:
+
+```yaml
+shitsuke:
+  audit_trail: true
+```
+
 ### 実装者 != レビュアー
 
 自己承認を防ぐ3原則:

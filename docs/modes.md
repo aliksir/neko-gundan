@@ -36,6 +36,7 @@ Adds an independent reviewer agent and evidence-based completion gates. The agen
 - Completion gates (evidence required, not just "I checked")
 - Reflexion (structured failure analysis)
 - Linter config protection (agents fix code, not lint rules)
+- Raw log (full audit trail of every agent action — opt-in)
 - PostToolUse auto-lint hook (millisecond feedback on writes)
 
 **Best for:** Solo developers who want a second pair of eyes, teams tired of rubber-stamp reviews.

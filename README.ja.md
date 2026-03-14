@@ -244,6 +244,33 @@ AI生成コードの量は人間のレビュー帯域より速く増える。品
 metrics_output_dir: "./_metrics/"
 ```
 
+### 生ログ — 全行動の監査証跡
+
+「何を見てヨシッって言ったんですか？」生ログはエージェントの**全行動**を記録する — 読んだファイル、変更のdiff全文、実行したコマンドとその出力、判断の理由。
+
+```markdown
+### [09:41:03] Edit src/checks/inbound.js:31
+```diff
++ /\b(?:Invoke-Expression|IEX)\s*[\s(]/i,
++ /\bStart-Process\b/i,
+```
+
+### [09:41:05] Bash node -e "const {CHECKS}..."
+```
+IN-002 patterns: 16
+```
+exit: 0
+```
+
+ログは**作業完了後**にまとめて生成（実行中のオーバーヘッドなし）。`git diff` とエージェント報告のクロスチェックで正確性を担保。
+
+`raw_log` を有効にして使用（`full` プリセットではデフォルトON）:
+
+```yaml
+shitsuke:
+  raw_log: true
+```
+
 ### 実装者 != レビュアー
 
 自己承認を防ぐ3原則:

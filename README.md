@@ -282,6 +282,15 @@ shitsuke:
   raw_log: true
 ```
 
+<details>
+<summary>Full sample output →</summary>
+
+See [logs/raw-raw-log-module-20260314.md](logs/raw-raw-log-module-20260314.md) for a real example — the raw log generated from adding this module itself.
+
+Includes: every file edit with full diff, bash commands with output, decision rationale, and git diff cross-check.
+
+</details>
+
 ### Implementer != Reviewer
 
 The 3 review principles that prevent self-approval:

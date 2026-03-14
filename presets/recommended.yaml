@@ -29,6 +29,7 @@ shitsuke:
   spec_driven_review: false
   checklist_export: true
   quality_metrics: false
+  raw_log: false
   faceted_prompting: false
   linter_protection: false
   module_addition: false

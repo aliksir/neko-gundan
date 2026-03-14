@@ -250,6 +250,81 @@ No design column (squad tasks rarely have separate design docs).
 
 ---
 
+## 5. Log Reconstruction (Rebuild)
+
+Reconstructs audit logs after the fact — from git history, existing artifacts (plans/, result/, checklist/, logs/), and project files.
+
+### Use Cases
+
+| Scenario | What to rebuild | Primary data source |
+|----------|----------------|-------------------|
+| "Where did that file go?" | File history | `git log --follow --diff-filter=D`, `_deleted/` |
+| "Who approved this change?" | Approval log | `result/*`, `git log --grep="APPROVE"`, raw logs |
+| "What requirements did this task cover?" | Traceability | `plans/*`, `git log`, test files |
+| "Why was the scope changed?" | Change ledger | `git log`, `result/*`, whiteboard archives |
+| "Give me the full audit for task X" | Audit summary | All of the above, aggregated |
+
+### Reconstruction Procedure
+
+#### Approval Log Rebuild
+
+```
+1. Search result reports:  Grep "APPROVE|PASS|承認" in result/{project}*.md
+2. Search raw logs:        Grep "APPROVE|verdict" in logs/raw-*{project}*.md
+3. Search git history:     git log --grep="review" --grep="APPROVE" --all-match -- {project}/
+4. Search whiteboards:     Grep "APPROVE|承認" in whiteboard/whiteboard-{project}*.md
+5. Aggregate into approval log template (deduplicate by date + subject)
+```
+
+#### Traceability Rebuild
+
+```
+1. Read plan:              plans/{project}_*.md → extract requirements/success criteria
+2. Assign REQ-IDs:         Sequential from plan items
+3. Find commits:           git log --oneline -- {project}/ → match to requirements by message
+4. Find tests:             Glob "{project}/**/test_*" or "**/*_test.*" → match to requirements
+5. Verify status:          Run tests or check last CI result
+6. Output traceability matrix
+```
+
+#### Change Ledger Rebuild
+
+```
+1. Compare plan vs result: Diff scope sections of plans/ and result/ for the project
+2. Search for pivots:      Grep "ESCALATION|OBJECTION|scope|変更" in whiteboard/result/logs
+3. Check git history:      git log --oneline -- {project}/ → identify non-trivial scope changes
+4. Output change ledger with CHG-IDs
+```
+
+#### File Tracking ("Where did it go?")
+
+```
+1. git log --all --full-history -- "**/filename"     → full history including renames
+2. git log --diff-filter=D -- "**/filename"           → when it was deleted
+3. ls {project}/_deleted/                             → check safety archive
+4. git log --follow -- "path/to/file"                 → track through renames
+```
+
+### Rebuild Output
+
+Reconstructed logs are output to the same `audit/` directory as regular logs, with a `_rebuilt` suffix:
+
+```
+audit/{project}_approvals_rebuilt.md
+audit/{project}_traceability_rebuilt.md
+audit/{project}_changes_rebuilt.md
+```
+
+If the original file exists, the rebuild is saved separately (never overwrites). The user decides whether to merge or replace.
+
+### Limitations
+
+- Conversation context is lost after compaction — reconstructions from git/files may be incomplete
+- Approval verdicts not recorded in result reports or raw logs cannot be recovered
+- This is why recording at the time of action (the normal flow) is always preferred
+
+---
+
 ## Completion Gate Item
 
 When this module is active, add to the completion gate:
@@ -270,3 +345,4 @@ When this module is active, add to the completion gate:
 | kurouto-neko | Post-review (APPROVE verdict) | Append to approval log |
 | genba-neko | Post-work (completion report) | Include commit hashes and test references for traceability |
 | oyakata-neko | On commander approval / directive changes | Append to approval log / change ledger |
+| oyakata-neko / shigoto-neko | On rebuild request | Execute reconstruction procedure, output to `audit/{project}_{type}_rebuilt.md` |

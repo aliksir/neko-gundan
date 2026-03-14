@@ -313,6 +313,14 @@ Traceability uses REQ-IDs assigned during task decomposition. Each requirement i
 
 Approval records capture what currently vanishes in conversation context — review verdicts, design sign-offs, and commander approvals, all with timestamps and basis.
 
+Need logs after the fact? The rebuild feature reconstructs audit records from git history, result reports, and raw logs — so "where did that file go?" and "who approved this?" are always answerable:
+
+```
+Approval log rebuild:   result/ + raw-log + git history → approvals_rebuilt.md
+Traceability rebuild:   plans/ + git log + test files   → traceability_rebuilt.md
+File tracking:          git log --follow + _deleted/    → full rename/delete history
+```
+
 Enable `audit_trail` in your config (ON in `full` preset):
 
 ```yaml

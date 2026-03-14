@@ -78,6 +78,25 @@ For all missions, create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` as part of t
 - Cross-area insight -> **Write in Cross-Cutting**
 - Completed within own scope -> **Don't write** (SendMessage report only)
 
+### Selective Sharing Criteria (arXiv:2602.05965)
+
+Not all findings are worth sharing. Excessive whiteboard writes create noise that hurts other agents' performance. Apply these filters before writing:
+
+| Filter | Question | If YES → | If NO → |
+|--------|----------|----------|---------|
+| **Cross-impact** | Does this affect another agent's assigned files or approach? | Write | Skip |
+| **Assumption change** | Does this contradict an assumption stated in the plan? | Write | Skip |
+| **Blocker potential** | Could this block another agent if they don't know about it? | Write | Skip |
+| **Novel information** | Is this something not already derivable from the codebase? | Write | Skip |
+
+**Rule of thumb**: If fewer than 2 filters pass, don't write to the whiteboard. Report via SendMessage only.
+
+### Anti-Patterns (Don't Write These)
+- Implementation details within your own scope ("I chose to use a for loop")
+- Progress updates ("50% done") — use SendMessage instead
+- Information already in git history or existing files
+- Speculative concerns without evidence
+
 ### Rules
 - Whiteboard is for knowledge sharing. Report progress via SendMessage directly
 - Don't modify other genba-neko's Findings. Only update your section

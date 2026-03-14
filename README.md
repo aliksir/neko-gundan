@@ -196,14 +196,15 @@ Each objection requires: **Facts + Concerns + Alternative Proposal**
 
 ### Evidence-Based Quality Gates
 
-Every task must pass a gate with recorded evidence. "I confirmed it" is not allowed — only "here's the proof."
+Every task must pass a gate with recorded evidence. "I confirmed it" is not allowed — only "here's the proof." This includes **hands-on verification**: agents must actually run the code they wrote and record the output, not just claim it works.
 
 ```
-| # | Item              | Status | Evidence                              |
-|---|-------------------|--------|---------------------------------------|
-| 1 | Tests pass        | PASS   | `npm test`: 42 passed, 0 failed       |
-| 2 | No unintended diff| PASS   | `git diff` shows only target files    |
-| 3 | Objections resolved| PASS  | No [OBJECTION] tags on whiteboard     |
+| # | Item               | Status | Evidence                              |
+|---|---------------------|--------|---------------------------------------|
+| 1 | Tests pass          | PASS   | `npm test`: 42 passed, 0 failed       |
+| 2 | Live verification   | PASS   | CLI output confirms expected behavior |
+| 3 | No unintended diff  | PASS   | `git diff` shows only target files    |
+| 4 | Objections resolved | PASS   | No [OBJECTION] tags on whiteboard     |
 ```
 
 ### Checklist Export — Visible Proof

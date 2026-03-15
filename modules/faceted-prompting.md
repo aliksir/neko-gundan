@@ -86,3 +86,12 @@ Change a shared rule once in `rules/` → all agents pick it up. Agent-specific 
 4. If it applies to multiple agents → put it in `rules/` instead
 
 "Structure controls attention. Put what matters most where the AI looks last."
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| oyakata-neko | Agent definition authoring | Structure new agent definitions using the 5-facet order (Persona → Knowledge → Instruction → Output Contract → Policy) |
+| shigoto-neko | Agent definition authoring | Follow facet order; place Policy (constraints, prohibitions) at the end of the definition |
+| genba-neko | Agent definition authoring | Follow facet order; place Policy (constraints, prohibitions) at the end of the definition |
+| kurouto-neko | Review (agent definition changes) | Verify that new/modified agent content is placed in the correct facet zone |

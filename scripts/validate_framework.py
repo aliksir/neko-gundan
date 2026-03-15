@@ -93,6 +93,9 @@ def extract_active_modules_from_agents(agents_dir: Path) -> Dict[str, List[Tuple
             if (in_table and line.startswith("|")) or not in_table:
                 matches = re.findall(MODULE_REF_PATTERN, line)
                 for mod_path in matches:
+                    # Skip wildcard paths like `modules/*.md` (documentation prose, not real refs)
+                    if "*" in mod_path:
+                        continue
                     module_refs.setdefault(mod_path, []).append((agent_file.name, i))
                 if in_table:
                     continue

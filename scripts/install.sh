@@ -440,6 +440,12 @@ copy_file() {
                 echo ""
                 diff --color=auto -u "$dst" "$src" 2>/dev/null | head -30 || true
                 echo ""
+                if [ ! -t 0 ]; then
+                    echo -e "  ${YELLOW}SKIP${NC} $(basename "$dst") (non-interactive: kept local)"
+                    ((skipped++)) || true
+                    ((has_diff++)) || true
+                    return
+                fi
                 echo -n "  Overwrite with upstream? [y]es / [n]o / [d]iff full: "
                 read -r answer < /dev/tty
                 case "$answer" in
@@ -451,15 +457,20 @@ copy_file() {
                     d|D|diff)
                         diff --color=auto -u "$dst" "$src" 2>/dev/null || true
                         echo ""
-                        echo -n "  Overwrite? [y/n]: "
-                        read -r answer2 < /dev/tty
-                        if [ "$answer2" = "y" ] || [ "$answer2" = "Y" ]; then
-                            cp "$src" "$dst"
-                            echo -e "  ${GREEN}UPDATED${NC} $(basename "$dst")"
-                            ((updated++)) || true
-                        else
-                            echo -e "  ${YELLOW}KEPT${NC} $(basename "$dst") (local version)"
+                        if [ ! -t 0 ]; then
+                            echo -e "  ${YELLOW}SKIP${NC} $(basename "$dst") (non-interactive: kept local)"
                             ((skipped++)) || true
+                        else
+                            echo -n "  Overwrite? [y/n]: "
+                            read -r answer2 < /dev/tty
+                            if [ "$answer2" = "y" ] || [ "$answer2" = "Y" ]; then
+                                cp "$src" "$dst"
+                                echo -e "  ${GREEN}UPDATED${NC} $(basename "$dst")"
+                                ((updated++)) || true
+                            else
+                                echo -e "  ${YELLOW}KEPT${NC} $(basename "$dst") (local version)"
+                                ((skipped++)) || true
+                            fi
                         fi
                         ;;
                     *)

@@ -12,8 +12,20 @@ Every request — not just platoon+ — goes through at least a nano gate. Takes
 | 2 | **Desired output confirmed** | What does the commander want? (answer? file change? record?) |
 
 - No file output required — mental confirmation is sufficient
-- If the task turns out to be squad+, escalate to the full Start Gate immediately
-- Pure greetings/chat are exempt
+- Pure greetings/chat are exempt — **but** if chat leads to a request ("look into this", "add that"), escalate immediately
+
+### Escalation Rules (Mandatory)
+
+**When development, modification, or file changes occur during a nano-gated task, escalate to Squad Start Gate immediately.**
+
+Required artifacts on escalation (regardless of scale):
+- **Plan**: `plans/YYYYMMDD_{project}_*.md`
+- **Checklist**: `checklist/YYYYMMDD_{project}.md`
+- **Result report**: `result/YYYYMMDD_{project}.md` (on completion)
+
+Retroactive creation is acceptable, but proceeding to the next task without creating these is prohibited.
+
+"Started as recon, turned into development? Stop and gate up. No exceptions."
 
 ## Start Gate (Before Beginning Work — Squad+)
 

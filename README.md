@@ -193,6 +193,20 @@ The team auto-scales based on task size:
 
 ## Key Features
 
+### Phase-Based Independent Execution
+
+Run individual phases without going through the full pipeline. Useful when humans or other AIs handle some phases.
+
+```bash
+/neko-gundan design "Add user auth"       # Design only — no implementation
+/neko-gundan implement "plans/auth.md"     # Implement from a plan (human or AI-written)
+/neko-gundan review "feature/auth branch"  # Review only — no modifications
+/neko-gundan test "src/auth/"              # Test & quality check only
+/neko-gundan "Add user auth"              # Full flow (default)
+```
+
+Each phase has its own lightweight gates. Input templates are in `templates/` — format matching is not required, as long as the minimum fields (scope, success criteria) are readable. See [WORKFLOW.md](docs/WORKFLOW.md#phase-based-independent-execution) for details.
+
 ### Agents That Push Back
 
 Agents have an **obligation** to object to bad instructions — not just follow them.

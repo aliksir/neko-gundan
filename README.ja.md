@@ -185,6 +185,20 @@ Claude Codeの設定ファイル（`~/.claude/settings.json`）に追加:
 
 ## 主要機能
 
+### フェーズ別独立実行
+
+全フロー一気通貫ではなく、個別フェーズだけを実行できる。人間や他AIが一部のフェーズを担当する場合に便利。
+
+```bash
+/neko-gundan design "認証機能を追加"          # 設計のみ — 実装しない
+/neko-gundan implement "plans/auth.md"        # 計画書（人間/AI作成）から実装のみ
+/neko-gundan review "feature/auth ブランチ"    # レビューのみ — 修正しない
+/neko-gundan test "src/auth/"                 # テスト・品質確認のみ
+/neko-gundan "認証機能を追加"                  # 全フロー（デフォルト）
+```
+
+各フェーズに専用の軽量ゲートあり。入力テンプレートは `templates/` にあるが、フォーマットの完全一致は不要（スコープ・成功基準が読み取れればOK）。詳細は [WORKFLOW.md](docs/WORKFLOW.md#フェーズ別独立実行) を参照。
+
 ### 異議を申し立てるエージェント
 
 エージェントは命令に従うだけではない。不適切な指示に**異議を申し立てる義務**がある。

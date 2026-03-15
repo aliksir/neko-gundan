@@ -1,5 +1,7 @@
 # Neko Gundan - Multi-Agent Orchestration for Claude Code
 
+> **New here?** Try the interactive setup: just run `/welcome-neko` in Claude Code and follow the prompts — no manual setup needed!
+
 **[日本語版 README はこちら](README.ja.md)** | **On PRO plan? → [Koneko Gundan (Lite version)](README.koneko.md)**
 
 > One Claude Code agent can write code. But it can't catch its own mistakes, stop bad decisions, or coordinate across files safely. Neko Gundan splits the work into a team — so the agent that writes the code is never the one that reviews it.

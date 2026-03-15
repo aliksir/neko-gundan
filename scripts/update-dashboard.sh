@@ -199,7 +199,7 @@ echo "## Token使用量" >> "$DASHBOARD"
 echo "" >> "$DASHBOARD"
 
 if [ -d "$TOKEN_DIR" ]; then
-    latest_token=$(find "$TOKEN_DIR" -maxdepth 1 -name "*.json" -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2- || true)
+    latest_token=$(ls -t "$TOKEN_DIR"/*.json 2>/dev/null | head -1 || true)
     if [ -n "$latest_token" ] && [ -f "$latest_token" ] && command -v jq &>/dev/null; then
         op=$(jq -r '.operation // "不明"' "$latest_token" 2>/dev/null)
         started=$(jq -r '.started_at // "不明"' "$latest_token" 2>/dev/null)
@@ -221,7 +221,7 @@ echo "## Proof of Work" >> "$DASHBOARD"
 echo "" >> "$DASHBOARD"
 
 if [ -d "$POW_DIR" ]; then
-    pow_files=$(find "$POW_DIR" -maxdepth 1 -name "*.json" -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -5 | cut -d' ' -f2- || true)
+    pow_files=$(ls -t "$POW_DIR"/*.json 2>/dev/null | head -5 || true)
     if [ -n "$pow_files" ]; then
         echo "| タスクID | 判定 | テスト | ビルド | レビュー | リグレッション | 時刻 |" >> "$DASHBOARD"
         echo "|---------|------|--------|--------|---------|--------------|------|" >> "$DASHBOARD"

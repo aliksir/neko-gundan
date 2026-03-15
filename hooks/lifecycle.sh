@@ -305,7 +305,9 @@ cmd_before_remove() {
     if [ -n "$worktree_dir" ]; then
         if [ "$auto_cleanup" = "true" ]; then
             echo "[lifecycle] before_remove: worktree検出 (${worktree_dir}) - 自動クリーンアップ対象"
-            # 実際の削除はgit worktree removeで行う（安全のためここでは実行しない）
+            # NOTE: auto_cleanup_worktree=true でもここでは削除しない（ログ記録のみ）。
+            # 実際の削除は呼び出し元（orchestrator）が git worktree remove で行う。
+            # この設計は意図的 — lifecycle.sh は副作用を持たない観測レイヤー。
             log_event "before_remove" "$agent" "\"worktree\":\"${worktree_dir}\",\"auto_cleanup\":true"
         else
             echo "[lifecycle] before_remove: worktree検出 (${worktree_dir}) - 手動クリーンアップ必要"

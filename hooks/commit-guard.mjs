@@ -153,6 +153,25 @@ if (hasCodeChanges) {
   if (!checklistExists) {
     missing.push(`checklist/*_${projectName}*.md（チェックリスト — コード変更あり）`);
   }
+
+  // 4. コードファイル変更時のテスト計画書確認
+  // テスト不要でも「テスト対象なし」でファイルを作成すること
+  const testPlanDir = resolve(workDir, 'test-plan');
+  let testPlanExists = false;
+  if (existsSync(testPlanDir)) {
+    try {
+      const testPlanFiles = readdirSync(testPlanDir);
+      testPlanExists = testPlanFiles.some(
+        f => f.includes(projectName) && f.endsWith('.md')
+      );
+    } catch {
+      testPlanExists = true;
+    }
+  }
+
+  if (!testPlanExists) {
+    missing.push(`test-plan/*_${projectName}*.md（テスト計画書 — コード変更あり。テスト不要でも「テスト対象なし」で作成必須）`);
+  }
 }
 
 // --- 結果判定 ---

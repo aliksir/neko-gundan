@@ -42,6 +42,24 @@ Execute before starting any squad+ mission. The gate is **not complete until all
 | 7 | Dashboard initialized (Platoon+) | `status/dashboard.md` populated with What/Why/Who/Constraints/Current State |
 | 8 | **Artifact existence confirmed** | `ls` confirms plan + checklist (+ dashboard for Platoon+) all exist. **Gate incomplete until all artifacts are present** |
 
+## Pre-Report Checkpoint (All Scales — Unconditional)
+
+**Fires unconditionally before reporting "done" to the commander. Independent of gate scale, escalation state, or task classification.**
+
+The trigger is the act of reporting itself — not a gate decision.
+
+| # | Check | Question |
+|---|-------|----------|
+| 1 | **Request-result alignment** | Does what I did match what the commander asked? |
+| 2 | **Evidence of correctness** | Do I have proof it works/exists? (command output, file check, test result) |
+| 3 | **Artifact status** | Are plan/checklist/report needed? If yes, do they exist? |
+
+Mental confirmation only — no file output required. But if #3 reveals missing artifacts, create them before reporting.
+
+"Don't say YOSHI until you've actually looked."
+
+---
+
 ## Completion Gate (Before Saying "Done")
 
 Every item must be checked with evidence. "I confirmed it" is not evidence — "Here's the command output showing it works" is.

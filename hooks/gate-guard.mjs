@@ -18,6 +18,55 @@ if (tool_name !== 'Edit' && tool_name !== 'Write') {
 const filePath = normalize(tool_input.file_path || '').replace(/\\/g, '/');
 const workDir = 'C:/work';
 
+// --- ~/.claude/ 配下のスキル・コマンドファイル編集チェック ---
+// CLAUDE_CONFIG_DIR が設定されていなければ、デフォルトの ~/.claude を使用
+const homeDir = (process.env.HOME || process.env.USERPROFILE || '').replace(/\\/g, '/');
+const claudeConfigDir = (process.env.CLAUDE_CONFIG_DIR || `${homeDir}/.claude`).replace(/\\/g, '/');
+const claudeSkillDirs = ['commands', 'skills'];
+
+if (claudeConfigDir && filePath.startsWith(claudeConfigDir + '/')) {
+  const claudeRelative = filePath.slice(claudeConfigDir.length + 1);
+  const claudeParts = claudeRelative.split('/');
+  // commands/*.md or skills/*/*.md のみ対象
+  if (claudeParts.length >= 2 && claudeSkillDirs.includes(claudeParts[0])) {
+    // スキル/コマンド名を抽出（拡張子除去）
+    const skillFile = claudeParts[0] === 'commands'
+      ? claudeParts[1].replace(/\.md$/, '')  // commands/nano-banana.md → nano-banana
+      : claudeParts[1];                       // skills/foo/SKILL.md → foo
+    const plansDir = resolve(workDir, 'plans');
+    let planFound = false;
+    if (existsSync(plansDir)) {
+      try {
+        const planFiles = readdirSync(plansDir);
+        planFound = planFiles.some(
+          f => f.includes(skillFile) && f.endsWith('.md')
+        );
+      } catch {
+        planFound = true; // エラー時はブロックしない
+      }
+    }
+    if (!planFound) {
+      const reason = [
+        `🚫 スキル/コマンド変更に計画書がありません！`,
+        `  対象: ${claudeRelative}`,
+        `  必要: plans/ に「${skillFile}」を含む計画書（例: plans/YYYYMMDD_${skillFile}-update.md）`,
+        '',
+        'スキル変更も開発作業です。計画書とチェックリストを先に作成してください。',
+      ].join('\n');
+      console.log(JSON.stringify({
+        hookSpecificOutput: {
+          hookEventName: 'PreToolUse',
+          permissionDecision: 'deny',
+          permissionDecisionReason: reason,
+        },
+      }));
+      process.exit(0);
+    }
+  }
+  // ~/.claude/ 配下のその他ファイル（settings.json等）はスキップ
+  process.exit(0);
+}
+
 // C:\work 配下でなければスキップ
 if (!filePath.startsWith(workDir + '/')) {
   process.exit(0);

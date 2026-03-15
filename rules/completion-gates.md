@@ -18,14 +18,17 @@ Every request — not just platoon+ — goes through at least a nano gate. Takes
 
 **When development, modification, or file changes occur during a nano-gated task, escalate to Squad Start Gate immediately.**
 
-Required artifacts on escalation (regardless of scale):
-- **Plan**: `plans/YYYYMMDD_{project}_*.md`
-- **Checklist**: `checklist/YYYYMMDD_{project}.md`
-- **Result report**: `result/YYYYMMDD_{project}.md` (on completion)
+**On escalation, execute these steps IN ORDER (before writing any code):**
 
-Retroactive creation is acceptable, but proceeding to the next task without creating these is prohibited.
+1. Create `plans/YYYYMMDD_{task}.md` — write scope + success criteria
+2. Create `checklist/YYYYMMDD_{task}.md` — write work items
+3. **Then** start implementation
+4. Create `result/YYYYMMDD_{task}.md` on completion
 
-"Started as recon, turned into development? Stop and gate up. No exceptions."
+**"Code first, plan later" is prohibited.** Plan comes first, code comes second.
+Even when an external review (e.g., Codex) already provides a fix list, transcribe it into a plan before starting.
+
+"Started as recon, turned into development? Stop. Write the plan. Then code."
 
 ## Start Gate (Before Beginning Work — Squad+)
 

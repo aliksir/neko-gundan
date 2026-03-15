@@ -42,6 +42,19 @@ Execute before starting any squad+ mission. The gate is **not complete until all
 | 7 | Dashboard initialized (Platoon+) | `status/dashboard.md` populated with What/Why/Who/Constraints/Current State |
 | 8 | **Artifact existence confirmed** | `ls` confirms plan + checklist (+ dashboard for Platoon+) all exist. **Gate incomplete until all artifacts are present** |
 
+### Artifact Set Rule (Mandatory)
+
+**1 task = 1 matched set.** Plan, checklist, result report, raw log, and audit log must all share the same `{task_name}` and correspond 1:1.
+
+```
+plans/20260315_feature-x.md        ← plan
+checklist/20260315_feature-x.md    ← checklist
+result/20260315_feature-x.md       ← result report
+```
+
+- Even when multiple tasks run in one session, create **separate artifact sets per task** (never merge into one report)
+- A plan without a matching report (or vice versa) is an inconsistency — fix it before closing
+
 ## Pre-Report Checkpoint (All Scales — Unconditional)
 
 **Fires unconditionally before reporting "done" to the commander. Independent of gate scale, escalation state, or task classification.**

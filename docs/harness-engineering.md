@@ -112,6 +112,32 @@ This turns lint errors from "discovered at review time" into "fixed at write tim
 - **Hurl**: Plain-text HTTP test runner, agent-friendly for API testing
 - **agent-browser**: 5.7x more token-efficient than Playwright MCP for E2E
 
+## Agent maxTurns (2026-03-15)
+
+Set `maxTurns` in agent frontmatter to prevent runaway agents. Acts as a hard ceiling on conversation turns.
+
+| Agent | maxTurns | Rationale |
+|-------|----------|-----------|
+| genba-neko | 30 | Single-task worker; 30 turns is generous for most implementations |
+| shigoto-neko | 50 | Manages multiple workers + polling; needs more headroom |
+| kurouto-neko | — | Review is typically short; default is fine |
+| oyakata-neko | — | Strategic; rarely hits turn limits |
+
+Works alongside takt-ralph.md's 3-layer Watchdog — `maxTurns` is the hard stop, Watchdog is the early warning.
+
+## Hooks Config Separation Pattern (2026-03-15)
+
+Separate shared hooks (team/project) from personal hooks to avoid conflicts:
+
+```
+.claude/settings.json          ← Team-shared (committed to git)
+.claude/settings.local.json    ← Personal overrides (gitignored)
+```
+
+**Priority**: `settings.local.json` overrides `settings.json` for the same hook event.
+
+**Use case**: Team enforces lint hooks via `settings.json`, but a developer can add personal notification hooks in `settings.local.json` without polluting the shared config.
+
 ## Further Reading
 
 - [Modes Guide](modes.md) — Install only what you need

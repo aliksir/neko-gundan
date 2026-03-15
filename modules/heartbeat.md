@@ -115,6 +115,8 @@ Shigoto-neko has an **obligation to actively check** genba-neko's progress, not 
 
 "A background agent that goes silent is worse than one that fails loudly. At least a failure gives you something to work with."
 
+> Design informed by distributed systems principles applied to LLM teams (arxiv:2603.12229).
+
 ## Integration Points
 
 | Agent | Phase | Action |

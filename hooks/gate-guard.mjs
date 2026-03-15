@@ -33,10 +33,11 @@ if (parts.length <= 1) {
 const projectName = parts[0];
 
 // メタディレクトリはスキップ（ゲート成果物自体の作成を妨げない）
+// NOTE: neko-gundan自体も開発対象になり得る。自分のリポ名はここに入れないこと (2026-03-15)
 const metaDirs = [
   'plans', 'checklist', 'result', 'whiteboard', 'Purpose', 'memory',
   'metrics', '_archive', '_deleted', 'topic', 'kidou', 'scratch',
-  'multi-agent-neko', 'claude-skills', '依頼事項',
+  'claude-skills', '依頼事項',
 ];
 if (metaDirs.includes(projectName)) {
   process.exit(0);

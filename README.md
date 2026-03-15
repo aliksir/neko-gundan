@@ -207,6 +207,24 @@ Run individual phases without going through the full pipeline. Useful when human
 
 Each phase has its own lightweight gates. Input templates are in `templates/` — format matching is not required, as long as the minimum fields (scope, success criteria) are readable. See [WORKFLOW.md](docs/WORKFLOW.md#phase-based-independent-execution) for details.
 
+The **test phase** includes structured test planning with a coverage matrix:
+
+```
+1. Read target code → list all functions/features
+2. Create test plan with matrix (function × aspect)
+3. Present to commander → approval
+4. Unit tests (normal + abnormal cases mandatory)
+5. Integration tests (cross-feature scenarios mandatory)
+6. Record results in matrix → report
+```
+
+| Aspect | Required | Description |
+|--------|----------|-------------|
+| Normal cases | **Yes** | Expected input → expected output |
+| Abnormal cases | **Yes** | Invalid input, null, type mismatch, unauthorized |
+| Boundary values | Recommended | 0/1/MAX, empty string, upper limit ±1 |
+| State transitions | When applicable | Before/after state changes |
+
 ### Agents That Push Back
 
 Agents have an **obligation** to object to bad instructions — not just follow them.

@@ -91,7 +91,25 @@ if (!resultExists) {
   missing.push(`result/${today}_${projectName}.md（報告書）`);
 }
 
-// 2. コードファイル変更時のチェックリスト確認
+// 2. 計画書チェック（全commit必須 — 後追いOKだがコミット時には存在すること）
+const plansDir = resolve(workDir, 'plans');
+let planExists = false;
+if (existsSync(plansDir)) {
+  try {
+    const planFiles = readdirSync(plansDir);
+    planExists = planFiles.some(
+      f => f.includes(projectName) && f.endsWith('.md')
+    );
+  } catch {
+    planExists = true;
+  }
+}
+
+if (!planExists) {
+  missing.push(`plans/*_${projectName}*.md（計画書 — 後追いOKだがコミット前に作成必須）`);
+}
+
+// 3. コードファイル変更時のチェックリスト確認
 let hasCodeChanges = false;
 const codeExtensions = [
   '.js', '.mjs', '.ts', '.tsx', '.py', '.rb', '.go', '.rs', '.java',

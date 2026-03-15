@@ -1,6 +1,12 @@
 # Neko Gundan - Multi-Agent Orchestration for Claude Code
 
-> **New here?** Try the interactive setup: just run `/welcome-neko` in Claude Code and follow the prompts — no manual setup needed!
+> **New here?** Install the skill, then run `/welcome-neko` in Claude Code — interactive setup, no manual config needed!
+> ```bash
+> # Install the skill
+> git clone https://github.com/aliksir/neko-gundan.git
+> cp -r neko-gundan/skills/welcome-neko ~/.claude/skills/
+> # Then in Claude Code, type: /welcome-neko
+> ```
 
 **[日本語版 README はこちら](README.ja.md)** | **On PRO plan? → [Koneko Gundan (Lite version)](README.koneko.md)**
 

@@ -1,6 +1,12 @@
 # 猫軍団 - Claude Code マルチエージェントオーケストレーション
 
-> **初めての方へ** Claude Codeで `/welcome-neko` を実行すれば、対話形式でセットアップできます。手動設定は不要です！
+> **初めての方へ** スキルをインストールしてClaude Codeで `/welcome-neko` を実行すれば、対話形式でセットアップできます！
+> ```bash
+> # スキルをインストール
+> git clone https://github.com/aliksir/neko-gundan.git
+> cp -r neko-gundan/skills/welcome-neko ~/.claude/skills/
+> # Claude Codeで /welcome-neko を実行
+> ```
 
 **[English README](README.md)** | **PROプラン？ → [子猫軍団（ライト版）](README.koneko.ja.md)**
 

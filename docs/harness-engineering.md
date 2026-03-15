@@ -79,6 +79,39 @@ From Harness Engineering research:
 | **Self-approving changes** | — | Implementer != Reviewer |
 | **Security vulnerabilities** (36-40% of AI code) | External tool integration | JiT tests, ensemble judge |
 
+## PostToolUse Feedback Loop (2026-03-15)
+
+The most impactful harness improvement: inject lint results directly into the agent's context after every Edit/Write.
+
+```
+Edit/Write → auto-lint-feedback.sh → lint violations found?
+  YES → Return JSON with additionalContext → Agent self-corrects
+  NO  → Silent exit (no noise)
+```
+
+This turns lint errors from "discovered at review time" into "fixed at write time" — millisecond feedback vs. hour-scale feedback.
+
+### Supported Languages
+
+| Language | Linter | Fallback |
+|----------|--------|----------|
+| TypeScript/JS | oxlint | eslint |
+| Python | ruff | — |
+| Rust | cargo clippy | — |
+
+### Key Metrics (Source: @gyakuse Harness Engineering 2026)
+
+- **Harness vs Model**: 22-point SWE-bench improvement from harness changes vs 1 point from model swap (Morph)
+- **Instruction limit**: Performance degrades at 150-200+ instructions (IFScale)
+- **AI code vulnerabilities**: 36-40% contain security issues (OX Security/Snyk)
+- **Feedback speed hierarchy**: PostToolUse (ms) > pre-commit (s) > CI (min) > human review (hours)
+
+### Future Considerations
+
+- **Plankton pattern**: Route violations by complexity to Haiku/Sonnet/Opus
+- **Hurl**: Plain-text HTTP test runner, agent-friendly for API testing
+- **agent-browser**: 5.7x more token-efficient than Playwright MCP for E2E
+
 ## Further Reading
 
 - [Modes Guide](modes.md) — Install only what you need

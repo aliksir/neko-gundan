@@ -2,9 +2,22 @@
 
 Quality checkpoints that must be passed before declaring any task complete. No exceptions, even for single-line changes.
 
-## Start Gate (Before Beginning Work)
+## Nano Start Gate (Recon / All Scales)
 
-Execute before starting any platoon+ mission. The gate is **not complete until all artifacts exist**.
+Every request — not just platoon+ — goes through at least a nano gate. Takes 10 seconds.
+
+| # | Check | How to verify |
+|---|-------|---------------|
+| 1 | **Target identified** | What project/topic? If cross-project, note `[cross-project]` |
+| 2 | **Desired output confirmed** | What does the commander want? (answer? file change? record?) |
+
+- No file output required — mental confirmation is sufficient
+- If the task turns out to be squad+, escalate to the full Start Gate immediately
+- Pure greetings/chat are exempt
+
+## Start Gate (Before Beginning Work — Squad+)
+
+Execute before starting any squad+ mission. The gate is **not complete until all artifacts exist**.
 
 | # | Check | How to verify |
 |---|-------|---------------|

@@ -94,9 +94,31 @@ Shigoto-neko has an **obligation to actively check** genba-neko's progress, not 
 
 "A manager who only waits for reports isn't managing. Go check yourself... YOSHI!"
 
+## Background Agent Silent Stall Detection
+
+**Problem**: Agents launched via `Agent(run_in_background=true)` bypass shigoto-neko's polling loop. If they stall (rate limits, context overflow, etc.), no one notices.
+
+### Detection Rules
+
+| Rule | Condition | Action |
+|------|-----------|--------|
+| **15-minute rule** | First agent completes but others haven't after 15min | Check output file timestamps |
+| **Stall confirmation** | Output file not updated for 10+ minutes | Confirmed stall — recover partial results |
+| **Recovery** | Stall confirmed | Extract partial results from output file, re-run with reduced scope |
+| **Root cause logging** | After recovery | Record cause (rate limit / WebFetch overload / context overflow) |
+
+### Prevention
+
+- Background research agents (WebFetch-heavy): **max 3 concurrent** (rate limit avoidance)
+- Include WebFetch call limits in agent instructions (e.g., "max 3 WebFetch calls")
+- General background agents: **max 5 concurrent**
+
+"A background agent that goes silent is worse than one that fails loudly. At least a failure gives you something to work with."
+
 ## Integration Points
 
 | Agent | Phase | Action |
 |-------|-------|--------|
 | genba-neko | During work (step 6) | Report when stuck (5min/2errors/unclear/unexpected). 3 consecutive errors -> `[ESCALATION]` |
 | shigoto-neko | After assignment (Progress Monitoring) | Poll at 5min, then every 10min. Respond to `[ESCALATION]` immediately |
+| oyakata-neko | After background agent launch | Apply 15-minute rule for stall detection on `run_in_background` agents |

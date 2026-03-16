@@ -34,6 +34,38 @@ Assess the task scale and deploy the appropriate formation:
 
 For platoon+ missions where agent discoveries affect each other, shigoto-neko sets up a whiteboard for cross-agent knowledge sharing.
 
+## Phase Routing
+
+The first keyword in `$ARGUMENTS` selects a phase. No keyword = full flow.
+
+| Keyword | Phase | What it does |
+|---------|-------|-------------|
+| `design` | Design | Plan + design documents. No implementation |
+| `implement` | Implement | Read plan + design, implement only |
+| `review` | Review | Review plan/code. No modifications |
+| `test` | Test | Test planning + execution + quality check |
+| (none) | Full flow | All phases end-to-end |
+
+### Required Files per Phase
+
+Before executing, check for required input files. **If missing, show a clear error:**
+
+```
+❌ Required file not found: plans/*_{project}.md (plan document)
+   Create it with: /neko-gundan design "your task description"
+   Or manually create: plans/YYYYMMDD_{project}.md
+```
+
+| Phase | Required Input | If Missing |
+|-------|---------------|------------|
+| `design` | — | (no prerequisites) |
+| `implement` | `plans/*_{project}.md` | Error: "Run `/neko-gundan design` first or create a plan manually" |
+| `implement` | `designs/*_{project}.md` | Auto-create with "No design target: implement-only execution" |
+| `review` | Plan and/or source code | Error: "Specify plan path or project/branch to review" |
+| `test` | Source code in target dir | Error: "No source code found in {target}" |
+
+Phase-specific gates: see `rules/completion-gates.md` "Phase-Specific Gates" section.
+
 ## Quality Gates
 
 Every task must pass completion gates before being declared done. See the rules/completion-gates.md for details.

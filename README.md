@@ -207,6 +207,18 @@ Run individual phases without going through the full pipeline. Useful when human
 
 Each phase has its own lightweight gates. Input templates are in `templates/` — format matching is not required, as long as the minimum fields (scope, success criteria) are readable. See [WORKFLOW.md](docs/WORKFLOW.md#phase-based-independent-execution) for details.
 
+#### Phase File Requirements
+
+| Phase | Required Input | Output | Auto-created if missing |
+|-------|---------------|--------|------------------------|
+| `design` | Purpose file (if exists) | `plans/`, `designs/` | designs/ template |
+| `implement` | `plans/*.md`, `designs/*.md` | Source code, commits | designs/ (with "No design target") |
+| `review` | Plan and/or source code | Review report | — |
+| `test` | Source code | Test plan, test results | — |
+| (full flow) | — | All of the above | — |
+
+> **Missing files?** Each phase checks for required inputs at its start gate. If a required file is missing, the command tells you exactly which file is needed and where to create it — instead of silently failing.
+
 The **test phase** includes structured test planning with a coverage matrix:
 
 ```

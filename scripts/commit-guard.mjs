@@ -92,14 +92,14 @@ if (!resultExists) {
   missing.push(`result/${today}_${projectName}.md（報告書）`);
 }
 
-// 2. 計画書チェック（全commit必須 — 後追いOKだがコミット時には存在すること）
+// 2. 計画書チェック（全commit必須 — 当日の計画書が必要。過去の計画書はカウントしない）
 const plansDir = resolve(workDir, 'plans');
 let planExists = false;
 if (existsSync(plansDir)) {
   try {
     const planFiles = readdirSync(plansDir);
     planExists = planFiles.some(
-      f => f.includes(projectName) && f.endsWith('.md')
+      f => f.includes(projectName) && f.startsWith(today) && f.endsWith('.md')
     );
   } catch {
     planExists = true;
@@ -107,17 +107,17 @@ if (existsSync(plansDir)) {
 }
 
 if (!planExists) {
-  missing.push(`plans/*_${projectName}*.md（計画書 — 後追いOKだがコミット前に作成必須）`);
+  missing.push(`plans/${today}_${projectName}.md（計画書 — 当日の計画書が必要。過去の計画書は別タスクのもの）`);
 }
 
-// 3. テスト計画書チェック（全commit必須）
+// 3. テスト計画書チェック（全commit必須 — 当日日付）
 const testPlanDir = resolve(workDir, 'test-plan');
 let testPlanExists = false;
 if (existsSync(testPlanDir)) {
   try {
     const testPlanFiles = readdirSync(testPlanDir);
     testPlanExists = testPlanFiles.some(
-      f => f.includes(projectName) && f.endsWith('.md')
+      f => f.includes(projectName) && f.startsWith(today) && f.endsWith('.md')
     );
   } catch {
     testPlanExists = true;
@@ -125,17 +125,17 @@ if (existsSync(testPlanDir)) {
 }
 
 if (!testPlanExists) {
-  missing.push(`test-plan/*_${projectName}*.md（テスト計画書 — テスト不要でも「テスト対象なし」と理由を記録して作成必須）`);
+  missing.push(`test-plan/${today}_${projectName}.md（テスト計画書 — テスト不要でも「テスト対象なし」と理由を記録）`);
 }
 
-// 4. 監査ログチェック（全commit必須）
+// 4. 監査ログチェック（全commit必須 — 当日日付）
 const auditDir = resolve(workDir, 'audit');
 let auditExists = false;
 if (existsSync(auditDir)) {
   try {
     const auditFiles = readdirSync(auditDir);
     auditExists = auditFiles.some(
-      f => f.includes(projectName) && f.endsWith('.md')
+      f => f.includes(projectName) && f.startsWith(today) && f.endsWith('.md')
     );
   } catch {
     auditExists = true;
@@ -143,17 +143,17 @@ if (existsSync(auditDir)) {
 }
 
 if (!auditExists) {
-  missing.push(`audit/*_${projectName}*.md（監査ログ — トレーサビリティ・承認記録）`);
+  missing.push(`audit/${today}_${projectName}.md（監査ログ — トレーサビリティ・承認記録）`);
 }
 
-// 5. 生ログチェック（全commit必須）
+// 5. 生ログチェック（全commit必須 — 当日日付）
 const logsDir = resolve(workDir, 'logs');
 let rawLogExists = false;
 if (existsSync(logsDir)) {
   try {
     const logFiles = readdirSync(logsDir);
     rawLogExists = logFiles.some(
-      f => f.includes(projectName) && f.endsWith('.md')
+      f => f.includes(projectName) && f.startsWith(today) && f.endsWith('.md')
     );
   } catch {
     rawLogExists = true;
@@ -161,7 +161,7 @@ if (existsSync(logsDir)) {
 }
 
 if (!rawLogExists) {
-  missing.push(`logs/*_${projectName}*.md（生ログ — エージェント行動の証跡）`);
+  missing.push(`logs/${today}_${projectName}.md（生ログ — エージェント行動の証跡）`);
 }
 
 // 6. コードファイル変更時のチェックリスト確認

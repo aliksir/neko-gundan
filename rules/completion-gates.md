@@ -197,14 +197,15 @@ When deleting files:
 | 3 | **Required designs done** | DB/API/UI designs completed as needed. Unused → `[N/A]` |
 | 4 | **Design review conducted** | Designer ≠ reviewer (per review-protocol.md) |
 
-### Implement Start Gate (4 items)
+### Implement Start Gate (3 items)
+
+> Required input is **previous phase output (design document) only**. Plan is recommended but not required.
 
 | # | Check | How to verify |
 |---|-------|---------------|
-| 1 | **Plan exists** | Read plan file — scope and success criteria are readable |
-| 2 | **Design document exists** | Check `designs/YYYYMMDD_{project}.md`. If exists, read it. **If missing, auto-create with "No design target: implement-only execution"** and continue |
-| 3 | **Implementation-ready** | Plan + design have scope, steps, success criteria. If insufficient, ask commander |
-| 4 | **git status clean** | `git status` in project directory. Uncommitted changes → WIP commit or stash |
+| 1 | **Design document exists** | Check `designs/YYYYMMDD_{project}.md`. If exists, read it. **If missing, auto-create with "No design target: implement-only execution"** and continue. Also read plan (if exists) |
+| 2 | **Implementation-ready** | Design doc (+ plan if available) has scope and success criteria. If insufficient, ask commander |
+| 3 | **git status clean** | `git status` in project directory. Uncommitted changes → WIP commit or stash |
 
 ### Implement Completion Gate (4 items)
 
@@ -215,19 +216,23 @@ When deleting files:
 | 3 | **Syntax check passed** | lint/type check (if applicable). Record results as evidence |
 | 4 | **Functional verification** | Test run / CLI run / browser check. Record evidence. No test target → `[N/A]` with reason |
 
-### Review Start Gate (2 items)
+### Review Start Gate (3 items)
+
+> Reference source depends on review target: plan review → none, design review → plan (if exists), code review → design (if exists).
 
 | # | Check | How to verify |
 |---|-------|---------------|
-| 1 | **Review target identified** | Plan path / project name + branch / both are clear |
-| 2 | **Target readable** | Target files are accessible via `Read` / `git diff` |
+| 1 | **Review target identified** | Plan / design / code. Target type determines reference source |
+| 2 | **Reference source loaded** | Plan review → none / Design review → read plan (if exists) / Code review → read design (if exists) |
+| 3 | **Target readable** | Target files are accessible via `Read` / `git diff` |
 
-### Review Completion Gate (2 items)
+### Review Completion Gate (3 items)
 
 | # | Check | How to verify |
 |---|-------|---------------|
-| 1 | **Review report output** | Verdict (APPROVE/REQUEST_CHANGES) + findings are explicit |
-| 2 | **Evidence for each finding** | Each finding includes file path, line number, specific issue |
+| 1 | **Reference source documented** | Review report states reference source. Plan review → "Reference: none" / Design review → "Reference: plans/XXX.md" / Code review → "Reference: designs/XXX.md". If no reference exists, state so explicitly |
+| 2 | **Review report output** | Verdict (APPROVE/REQUEST_CHANGES) + findings are explicit |
+| 3 | **Evidence for each finding** | Each finding includes file path, line number, specific issue |
 
 ### Test Start Gate (3 items)
 

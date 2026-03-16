@@ -16,7 +16,7 @@ if (tool_name !== 'Edit' && tool_name !== 'Write') {
 }
 
 const filePath = normalize(tool_input.file_path || '').replace(/\\/g, '/');
-const workDir = 'C:/work';
+const workDir = (process.env.NEKO_WORK_DIR || process.cwd()).replace(/\\/g, '/');
 
 // --- ~/.claude/ 配下のスキル・コマンドファイル編集チェック ---
 // CLAUDE_CONFIG_DIR が設定されていなければ、デフォルトの ~/.claude を使用
@@ -67,12 +67,12 @@ if (claudeConfigDir && filePath.startsWith(claudeConfigDir + '/')) {
   process.exit(0);
 }
 
-// C:\work 配下でなければスキップ
+// workDir 配下でなければスキップ
 if (!filePath.startsWith(workDir + '/')) {
   process.exit(0);
 }
 
-// C:\work\ 直下のファイル（CLAUDE.md等）はスキップ
+// workDir 直下のファイル（CLAUDE.md等）はスキップ
 const relative = filePath.slice(workDir.length + 1);
 const parts = relative.split('/');
 if (parts.length <= 1) {

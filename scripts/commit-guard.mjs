@@ -35,13 +35,15 @@ if (command.includes('--amend')) {
   process.exit(0);
 }
 
-const workDir = 'C:/work';
+const workDir = (process.env.NEKO_WORK_DIR || process.cwd()).replace(/\\/g, '/');
 
 // --- コミット対象プロジェクトの特定 ---
 
 // cdコマンドからプロジェクトディレクトリを特定
 let projectName = null;
-const cdMatch = command.match(/cd\s+(?:C:\/work|\/c\/work)\/([^\s/&;]+)/i);
+const workDirEscaped = workDir.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const cdPattern = new RegExp(`cd\\s+(?:${workDirEscaped})\\/([^\\s/&;]+)`, 'i');
+const cdMatch = command.match(cdPattern);
 if (cdMatch) {
   projectName = cdMatch[1];
 }
@@ -54,8 +56,7 @@ if (!projectName) {
 // メタディレクトリはスキップ
 const metaDirs = [
   'plans', 'checklist', 'result', 'whiteboard', 'Purpose', 'memory',
-  'metrics', '_archive', '_deleted', 'topic', 'kidou', 'scratch',
-  'claude-skills', '依頼事項', 'test-plan', 'audit', 'logs',
+  'metrics', '_archive', '_deleted', 'topic', 'test-plan', 'audit', 'logs', 'designs',
 ];
 if (metaDirs.includes(projectName)) {
   process.exit(0);

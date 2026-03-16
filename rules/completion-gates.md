@@ -202,7 +202,7 @@ When deleting files:
 | # | Check | How to verify |
 |---|-------|---------------|
 | 1 | **Plan exists** | Read plan file — scope and success criteria are readable |
-| 2 | **Design document exists** | Read `designs/YYYYMMDD_{project}.md` — design approach is readable. If no design needed → "No design target" must be recorded |
+| 2 | **Design document exists** | Check `designs/YYYYMMDD_{project}.md`. If exists, read it. **If missing, auto-create with "No design target: implement-only execution"** and continue |
 | 3 | **Implementation-ready** | Plan + design have scope, steps, success criteria. If insufficient, ask commander |
 | 4 | **git status clean** | `git status` in project directory. Uncommitted changes → WIP commit or stash |
 

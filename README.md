@@ -193,6 +193,16 @@ The team auto-scales based on task size:
 
 ## Key Features
 
+### Mandatory Design Phase
+
+Every task follows the flow: **Plan → Design → Implement → Quality Check**. The design document (`designs/`) is a required artifact — even for small changes.
+
+- **Code changes**: Write design rationale (why this approach, what alternatives were considered)
+- **No code changes** (docs, config): Create the file with "No design target" and the reason
+- The `commit-guard` hook blocks commits when `designs/` is missing
+
+This ensures you can always trace back *why* something was built the way it was — not just *what* was changed.
+
 ### Phase-Based Independent Execution
 
 Run individual phases without going through the full pipeline. Useful when humans or other AIs handle some phases.

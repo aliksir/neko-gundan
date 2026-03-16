@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.8.0] - 2026-03-17
+
+### Added
+- **Mandatory Design Phase**: `designs/` added as required artifact for all commits. Flow is now Plan → Design → Implement → Quality Check
+- **Phase-specific gates**: Design/Implement/Review/Test gates added to `completion-gates.md` for independent phase execution
+- **Phase file requirements table**: README (EN/JA) documents required inputs and outputs per phase
+- **Audit Commands & Permissions section**: `modules/audit-trail.md` now includes command/permission summary table
+- **Actionable hook error messages**: gate-guard and commit-guard show specific file creation hints on block
+
+### Fixed
+- **commit-guard timezone bug**: Changed from UTC (`toISOString`) to local time — fixes off-by-one date in JST+9 and similar timezones
+- **Implement start gate relaxed**: `plans/` changed from required to recommended (design doc is the true prerequisite from previous phase)
+- **Local-specific paths removed**: Hardcoded `C:\work` replaced with `NEKO_WORK_DIR` environment variable
+- **Local metaDirs removed**: `kidou`, `scratch`, `claude-skills`, `依頼事項` removed from public hooks
+
+### Changed
+- **Review gates**: Added reference source documentation requirement (plan review → none, design review → plan, code review → design)
+
 ## [1.7.2] - 2026-03-13
 
 ### Added

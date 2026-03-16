@@ -3,12 +3,7 @@
 # in_progress状態のタスクが一定時間更新されない場合にアラートを出力する
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# 環境検出: WSL(/mnt/c/...) vs Git Bash(/c/...)
-if [ -d "/mnt/c/work" ]; then
-  BASE_DIR="/mnt/c/work/multi-agent-neko"
-else
-  BASE_DIR="/c/work/multi-agent-neko"
-fi
+BASE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 CONFIG_DIR="${BASE_DIR}/config"
 ALERTS_DIR="${BASE_DIR}/status/alerts"
 TASKS_BASE_DIR="${HOME}/.claude/tasks"

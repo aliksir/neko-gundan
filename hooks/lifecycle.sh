@@ -15,12 +15,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-# 環境検出: WSL(/mnt/c/...) vs Git Bash(/c/...)
-if [ -d "/mnt/c/work/multi-agent-neko" ]; then
-    BASE_DIR="/mnt/c/work/multi-agent-neko"
-else
-    BASE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-fi
+BASE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 CONFIG_FILE="$BASE_DIR/config/lifecycle.json"
 STATUS_JSON="$BASE_DIR/status/agent-status.json"
 LOG_FILE="$BASE_DIR/status/lifecycle-log.jsonl"

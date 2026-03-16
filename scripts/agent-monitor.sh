@@ -2,10 +2,12 @@
 # 猫軍団エージェント監視スクリプト
 # tmux右ペインで常駐し、エージェントの処理状況をリアルタイム表示する
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BASE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 TEAMS_DIR="$HOME/.claude/teams"
 TASKS_DIR="$HOME/.claude/tasks"
-STATUS_JSON="/mnt/c/work/multi-agent-neko/status/agent-status.json"
-DASHBOARD="/mnt/c/work/multi-agent-neko/status/dashboard.md"
+STATUS_JSON="$BASE_DIR/status/agent-status.json"
+DASHBOARD="$BASE_DIR/status/dashboard.md"
 WHITEBOARD_DIR="${WHITEBOARD_DIR:-whiteboard}"
 
 # 色定義
@@ -96,7 +98,7 @@ render() {
     # === Stallアラート ===
     echo -e "\n${DIM}────────────────────────────────────${NC}"
     echo -e "${BOLD}⚠️  Stallアラート${NC}"
-    local alerts_dir="/mnt/c/work/multi-agent-neko/status/alerts"
+    local alerts_dir="$BASE_DIR/status/alerts"
     if [ -d "$alerts_dir" ]; then
         local alert_files
         alert_files=$(ls -t "$alerts_dir"/*.json 2>/dev/null)
@@ -136,7 +138,7 @@ render() {
     fi
 
     # === Concurrency表示 ===
-    local concurrency_conf="/mnt/c/work/multi-agent-neko/config/concurrency.json"
+    local concurrency_conf="$BASE_DIR/config/concurrency.json"
     if [ -f "$concurrency_conf" ] && command -v jq &>/dev/null; then
         local max_total max_genba
         max_total=$(jq -r '.max_concurrent_agents // 5' "$concurrency_conf" 2>/dev/null)
@@ -183,7 +185,7 @@ render() {
     fi
 
     # === Token使用量 ===
-    local token_dir="/mnt/c/work/multi-agent-neko/status/token-usage"
+    local token_dir="$BASE_DIR/status/token-usage"
     if [ -d "$token_dir" ]; then
         local latest_token
         latest_token=$(ls -t "$token_dir"/*.json 2>/dev/null | head -1)

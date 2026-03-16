@@ -8,12 +8,8 @@
 #   bash token-tracker.sh status "作戦名"
 #   bash token-tracker.sh add-agent "作戦名" "エージェント名"
 
-# 環境検出: WSL(/mnt/c/...) vs Git Bash(/c/...)
-if [ -d "/mnt/c/work" ]; then
-  BASE_DIR="/mnt/c/work/multi-agent-neko"
-else
-  BASE_DIR="/c/work/multi-agent-neko"
-fi
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BASE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 TOKEN_USAGE_DIR="${BASE_DIR}/status/token-usage"
 
 # ディレクトリ自動作成

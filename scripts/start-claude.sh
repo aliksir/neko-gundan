@@ -1,10 +1,12 @@
 #!/bin/bash
 # Claude Code + 猫軍団モニター ランチャー
 # tmuxセッションを作成し、右ペインにエージェントモニターを常駐させる
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BASE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 SESSION="claude"
-MONITOR="/mnt/c/work/multi-agent-neko/scripts/agent-monitor.sh"
+MONITOR="$BASE_DIR/scripts/agent-monitor.sh"
 
-cd /mnt/c/work
+cd "$BASE_DIR/.."
 
 if tmux has-session -t "$SESSION" 2>/dev/null; then
     # 既存セッションにアタッチ

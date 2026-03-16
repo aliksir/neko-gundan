@@ -121,7 +121,7 @@ These items are added to the gate when the corresponding module is enabled in `n
 | 12 | linter_protection | No linter config weakened | Diff shows no linter rule removals | linter_protection: true |
 | 13 | reflexion | Failure reflection recorded (if applicable) | Reflexion section in report | reflexion: true AND task had failures |
 | 14 | progress_visibility | Dashboard finalized | `status/dashboard.md` has final status, completion %, "Mission: COMPLETE" | Platoon+ AND progress_visibility: true |
-| 15 | audit_trail | Audit trail recorded | Traceability: all REQs VERIFIED or DEFERRED. Approvals: all reviews logged. Changes: all scope changes logged. Summary: generated (platoon+) | audit_trail: true |
+| 15 | audit_trail | Audit trail recorded | Traceability: all REQs VERIFIED or DEFERRED. Approvals: all reviews logged. Changes: all scope changes logged. Commands & permissions: summarized (category/command/target/count). Summary: generated (platoon+) | audit_trail: true |
 | 16 | test_plan | Test plan completed | Test plan matrix exists, all unit test items (normal + abnormal) and integration test items checked. `[N/A]` if no code changes (docs/config only) | Test phase was executed (manually or via `/neko-gundan test`) |
 
 > **Total item count** = 7 (core) + active module items. Verify your count matches `neko-gundan.config.yaml` active modules.

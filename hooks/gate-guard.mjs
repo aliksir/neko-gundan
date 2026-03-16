@@ -144,12 +144,19 @@ if (!planExists) missing.push(`plans/${projectName}_*.md（計画書）`);
 if (!checklistExists) missing.push(`checklist/*_${projectName}*.md（チェックリスト）`);
 
 if (missing.length > 0) {
+  const hints = [];
+  if (!planExists) {
+    hints.push(`  → /neko-gundan design "task description" を実行、もしくは plans/YYYYMMDD_${projectName}.md を作成してください`);
+  }
+  if (!checklistExists) {
+    hints.push(`  → checklist/YYYYMMDD_${projectName}.md を作成してください`);
+  }
+
   const reason = [
     `🚫 開始ゲート未完了！プロジェクト「${projectName}」の以下の成果物が存在しません:`,
     ...missing.map(m => `  - ${m}`),
     '',
-    '先に開始ゲートを通してください（rules/gates.md 参照）。',
-    '計画書とチェックリストを作成してから実装に着手すること。',
+    ...hints,
   ].join('\n');
 
   console.log(JSON.stringify({

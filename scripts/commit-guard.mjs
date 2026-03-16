@@ -3,7 +3,11 @@
 // PreToolUse(Bash) で起動。
 // git commit 実行時に以下を確認:
 //   1. result/ に当日の報告書があるか（全commit必須）
-//   2. コードファイル変更時は checklist/ にチェックリストがあるか
+//   2. plans/ に計画書があるか（全commit必須）
+//   3. test-plan/ にテスト計画書があるか（全commit必須）
+//   4. audit/ に監査ログがあるか（全commit必須）
+//   5. logs/ に生ログがあるか（全commit必須）
+//   6. コードファイル変更時は checklist/ にチェックリストがあるか
 //
 // 計画書（plans/）も必須。作業着手前に作成すること。
 
@@ -51,7 +55,7 @@ if (!projectName) {
 const metaDirs = [
   'plans', 'checklist', 'result', 'whiteboard', 'Purpose', 'memory',
   'metrics', '_archive', '_deleted', 'topic', 'kidou', 'scratch',
-  'claude-skills', '依頼事項', 'test-plan',
+  'claude-skills', '依頼事項', 'test-plan', 'audit', 'logs',
 ];
 if (metaDirs.includes(projectName)) {
   process.exit(0);
@@ -106,7 +110,61 @@ if (!planExists) {
   missing.push(`plans/*_${projectName}*.md（計画書 — 後追いOKだがコミット前に作成必須）`);
 }
 
-// 3. コードファイル変更時のチェックリスト確認
+// 3. テスト計画書チェック（全commit必須）
+const testPlanDir = resolve(workDir, 'test-plan');
+let testPlanExists = false;
+if (existsSync(testPlanDir)) {
+  try {
+    const testPlanFiles = readdirSync(testPlanDir);
+    testPlanExists = testPlanFiles.some(
+      f => f.includes(projectName) && f.endsWith('.md')
+    );
+  } catch {
+    testPlanExists = true;
+  }
+}
+
+if (!testPlanExists) {
+  missing.push(`test-plan/*_${projectName}*.md（テスト計画書 — テスト不要でも「テスト対象なし」と理由を記録して作成必須）`);
+}
+
+// 4. 監査ログチェック（全commit必須）
+const auditDir = resolve(workDir, 'audit');
+let auditExists = false;
+if (existsSync(auditDir)) {
+  try {
+    const auditFiles = readdirSync(auditDir);
+    auditExists = auditFiles.some(
+      f => f.includes(projectName) && f.endsWith('.md')
+    );
+  } catch {
+    auditExists = true;
+  }
+}
+
+if (!auditExists) {
+  missing.push(`audit/*_${projectName}*.md（監査ログ — トレーサビリティ・承認記録）`);
+}
+
+// 5. 生ログチェック（全commit必須）
+const logsDir = resolve(workDir, 'logs');
+let rawLogExists = false;
+if (existsSync(logsDir)) {
+  try {
+    const logFiles = readdirSync(logsDir);
+    rawLogExists = logFiles.some(
+      f => f.includes(projectName) && f.endsWith('.md')
+    );
+  } catch {
+    rawLogExists = true;
+  }
+}
+
+if (!rawLogExists) {
+  missing.push(`logs/*_${projectName}*.md（生ログ — エージェント行動の証跡）`);
+}
+
+// 6. コードファイル変更時のチェックリスト確認
 // git diff --cached でステージ済みファイルにコードファイルが含まれるか確認
 let hasCodeChanges = false;
 const codeExtensions = ['.js', '.mjs', '.ts', '.tsx', '.py', '.rb', '.go', '.rs', '.java', '.c', '.cpp', '.h', '.cs', '.php', '.swift', '.kt', '.vue', '.svelte', '.jsx', '.sh', '.bash', '.ps1', '.sql'];
@@ -173,23 +231,6 @@ if (hasCodeChanges) {
     }
   }
 
-  // 4. コードファイル変更時のテスト計画書確認
-  const testPlanDir = resolve(workDir, 'test-plan');
-  let testPlanExists = false;
-  if (existsSync(testPlanDir)) {
-    try {
-      const testPlanFiles = readdirSync(testPlanDir);
-      testPlanExists = testPlanFiles.some(
-        f => f.includes(projectName) && f.endsWith('.md')
-      );
-    } catch {
-      testPlanExists = true;
-    }
-  }
-
-  if (!testPlanExists) {
-    missing.push(`test-plan/*_${projectName}*.md（テスト計画書 — コード変更あり。テスト不要でも「テスト対象なし」で作成必須）`);
-  }
 }
 
 // --- 結果判定 ---
@@ -199,11 +240,13 @@ if (missing.length > 0) {
     `🚫 コミット前の成果物チェック！プロジェクト「${projectName}」の以下が不足:`,
     ...missing.map(m => `  - ${m}`),
     '',
-    '【ルール】',
-    '・どんな些細な作業でも報告書（result/）は必ず作成すること',
-    '・コード変更時はチェックリスト（checklist/）も必須',
-    '・コード変更時はテスト計画書（test-plan/）も必須（テスト不要でも「テスト対象なし」で作成）',
-    '・計画書（plans/）が作成されてから作業に着手すること',
+    '【ルール — 全commit必須の成果物6種】',
+    '・報告書（result/）— どんな些細な作業でも必須',
+    '・計画書（plans/）— 作業着手前に作成',
+    '・テスト計画書（test-plan/）— テスト不要でも「テスト対象なし」と理由を記録',
+    '・監査ログ（audit/）— トレーサビリティ・承認記録',
+    '・生ログ（logs/）— エージェント行動の証跡',
+    '・チェックリスト（checklist/）— コード変更時のみ',
   ].join('\n');
 
   console.log(JSON.stringify({

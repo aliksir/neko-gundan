@@ -3,10 +3,10 @@
 // PreToolUse(Bash) で起動。
 // git commit 実行時に以下を確認:
 //   1. result/ に報告書があるか（全commit必須）
-//   2. コードファイル変更時は checklist/ にチェックリストがあるか
-//
-// 計画書（plans/）は後追いOKなのでブロックしない。
-// ただし報告書作成時に計画書も必ず残すこと（ルール上の義務）。
+//   2. plans/ に計画書があるか（全commit必須）
+//   3. designs/ に設計書があるか（全commit必須）
+//   4. コードファイル変更時は checklist/ にチェックリストがあるか
+//   5. コードファイル変更時は test-plan/ にテスト計画書があるか
 //
 // 環境変数:
 //   NEKO_WORK_DIR: 作業ルートディレクトリ（default: process.cwd()の親）
@@ -61,7 +61,7 @@ if (!projectName) {
 // メタディレクトリはスキップ
 const metaDirs = [
   'plans', 'checklist', 'result', 'whiteboard', 'Purpose', 'memory',
-  'metrics', '_archive', '_deleted', 'topic', 'scratch', 'test-plan',
+  'metrics', '_archive', '_deleted', 'topic', 'scratch', 'test-plan', 'designs',
 ];
 if (metaDirs.includes(projectName)) {
   process.exit(0);
@@ -109,7 +109,25 @@ if (!planExists) {
   missing.push(`plans/*_${projectName}*.md（計画書 — 後追いOKだがコミット前に作成必須）`);
 }
 
-// 3. コードファイル変更時のチェックリスト確認
+// 3. 設計書チェック（全commit必須）
+const designsDir = resolve(workDir, 'designs');
+let designExists = false;
+if (existsSync(designsDir)) {
+  try {
+    const designFiles = readdirSync(designsDir);
+    designExists = designFiles.some(
+      f => f.includes(projectName) && f.endsWith('.md')
+    );
+  } catch {
+    designExists = true;
+  }
+}
+
+if (!designExists) {
+  missing.push(`designs/*_${projectName}*.md（設計書 — 設計不要でも「設計対象なし」と理由を記録）`);
+}
+
+// 4. コードファイル変更時のチェックリスト確認
 let hasCodeChanges = false;
 const codeExtensions = [
   '.js', '.mjs', '.ts', '.tsx', '.py', '.rb', '.go', '.rs', '.java',
@@ -181,11 +199,12 @@ if (missing.length > 0) {
     `🚫 コミット前の成果物チェック！プロジェクト「${projectName}」の以下が不足:`,
     ...missing.map(m => `  - ${m}`),
     '',
-    '【ルール】',
-    '・どんな些細な作業でも報告書（result/）は必ず作成すること',
+    '【ルール — 全commit必須の成果物】',
+    '・報告書（result/）— どんな些細な作業でも必須',
+    '・計画書（plans/）— 作業着手前に作成',
+    '・設計書（designs/）— 設計不要でも「設計対象なし」と理由を記録',
     '・コード変更時はチェックリスト（checklist/）も必須',
-    '・コード変更時はテスト計画書（test-plan/）も必須（テスト不要でも「テスト対象なし」で作成）',
-    '・計画書（plans/）が作成されてから作業に着手すること',
+    '・コード変更時はテスト計画書（test-plan/）も必須',
   ].join('\n');
 
   console.log(JSON.stringify({

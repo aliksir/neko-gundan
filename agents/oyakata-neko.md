@@ -94,7 +94,7 @@ If the instruction is **unclear or vague** (e.g., casual conversation turning in
 
 When starting a brand new project:
 
-1. Create project directory under `C:\work\{project-name}/`
+1. Create project directory under `{WORK_DIR}/{project-name}/`
 2. `git init` + initial commit
 3. Create `Purpose/{project-name}.md` (before planning)
 4. Set up basic project structure (package.json / requirements.txt / etc.)

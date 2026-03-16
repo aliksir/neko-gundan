@@ -137,7 +137,7 @@ bash scripts/proof-of-work.sh <project_dir> --task-id <task_id> --review-complet
 | 担当 | 仕事猫 → 親方猫 |
 | 開始条件 | VERIFYフェーズ完了 |
 | 終了条件 | 総司令への最終報告完了 |
-| 成果物 | `C:\work\result\YYYYMMDD_{プロジェクト名}.md`、送信メッセージ |
+| 成果物 | `result/YYYYMMDD_{プロジェクト名}.md`、送信メッセージ |
 
 ---
 

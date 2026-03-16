@@ -85,8 +85,7 @@ const projectName = parts[0];
 // NOTE: neko-gundan自体も開発対象になり得る。自分のリポ名はここに入れないこと (2026-03-15)
 const metaDirs = [
   'plans', 'checklist', 'result', 'whiteboard', 'Purpose', 'memory',
-  'metrics', '_archive', '_deleted', 'topic', 'kidou', 'scratch',
-  'claude-skills', '依頼事項', 'test-plan', 'designs',
+  'metrics', '_archive', '_deleted', 'topic', 'test-plan', 'designs',
 ];
 if (metaDirs.includes(projectName)) {
   process.exit(0);

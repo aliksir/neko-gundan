@@ -61,7 +61,7 @@ if (!projectName) {
 // メタディレクトリはスキップ
 const metaDirs = [
   'plans', 'checklist', 'result', 'whiteboard', 'Purpose', 'memory',
-  'metrics', '_archive', '_deleted', 'topic', 'scratch', 'test-plan', 'designs',
+  'metrics', '_archive', '_deleted', 'topic', 'test-plan', 'designs',
 ];
 if (metaDirs.includes(projectName)) {
   process.exit(0);

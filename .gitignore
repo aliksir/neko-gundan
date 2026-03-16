@@ -8,3 +8,11 @@ __pycache__/
 Thumbs.db
 _deleted/
 node_modules/
+
+# Session artifacts (generated during operations, not part of framework)
+audit/
+logs/
+status/dashboard.md
+status/agent-status.json
+status/code-factory-report.*
+status/token-usage/

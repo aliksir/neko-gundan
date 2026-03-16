@@ -222,9 +222,9 @@ Each phase has its own lightweight gates. Input templates are in `templates/` �
 | Phase | Required Input | Output | Auto-created if missing |
 |-------|---------------|--------|------------------------|
 | `design` | Purpose file (if exists) | `plans/`, `designs/` | designs/ template |
-| `implement` | `plans/*.md`, `designs/*.md` | Source code, commits | designs/ (with "No design target") |
-| `review` | Plan and/or source code | Review report | — |
-| `test` | Source code | Test plan, test results | — |
+| `implement` | `designs/*.md` (recommended); `plans/*.md` (required if no designs) | Source code, commits | designs/ (with "No design target") |
+| `review` | Plan / design / code (reference source varies by target type) | Review report | — |
+| `test` | Source code, test plan (matrix) | Test results | — |
 | (full flow) | — | All of the above | — |
 
 > **Missing files?** Each phase checks for required inputs at its start gate. If a required file is missing, the command tells you exactly which file is needed and where to create it — instead of silently failing.

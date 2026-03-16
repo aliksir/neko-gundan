@@ -69,7 +69,9 @@ if (metaDirs.includes(projectName)) {
 
 // --- 成果物チェック ---
 
-const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+// Use local time (UTC causes off-by-one date in JST+9 and other positive UTC offsets)
+const now = new Date();
+const today = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
 const missing = [];
 
 // 1. 報告書チェック（全commit必須）

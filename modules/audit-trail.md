@@ -206,6 +206,19 @@ Generated: YYYY-MM-DD HH:MM
 - APPROVED: {N} | REJECTED: {N}
 - Full ledger: [link to changes file]
 
+## Commands & Permissions
+| Category | Command/Action | Target | Count |
+|----------|---------------|--------|-------|
+| Git | git commit | {project} | {N} |
+| Git | git push | {remote/branch} | {N} |
+| Git | gh pr merge | PR #{N} | {N} |
+| External | post_tweet | Tweet ID: {id} | {N} |
+| File | Write (new) | {file1, file2, ...} | {N} |
+| File | Edit | {file1, file2, ...} | {N} |
+| Bash | {command} | {target} | {N} |
+
+> Summarize commands with side effects. Pair with raw log for full details.
+
 ## Quality Evidence
 - Checklist: [link to checklist file] — {PASS}/{Total} items
 - Metrics: [link to metrics file]
@@ -232,11 +245,11 @@ Shigoto-neko generates the audit summary as part of the completion gate, after a
 
 ## Scale Variants
 
-| Scale | Traceability | Approvals | Changes | Summary |
-|-------|-------------|-----------|---------|---------|
-| **Squad** | Lite (REQ-ID + commit only, no design column) | Review approvals only | On scope change only | Skip |
-| **Platoon** | Full | Full | Full | Full |
-| **Battalion** | Full | Full | Full | Full |
+| Scale | Traceability | Approvals | Changes | Commands | Summary |
+|-------|-------------|-----------|---------|----------|---------|
+| **Squad** | Lite (REQ-ID + commit only, no design column) | Review approvals only | On scope change only | Required | Skip |
+| **Platoon** | Full | Full | Full | Required | Full |
+| **Battalion** | Full | Full | Full | Required | Full |
 
 ### Squad Lite Traceability
 

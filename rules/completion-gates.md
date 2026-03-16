@@ -47,10 +47,11 @@ Execute before starting any squad+ mission. The gate is **not complete until all
 
 ### Artifact Set Rule (Mandatory)
 
-**1 task = 1 matched set.** Plan, checklist, result report, raw log, and audit log must all share the same `{task_name}` and correspond 1:1.
+**1 task = 1 matched set.** Plan, design document, checklist, result report, raw log, and audit log must all share the same `{task_name}` and correspond 1:1.
 
 ```
 plans/20260315_feature-x.md        ← plan
+designs/20260315_feature-x.md      ← design document
 checklist/20260315_feature-x.md    ← checklist
 result/20260315_feature-x.md       ← result report
 ```

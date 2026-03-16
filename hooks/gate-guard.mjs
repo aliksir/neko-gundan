@@ -86,7 +86,7 @@ const projectName = parts[0];
 const metaDirs = [
   'plans', 'checklist', 'result', 'whiteboard', 'Purpose', 'memory',
   'metrics', '_archive', '_deleted', 'topic', 'kidou', 'scratch',
-  'claude-skills', '依頼事項', 'test-plan',
+  'claude-skills', '依頼事項', 'test-plan', 'designs',
 ];
 if (metaDirs.includes(projectName)) {
   process.exit(0);

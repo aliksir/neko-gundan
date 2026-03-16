@@ -171,3 +171,78 @@ When deleting files:
 1. Move to `_deleted/` directory first (never instant-delete)
 2. Verify no references to the file remain
 3. Next session can confirm and permanently remove
+
+---
+
+## Phase-Specific Gates (`/neko-gundan <phase>`)
+
+> Used when running individual phases independently.
+> For full end-to-end flow (no phase argument), use the Nano/Squad/Platoon gates above.
+
+### Design Start Gate (4 items)
+
+| # | Check | How to verify |
+|---|-------|---------------|
+| 1 | **Target project identified** | Which project? New → `[new]`. Existing → Read `Purpose/{project}.md` |
+| 2 | **Input specification confirmed** | Is all info needed for design available? If not, ask commander |
+| 3 | **Existing designs checked** | `ls plans/{project}_* designs/{project}_*` — update or add, don't overwrite |
+| 4 | **Design document template created** | `designs/YYYYMMDD_{project}.md` created with sections for approach, changes, rationale |
+
+### Design Completion Gate (4 items)
+
+| # | Check | How to verify |
+|---|-------|---------------|
+| 1 | **Plan exists** | `plans/` contains plan with scope, success criteria, and out-of-scope |
+| 2 | **Design document completed** | `designs/YYYYMMDD_{project}.md` has approach, changes, rationale filled in. If no design needed → "No design target" with reason (file still required) |
+| 3 | **Required designs done** | DB/API/UI designs completed as needed. Unused → `[N/A]` |
+| 4 | **Design review conducted** | Designer ≠ reviewer (per review-protocol.md) |
+
+### Implement Start Gate (4 items)
+
+| # | Check | How to verify |
+|---|-------|---------------|
+| 1 | **Plan exists** | Read plan file — scope and success criteria are readable |
+| 2 | **Design document exists** | Read `designs/YYYYMMDD_{project}.md` — design approach is readable. If no design needed → "No design target" must be recorded |
+| 3 | **Implementation-ready** | Plan + design have scope, steps, success criteria. If insufficient, ask commander |
+| 4 | **git status clean** | `git status` in project directory. Uncommitted changes → WIP commit or stash |
+
+### Implement Completion Gate (4 items)
+
+| # | Check | How to verify |
+|---|-------|---------------|
+| 1 | **Success criteria met** | Verify each criterion from the plan one by one |
+| 2 | **Code committed** | `git status` shows clean or committed |
+| 3 | **Syntax check passed** | lint/type check (if applicable). Record results as evidence |
+| 4 | **Functional verification** | Test run / CLI run / browser check. Record evidence. No test target → `[N/A]` with reason |
+
+### Review Start Gate (2 items)
+
+| # | Check | How to verify |
+|---|-------|---------------|
+| 1 | **Review target identified** | Plan path / project name + branch / both are clear |
+| 2 | **Target readable** | Target files are accessible via `Read` / `git diff` |
+
+### Review Completion Gate (2 items)
+
+| # | Check | How to verify |
+|---|-------|---------------|
+| 1 | **Review report output** | Verdict (APPROVE/REQUEST_CHANGES) + findings are explicit |
+| 2 | **Evidence for each finding** | Each finding includes file path, line number, specific issue |
+
+### Test Start Gate (3 items)
+
+| # | Check | How to verify |
+|---|-------|---------------|
+| 1 | **Test target identified** | Project name, scope, test type are clear |
+| 2 | **Code exists** | Target directory contains code to test |
+| 3 | **Test plan created and approved** | Test matrix (feature × concern) created, presented to commander |
+
+### Test Completion Gate (5 items)
+
+| # | Check | How to verify |
+|---|-------|---------------|
+| 1 | **Unit tests all executed** | Test matrix normal/abnormal cases all checked (no `[ ]` remaining) |
+| 2 | **Integration tests all executed** | Integration test scenarios all checked |
+| 3 | **Test execution evidence** | Pass/fail count, coverage recorded |
+| 4 | **Quality check results** | lint/security scan results (if run). Not run → `[N/A]` with reason |
+| 5 | **Failures listed** | If any fail/warning/vulnerability, list them. All pass → record "All PASS" |

@@ -195,9 +195,24 @@ if (hasCodeChanges) {
 // --- 結果判定 ---
 
 if (missing.length > 0) {
+  const fileHints = {
+    'result/': `result/ にプロジェクト名を含む報告書を作成してください`,
+    'plans/': `/neko-gundan design "task description" を実行、もしくは plans/ に計画書を作成してください`,
+    'designs/': `designs/ に設計書を作成してください（設計不要なら「設計対象なし」と記載）`,
+    'checklist/': `checklist/ にチェックリストを作成してください`,
+    'test-plan/': `test-plan/ にテスト計画書を作成してください（テスト不要なら「テスト対象なし」と記載）`,
+  };
+
+  const hints = missing.map(m => {
+    const dir = Object.keys(fileHints).find(d => m.includes(d));
+    return dir ? `  → ${fileHints[dir]}` : '';
+  }).filter(Boolean);
+
   const reason = [
     `🚫 コミット前の成果物チェック！プロジェクト「${projectName}」の以下が不足:`,
     ...missing.map(m => `  - ${m}`),
+    '',
+    ...hints,
     '',
     '【ルール — 全commit必須の成果物】',
     '・報告書（result/）— どんな些細な作業でも必須',

@@ -188,24 +188,26 @@ When deleting files:
 | 3 | **Existing designs checked** | `ls plans/{project}_* designs/{project}_*` — update or add, don't overwrite |
 | 4 | **Design document template created** | `designs/YYYYMMDD_{project}.md` created with sections for approach, changes, rationale |
 
-### Design Completion Gate (4 items)
+### Design Completion Gate (5 items)
 
 | # | Check | How to verify |
 |---|-------|---------------|
 | 1 | **Plan exists** | `plans/` contains plan with scope, success criteria, and out-of-scope |
 | 2 | **Design document completed** | `designs/YYYYMMDD_{project}.md` has approach, changes, rationale filled in. If no design needed → "No design target" with reason (file still required) |
 | 3 | **Required designs done** | DB/API/UI designs completed as needed. Unused → `[N/A]` |
-| 4 | **Design review conducted** | Designer ≠ reviewer (per review-protocol.md) |
+| 4 | **Test plan determination** | Determine from design document whether verification activities (script execution, CLI output checks, browser checks, build verification, etc.) will occur during the task. **If yes**: create test matrix skeleton (ID, function, perspective, expected result) in `test-plan/`. **If no**: record "No test target" with reasoning in `test-plan/`. **Criteria**: if plan/design mentions "verify", "test", "confirm behavior", "check output" → test target exists. Pure documentation edits or config value text changes only → no test target |
+| 5 | **Design review conducted** | Designer ≠ reviewer (per review-protocol.md) |
 
-### Implement Start Gate (3 items)
+### Implement Start Gate (4 items)
 
-> Required input is **previous phase output (design document) only**. Plan is recommended but not required.
+> Design document (designs/) is recommended input. When absent, the plan must contain justification for why design is unnecessary.
 
 | # | Check | How to verify |
 |---|-------|---------------|
-| 1 | **Design document exists** | Check `designs/YYYYMMDD_{project}.md`. If exists, read it. **If missing, auto-create with "No design target: implement-only execution"** and continue. Also read plan (if exists) |
-| 2 | **Implementation-ready** | Design doc (+ plan if available) has scope and success criteria. If insufficient, ask commander |
-| 3 | **git status clean** | `git status` in project directory. Uncommitted changes → WIP commit or stash |
+| 1 | **Design document exists** | Check `designs/YYYYMMDD_{project}.md`. If exists, read it. **If missing → proceed to next item to verify justification** |
+| 2 | **Design-skip justification (only when design doc missing)** | Read plan (plans/). Create design doc with "No design target" **only if** one of these is explicitly stated: (1) documentation/config text changes only (2) design completed by human or external AI (3) additional implementation within scope of existing design. **If no justification found → implementation cannot start** — return to design phase or ask commander |
+| 3 | **Implementation-ready** | Design doc or plan has scope and success criteria. **If neither has them → implementation cannot start** — ask commander |
+| 4 | **git status clean** | `git status` in project directory. Uncommitted changes → WIP commit or stash |
 
 ### Implement Completion Gate (4 items)
 

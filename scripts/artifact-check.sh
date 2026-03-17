@@ -1,0 +1,110 @@
+#!/bin/bash
+# ===========================================
+# 猫軍団 — 成果物一括チェックスクリプト
+# ===========================================
+#
+# 使い方:
+#   bash scripts/artifact-check.sh <project-name> [work-dir]
+#
+# 全commit必須の成果物（7種）+ コード変更時のchecklist の存在を確認。
+# 完了ゲート・報告前チェックポイントで使用。
+#
+# 終了コード:
+#   0: 全成果物あり
+#   1: 不足あり（不足一覧を出力）
+
+set -euo pipefail
+
+PROJECT="${1:-}"
+WORK_DIR="${2:-$(pwd)}"
+
+if [ -z "$PROJECT" ]; then
+    echo "使い方: bash scripts/artifact-check.sh <project-name> [work-dir]" >&2
+    exit 1
+fi
+
+# --- 色定義 ---
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m'
+
+# --- 全commit必須（7種） ---
+ALWAYS_REQUIRED=(
+    "plans:計画書"
+    "designs:設計書"
+    "test-plan:テスト計画書"
+    "audit:監査ログ"
+    "logs:生ログ"
+    "result:報告書"
+)
+
+missing=0
+total=0
+
+echo "🔍 成果物チェック: プロジェクト「${PROJECT}」"
+echo "   作業ディレクトリ: ${WORK_DIR}"
+echo ""
+
+for entry in "${ALWAYS_REQUIRED[@]}"; do
+    dir="${entry%%:*}"
+    label="${entry##*:}"
+    total=$((total + 1))
+
+    found=false
+    if [ -d "${WORK_DIR}/${dir}" ]; then
+        # プロジェクト名を含む.mdファイルがあるか
+        if ls "${WORK_DIR}/${dir}/"*"${PROJECT}"*.md 1>/dev/null 2>&1; then
+            found=true
+        fi
+    fi
+
+    if [ "$found" = true ]; then
+        echo -e "  ${GREEN}✓${NC} ${dir}/ — ${label}"
+    else
+        echo -e "  ${RED}✗${NC} ${dir}/ — ${label} が見つかりません"
+        missing=$((missing + 1))
+    fi
+done
+
+# metrics/ チェック（PJ別累積ファイル）
+total=$((total + 1))
+metrics_found=false
+if [ -d "${WORK_DIR}/metrics" ]; then
+    if ls "${WORK_DIR}/metrics/"*"${PROJECT}"*_metrics.md 1>/dev/null 2>&1; then
+        metrics_found=true
+    fi
+fi
+
+if [ "$metrics_found" = true ]; then
+    echo -e "  ${GREEN}✓${NC} metrics/ — メトリクス"
+else
+    echo -e "  ${RED}✗${NC} metrics/ — メトリクス が見つかりません"
+    missing=$((missing + 1))
+fi
+
+# checklist/ チェック（コード変更の有無に関係なく存在確認、警告レベル）
+total=$((total + 1))
+checklist_found=false
+if [ -d "${WORK_DIR}/checklist" ]; then
+    if ls "${WORK_DIR}/checklist/"*"${PROJECT}"*.md 1>/dev/null 2>&1; then
+        checklist_found=true
+    fi
+fi
+
+if [ "$checklist_found" = true ]; then
+    echo -e "  ${GREEN}✓${NC} checklist/ — チェックリスト"
+else
+    echo -e "  ${YELLOW}△${NC} checklist/ — チェックリスト（コード変更時は必須）"
+fi
+
+echo ""
+
+if [ "$missing" -gt 0 ]; then
+    echo -e "${RED}結果: ${missing}/${total} 個の必須成果物が不足しています${NC}"
+    echo "  → 不足分を作成してからコミット・報告してください"
+    exit 1
+else
+    echo -e "${GREEN}結果: 全 ${total} 種の必須成果物が揃っています ヨシッ！${NC}"
+    exit 0
+fi

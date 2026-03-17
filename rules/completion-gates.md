@@ -69,9 +69,9 @@ The trigger is the act of reporting itself — not a gate decision.
 |---|-------|----------|
 | 1 | **Request-result alignment** | Does what I did match what the commander asked? |
 | 2 | **Evidence of correctness** | Do I have proof it works/exists? (command output, file check, test result) |
-| 3 | **Artifact status** | Are plan/checklist/report needed? If yes, do they exist? |
+| 3 | **Artifact set verified** | Run `bash scripts/artifact-check.sh {project}` to mechanically verify all required artifacts exist. If any are missing, create them before reporting. **Do not rely on mental confirmation alone** — the script is the source of truth |
 
-Mental confirmation only — no file output required. But if #3 reveals missing artifacts, create them before reporting.
+Items #1-2 are mental checks. Item #3 is **mandatory script execution** — not optional, not mental-only. The script catches artifacts that humans and agents forget.
 
 "Don't say YOSHI until you've actually looked."
 
@@ -209,7 +209,7 @@ When deleting files:
 | 3 | **Implementation-ready** | Design doc or plan has scope and success criteria. **If neither has them → implementation cannot start** — ask commander |
 | 4 | **git status clean** | `git status` in project directory. Uncommitted changes → WIP commit or stash |
 
-### Implement Completion Gate (4 items)
+### Implement Completion Gate (5 items)
 
 | # | Check | How to verify |
 |---|-------|---------------|
@@ -217,6 +217,7 @@ When deleting files:
 | 2 | **Code committed** | `git status` shows clean or committed |
 | 3 | **Syntax check passed** | lint/type check (if applicable). Record results as evidence |
 | 4 | **Functional verification** | Test run / CLI run / browser check. Record evidence. No test target → `[N/A]` with reason |
+| 5 | **Artifact set check** | Run `bash scripts/artifact-check.sh {project}` or manually verify: plans/, designs/, test-plan/, audit/, logs/, result/, metrics/ all exist with project name. Checklist/ required if code was changed. **All 7+1 artifacts must exist before commit** |
 
 ### Review Start Gate (3 items)
 
@@ -244,7 +245,7 @@ When deleting files:
 | 2 | **Code exists** | Target directory contains code to test |
 | 3 | **Test plan created and approved** | Test matrix (feature × concern) created, presented to commander |
 
-### Test Completion Gate (5 items)
+### Test Completion Gate (6 items)
 
 | # | Check | How to verify |
 |---|-------|---------------|
@@ -253,3 +254,4 @@ When deleting files:
 | 3 | **Test execution evidence** | Pass/fail count, coverage recorded |
 | 4 | **Quality check results** | lint/security scan results (if run). Not run → `[N/A]` with reason |
 | 5 | **Failures listed** | If any fail/warning/vulnerability, list them. All pass → record "All PASS" |
+| 6 | **Artifact set check** | Run `bash scripts/artifact-check.sh {project}` or manually verify all required artifacts exist. **Must pass before reporting completion** |

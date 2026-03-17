@@ -519,10 +519,11 @@ if [ -n "$(echo "$MODULES" | tr -d ' ')" ]; then
     echo ""
 fi
 
-# Hooks (gate-guard)
+# Hooks (gate-guard + commit-guard)
 echo -e "${CYAN}Hooks:${NC}"
 mkdir -p "$CLAUDE_DIR/hooks" 2>/dev/null || true
 copy_file "$NEKO_DIR/hooks/gate-guard.mjs" "$CLAUDE_DIR/hooks/gate-guard.mjs"
+copy_file "$NEKO_DIR/hooks/commit-guard.mjs" "$CLAUDE_DIR/hooks/commit-guard.mjs"
 echo ""
 
 # Commands (implement/plan/all モードのみ)
@@ -576,20 +577,23 @@ elif [ "$copied" -gt 0 ]; then
         echo "  3. Run: bash neko-gundan/scripts/setup.sh  (for runtime dirs)"
     fi
     echo ""
-    echo -e "${CYAN}Required: Gate Guard Hook${NC}"
-    echo "  Prevents skipping the planning phase (blocks Edit/Write until"
-    echo "  plans/ and checklist/ files exist). Add to your settings.json:"
+    echo -e "${CYAN}Required: Gate Guard + Commit Guard Hooks${NC}"
+    echo "  Gate Guard: blocks Edit/Write until plans/ and checklist/ exist."
+    echo "  Commit Guard: blocks git commit until designs/ and other artifacts exist."
+    echo "  Add to your settings.json:"
     echo ""
     echo '  "hooks": {'
     echo '    "PreToolUse": ['
     echo '      { "matcher": "Edit",'
     echo "        \"hooks\": [{ \"type\": \"command\", \"command\": \"node $(echo "$CLAUDE_DIR/hooks" | sed 's|\\|/|g')/gate-guard.mjs\", \"timeout\": 3 }] },"
     echo '      { "matcher": "Write",'
-    echo "        \"hooks\": [{ \"type\": \"command\", \"command\": \"node $(echo "$CLAUDE_DIR/hooks" | sed 's|\\|/|g')/gate-guard.mjs\", \"timeout\": 3 }] }"
+    echo "        \"hooks\": [{ \"type\": \"command\", \"command\": \"node $(echo "$CLAUDE_DIR/hooks" | sed 's|\\|/|g')/gate-guard.mjs\", \"timeout\": 3 }] },"
+    echo '      { "matcher": "Bash",'
+    echo "        \"hooks\": [{ \"type\": \"command\", \"command\": \"node $(echo "$CLAUDE_DIR/hooks" | sed 's|\\|/|g')/commit-guard.mjs\", \"timeout\": 10 }] }"
     echo '    ]'
     echo '  }'
     echo ""
-    echo "  Without this hook, agents may skip planning after context compaction."
+    echo "  Without these hooks, agents may skip planning or commit without artifacts."
 else
     echo "All files already exist. Nothing to do."
     echo "To check for upstream updates: bash install.sh --update ${MODE_INPUT} ${TARGET_DIR}"

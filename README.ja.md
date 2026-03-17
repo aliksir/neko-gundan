@@ -245,6 +245,7 @@ Claude Codeの設定ファイル（`~/.claude/settings.json`）に追加:
 
 - **OBJECTION-001**（現場猫 → 仕事猫）：「この指示は既存機能を壊します」
 - **OBJECTION-002**（仕事猫 → 親方猫）：「この戦略は目的と矛盾しています」
+- **OBJECTION-003**（玄人猫 → 仕事猫）：「この設計には欠陥があります」
 
 各異議には**事実 + 懸念 + 代替案**が必要。
 
@@ -334,11 +335,9 @@ shitsuke:
 ```
 
 <details>
-<summary>出力サンプルを見る →</summary>
+<summary>出力に含まれる内容 →</summary>
 
-[logs/raw-raw-log-module-20260314.md](logs/raw-raw-log-module-20260314.md) — このモジュール自体を追加した際の実際の生ログ。
-
-全Editのdiff全文、Bashコマンドの出力、判断の理由、git diffとのクロスチェックを含む。
+全Editのdiff全文、Bashコマンドの出力、判断の理由、git diffとのクロスチェック。フォーマットの詳細は [modules/raw-log.md](modules/raw-log.md) を参照。
 
 </details>
 

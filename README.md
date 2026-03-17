@@ -253,6 +253,7 @@ Agents have an **obligation** to object to bad instructions — not just follow 
 
 - **OBJECTION-001** (worker -> manager): "This instruction will break things"
 - **OBJECTION-002** (manager -> general): "This strategy contradicts our goal"
+- **OBJECTION-003** (reviewer -> manager): "This design has a flaw"
 
 Each objection requires: **Facts + Concerns + Alternative Proposal**
 
@@ -345,11 +346,9 @@ shitsuke:
 ```
 
 <details>
-<summary>Full sample output →</summary>
+<summary>What the output includes →</summary>
 
-See [logs/raw-raw-log-module-20260314.md](logs/raw-raw-log-module-20260314.md) for a real example — the raw log generated from adding this module itself.
-
-Includes: every file edit with full diff, bash commands with output, decision rationale, and git diff cross-check.
+Every file edit with full diff, bash commands with output, decision rationale, and git diff cross-check. See [modules/raw-log.md](modules/raw-log.md) for format details.
 
 </details>
 

@@ -88,7 +88,7 @@ The team auto-scales based on task size:
 
 ### Mandatory Design Phase
 
-Every task follows: **Plan → Design → Implement → Quality Check**. Design documents (`designs/`) are required — `commit-guard` hook blocks commits without them. This ensures you can always trace *why* something was built the way it was.
+Every task follows: **Plan → Design → Design Review → Implement → Quality Check**. Design review is required at all scales (not just platoon+) — it catches config mismatches and architectural issues early. Design documents (`designs/`) are required — `commit-guard` hook blocks commits without them. Artifacts are completed at their phase boundary, not backfilled before commit.
 
 ### Phase-Based Independent Execution
 

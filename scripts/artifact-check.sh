@@ -94,6 +94,38 @@ fi
 
 if [ "$checklist_found" = true ]; then
     echo -e "  ${GREEN}✓${NC} checklist/ — チェックリスト"
+
+    # チェックリスト完了率チェック（未チェック項目の検出）
+    checklist_file=""
+    for f in "${WORK_DIR}/checklist/"*"${PROJECT}"*.md; do
+        [ -f "$f" ] && checklist_file="$f"
+    done
+    if [ -n "$checklist_file" ]; then
+        total_items=$(grep -cE '^\s*- \[(x| )\]' "$checklist_file" 2>/dev/null || true)
+        total_items=${total_items:-0}
+        checked_items=$(grep -cE '^\s*- \[x\]' "$checklist_file" 2>/dev/null || true)
+        checked_items=${checked_items:-0}
+        unchecked_items=$(grep -cE '^\s*- \[ \]' "$checklist_file" 2>/dev/null || true)
+        unchecked_items=${unchecked_items:-0}
+        # [N/A] 行は未チェックから除外
+        na_items=$(grep -cE '^\s*- \[ \].*\[N/A\]' "$checklist_file" 2>/dev/null || true)
+        na_items=${na_items:-0}
+        real_unchecked=$((unchecked_items - na_items))
+
+        if [ "$total_items" -gt 0 ]; then
+            completion_pct=$(( (checked_items * 100) / total_items ))
+            if [ "$real_unchecked" -gt 0 ]; then
+                echo -e "    ${YELLOW}⚠ 未チェック ${real_unchecked} 件（完了率 ${completion_pct}%）${NC}"
+                # 先頭3件を表示
+                grep -E '^\s*- \[ \]' "$checklist_file" | grep -v '\[N/A\]' | head -3 | while read -r line; do
+                    echo -e "      ${YELLOW}→ ${line}${NC}"
+                done
+                echo -e "    ${YELLOW}  チェックを埋めてから報告してください${NC}"
+            else
+                echo -e "    ${GREEN}  完了率 ${completion_pct}% — 全項目チェック済み ヨシッ！${NC}"
+            fi
+        fi
+    fi
 else
     echo -e "  ${YELLOW}△${NC} checklist/ — チェックリスト（コード変更時は必須）"
 fi

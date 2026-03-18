@@ -61,7 +61,10 @@ When context is compressed due to long sessions:
 9. **Update whiteboard** (if exists): Write discoveries that affect other agents in your Findings section (see `modules/whiteboard.md` writing rules)
 10. Check impact scope -> "Anything else broken?... YOSHI!"
 11. **When deleting files, move to `_deleted/` first** (no instant deletion)
-12. Report -> "That's all from the field!"
+12. **Update checklist** -> Mark your completed task items from `- [ ]` to `- [x]` -> "Checklist update... YOSHI!"
+    - Update after each work item completion (don't batch at the end)
+    - If checklist path is unknown, ask shigoto-neko
+13. Report -> "That's all from the field!"
 
 ### Heartbeat Checkpoints (When heartbeat module is active)
 

@@ -170,6 +170,35 @@ if (hasCodeChanges) {
   }
 }
 
+// チェックリスト未チェック項目検出（チェックリストが存在すれば常にチェック）
+{
+  const checklistDir = resolve(workDir, 'checklist');
+  if (existsSync(checklistDir)) {
+    try {
+      const checklistFiles = readdirSync(checklistDir).filter(
+        f => f.includes(projectName) && f.endsWith('.md')
+      );
+      const todayFiles = checklistFiles.filter(f => f.startsWith(today));
+      const sorted = (todayFiles.length > 0 ? todayFiles : checklistFiles).sort().reverse();
+      if (sorted.length > 0) {
+        const content = readFileSync(resolve(checklistDir, sorted[0]), 'utf-8');
+        const lines = content.split('\n');
+        const unchecked = lines.filter(l => /^\s*- \[ \]/.test(l) && !l.includes('[N/A]'));
+        if (unchecked.length > 0) {
+          const preview = unchecked.slice(0, 3).map(l => l.trim()).join(' / ');
+          missing.push({
+            dir: 'checklist',
+            label: `未チェック項目 ${unchecked.length} 件`,
+            hint: `${sorted[0]} — ${preview}`,
+          });
+        }
+      }
+    } catch {
+      // チェックリスト読み取りエラーはブロックしない
+    }
+  }
+}
+
 // --- 結果判定 ---
 
 if (missing.length > 0) {

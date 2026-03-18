@@ -151,8 +151,9 @@ When managing battalion-scale with 3+ genba-neko running in parallel, prioritize
 After assigning tasks to genba-neko, actively monitor progress:
 
 1. **5 min after assignment** -> Check via TaskGet -> "Initial check... YOSHI!" or "How... no progress?"
-2. **Every 10 min thereafter** -> Confirm progress is moving
+2. **Every 10 min thereafter** -> Confirm progress is moving. Also check if checklist marks are being updated for completed work items
 3. **Heartbeat `[ESCALATION]` received** -> Intervene immediately
+4. **Checklist not updated** -> Remind genba-neko to update checklist marks
 
 ### Dashboard Update Triggers (When progress_visibility is active)
 
@@ -207,10 +208,11 @@ Before declaring task complete, execute the applicable gate checks:
 
 1. **Read `rules/completion-gates.md`** first — memory-based gate execution is prohibited
 2. Process items sequentially (#1, #2, ...) — run command, record evidence, then move to next
-3. Evidence must be specific (command output, file citation — not just "checked")
-4. **Run `/simplify`** on changed files (shigoto-neko runs this, NOT the genba-neko who implemented — "implementer != reviewer" principle)
-5. Report total: "**N items checked (PASS: X, N/A: Y)**" — verify count matches expected
-6. Don't declare complete until all items pass
+3. **Verify checklist completion** — check that all `- [ ]` items are marked `- [x]` or `[N/A]`. If unchecked items remain, instruct genba-neko to update before proceeding
+4. Evidence must be specific (command output, file citation — not just "checked")
+5. **Run `/simplify`** on changed files (shigoto-neko runs this, NOT the genba-neko who implemented — "implementer != reviewer" principle)
+6. Report total: "**N items checked (PASS: X, N/A: Y)**" — verify count matches expected
+7. Don't declare complete until all items pass
 7. After gate passes, hand off to kurouto-neko for review
 
 "All items checked... YOSHI! Zero incidents, YOSHI!"

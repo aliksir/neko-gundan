@@ -59,6 +59,23 @@ result/20260315_feature-x.md       ← result report
 - Even when multiple tasks run in one session, create **separate artifact sets per task** (never merge into one report)
 - A plan without a matching report (or vice versa) is an inconsistency — fix it before closing
 
+### Artifact Completion Timing (No Backfilling)
+
+**"Create template → frantically fill before commit" is prohibited. Each artifact must be complete at its phase boundary.**
+
+| Artifact | Completion Timing | Checkpoint |
+|----------|------------------|------------|
+| Plan | **At start gate completion** (before work begins) | No plan = no code |
+| Checklist | **At plan creation** (before work begins) | Work items + QA items defined before starting |
+| Design doc | **At design phase completion** (before implementation) | Design review passed → start implementation |
+| Test plan | **At design completion** (before implementation) | Test target determination + matrix skeleton |
+| Audit log | **Incrementally during each phase** | Record on review approval, scope changes |
+| Raw log | **Incrementally during work** | Record Read/Edit/Bash actions as they happen |
+| Result report | **Just before completion gate** | Aggregates all phase results |
+| Metrics | **At completion gate** | Append task row + recalculate summary |
+
+**Principle: Everything except the result report and metrics should be complete at its phase boundary, not backfilled before commit.**
+
 ## Pre-Report Checkpoint (All Scales — Unconditional)
 
 **Fires unconditionally before reporting "done" to the commander. Independent of gate scale, escalation state, or task classification.**
@@ -133,8 +150,8 @@ Completion gate scope varies by process weight (see `modules/process-weight.md`)
 | Weight | Gate Scope | Review |
 |--------|-----------|--------|
 | **Light** | Quick gate: items #1, #2, #5 only (tests pass + no unintended diff + clean state) | Self-check allowed |
-| **Standard** | Full gate: all core items (#1-#7) + active module items | Independent reviewer required |
-| **Strict** | Full gate + ensemble judge + mandatory ISV | Independent reviewer + ensemble |
+| **Standard** | Full gate: all core items (#1-#7) + active module items + **design review** | Independent reviewer required (Sonnet+). Design review catches config mismatches and architectural issues early |
+| **Strict** | Full gate + ensemble judge + mandatory ISV | Independent reviewer (Opus) + ensemble |
 
 Default is **Standard** unless specified otherwise.
 

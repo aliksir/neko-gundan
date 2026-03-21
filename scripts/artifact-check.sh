@@ -61,6 +61,26 @@ for entry in "${ALWAYS_REQUIRED[@]}"; do
 
     if [ "$found" = true ]; then
         echo -e "  ${GREEN}✓${NC} ${dir}/ — ${label}"
+        # 生ログの内容チェック（テンプレート未記入検出）
+        if [ "$dir" = "logs" ]; then
+            log_file=""
+            for f in "${WORK_DIR}/${dir}/"*"${PROJECT}"*.md; do
+                [ -f "$f" ] && log_file="$f"
+            done
+            if [ -n "$log_file" ]; then
+                template_remains=$(grep -cE '（作業中に追記）|（追記予定）|TBD' "$log_file" 2>/dev/null || true)
+                template_remains=${template_remains:-0}
+                action_lines=$(grep -cE '^(Read|Edit|Write|Bash|Grep|Glob|Agent|WebFetch|WebSearch):' "$log_file" 2>/dev/null || true)
+                action_lines=${action_lines:-0}
+                if [ "$template_remains" -gt 0 ]; then
+                    echo -e "    ${RED}✗ 生ログにテンプレート未記入文言が残っています（${template_remains}箇所）${NC}"
+                    echo -e "    ${RED}  → 現場猫のアクションログを収集してから完了してください${NC}"
+                    missing=$((missing + 1))
+                elif [ "$action_lines" -eq 0 ]; then
+                    echo -e "    ${YELLOW}⚠ 生ログにアクション行（Read:/Edit:/Bash:等）が見つかりません${NC}"
+                fi
+            fi
+        fi
     else
         echo -e "  ${RED}✗${NC} ${dir}/ — ${label} が見つかりません"
         missing=$((missing + 1))

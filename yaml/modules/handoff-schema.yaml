@@ -60,7 +60,7 @@ module_detail:
       action: ハンドオフフィールドを検証する（from/to必須・status有効・completed非空・actionフィールド適切）
     - agent: shigoto-neko
       phase: タスクルーティング時
-      action: actionフィールドを使って判断する: auto（続行）/ confirm（先に承認）/ propose_only（レビューのみ）
+      action: "actionフィールドを使って判断する: auto（続行）/ confirm（先に承認）/ propose_only（レビューのみ）"
 
   notes:
     - "statusの3値: complete（完了）/ partial（部分完了）/ blocked（ブロック中）"

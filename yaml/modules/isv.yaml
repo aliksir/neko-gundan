@@ -44,13 +44,13 @@ module_detail:
         - "outcome: 0.0=完全失敗・ロールバック / 0.3=大幅な手戻り / 0.5=部分的に達成 / 0.7=軽微な修正で完了 / 1.0=初回成功"
 
     - id: 3
-      name: shigoto-neko: タスク指示へのISV追加
+      name: "shigoto-neko: タスク指示へのISV追加"
       steps:
         - "タスク指示（pre-dispatch）にISV開始値を追加する"
         - "ISV (start): urgency / risk / complexity / novelty / purpose_alignment の5次元"
 
     - id: 4
-      name: shigoto-neko: 報告書へのISV結果追加
+      name: "shigoto-neko: 報告書へのISV結果追加"
       steps:
         - "完了報告にISV結果値を追加する"
         - "ISV (result): confidence / outcome / review_cycles / intervention_count の4次元"

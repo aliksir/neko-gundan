@@ -49,7 +49,7 @@ module_detail:
 
   integration_points:
     - agent: shigoto-neko
-      phase: 作業中（トリガー該当時: genba-neko3体以上かつ遅延 / polling追いつかず / ゲート先送り / Heartbeat2件以上キュー）
+      phase: "作業中（トリガー該当時: genba-neko3体以上かつ遅延 / polling追いつかず / ゲート先送り / Heartbeat2件以上キュー）"
       action: CAPACITY-001エスカレーション報告をoyakata-nekoに送信
     - agent: oyakata-neko
       phase: shigoto-nekoからCAPACITY-001受信時

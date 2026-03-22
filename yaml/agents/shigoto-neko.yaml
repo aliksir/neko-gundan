@@ -95,7 +95,7 @@ agent:
       categories: "ダッシュボード・ホワイトボード管理"
     - priority: "P4: 連携（状況依存・現場猫に実行を依頼可）"
       categories: "Code Factoryゲート・スキル発見・Figma"
-    delegation_rules:
+  delegation_rules:
       - "P0・P1は仕事猫が必ず自分でやる（中間管理職の存在意義）"
       - "P2の実行は玄人猫や現場猫に委譲できるが、判定は仕事猫が行う"
       - "P3・P4は現場猫にこのフォーマットで記入してくれと依頼してよい"

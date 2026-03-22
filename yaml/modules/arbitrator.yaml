@@ -35,14 +35,14 @@ module_detail:
 
   integration_points:
     - agent: oyakata-neko
-      phase: トリガー発生時（レビュー3サイクル超 / confidence:low / ensembleスプリット / 解決不能OBJECTION）
-      action: 仲裁者として介入: 情報収集・争点特定・裁定発行
+      phase: "トリガー発生時（レビュー3サイクル超 / confidence:low / ensembleスプリット / 解決不能OBJECTION）"
+      action: "仲裁者として介入: 情報収集・争点特定・裁定発行"
     - agent: oyakata-neko
       phase: 裁定後
       action: ダッシュボードの"Decisions"セクションに裁定を記録
     - agent: kurouto-neko
       phase: レビュー判定時
-      action: confidence:lowまたはensemble結果が1:1:1スプリットの場合は仲裁者にエスカレーション
+      action: "confidence:lowまたはensemble結果が1:1:1スプリットの場合は仲裁者にエスカレーション"
     - agent: shigoto-neko
       phase: レビューループ監視時
       action: レビューループが3サイクルを超えたら仲裁者にエスカレーション

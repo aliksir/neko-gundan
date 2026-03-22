@@ -1,0 +1,20 @@
+module:
+  name: objection_flow
+  id: null
+  default: "Part of core (always active)"
+  scale: "All"
+  description: "Unified objection recording and escalation flow across all agents."
+  full_definition: "modules/objection-flow.md"
+  integration_points:
+    - agent: genba-neko
+      phase: "During work"
+      action: "Raise OBJECTION-001 when instructions don't match reality"
+    - agent: shigoto-neko
+      phase: "During management"
+      action: "Raise OBJECTION-002 when strategy is wrong; Handle OBJECTION-001/003"
+    - agent: kurouto-neko
+      phase: "During review"
+      action: "Raise OBJECTION-003 when design is flawed; Check existing OBJECTIONs"
+    - agent: oyakata-neko
+      phase: "On escalation"
+      action: "Handle OBJECTION-002; Final arbitration"

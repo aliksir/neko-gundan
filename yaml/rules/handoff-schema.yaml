@@ -1,0 +1,17 @@
+module:
+  name: handoff_schema
+  id: null
+  default: "OFF"
+  scale: "Platoon+"
+  description: "Structured data format for inter-agent work handoffs."
+  full_definition: "modules/handoff-schema.md"
+  integration_points:
+    - agent: genba-neko
+      phase: "Post-work (handoff to next agent)"
+      action: "Include structured handoff data (from, to, status, completed, pending, files_modified, blockers)"
+    - agent: shigoto-neko
+      phase: "Handoff review"
+      action: "Validate handoff fields (from/to required, status valid, completed non-empty, action field appropriate)"
+    - agent: shigoto-neko
+      phase: "Task routing"
+      action: "Use `action` field to decide: auto (proceed), confirm (approve first), propose_only (review only)"

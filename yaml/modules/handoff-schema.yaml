@@ -1,0 +1,69 @@
+module_detail:
+  name: Structured Handoff Schema Module
+  id: handoff_schema
+  default: "OFF"
+  scale: Platoon+
+  why: >
+    エージェント間の作業ハンドオフを構造化されたデータフォーマットで行うことで、
+    受信側エージェントが「何をすべきか」だけで行動できるようにする。
+    暗黙の前提をなくし、ハンドオフの検証を可能にする。
+  description: >
+    エージェント間の作業ハンドオフのための構造化データフォーマット。
+    Platoon+のエージェント間ハンドオフに必須フィールドを定義し、
+    actionフィールドで受信側の行動を制御する。
+
+  procedures:
+    - id: 1
+      name: ハンドオフ検証ルール
+      steps:
+        - "from と to は必須。空文字列は禁止"
+        - "status は 'complete' / 'partial' / 'blocked' の3値のいずれかであること"
+        - "completed には最低1件の項目があること（何もしていなければハンドオフ不要）"
+        - "files_modified が空の場合、status は 'blocked' であるべき"
+        - "受信側が『何をすべきか』だけで行動できること。暗黙の前提を持たせない"
+
+    - id: 2
+      name: actionフィールドによるルーティング
+      steps:
+        - "action: auto → 受信側は即座に開始する（テスト通過・次フェーズ移行時）"
+        - "action: confirm → shigoto-nekoの承認が必要（設計判断を含む作業時）"
+        - "action: propose_only → 提案のみ・実行しない（高リスクな変更時）"
+        - "デフォルト: confirm（フェイルセーフ）"
+
+  templates:
+    - name: ハンドオフ必須フィールドスキーマ
+      fields:
+        - "handoff:"
+        - "  from: string       # 役割ラベル（例: 'genba-neko A'、'shigoto-neko'）"
+        - "  to: string         # ハンドオフ先"
+        - "  status: enum       # 'complete' | 'partial' | 'blocked'"
+        - "  completed:         # 完了した作業"
+        - "    - string"
+        - "  pending:           # 残りの作業"
+        - "    - string"
+        - "  files_modified:    # 変更したファイルパス"
+        - "    - string"
+        - "  blockers:          # ブロッカー（あれば）"
+        - "    - string"
+
+    - name: actionフィールド（オプション）
+      fields:
+        - "handoff:"
+        - "  action: enum  # 'auto' | 'confirm' | 'propose_only'"
+
+  integration_points:
+    - agent: genba-neko
+      phase: 作業後（次エージェントへのハンドオフ時）
+      action: 構造化ハンドオフデータ（from・to・status・completed・pending・files_modified・blockers）を含める
+    - agent: shigoto-neko
+      phase: ハンドオフレビュー時
+      action: ハンドオフフィールドを検証する（from/to必須・status有効・completed非空・actionフィールド適切）
+    - agent: shigoto-neko
+      phase: タスクルーティング時
+      action: "actionフィールドを使って判断する: auto（続行）/ confirm（先に承認）/ propose_only（レビューのみ）"
+
+  notes:
+    - "statusの3値: complete（完了）/ partial（部分完了）/ blocked（ブロック中）"
+    - "actionのデフォルト: confirm（フェイルセーフ）"
+    - "FIDESモジュールと組み合わせて使用する場合はtrust_levelフィールドも追加する"
+    - "受信側エージェントはhandoffの情報だけで次の作業を開始できること。口頭での補足に依存しない"

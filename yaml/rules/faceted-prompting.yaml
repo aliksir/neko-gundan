@@ -1,0 +1,20 @@
+module:
+  name: faceted_prompting
+  id: null
+  default: "ON"
+  scale: "All"
+  description: "Design guideline for structuring agent prompts using Separation of Concerns (SoC). Based on TAKT's Faceted Prompting approach."
+  full_definition: "modules/faceted-prompting.md"
+  integration_points:
+    - agent: oyakata-neko
+      phase: "Agent definition authoring"
+      action: "Structure new agent definitions using the 5-facet order (Persona -> Knowledge -> Instruction -> Output Contract -> Policy)"
+    - agent: shigoto-neko
+      phase: "Agent definition authoring"
+      action: "Follow facet order; place Policy (constraints, prohibitions) at the end of the definition"
+    - agent: genba-neko
+      phase: "Agent definition authoring"
+      action: "Follow facet order; place Policy (constraints, prohibitions) at the end of the definition"
+    - agent: kurouto-neko
+      phase: "Review (agent definition changes)"
+      action: "Verify that new/modified agent content is placed in the correct facet zone"

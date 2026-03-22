@@ -1,0 +1,87 @@
+module_detail:
+  name: Checklist Export Module
+  id: checklist_export
+  default: "ON (recommended+)"
+  scale: Squad+
+  why: >
+    会話コンテキストに埋め込まれたチェックリストはコンテキスト圧縮時に失われる。
+    完了時だけ作成すると実行中の進捗が見えない。
+    別ファイルとして出力することで検索可能・差分確認可能・監査可能になる。
+  description: >
+    タスクチェックリストを外部ファイルにエクスポートして進捗管理・人間レビュー・記録を可能にする。
+    チェックリストはタスクの最初の成果物として計画フェーズで作成する。
+
+  configuration:
+    steps:
+      - "プロジェクトのCLAUDE.mdに出力ディレクトリを設定する"
+      - "設定例: checklist_output_dir: /path/to/checklist/"
+      - "未設定の場合は {project_root}/_checklist/ がデフォルト"
+
+  procedures:
+    - id: 1
+      name: チェックリストライフサイクル
+      steps:
+        - "計画開始時: oyakata-neko（偵察/小隊）またはshigoto-neko（中隊+）がチェックリストファイルを作成する"
+        - "『チェックリスト作成』項目が最初のPASS項目になる"
+        - "作業進捗に合わせてチェックリストを更新する"
+        - "完了ゲート時に全項目がPASSまたはN/Aになっていること"
+
+    - id: 2
+      name: ファイル命名規則
+      steps:
+        - "命名: {checklist_output_dir}/YYYYMMDD_{project_name}.md"
+        - "同日重複時: _2.md, _3.md などの連番を追加"
+
+    - id: 3
+      name: チェックリスト更新ルール
+      steps:
+        - "フェーズ移行時（計画完了・実装完了・ゲート完了）に **更新日時** タイムスタンプを更新する"
+        - "作業中に完了した項目は [x] にマークする（最後にまとめてではなく随時）"
+        - "実行中に新たな要件が発生したらTask-Specificに項目を追加する"
+        - "不要になった項目: [N/A] {理由} としてマークする"
+
+    - id: 4
+      name: 完了ゲート統合
+      steps:
+        - "全チェックリスト項目が [x]（PASS）または [N/A]（理由付き）であることを確認する"
+        - "未チェック [ ] の項目が残っていないことを確認する"
+        - "設定された出力ディレクトリにチェックリストファイルが存在することを確認する"
+
+  templates:
+    - name: チェックリストテンプレート
+      fields:
+        - "# Checklist: {project_name} {task_summary}"
+        - "**作成日時**: YYYY-MM-DD HH:MM"
+        - "**更新日時**: YYYY-MM-DD HH:MM"
+        - "**Task**: {タスクサマリ}"
+        - "**Plan**: {計画書ファイルへのリンク}"
+        - "## Start"
+        - "- [x] チェックリスト作成"
+        - "- [ ] 計画書作成"
+        - "- [ ] ホワイトボード作成（同名プロジェクトがあれば再利用）"
+        - "## Task-Specific"
+        - "- [ ] {計画時にoyakata/shigoto-nekoが定義した項目}"
+        - "- [ ] {タスク指示から派生した項目}"
+        - "- [ ] ..."
+        - "## Completion"
+        - "- [ ] 全ゲート項目PASSまたはN/A（rules/completion-gates.md参照）"
+        - "- [ ] 計画書格納済み（plans/）"
+        - "- [ ] 報告書作成済み（result/）"
+
+  integration_points:
+    - agent: oyakata-neko（小隊）/ shigoto-neko（中隊+）
+      phase: 計画開始時
+      action: Start + Task-Specific + Completionセクションを含むチェックリストファイルを作成
+    - agent: shigoto-neko / oyakata-neko
+      phase: 作業中
+      action: 作業進捗に応じてチェックリスト項目を更新（genba-nekoがSendMessageで報告、shigoto-nekoがファイルを更新）
+    - agent: shigoto-neko / oyakata-neko
+      phase: 完了ゲート時
+      action: 全項目PASSまたはN/Aを確認し、報告書からリンクを張る
+
+  notes:
+    - "チェックリストはタスクの最初の成果物。計画時に作成する"
+    - "証拠のあるチェック項目には根拠を記載する"
+    - "FAIL項目には何が問題だったかを記載する"
+    - "報告書からチェックリストファイルへのリンクを張る: チェックリスト: {path}"
+    - "セクション別定義者: Start（テンプレート固定）/ Task-Specific（oyakata/shigoto-nekoが計画時に定義）/ Completion（テンプレート固定）"

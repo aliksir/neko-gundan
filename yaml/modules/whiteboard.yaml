@@ -1,0 +1,112 @@
+module_detail:
+  name: Whiteboard Module
+  id: WHITEBOARD-001
+  default: "ON"
+  scale: All
+  why: "マルチエージェントシステムでは各エージェントのコンテキストが独立している。共有ホワイトボードなしには、あるエージェントの発見が他のエージェントに伝わらず、重複作業・コンフリクト・設計ミスが発生する。ただし全情報を書くとノイズが増えて逆効果になるため、選択的共有ルールを設ける。"
+  description: "共有ホワイトボードファイルによるエージェント横断の知識共有とコンテキスト永続化。仕事猫がチーム構造を記入し、現場猫は作業前に読んで作業後に他のエージェントに影響する発見を書く。選択的共有基準（arXiv:2602.05965）でノイズを抑制する。"
+  configuration:
+    steps:
+      - "保存先: {WHITEBOARD_DIR}/whiteboard-{mission}.md"
+      - "WHITEBOARD_DIR のデフォルト: whiteboard/（プロジェクトルート相対）"
+      - "CLAUDE.md または環境設定でパスを上書き可能（例: Markdownプレビューツールが監視するディレクトリ）"
+      - "同一プロジェクト名のホワイトボードが既に存在する場合は新規作成せず再利用する"
+  procedures:
+    - id: 1
+      name: "仕事猫 — ホワイトボード管理"
+      steps:
+        - "全ミッションで pre-dispatch hard gate の一部として whiteboard-{mission}.md を作成する（必須・スキップ不可）"
+        - "テンプレートに従ってゴール・チーム構成・作業の連鎖・主要な未解決質問・Findingsセクションを記入する"
+        - "SSOT ルール: ホワイトボードは実行状態（誰が何をするか・現在の進捗・発見）の正（SSOT）。計画書（plans/）は決定と根拠（なぜこのアプローチか・スコープ）の正（SSOT）。両方に同じ情報がある場合（例: ファイル所有権テーブル）、実行中はホワイトボードが優先"
+      conditions: []
+    - id: 2
+      name: "現場猫 — 作業前（ホワイトボード読み込み）"
+      steps:
+        - "作業開始前にホワイトボード（{WHITEBOARD_DIR}/whiteboard-*.md）を読む"
+        - "他の現場猫のFindingsセクションを確認する"
+        - "自分の作業に影響する情報がないかチェックする → 'ホワイトボード確認…ヨシッ！'"
+      conditions:
+        - "小隊以上: 必須"
+        - "中隊以上: 必須"
+        - "Squad: ホワイトボードが存在するか確認する"
+    - id: 3
+      name: "現場猫 — 作業後（書き込み判断）"
+      steps:
+        - "判断基準: '他の猫が知らないとマズい？' → YES なら書く"
+        - "他のエージェントの作業に影響する発見 → Findingsに書く（出典付き）"
+        - "当初の想定と違った事実 → Findingsに書く"
+        - "複数領域にまたがる気づき → Cross-Cuttingに書く"
+        - "自分の担当内で完結する話 → 書かない（SendMessageで報告のみ）"
+      conditions: []
+    - id: 4
+      name: "選択的共有フィルター（arXiv:2602.05965）"
+      steps:
+        - "全ての発見を書くのではなく、以下の4フィルターを適用してから書くかを判断する"
+        - "フィルター1 Cross-impact: これは他のエージェントの担当ファイルやアプローチに影響するか？ YES → 書く / NO → スキップ"
+        - "フィルター2 Assumption change: これは計画書で述べた前提に反するか？ YES → 書く / NO → スキップ"
+        - "フィルター3 Blocker potential: 他のエージェントがこれを知らないとブロックされる可能性があるか？ YES → 書く / NO → スキップ"
+        - "フィルター4 Novel information: これはコードベースから推測できない新情報か？ YES → 書く / NO → スキップ"
+        - "ルール: 2つ未満のフィルターが通過した場合、ホワイトボードには書かない。SendMessageで報告のみ"
+      conditions: []
+    - id: 5
+      name: "アンチパターン（書いてはいけないもの）"
+      steps:
+        - "自分のスコープ内の実装詳細（例: 'forループを使うことにした'）"
+        - "進捗更新（例: '50%完了'） → SendMessageで報告する"
+        - "既にgit履歴や既存ファイルにある情報"
+        - "証拠のない推測的な懸念"
+      conditions: []
+    - id: 6
+      name: "ホワイトボードルール"
+      steps:
+        - "ホワイトボードは知識共有用。進捗報告はSendMessageで仕事猫さんに直接報告する"
+        - "他の現場猫のFindingsは書き換えない。自分のセクションだけ更新する"
+        - "何でもかんでも書かない。ノイズは他の猫の邪魔になる"
+      conditions: []
+  templates:
+    - name: "Whiteboard Template"
+      fields:
+        - "# Whiteboard: {Mission Name}"
+        - "**作成日時**: YYYY-MM-DD HH:MM"
+        - "**更新日時**: YYYY-MM-DD HH:MM"
+        - "> **SSOT Rule**: The whiteboard is the single source of truth for *execution state*. The plan document (plans/) is the source of truth for *decisions and rationale*."
+        - "## Goal"
+        - "[このミッションで達成すること]"
+        - "## Team Structure"
+        - "| Role | Task | Area |"
+        - "## How Work Connects"
+        - "[各エージェントの作業が互いにどう影響するか]"
+        - "## Key Questions"
+        - "- [ ] [複数領域にまたがる未解決の質問]"
+        - "## Findings"
+        - "### Shigoto-neko — Decomposition Rationale"
+        - "1. **Purpose**: [なぜこのタスクが必要か？]"
+        - "2. **Decomposition**: [なぜこの分割か？検討した代替案は？]"
+        - "3. **Headcount**: [なぜこの人数か？]"
+        - "4. **Perspective**: [検討した他のアプローチは？]"
+        - "5. **Risk**: [何が失敗しうるか？]"
+        - "### {Agent 1}"
+        - "- [発見（出典付き）]"
+        - "### {Agent 2}"
+        - "- [発見（出典付き）]"
+        - "## Cross-Cutting Observations"
+        - "[複数領域にまたがる洞察]"
+        - "## Decisions"
+        - "[ホワイトボード議論を通じて行われた決定]"
+  integration_points:
+    - agent: shigoto-neko
+      phase: Pre-dispatch gate
+      action: "Create whiteboard, fill team structure (mandatory, no skip)"
+    - agent: genba-neko
+      phase: "Pre-work (step 3)"
+      action: "Read whiteboard (mandatory for platoon+, check if exists for squad)"
+    - agent: genba-neko
+      phase: "Post-work (step 9)"
+      action: "Write findings that affect other agents"
+  notes:
+    - "ホワイトボード作成は pre-dispatch hard gate の必須項目。スキップ不可"
+    - "WHITEBOARD_DIR のデフォルトは whiteboard/（プロジェクトルート相対）。CLAUDE.md で上書き可能"
+    - "同一プロジェクト名のホワイトボードが既に存在する場合は新規作成せず再利用する"
+    - "ホワイトボードは実行状態の正（SSOT）。計画書は決定と根拠の正（SSOT）。実行中は両方が一致しない場合ホワイトボードが優先"
+    - "選択的共有: フィルターを通過した情報のみ書く。ノイズは他のエージェントのパフォーマンスを低下させる（arXiv:2602.05965）"
+    - "ホワイトボードを読まずに作業開始するのは危険。先に読む"

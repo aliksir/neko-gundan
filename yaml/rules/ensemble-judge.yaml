@@ -1,0 +1,20 @@
+module:
+  name: ensemble_judge
+  id: null
+  default: "OFF"
+  scale: "Platoon+"
+  description: "Combines multiple evaluation strategies for important reviews."
+  full_definition: "modules/ensemble-judge.md"
+  integration_points:
+    - agent: kurouto-neko
+      phase: "Review (when ensemble triggered)"
+      action: "Run all 3 strategies (rubric, comparative, checklist), integrate results"
+    - agent: shigoto-neko
+      phase: "Pre-review (Standard weight)"
+      action: "Explicitly request ensemble review when needed"
+    - agent: kurouto-neko
+      phase: "Review (Strict weight)"
+      action: "Automatically activate ensemble for all reviews"
+    - agent: kurouto-neko
+      phase: "Post-ensemble (1:1:1 split)"
+      action: "Escalate to arbitrator (oyakata-neko / Opus)"

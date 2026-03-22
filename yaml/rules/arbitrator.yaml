@@ -1,0 +1,20 @@
+module:
+  name: arbitrator
+  id: null
+  default: "OFF"
+  scale: "Platoon+"
+  description: "Formal mediation process when review loops exceed limits or confidence is low."
+  full_definition: "modules/arbitrator.md"
+  integration_points:
+    - agent: oyakata-neko
+      phase: "On trigger (review 3+ cycles / confidence: low / ensemble split / unresolvable OBJECTION)"
+      action: "Intervene as arbitrator: gather info, identify dispute, issue ruling"
+    - agent: oyakata-neko
+      phase: "Post-ruling"
+      action: "Record ruling in dashboard \"Decisions\" section"
+    - agent: kurouto-neko
+      phase: "Review judgment"
+      action: "Escalate to arbitrator when confidence: low or ensemble result is 1:1:1 split"
+    - agent: shigoto-neko
+      phase: "Review loop monitoring"
+      action: "Escalate to arbitrator when review loop exceeds 3 cycles"

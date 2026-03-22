@@ -1,0 +1,103 @@
+module_detail:
+  name: Quality Metrics Module
+  id: null
+  default: "OFF"
+  scale: All
+  why: "AIが生成するコードの量が人間のレビュー能力より速く増えている。品質トレンドへの統計的可視性がなければ、ゲートは形式的なものになる — 存在するが機能しているか誰も確認しない。このモジュールはタスクごとのメトリクスをプロジェクト単位の累積ファイルに蓄積し、トレンドを可視化する。"
+  description: "タスクごとの品質メトリクスを累積し、トレンド分析付きのMarkdownレポートを出力する。ゲートパス率・スキップ率・レビューサイクル数・人間介入数・確信度を追跡し、アラートトリガーで問題トレンドをフラグする。"
+  configuration:
+    steps:
+      - "プロジェクトの CLAUDE.md にメトリクス出力ディレクトリを設定する:"
+      - "  ### メトリクス出力"
+      - "  - metrics_output_dir: /path/to/metrics/"
+      - "未設定の場合は {project_root}/_metrics/ がデフォルト"
+      - "neko-gundan.config.yaml での有効化設定も可能"
+  procedures:
+    - id: 1
+      name: "メトリクス実施タイミングとデータソース"
+      steps:
+        - "タイミング: チェックリストエクスポート（有効な場合）の後、結果報告書作成前"
+        - "データソース1 — 完了ゲートチェックリスト: PASS / FAIL / SKIP カウント、スキップ率"
+        - "データソース2 — ISV結果次元: confidence, outcome, review_cycles, intervention_count"
+        - "データソース3 — git diff / git log: 変更ファイル数、ホットスポット検出"
+      conditions: []
+    - id: 2
+      name: "出力ファイル形式"
+      steps:
+        - "1プロジェクトにつき1累積ファイル（タスクごとではない）"
+        - "パス: {metrics_output_dir}/{project_name}_metrics.md"
+        - "各タスク完了時に Recent Tasks に行を追記し、Summary を再計算する"
+        - "ファイルはself-contained（全メトリクスの意味がインラインで記載されること）"
+      conditions: []
+    - id: 3
+      name: "トレンド指標"
+      steps:
+        - "↑ 増加（直近3件 vs 前3件の比較）"
+        - "↓ 減少"
+        - "→ 安定"
+        - "⚠️ トレンドが懸念される場合に付加（スキップ率上昇、確信度低下等）"
+      conditions: []
+    - id: 4
+      name: "参考閾値（プロジェクト別に調整すること）"
+      steps:
+        - "ゲートパス率 — 健全: 70-95% / 要注意: 50-70% または >95% / 要対応: <50%"
+        - "スキップ率 — 健全: <20% / 要注意: 20-35% / 要対応: >35%"
+        - "平均レビューサイクル — 健全: 1.2-2.0 / 要注意: 1.0（継続）または >2.5 / 要対応: >3.0 または 5タスク以上継続1.0"
+        - "人間介入数 — 健全: 0.2-1.0/タスク / 要注意: 10タスク以上連続0 / 要対応: 継続0（監視なし？）"
+        - "確信度 — 健全: >0.7 / 要注意: 0.6-0.7 / 要対応: <0.6"
+        - "注意: レビューサイクル1.0が継続する場合、レビューが形式的（ゴム印）になっている可能性がある"
+        - "注意: ゲートパス率100%が継続する場合、ゲートが甘すぎるか困難なタスクを避けている可能性がある"
+      conditions: []
+    - id: 5
+      name: "アラートトリガー"
+      steps:
+        - "スキップ率 >30%: 'ゲート項目が頻繁にスキップされている — N/Aが適切か確認'"
+        - "平均レビューサイクル = 1.0 が5タスク以上: '全タスクが初回レビューでパス — レビューが実質的か確認'"
+        - "人間介入数 = 0 が10タスク以上: '人間による修正が検出されない — 監視がアクティブか確認'"
+        - "任意のタスクで確信度 <0.6: '低確信度タスクがパス — 証跡の品質を確認'"
+        - "同一ファイルが30日間で5回以上変更: 'ホットスポット検出 — 設計の安定化を検討'"
+      conditions: []
+    - id: 6
+      name: "運用ルール"
+      steps:
+        - "Recent Tasks は直近30タスクを保持（古い行はアーカイブまたはトリム）"
+        - "Summary は毎回直近10タスクから再計算する"
+        - "ホットスポットは直近30日の git log から計算する"
+        - "ISVモジュールが無効な場合、confidence/outcome 列と関連メトリクスを省略する"
+        - "ファイルはself-containedであること — 全メトリクスの意味がインラインで記載される"
+      conditions: []
+  templates:
+    - name: "Quality Metrics File Format"
+      fields:
+        - "# Quality Metrics: {project_name}"
+        - "Updated: YYYY-MM-DD"
+        - "## Summary (last 10 tasks)"
+        - "| Metric | Value | Trend | What it means |"
+        - "| Gate pass rate | XX% | →/↑/↓ | 完了ゲートPASS率。低い=品質ギャップ |"
+        - "| Skip rate | XX% | →/↑⚠️/↓ | N/Aスキップ率。高い=ゲートが形式化 |"
+        - "| Avg review cycles | X.X | →/↑/↓ | タスクあたりのレビューラウンド数 |"
+        - "| Human interventions | X.X/task | →/↑/↓ | 人間修正介入数 |"
+        - "| Avg confidence | X.XX | →/↑/↓ | ジャッジの確信度。低い=不確かなままパス |"
+        - "## Alerts"
+        - "- ⚠️ {metric} {懸念の説明}"
+        - "## Recent Tasks"
+        - "| Date | Task | Files | Cycles | Outcome | Confidence | Gate | Flags |"
+        - "| MM-DD | {summary} | {n} | {n} | {0-1} | {0-1} | {P/F/S} | {alerts} |"
+        - "## Hotspots (last 30 days)"
+        - "Files changed repeatedly may indicate unstable design."
+        - "| File | Changes | Last changed |"
+        - "| {path} | {n} | MM-DD |"
+  integration_points:
+    - agent: "shigoto-neko / oyakata-neko"
+      phase: "Completion gate (after checklist export, before result report)"
+      action: "Append task metrics row to {metrics_output_dir}/{project_name}_metrics.md, recalculate summary"
+    - agent: "shigoto-neko / oyakata-neko"
+      phase: Completion gate
+      action: "Check alert triggers; flag concerning trends"
+    - agent: "shigoto-neko / oyakata-neko"
+      phase: Periodic review
+      action: "Review hotspots (files changed 5+ times in 30 days) for design instability"
+  notes:
+    - "メトリクスは報告書に含めない。metrics/{PJ名}_metrics.md へのリンクのみ報告書に記載する"
+    - "研究プロトタイプと本番APIでは適切な閾値が異なる。参考閾値はプロジェクトごとに調整すること"
+    - "AIが生成するコードの量が人間のレビュー能力より速く増えているため、統計的品質トレンドの可視化が不可欠"

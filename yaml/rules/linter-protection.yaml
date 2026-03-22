@@ -1,0 +1,17 @@
+module:
+  name: linter_protection
+  id: null
+  default: "ON"
+  scale: "All"
+  description: "Prevents agents from silencing linter errors by editing linter configuration instead of fixing code."
+  full_definition: "modules/linter-protection.md"
+  integration_points:
+    - agent: genba-neko
+      phase: "During implementation"
+      action: "Do not edit protected linter config files; fix code instead"
+    - agent: kurouto-neko
+      phase: "During review"
+      action: "Verify no linter rules disabled/weakened in diff"
+    - agent: shigoto-neko
+      phase: "Completion gate"
+      action: "Check gate item #12 (no linter config weakened)"

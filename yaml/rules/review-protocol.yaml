@@ -1,0 +1,145 @@
+review_protocol:
+  description: "全規模で適用する品質保証の自動フロー。taktの「宣言的オーケストレーション」の核心を猫軍団に統合。"
+
+  principles:
+    - id: 1
+      rule: "実装者≠レビュアー: 書いた猫が自分でレビューしない"
+    - id: 2
+      rule: "レビュアーは読み取り専用: コード改変禁止。指摘のみ行い、修正は実装者に差し戻す"
+    - id: 3
+      rule: "ループ上限3回: 3サイクル超過で仲裁者（Opus）が介入し、打ち切りか続行を判断"
+
+  related_critical_rules:
+    - "異議申立義務: レビュー中に指示自体の問題を発見した場合、OBJECTION-001/002で異議を申し立てる（agents/参照）"
+    - "新規ファイル即コミット: レビュー前にコミットされていないファイルがあれば差し戻す"
+
+  flow: "implement → review(edit:false) → [問題あり] → fix → review → ... (最大3回)\n                                  [問題なし] → supervise → COMPLETE"
+
+  context_rot_prevention: "修正フェーズでは前セッションのレスポンスを引き継がず、レビューレポートファイル経由で情報共有する"
+
+  session_isolation_evidence:
+    added: "2026-03-15"
+    research_reference: "arxiv:2603.12123"
+    findings:
+      - "同一セッションで2回レビューしてもF1は24.6%→変化なし"
+      - "新規セッションに分離するとF1が28.6%に向上（+16%相対改善）"
+      - "改善の原因はコンテキスト汚染の排除。追加インフラ不要・コスト1セッション分のみ"
+    rules:
+      - "猫軍団の「実装者≠レビュアー」「TDD分離原則」は本論文の知見と完全一致"
+      - "同一セッション内での再レビューは効果なし。必ず別エージェント（別セッション）でレビューすること"
+
+  tdd_separation:
+    added: "2026-03-07"
+    description: "同一コンテキストでテスト作成と実装を行うと、テスト作成者の分析が実装者に漏れる（Context Pollution）"
+    applies_to: "中隊以上"
+    flow: "現場猫A: テスト作成 → handoff(action:auto) → 現場猫B: 実装 → 玄人猫: レビュー"
+
+  external_tool_judge_integration:
+    added: "2026-03-07"
+    description: "玄人猫のルブリック判定前に外部ツール結果を構造化データとして入力する。ツール結果なしの「感覚的ヨシ」を排除する"
+    inputs:
+      - "lint/型チェック結果"
+      - "テスト実行結果（pass/fail/coverage）"
+      - "セキュリティスキャン結果（gitleaks, semgrep等）"
+
+  agent_as_judge:
+    description: "レビュアー（玄人猫/QA担当）は .claude/agents/kurouto-neko.md のルブリックで判定する。感覚的な「ヨシッ」を排除し構造化判定。"
+    aspects:
+      - "正確性"
+      - "安全性"
+      - "保守性"
+      - "テスト"
+    escalation: "confidenceがlowの場合、仲裁者（Opus）にエスカレーション"
+
+  self_verification:
+    principle: "oikon原則"
+    methods:
+      - method: "テスト実行"
+        when: "コード変更後に npm test / pytest 等で即時検証"
+      - method: "期待出力の提供"
+        when: "「この入力でこの出力が正解」を明示して自己判定させる"
+      - method: "スクショ確認"
+        when: "UI変更時はブラウザツールで目視確認"
+      - method: "シナリオ検証"
+        when: "ブラウザ操作後にjavascript_toolで期待結果を機械検証（CUAパターン）"
+      - method: "lint/型チェック"
+        when: "tsc --noEmit / ruff check で静的検証"
+
+  jit_tests:
+    description: "PR差分から自動生成する使い捨てテスト。レビュー補助として活用する。（Meta研究由来）"
+    when_to_use:
+      - "変更が3ファイル以上、かつ既存テストが変更箇所をカバーしていない場合"
+      - "レビュアー（玄人猫）が「テストカバレッジ不足」と判定した場合"
+    procedure:
+      - "git diff から変更された関数・メソッドを特定"
+      - "変更箇所に対する境界値・異常系テストを生成（使い捨て前提）"
+      - "テスト実行 → 失敗があれば実装にフィードバック"
+      - "レビュー通過後、使い捨てテストは削除可（永続テストは別途作成）"
+    notes:
+      - "使い捨てテストはリポジトリにコミットしない（tmp/jit-tests/ に出力）"
+      - "永続テストの代替ではない。レビュー精度の補助ツール"
+
+  db_design_review:
+    added: "2026-03-08"
+    description: "DB変更を含む全タスクで、実装前にDB設計レビューを実施する。設計者≠レビュアー。"
+    checklist:
+      - aspect: "正規化"
+        check: "第3正規形以上か。非正規化がある場合、パフォーマンス理由が明記されているか"
+      - aspect: "インデックス"
+        check: "WHERE/JOIN/ORDER BYで使われるカラムにインデックスが定義されているか。過剰インデックスはないか"
+      - aspect: "拡張性"
+        check: "将来のカラム追加・テーブル分割を想定した設計か。ENUMハードコードや固定カラム数に依存していないか"
+      - aspect: "命名規約"
+        check: "snake_case統一。既存テーブル・カラムとの命名一貫性。略語の乱用がないか"
+      - aspect: "データ型"
+        check: "適切な型選択（VARCHAR長、INTEGER vs BIGINT、日時型等）。NULL許容の妥当性"
+      - aspect: "制約"
+        check: "PRIMARY KEY、FOREIGN KEY、UNIQUE、NOT NULL、DEFAULT値が適切か"
+      - aspect: "マイグレーション"
+        check: "既存データへの破壊的変更がないか。ロールバック可能か"
+    flow: "DB設計書作成 → DBレビュー(edit:false) → [問題あり] → 修正 → 再レビュー → ... (最大3回)\n                                         [問題なし] → API/UI設計フェーズへ"
+
+  api_ui_design_review:
+    added: "2026-03-08"
+    description: "DBレビュー通過後に着手。API設計とUI設計は並行可。"
+    checklist:
+      - aspect: "DB整合性"
+        check: "APIのリクエスト/レスポンスがDBスキーマと一致しているか"
+      - aspect: "エンドポイント設計"
+        check: "RESTful規約、命名の一貫性、適切なHTTPメソッド"
+      - aspect: "UI-APIマッピング"
+        check: "画面の表示・操作に必要なAPIが揃っているか"
+
+  refactoring_limit:
+    added: "2026-03-08"
+    research_reference: "arxiv:2602.21833"
+    rationale: "LLMにリファクタリングを繰り返し依頼すると、v0→v1で大幅変更した後v3以降は変更1%以下に収束する。すでに高品質なコードにも不要な変更を加える「過剰リファクタリング傾向」が確認されている。"
+    max_passes: 2
+    rules:
+      - "/simplify やリファクタリング依頼は最大2パスまで。3回目以降は費用対効果がほぼゼロ"
+      - "変更がない/極小の場合は「安定化済み」と判断して終了"
+      - "停止基準を明示してからリファクタリングを開始する（「何を改善するか」を先に定義）"
+
+  test_quality:
+    added: "2026-03-08"
+    research_reference: "arxiv:2602.07900"
+    background: "AIエージェントが生成するテストは「習慣の模倣」に陥りやすい。print文がassertの4〜5倍という実態が報告されている。テスト量と問題解決率に統計的相関はない（83%のタスクでテスト有無は結果に無関係）。"
+    rules:
+      - "assert重視: テストには形式的な検証（assert文）を必ず含める。print文のみのテストは不可"
+      - "量より質: テスト数を増やすより、境界値・異常系の少数精鋭テストを設計"
+      - "テスト削減OK: コスト最適化のためにテスト数を減らすことは許容（解決率への影響は-2%程度）"
+      - "敵対的テスト推奨: 可能なら変異テスト的アプローチ（意図的にバグを仕込んでテストが検出するか確認）"
+
+  structural_hints:
+    added: "2026-03-08"
+    research_reference: "arxiv:2512.14917"
+    description: "LLMは以下のコード構造で理解精度が急落する。該当構造を扱う際はプロンプトに構造的ヒントを含める"
+    patterns:
+      - structure: "深いネスト（条件分岐/ループ）"
+        mitigation: "ネスト構造の概要を先に説明"
+      - structure: "クラス間依存（プロシージャ間コール）"
+        mitigation: "呼び出しチェーンの概要を付与"
+      - structure: "複合データ型（カスタムオブジェクト）"
+        mitigation: "データ構造の型定義を明示"
+      - structure: "サードパーティAPI呼び出し"
+        mitigation: "APIの振る舞いを簡潔に説明"

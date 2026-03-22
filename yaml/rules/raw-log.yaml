@@ -1,0 +1,17 @@
+module:
+  name: raw_log
+  id: null
+  default: "OFF"
+  scale: "Squad+"
+  description: "Records all tool calls line by line at the same granularity as ctrl+O (context viewer). No summarization, no omission, all entries recorded. Format: `{ToolName}: {target} ({result})` - one line per action."
+  full_definition: "modules/raw-log.md"
+  integration_points:
+    - agent: genba-neko
+      phase: "Post-work (completion report)"
+      action: "Include structured action list in handoff"
+    - agent: shigoto-neko
+      phase: "Pre-completion-gate"
+      action: "Collect action lists, run git diff, generate raw log file"
+    - agent: shigoto-neko
+      phase: "Completion gate"
+      action: "Verify raw log file exists"

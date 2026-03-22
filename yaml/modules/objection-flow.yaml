@@ -1,0 +1,64 @@
+module_detail:
+  name: Objection Flow Module
+  id: null
+  default: "ON (core — always active)"
+  scale: All
+  why: "全エージェント横断で異議申し立ての記録・エスカレーションフローを統一する。「言われた通りにやったら壊れました」を防ぎ、現場猫・仕事猫・玄人猫それぞれが気づいた問題を適切な相手に伝えられる構造を保証する。"
+  description: "全エージェントで共通の異議記録・エスカレーションフロー。OBJECTION-001/002/003 の3種類の異議タイプを定義し、ホワイトボードへの記録フォーマットとルールを規定する。"
+  configuration:
+    steps:
+      - "コアモジュールのため設定不要。常時アクティブ"
+  procedures:
+    - id: 1
+      name: "異議タイプの判定"
+      steps:
+        - "OBJECTION-001: 現場猫が仕事猫に対して申し立てる — 指示が現場の実態と一致しない場合"
+        - "OBJECTION-002: 仕事猫が親方猫に対して申し立てる — 戦略がプロジェクト目的と矛盾する場合"
+        - "OBJECTION-003: 玄人猫が仕事猫に対して申し立てる — レビューで設計レベルの問題を発見した場合"
+      conditions: []
+    - id: 2
+      name: "ホワイトボードへの記録"
+      steps:
+        - "任意のOBJECTIONが申し立てられた場合、ホワイトボードに以下のフォーマットで記録する"
+        - "セクション名: ### [OBJECTION] {OBJECTION-00X} by {agent-name}"
+        - "フィールド Date: {timestamp}"
+        - "フィールド Target: {異議を向ける相手}"
+        - "フィールド Issue: {事実の記述}"
+        - "フィールド Status: OPEN / ACCEPTED / REJECTED"
+        - "フィールド Resolution: {解決後に判断と理由を記入}"
+      conditions: []
+    - id: 3
+      name: "異議の解決"
+      steps:
+        - "OPEN の異議はタスク完了をブロックする"
+        - "REJECTED の異議には理由を必ず記入する"
+        - "玄人猫はレビュー開始前に [OBJECTION] タグを確認する（agents/kurouto-neko.md 参照）"
+        - "OBJECTIONレコードをホワイトボードから削除しない"
+      conditions: []
+  templates:
+    - name: "Whiteboard OBJECTION Record"
+      fields:
+        - "### [OBJECTION] {OBJECTION-00X} by {agent-name}"
+        - "- **Date**: {timestamp}"
+        - "- **Target**: {who the objection is directed to}"
+        - "- **Issue**: {factual description}"
+        - "- **Status**: OPEN / ACCEPTED / REJECTED"
+        - "- **Resolution**: {decision and reasoning, filled after resolution}"
+  integration_points:
+    - agent: genba-neko
+      phase: During work
+      action: "Raise OBJECTION-001 when instructions don't match reality"
+    - agent: shigoto-neko
+      phase: During management
+      action: "Raise OBJECTION-002 when strategy is wrong; Handle OBJECTION-001/003"
+    - agent: kurouto-neko
+      phase: During review
+      action: "Raise OBJECTION-003 when design is flawed; Check existing OBJECTIONs"
+    - agent: oyakata-neko
+      phase: On escalation
+      action: "Handle OBJECTION-002; Final arbitration"
+  notes:
+    - "OBJECTIONレコードはホワイトボードから絶対に削除しない（玄人猫がレビュー時に確認する）"
+    - "OPEN の異議はタスク完了をブロックする"
+    - "REJECTED の異議には必ず理由を記入すること"
+    - "玄人猫はレビュー開始前に [OBJECTION] タグを確認する義務がある"

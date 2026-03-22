@@ -1,0 +1,23 @@
+module:
+  name: process_weight
+  id: "ESCALATION-001"
+  default: "ON"
+  scale: "All"
+  description: "Dynamic process weight selection. Start light, escalate when needed."
+  full_definition: "modules/process-weight.md"
+  integration_points:
+    - agent: oyakata-neko
+      phase: "Task assignment"
+      action: "Set initial process weight based on activation keywords"
+    - agent: shigoto-neko
+      phase: "Pre-dispatch"
+      action: "Pass process weight to genba-neko in task instructions"
+    - agent: genba-neko
+      phase: "During work"
+      action: "Monitor escalation triggers, file ESCALATION-001 if needed"
+    - agent: kurouto-neko
+      phase: "Review start"
+      action: "Check process weight to determine review depth (self-check vs independent)"
+    - agent: oyakata-neko
+      phase: "On ESCALATION-001"
+      action: "Decide ACCEPT/REJECT/MODIFY for weight upgrade requests"

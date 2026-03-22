@@ -116,6 +116,31 @@ Before conducting review, collect external tool results as judgment input:
 
 **Classification rule**: If the contradiction involves Safety or Correctness aspects -> High. If it involves Testing or Maintainability -> Medium. If it involves only lint/style -> Low.
 
+## Framework-Specific Review Concerns
+
+> Apply these when the project's tech stack (Purpose doc "Equipment" section or package.json / go.mod) indicates the relevant framework. These concerns are checked **within** the Safety and Correctness rubric aspects — they do not replace the 5-aspect rubric.
+
+### React / Next.js
+
+| Concern | What to look for | Rubric aspect |
+|---------|-----------------|---------------|
+| **useEffect dependency array** | Missing deps cause stale closures; excess deps cause infinite loops. Check every `useEffect` against its actual dependencies. | Correctness |
+| **Stale closures** | Event handlers or callbacks capturing outdated `state`/`props` from a previous render. Look for async operations that use closure values set before `await`. | Correctness |
+| **setState during render** | Calling a state setter directly in the render body (outside `useEffect`/event handlers) triggers infinite re-render loops. | Correctness |
+| **List key misuse** | Using array index as `key` breaks reconciliation when the list reorders. Keys must be stable, unique IDs. | Correctness |
+| **Prop drilling (3+ levels)** | Props passed through 3 or more intermediate components that do not use them. Flag as maintainability issue; suggest Context or state library. | Maintainability |
+
+### Node.js / Backend
+
+| Concern | What to look for | Rubric aspect |
+|---------|-----------------|---------------|
+| **N+1 queries** | DB queries inside a loop over a result set. Look for `await repo.find()` calls within `for`/`map`. Suggest batch query or JOIN. | Correctness / Safety |
+| **Missing rate limiting** | Public or auth endpoints without rate-limit middleware. Any `router.post/get` without a rate-limit wrapper is a DoS surface. | Safety |
+| **Error response leakage** | Stack traces, SQL error messages, file paths, or internal identifiers returned in HTTP responses. `res.json(err)` or `res.send(err.stack)` patterns. | Safety |
+| **Unvalidated user input** | Query parameters or body fields used directly in DB queries, file paths, or shell commands without schema validation (e.g., zod, joi, express-validator). | Safety |
+
+> **Rating guidance**: N+1 found in a hot path → Correctness FAIL. Rate limiting absent on any public endpoint → Safety FAIL. Error leakage → Safety FAIL. Stale closure in data-fetching effect → Correctness FAIL.
+
 ## Active Modules
 
 The following optional modules may be active. Check `neko-gundan.config.yaml`.

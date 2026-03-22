@@ -232,9 +232,26 @@ When deleting files:
 |---|-------|---------------|
 | 1 | **Success criteria met** | Verify each criterion from the plan one by one |
 | 2 | **Code committed** | `git status` shows clean or committed |
-| 3 | **Syntax check passed** | lint/type check (if applicable). Record results as evidence |
+| 3 | **Syntax check passed** | lint/type check (if applicable). Record results as evidence. See language detection table below. |
 | 4 | **Functional verification** | Test run / CLI run / browser check. Record evidence. No test target → `[N/A]` with reason |
 | 5 | **Artifact set check** | Run `bash scripts/artifact-check.sh {project}` or manually verify: plans/, designs/, test-plan/, audit/, logs/, result/, metrics/ all exist with project name. Checklist/ required if code was changed. **All 7+1 artifacts must exist before commit** |
+
+#### Language Auto-Detection: Lint/Type Check Commands (Gate Item #3)
+
+Detect the project language from sentinel files, then run the corresponding command.
+Record the full command output as evidence. If multiple languages are present, run all that apply.
+
+| Language | Detection | Lint / Type Check Command |
+|----------|-----------|--------------------------|
+| TypeScript | `tsconfig.json` | `tsc --noEmit && eslint .` |
+| Python | `pyproject.toml` or `setup.py` | `ruff check . && mypy .` |
+| Go | `go.mod` | `go vet ./... && staticcheck ./...` |
+| Rust | `Cargo.toml` | `cargo clippy -- -D warnings && cargo fmt --check` |
+| JavaScript | `package.json` (no `tsconfig.json`) | `eslint .` |
+| Shell | `*.sh` files present | `shellcheck *.sh` |
+
+- If the language does not appear in this table, note "No lint tool configured" and record `[N/A]` with reason.
+- Do not modify linter config files to silence errors — fix the code instead (see `modules/linter-protection.md`).
 
 ### Review Start Gate (3 items)
 

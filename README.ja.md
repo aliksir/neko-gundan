@@ -188,6 +188,7 @@ bash neko-gundan/scripts/setup.sh  # ランタイムディレクトリを初期�
 | [他ツール比較](docs/comparison.ja.md) | Subagents / LangGraph / CrewAI との違い |
 | [ケーススタディ](docs/case-studies.ja.md) | 実プロジェクトでの適用例 |
 | [CLAUDE.md の例](examples/CLAUDE.md.example) | 完全な設定例 |
+| [YAML定義](yaml/) | エージェント・ルール・モジュール・ゲートの機械可読YAML版 |
 
 ## コントリビュート
 

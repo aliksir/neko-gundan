@@ -188,6 +188,7 @@ Safety rules (`security` mode) cost almost nothing — prompt rules, no extra ag
 | [Comparison](docs/comparison.md) | vs Subagents / LangGraph / CrewAI |
 | [Case Studies](docs/case-studies.md) | Real project examples |
 | [Example CLAUDE.md](examples/CLAUDE.md.example) | Full configuration example |
+| [YAML Definitions](yaml/) | Machine-readable YAML versions of all agents, rules, modules, and gates |
 
 ## Contributing
 

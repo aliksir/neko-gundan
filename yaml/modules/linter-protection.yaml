@@ -1,0 +1,72 @@
+module_detail:
+  name: Linter Config Protection Module
+  id: linter_protection
+  default: "ON"
+  scale: All
+  why: >
+    AIエージェントがリンターエラーを「修正」する際に、コードではなく設定を変更することが多い。
+    eslint-disable コメントの追加・.eslintrc の弱化・.eslintignore へのファイル追加などで
+    エラーを黙らせるが、根本的なコード品質問題は残る。
+    出典: Harness Engineeringの研究「モデルはコードを修正すべきであり、設定ではない」
+  description: >
+    エージェントがリンター設定を編集することでリンターエラーを黙らせることを防ぐ。
+    リンターエラーは設定ではなくコードを修正して解決する。
+    設定変更は人間の承認が必要。
+
+  procedures:
+    - id: 1
+      name: 基本ルール
+      steps:
+        - "コードを修正し設定を修正しない: リンターがエラーを報告したら、ルールを満たすようにコードを修正する"
+        - "理由なしのインライン抑制禁止: eslint-disable・noqa・#[allow(...)] には「なぜそのルールが適用されないか」のコメントが必要（「エラーを黙らせるため」は不可）"
+        - "設定変更には人間の承認が必要: リンタールールがプロジェクトにとって本当に誤っている場合、エージェントではなく人間が決定する"
+        - "新規プロジェクト設定は例外: 新規プロジェクトのリンター設定を明示的にセットアップする場合は設定ファイルを作成してよい"
+
+    - id: 2
+      name: 保護対象ファイルの確認
+      steps:
+        - "以下のファイルを編集する前に人間の明示的な指示があるか確認する"
+        - "JavaScript/TypeScript: .eslintrc* / eslint.config.* / .eslintignore / tsconfig.json（コンパイラ厳格性オプション）/ .prettierrc* / .prettierignore / biome.json / biome.jsonc"
+        - "Python: ruff.toml / .ruff.toml / pyproject.toml（[tool.ruff]・[tool.mypy]・[tool.pylint]セクション）/ .flake8 / mypy.ini / .mypy.ini / .pylintrc / setup.cfg（リンターセクション）"
+        - "Rust: clippy.toml / .clippy.toml / rustfmt.toml"
+        - "Go: .golangci.yml / .golangci.yaml"
+        - "汎用: .editorconfig / ソースコードをリンティングから除外する任意の*ignoreファイル"
+
+    - id: 3
+      name: フックによる強制（オプション）
+      steps:
+        - "Claude Code PreToolUseフックでリンター設定保護を強制できる（各プロジェクトのニーズに合わせて実装）"
+        - "フック設定: Write|Edit ツールの PreToolUse で保護ファイルに一致するパターンをチェックする"
+        - "保護ファイルへの編集をブロックし説明を提示する"
+
+  templates:
+    - name: フック設定例（参考）
+      fields:
+        - "{"
+        - "  \"hooks\": {"
+        - "    \"PreToolUse\": ["
+        - "      {"
+        - "        \"matcher\": \"Write|Edit\","
+        - "        \"command\": \"bash path/to/your/linter-guard.sh \\\"$TOOL_INPUT_FILE_PATH\\\"\""
+        - "      }"
+        - "    ]"
+        - "  }"
+        - "}"
+
+  integration_points:
+    - agent: genba-neko
+      phase: 実装中
+      action: 保護されたリンター設定ファイルを編集しない。代わりにコードを修正する
+    - agent: kurouto-neko
+      phase: レビュー中
+      action: diffでリンタールールが無効化・弱化されていないことを確認する
+    - agent: shigoto-neko
+      phase: 完了ゲート時
+      action: ゲート項目#12を確認する（理由なしにリンタールールが無効化されていないこと）
+
+  notes:
+    - "完了ゲート追加項目: リンター設定が弱化されていないことを確認（理由なしにリンタールールが無効化されていないことを検証）"
+    - "保護ファイルリストは各言語エコシステムのリンター設定ファイルを網羅"
+    - "インライン抑制（eslint-disable・noqa等）は絶対禁止ではないが、なぜそのルールが適用されないかの説明コメントが必須"
+    - "出典: Harness Engineering研究「The model should fix the code, not the config.」"
+    - "フック設定はこのリポジトリには含まれていない。各プロジェクトのニーズに合わせて実装すること"

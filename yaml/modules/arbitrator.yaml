@@ -1,0 +1,52 @@
+module_detail:
+  name: Arbitrator Module
+  id: arbitrator
+  default: "OFF"
+  scale: Platoon+
+  why: >
+    レビューループが上限を超えた場合や信頼度が低い場合に、公式な調停プロセスが必要。
+    通常は「考えずに委任」だが、仲裁は親方猫の専権事項。
+  description: >
+    レビューループが上限を超えた場合、または信頼度が低い場合の公式調停プロセス。
+    親方猫が仲裁者として介入し、情報収集・争点特定・裁定を行う。
+
+  procedures:
+    - id: 1
+      name: 仲裁介入プロセス（oyakata-neko）
+      conditions:
+        - "レビューループが3サイクルを超えて収束しない"
+        - "kurouto-nekoの判定にconfidence: lowが含まれる"
+        - "Ensemble Judgeの結果が3戦略で1:1:1に分裂"
+        - "shigoto-nekoとgenba-neko間のOBJECTIONが解決不能"
+      steps:
+        - "情報収集: 全レビュー履歴・OBJECTIONレコード・ホワイトボードを読む"
+        - "争点特定: 何について合意できないのかを明確にする"
+        - "独立判断: 当事者の主張ではなく事実と証拠に基づいて判断する"
+        - "裁定発行: Accept / Compromise / Remand / Abort のいずれかを決定する"
+        - "記録: ダッシュボードの『Decisions』セクションに裁定を記録する"
+
+  templates:
+    - name: 裁定テンプレート（Ruling Template）
+      fields:
+        - "Ruling: [Accept/Compromise/Remand/Abort]"
+        - "Dispute: [何について合意できなかったか]"
+        - "Basis: [事実と証拠に基づく理由]"
+        - "Order: [次に何をするか]"
+
+  integration_points:
+    - agent: oyakata-neko
+      phase: トリガー発生時（レビュー3サイクル超 / confidence:low / ensembleスプリット / 解決不能OBJECTION）
+      action: 仲裁者として介入: 情報収集・争点特定・裁定発行
+    - agent: oyakata-neko
+      phase: 裁定後
+      action: ダッシュボードの"Decisions"セクションに裁定を記録
+    - agent: kurouto-neko
+      phase: レビュー判定時
+      action: confidence:lowまたはensemble結果が1:1:1スプリットの場合は仲裁者にエスカレーション
+    - agent: shigoto-neko
+      phase: レビューループ監視時
+      action: レビューループが3サイクルを超えたら仲裁者にエスカレーション
+
+  notes:
+    - "仲裁は最後の手段。しかし必要な時は躊躇しない"
+    - "裁定の種類: Accept（一方の立場を採用）/ Compromise（双方から最適解を構築）/ Remand（追加調査を命令、具体的な項目を指定）/ Abort（タスクを中止し総司令にエスカレーション）"

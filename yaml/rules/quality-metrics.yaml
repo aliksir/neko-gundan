@@ -1,0 +1,17 @@
+module:
+  name: quality_metrics
+  id: null
+  default: "OFF"
+  scale: "All"
+  description: "Accumulates quality metrics per task and outputs a cumulative markdown report with trend analysis."
+  full_definition: "modules/quality-metrics.md"
+  integration_points:
+    - agent: "shigoto-neko / oyakata-neko"
+      phase: "Completion gate (after checklist export, before result report)"
+      action: "Append task metrics row to `{metrics_output_dir}/{project_name}_metrics.md`, recalculate summary"
+    - agent: "shigoto-neko / oyakata-neko"
+      phase: "Completion gate"
+      action: "Check alert triggers; flag concerning trends"
+    - agent: "shigoto-neko / oyakata-neko"
+      phase: "Periodic review"
+      action: "Review hotspots (files changed 5+ times in 30 days) for design instability"

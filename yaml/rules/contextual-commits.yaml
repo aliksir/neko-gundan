@@ -1,0 +1,84 @@
+contextual_commits:
+  description: "コミットメッセージに「なぜ」を構造化して埋め込む規約。"
+  version: "v0.1.0"
+  spec_url: "https://github.com/berserkdisruptors/contextual-commits"
+
+  format: |
+    <type>(<scope>): <subject>          ← Conventional Commit（従来通り）
+
+    <action-type>(<scope>): <description>  ← アクションライン（0行以上）
+    <action-type>(<scope>): <description>
+
+    Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
+
+  action_types:
+    - type: "intent"
+      records: "意図・目的"
+      when: "なぜこの変更をしたか、diffから読めない場合"
+    - type: "decision"
+      records: "選択した手段と理由"
+      when: "代替案がある技術選定をした場合"
+    - type: "rejected"
+      records: "却下した代替案＋理由"
+      when: "理由なしの却下は禁止（SPEC Rule 13）"
+    - type: "constraint"
+      records: "制約条件"
+      when: "実装を縛るハードリミットを発見した場合"
+    - type: "learned"
+      records: "発見した知見"
+      when: "APIの罠、非自明な振る舞いを発見した場合"
+
+  when_to_write:
+    principle: "diffで分かることは書かない。diffで分からない「なぜ」だけを書く。"
+    cases:
+      - commit_type: "typo修正、フォーマット、依存バンプ"
+        action_lines: "不要（ゼロ行でOK）"
+      - commit_type: "バグ修正（原因が自明）"
+        action_lines: "不要〜1行（constraintやlearnedがあれば）"
+      - commit_type: "機能追加・リファクタ（設計判断あり）"
+        action_lines: "書く（intent + decision が最低限）"
+      - commit_type: "代替案を検討して却下した"
+        action_lines: "必ず書く（rejected が最も価値が高い）"
+      - commit_type: "外部API・ライブラリの罠を踏んだ"
+        action_lines: "書く（learned）"
+
+  scope_rules:
+    - "小文字英数字＋ハイフン: auth, oauth-library, redis-cluster"
+    - "プロジェクト内で一貫させる: auth と authentication を混ぜない"
+    - "subject-line の scope とは独立（異なってOK）"
+
+  neko_guidelines:
+    lessons_distinction:
+      commit: "その場の判断記録（point-in-time）。git history に残る"
+      lessons_dir: "複数セッション横断の教訓（accumulated）。パターン化されたもの"
+      note: "同じ知見が両方に書かれてもOK（冗長は許容、消失は許容しない）"
+    agent_responsibilities:
+      - agent: "現場猫"
+        duty: "実装コミット時にアクションラインを付与"
+      - agent: "玄人猫"
+        duty: "レビューでアクションラインの品質チェック（diffと重複してないか、rejectedに理由があるか）"
+      - agent: "仕事猫"
+        duty: "計画書の設計判断をコミットの decision/rejected に転記するよう指示"
+    fabrication_prohibition:
+      rule_ref: "SPEC Rule 14"
+      description: "前セッションのコンテキストが不明な場合、推測でアクションラインを捏造しない。diffから明らかな技術選択のみ decision() として書いてOK。intent, rejected, constraint, learned は証拠なしに書かない。"
+
+  examples:
+    - |
+      feat(auth): implement JWT authentication
+
+      intent(auth): stateless auth for horizontal scaling
+      decision(auth-library): jose over jsonwebtoken — ESM native, maintained
+      rejected(auth-library): jsonwebtoken — CJS only, 2y no release
+      constraint(token-expiry): max 15min per security policy
+      learned(jose): importSPKI requires PEM format, not JWK
+
+      Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
+
+  query_examples:
+    - purpose: "過去にauthで却下された手段を全件検索"
+      command: "git log --all --grep=\"rejected(auth\""
+    - purpose: "constraintの一覧"
+      command: "git log --all --grep=\"constraint(\" --oneline"
+    - purpose: "特定scopeのlearned"
+      command: "git log --all --grep=\"learned(redis\" --format=\"%B\" | grep \"^learned(\""

@@ -1,0 +1,118 @@
+module_detail:
+  name: Intent State Vector Module (ISV)
+  id: isv
+  default: "OFF"
+  scale: Squad+
+  why: >
+    タスクの意図・状態・結果を多次元ベクトルとして記録する。
+    行動の背後にある推論を観察可能にし、成功・失敗パターンの比較と改善を可能にする。
+    LLMの記憶に頼らず、累積ログで将来のパターン抽出を可能にする。
+  description: >
+    タスクの意図（Intent）・状態（State）・結果（Result）を多次元ベクトルとして記録するモジュール。
+    タスク開始時に意図次元を定義し、実行中に状態次元を更新し、完了時に結果次元を記録する。
+    Squad規模ではISV Lite版（3次元）を使用する。
+
+  procedures:
+    - id: 1
+      name: ISVスキーマ定義
+      steps:
+        - "意図次元（タスク開始時に定義）:"
+        - "  urgency: 0.0（締め切りなし）〜 1.0（即時対応・障害）"
+        - "  risk: 0.0（安全な変更）〜 1.0（破壊的・本番環境）"
+        - "  complexity: 0.0（1ファイル・10行未満）〜 1.0（10ファイル超・設計変更）"
+        - "  novelty: 0.0（既存パターンの再利用）〜 1.0（完全新規・前例なし）"
+        - "  purpose_alignment: 0.0（Purposeと無関係）〜 1.0（Purposeの核心）"
+        - "状態次元（実行中に更新）:"
+        - "  confidence: 0.0（全low・未検証）〜 1.0（全high・ツール検証済み）"
+        - "  progress: 0.0（未着手）/ 0.5（進行中）/ 1.0（完了）"
+        - "  watchdog_level: 0（正常）/ 1（L1）/ 2（L2）/ 3（L3）"
+        - "  retry_count: 同一アプローチのリトライ回数"
+        - "結果次元（完了時に記録）:"
+        - "  outcome: 0.0（完全失敗）/ 0.5（部分成功）/ 1.0（完全成功）"
+        - "  review_cycles: レビューサイクル数（1 = 理想）"
+        - "  intervention_count: 人間の介入回数"
+
+    - id: 2
+      name: スコアリングアンカー（評価基準）
+      steps:
+        - "urgency: 0.0=締め切りなし・改善 / 0.3=今週中 / 0.5=今日中 / 0.7=数時間以内 / 1.0=即時対応・障害"
+        - "risk: 0.0=タイポ修正・コメント / 0.3=設定値変更 / 0.5=機能追加 / 0.7=DB・API変更 / 1.0=破壊的・本番環境"
+        - "complexity: 0.0=1ファイル・10行未満 / 0.3=1-2ファイル / 0.5=3-5ファイル / 0.7=6-10ファイル / 1.0=10ファイル超・設計変更"
+        - "novelty: 0.0=コピペ修正 / 0.3=既存パターン適用 / 0.5=部分的に新規 / 0.7=ほとんど新規 / 1.0=完全新規・前例なし"
+        - "purpose_alignment: 0.0=Purposeと無関係 / 0.3=間接的に関連 / 0.5=主要機能を改善 / 0.7=主要機能を追加 / 1.0=Purposeの核心"
+        - "confidence: 0.0=全low・未検証 / 0.3=一部low / 0.5=全medium / 0.7=ほぼhigh / 1.0=全high・ツール検証済み"
+        - "outcome: 0.0=完全失敗・ロールバック / 0.3=大幅な手戻り / 0.5=部分的に達成 / 0.7=軽微な修正で完了 / 1.0=初回成功"
+
+    - id: 3
+      name: shigoto-neko: タスク指示へのISV追加
+      steps:
+        - "タスク指示（pre-dispatch）にISV開始値を追加する"
+        - "ISV (start): urgency / risk / complexity / novelty / purpose_alignment の5次元"
+
+    - id: 4
+      name: shigoto-neko: 報告書へのISV結果追加
+      steps:
+        - "完了報告にISV結果値を追加する"
+        - "ISV (result): confidence / outcome / review_cycles / intervention_count の4次元"
+        - "完了したISVをISVログファイルに追記する（shigoto-nekoの責任）"
+        - "累積データで将来のパターン抽出を可能にする"
+
+    - id: 5
+      name: Squad Lite版
+      conditions:
+        - "小隊規模タスク（1-2ファイル変更）"
+      steps:
+        - "3次元のみを記録する: risk / confidence / outcome"
+
+  templates:
+    - name: ISVスキーマ（フル版）
+      fields:
+        - "isv:"
+        - "  # --- 意図次元（タスク開始時に定義）---"
+        - "  urgency: 0.5       # 0.0: 締め切りなし, 0.5: 通常, 1.0: 即時対応"
+        - "  risk: 0.5          # 0.0: 安全な変更, 0.5: 通常, 1.0: 破壊的変更"
+        - "  complexity: 0.5    # 0.0: 1ファイルのボイラープレート, 0.5: 数ファイル, 1.0: 大規模設計変更"
+        - "  novelty: 0.5       # 0.0: 既存パターン再利用, 0.5: 部分的に新規, 1.0: 完全新規設計"
+        - "  purpose_alignment: 0.9  # 0.0: 無関係, 0.5: 間接的, 1.0: Purposeの核心"
+        - "  # --- 状態次元（実行中に更新）---"
+        - "  confidence: 0.8    # 判定結果の集計. 0.0: 全low, 1.0: 全high"
+        - "  progress: 0.0      # 0.0: 未着手, 0.5: 進行中, 1.0: 完了"
+        - "  watchdog_level: 0  # 0: 正常, 1: L1, 2: L2, 3: L3"
+        - "  retry_count: 0     # 同一アプローチのリトライ回数"
+        - "  # --- 結果次元（完了時に記録）---"
+        - "  outcome: 1.0       # 0.0: 完全失敗, 0.5: 部分成功, 1.0: 完全成功"
+        - "  review_cycles: 1   # レビューサイクル数（1 = 理想）"
+        - "  intervention_count: 0  # 人間の介入回数"
+
+    - name: ISVスキーマ（Lite版・Squad用）
+      fields:
+        - "isv_lite:"
+        - "  risk: 0.3"
+        - "  confidence: 0.8"
+        - "  outcome: 1.0"
+
+    - name: タスク指示内ISV記述
+      fields:
+        - "ISV (start):"
+        - "  urgency: [0.0-1.0]  risk: [0.0-1.0]  complexity: [0.0-1.0]"
+        - "  novelty: [0.0-1.0]  purpose_alignment: [0.0-1.0]"
+
+    - name: 完了報告内ISV記述
+      fields:
+        - "ISV (result):"
+        - "  confidence: [0.0-1.0]  outcome: [0.0-1.0]"
+        - "  review_cycles: [count]  intervention_count: [count]"
+
+  integration_points:
+    - agent: shigoto-neko
+      phase: タスク指示時（pre-dispatch）
+      action: ISV開始値（urgency・risk・complexity・novelty・purpose_alignment）をタスク指示に追加
+    - agent: shigoto-neko
+      phase: 完了ゲート時（post-work）
+      action: ISV結果値（confidence・outcome・review_cycles・intervention_count）を記録し、ISVログに追記
+
+  notes:
+    - "完了ゲート追加項目: ISV記録済み確認（結果次元の記録・ISVログへの追記）"
+    - "ISVログが10件溜まったらパターン抽出・自動比較の仕組みを検討する（Phase 4-5）"
+    - "LLMエージェント間の主観的スコアリングのばらつきを減らすためにアンカーポイントを使用する"
+    - "Squad規模ではLite版（3次元）で十分"

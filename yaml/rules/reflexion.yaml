@@ -1,0 +1,11 @@
+module:
+  name: reflexion
+  id: null
+  default: "ON"
+  scale: "All"
+  description: "Structured reflection on failure to prevent repeating the same mistakes."
+  full_definition: "modules/reflexion.md"
+  integration_points:
+    - agent: genba-neko
+      phase: "Post-work (step 11, on failure)"
+      action: "Add Reflexion section to failure/redo report"

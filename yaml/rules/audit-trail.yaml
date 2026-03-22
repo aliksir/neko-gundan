@@ -1,0 +1,29 @@
+module:
+  name: audit_trail
+  id: null
+  default: "OFF"
+  scale: "Squad+"
+  description: "Records structured audit evidence across the software development lifecycle: requirements traceability, approval records, change management, and audit summary reports."
+  full_definition: "modules/audit-trail.md"
+  integration_points:
+    - agent: shigoto-neko
+      phase: "Task decomposition (pre-dispatch)"
+      action: "Create traceability matrix with REQ-IDs from plan requirements"
+    - agent: shigoto-neko
+      phase: "During work (on scope/design changes)"
+      action: "Append to change management ledger"
+    - agent: shigoto-neko
+      phase: "Completion gate"
+      action: "Verify all REQs VERIFIED/DEFERRED, generate audit summary (platoon+)"
+    - agent: kurouto-neko
+      phase: "Post-review (APPROVE verdict)"
+      action: "Append to approval log"
+    - agent: genba-neko
+      phase: "Post-work (completion report)"
+      action: "Include commit hashes and test references for traceability"
+    - agent: oyakata-neko
+      phase: "On commander approval / directive changes"
+      action: "Append to approval log / change ledger"
+    - agent: "oyakata-neko / shigoto-neko"
+      phase: "On rebuild request"
+      action: "Execute reconstruction procedure, output to `audit/{project}_{type}_rebuilt.md`"

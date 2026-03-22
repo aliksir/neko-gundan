@@ -1,0 +1,14 @@
+module:
+  name: isv
+  id: null
+  default: "OFF"
+  scale: "Squad+"
+  description: "Records task intent, state, and results as a multi-dimensional vector. Makes the reasoning behind actions observable, enabling comparison and improvement of success/failure patterns."
+  full_definition: "modules/isv.md"
+  integration_points:
+    - agent: shigoto-neko
+      phase: "Task instruction (pre-dispatch)"
+      action: "Add ISV start values (urgency, risk, complexity, novelty, purpose_alignment)"
+    - agent: shigoto-neko
+      phase: "Completion gate (post-work)"
+      action: "Record ISV result values (confidence, outcome, review_cycles, intervention_count), append to ISV log"

@@ -1,0 +1,20 @@
+module:
+  name: progress_visibility
+  id: null
+  default: "ON"
+  scale: "Platoon+"
+  description: "Ensures work progress is visible to all team members and the commander at all times."
+  full_definition: "modules/progress-visibility.md"
+  integration_points:
+    - agent: shigoto-neko
+      phase: "Pre-dispatch"
+      action: "Create dashboard entry (part of Pre-Dispatch Hard Gate)"
+    - agent: shigoto-neko
+      phase: "During work"
+      action: "Update on every genba-neko status change"
+    - agent: shigoto-neko
+      phase: "Completion"
+      action: "Final update with results"
+    - agent: oyakata-neko
+      phase: "Monitoring"
+      action: "Read dashboard for situation awareness"

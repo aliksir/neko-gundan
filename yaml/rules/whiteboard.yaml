@@ -1,0 +1,17 @@
+module:
+  name: whiteboard
+  id: "WHITEBOARD-001"
+  default: "ON"
+  scale: "All"
+  description: "Cross-agent knowledge sharing and context persistence through a shared whiteboard file."
+  full_definition: "modules/whiteboard.md"
+  integration_points:
+    - agent: shigoto-neko
+      phase: "Pre-dispatch gate"
+      action: "Create whiteboard, fill team structure (mandatory, no skip)"
+    - agent: genba-neko
+      phase: "Pre-work (step 3)"
+      action: "Read whiteboard (mandatory for platoon+, check if exists for squad)"
+    - agent: genba-neko
+      phase: "Post-work (step 9)"
+      action: "Write findings that affect other agents"

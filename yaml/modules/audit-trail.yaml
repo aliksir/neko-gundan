@@ -1,0 +1,194 @@
+module_detail:
+  name: Audit Trail Module
+  id: audit_trail
+  default: "OFF"
+  scale: Squad+
+  why: >
+    猫軍団はプロセス品質（チェックリスト・メトリクス・ISV）をすでに記録しているが、
+    監査に耐えられる証拠（audit-ready evidence）が不足している:
+    - トレーサビリティギャップ: 要件→設計→コミット→テストのリンクがない
+    - 承認記録の消失: レビュー承認が会話コンテキストに存在し圧縮時に消える
+    - 変更管理が散在: 変更理由がgitコミットメッセージだけに依存
+    - 統合ビューがない: 監査担当者は散在した成果物ではなく単一エントリポイントが必要
+  description: >
+    ソフトウェア開発ライフサイクル全体にわたる構造化された監査証跡を記録する:
+    要件トレーサビリティ・承認記録・変更管理・監査サマリーレポート。
+    プロジェクトローカルファイルに永続化することで開発を監査可能にする。
+
+  configuration:
+    steps:
+      - "プロジェクトのCLAUDE.mdに出力ディレクトリを設定する"
+      - |
+        設定例:
+        ### 監査証跡出力
+        audit_output_dir: /path/to/audit/
+      - "未設定の場合は {project_root}/audit/ がデフォルト"
+
+  procedures:
+    - id: 1
+      name: トレーサビリティマトリクス
+      steps:
+        - "タスク分解時（shigoto-neko）: 計画の要件・成功基準からREQ-IDを割り当てマトリクスを作成"
+        - "実装完了時（genba-neko）: Commitカラムにコミットハッシュ+サマリを記入"
+        - "テスト完了時（genba-neko）: Testカラムにファイル:クラス/関数を記入"
+        - "完了ゲート時（shigoto-neko）: 全REQがVERIFIEDまたはDEFERRED（理由付き）であることを確認"
+
+    - id: 2
+      name: 承認ログ
+      steps:
+        - "コードレビュー承認後（kurouto-neko）: APPROVE判定発行後に承認ログへ追記"
+        - "設計レビュー承認後（レビュアー）: 設計ゲート通過後に承認ログへ追記"
+        - "計画・ゲート承認（shigoto-neko）: 承認ログへ追記"
+        - "総司令承認（oyakata-neko）: 人間が明示的に承認した際に承認ログへ追記"
+        - "注意: 否定的判定（REQUEST_CHANGES）はここに記録しない。承認のみ"
+
+    - id: 3
+      name: 変更管理台帳
+      steps:
+        - "スコープ変更時: shigoto-nekoが変更管理台帳に追記（機能追加・削除）"
+        - "設計ピボット時: shigoto-nekoが追記（レビューフィードバックによる設計変更）"
+        - "ESCALATION-001時: shigoto-nekoが追記（プロセスウェイトアップグレード）"
+        - "OBJECTION-001/002/003受理時: shigoto-nekoが追記（決定事項）"
+        - "緊急修正・ホットフィックス時: shigoto-nekoが追記"
+        - "総司令のタスク中指示変更時: oyakata-nekoが追記"
+
+    - id: 4
+      name: 監査サマリーレポート生成
+      steps:
+        - "完了ゲート時（shigoto-neko）: 全ゲート項目確認後に監査サマリーを生成する"
+        - "全監査成果物（トレーサビリティ・承認ログ・変更台帳）への単一エントリポイントを作成する"
+
+    - id: 5
+      name: ログ再構築（Rebuild）
+      steps:
+        - "承認ログ再構築: result/{project}*.md に APPROVE|PASS|承認 を検索"
+        - "承認ログ再構築: logs/raw-*{project}*.md に APPROVE|verdict を検索"
+        - "承認ログ再構築: git log --grep='review' --grep='APPROVE' --all-match -- {project}/ を実行"
+        - "承認ログ再構築: whiteboard/whiteboard-{project}*.md に APPROVE|承認 を検索"
+        - "承認ログ再構築: 日付+件名で重複排除して承認ログテンプレートに集約"
+        - "トレーサビリティ再構築: plans/{project}_*.md を読み要件・成功基準を抽出してREQ-IDを割り当て"
+        - "トレーサビリティ再構築: git log --oneline -- {project}/ でコミットを要件にマッチング"
+        - "トレーサビリティ再構築: Glob '{project}/**/test_*' または '**/*_test.*' でテストを検索し要件にマッチング"
+        - "トレーサビリティ再構築: テスト実行または最終CI結果でステータスを確認"
+        - "変更台帳再構築: plans/ と result/ のスコープセクションを差分比較"
+        - "変更台帳再構築: whiteboard/result/logsで ESCALATION|OBJECTION|scope|変更 を検索"
+        - "変更台帳再構築: git log --oneline -- {project}/ で重要なスコープ変更を特定"
+        - "ファイル追跡: git log --all --full-history -- '**/filename' でリネームを含む全履歴を取得"
+        - "ファイル追跡: git log --diff-filter=D -- '**/filename' で削除日時を確認"
+        - "ファイル追跡: ls {project}/_deleted/ で安全アーカイブを確認"
+        - "再構築出力: audit/{project}_{type}_rebuilt.md に保存（既存ファイルは上書きしない）"
+
+  templates:
+    - name: トレーサビリティマトリクステンプレート（Platoon フル版）
+      fields:
+        - "# Traceability: {project_name}"
+        - "Updated: YYYY-MM-DD HH:MM"
+        - "| ID | Requirement | Design | Commit | Test | Status |"
+        - "| REQ-001 | ユーザー認証 | plans/auth_design.md | abc1234 | test_auth.py:TestLogin | VERIFIED |"
+        - "| REQ-002 | データエクスポート | plans/export_design.md | — | — | PENDING |"
+
+    - name: トレーサビリティマトリクステンプレート（Squad Lite版）
+      fields:
+        - "# Traceability: {project_name}"
+        - "Updated: YYYY-MM-DD HH:MM"
+        - "| ID | Requirement | Commit | Test | Status |"
+        - "| REQ-001 | 認証バグ修正 | abc1234 | test_auth.py | VERIFIED |"
+
+    - name: 承認ログテンプレート
+      fields:
+        - "# Approvals: {project_name}"
+        - "Updated: YYYY-MM-DD HH:MM"
+        - "| Date | Approver | Subject | Type | Verdict | Basis |"
+        - "| 2026-03-14 16:00 | kurouto-neko | PR実装 | Code review | APPROVE | Rubric 4/4 PASS, confidence: high |"
+        - "| 2026-03-14 15:30 | oyakata-neko | DBスキーマv2 | Design review | APPROVE | 6/6 gate items PASS |"
+        - "| 2026-03-14 15:00 | commander | 計画: authモジュール | Plan approval | APPROVE | スコープ確認済み |"
+
+    - name: 変更管理台帳テンプレート
+      fields:
+        - "# Changes: {project_name}"
+        - "Updated: YYYY-MM-DD HH:MM"
+        - "| ID | Date | Change | Reason | Impact | Approver | Status |"
+        - "| CHG-001 | 2026-03-14 | API認証方式: JWT → OAuth2 | セキュリティP1発見 | auth/, api/, tests/ | oyakata-neko | APPROVED |"
+        - "| CHG-002 | 2026-03-14 | キャッシュレイヤー追加 | パフォーマンス要件 | cache/, config/ | shigoto-neko | APPROVED |"
+
+    - name: 監査サマリーレポートテンプレート
+      fields:
+        - "# Audit Report: {project_name} — {mission_summary}"
+        - "Generated: YYYY-MM-DD HH:MM"
+        - "## Mission Overview"
+        - "- **Objective**: [何を構築・変更したか]"
+        - "- **Duration**: [開始日 — 終了日]"
+        - "- **Scale**: [Squad/Platoon/Battalion]"
+        - "- **Process weight**: [Light/Standard/Strict]"
+        - "## Traceability Summary"
+        - "- Total requirements: {N}"
+        - "- VERIFIED: {N} | IMPLEMENTED: {N} | PENDING: {N} | DEFERRED: {N}"
+        - "- Coverage: {VERIFIED / Total}%"
+        - "- Full matrix: [トレーサビリティファイルへのリンク]"
+        - "## Approval Summary"
+        - "- Total approvals: {N}"
+        - "- By type: Plan({N}), Design({N}), Code({N}), Gate({N}), Commander({N})"
+        - "- Full log: [承認ログファイルへのリンク]"
+        - "## Change Summary"
+        - "- Total changes: {N}"
+        - "- APPROVED: {N} | REJECTED: {N}"
+        - "- Full ledger: [変更台帳ファイルへのリンク]"
+        - "## Commands & Permissions"
+        - "| Category | Command/Action | Target | Count |"
+        - "| Git | git commit | {project} | {N} |"
+        - "| Git | git push | {remote/branch} | {N} |"
+        - "| Git | gh pr merge | PR #{N} | {N} |"
+        - "| External | post_tweet | Tweet ID: {id} | {N} |"
+        - "| File | Write (new) | {file1, file2, ...} | {N} |"
+        - "| File | Edit | {file1, file2, ...} | {N} |"
+        - "| Bash | {command} | {target} | {N} |"
+        - "## Quality Evidence"
+        - "- Checklist: [チェックリストファイルへのリンク] — {PASS}/{Total} items"
+        - "- Metrics: [メトリクスファイルへのリンク]"
+        - "- ISV: confidence={0.X}, outcome={0.X}, review_cycles={N}"
+        - "## Artifacts"
+        - "| Artifact | Path | Status |"
+        - "| Plan | plans/{project}_*.md | Exists |"
+        - "| Checklist | checklist/{date}_{project}.md | All PASS |"
+        - "| Traceability | audit/{project}_traceability.md | Complete |"
+        - "| Approvals | audit/{project}_approvals.md | Complete |"
+        - "| Changes | audit/{project}_changes.md | Complete |"
+        - "| Result report | result/{date}_{project}.md | Complete |"
+        - "| Raw log | logs/raw-*.md | Complete |"
+        - "| Metrics | metrics/{project}_metrics.md | Updated |"
+
+  integration_points:
+    - agent: shigoto-neko
+      phase: タスク分解時（pre-dispatch）
+      action: 計画の要件からREQ-IDを割り当ててトレーサビリティマトリクスを作成
+    - agent: shigoto-neko
+      phase: 作業中（スコープ・設計変更発生時）
+      action: 変更管理台帳に追記
+    - agent: shigoto-neko
+      phase: 完了ゲート時
+      action: 全REQがVERIFIED/DEFERREDであることを確認し、監査サマリーを生成（Platoon+）
+    - agent: kurouto-neko
+      phase: レビュー後（APPROVE判定時）
+      action: 承認ログに追記
+    - agent: genba-neko
+      phase: 作業後（完了報告時）
+      action: トレーサビリティのためコミットハッシュとテスト参照を含める
+    - agent: oyakata-neko
+      phase: 総司令承認時・指示変更時
+      action: 承認ログ / 変更台帳に追記
+    - agent: oyakata-neko / shigoto-neko
+      phase: 再構築リクエスト時
+      action: 再構築手順を実行し audit/{project}_{type}_rebuilt.md に出力
+
+  notes:
+    - "出力ファイル構成: {audit_output_dir}/{project}_traceability.md / _approvals.md / _changes.md / _audit-report.md"
+    - "REQ-IDは1プロジェクトミッション内でシーケンシャル（REQ-{NNN}）"
+    - "CHG-IDは1プロジェクトミッション内でシーケンシャル（CHG-{NNN}）"
+    - "トレーサビリティステータス: PENDING（未実装）/ IMPLEMENTED（コミット済み・テスト未確認）/ VERIFIED（テスト確認済み）/ DEFERRED（明示的にスコープ外・理由付き）"
+    - "承認タイプ: Plan approval / Design review / Code review / Gate approval / Commander approval"
+    - "変更ステータス: PROPOSED / APPROVED / IMPLEMENTED / REJECTED"
+    - "規模別バリアント: Squad（Lite版トレーサビリティ・承認のみ・変更時のみ変更台帳・サマリーなし）/ Platoon以上（フル版）"
+    - "再構築は事後対応。リアルタイム記録が常に優先される"
+    - "再構築ファイルは既存ファイルを上書きしない。ユーザーがマージ・置換を決定する"
+    - "コンテキスト圧縮後は会話コンテキストが失われるため、再構築が不完全になる場合がある"
+    - "完了ゲート追加項目: 監査証跡記録済み確認（REQ全件VERIFIED/DEFERRED・全レビュー承認記録・全スコープ変更記録・サマリー生成済み[Platoon+]）"

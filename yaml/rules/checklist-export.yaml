@@ -1,0 +1,17 @@
+module:
+  name: checklist_export
+  id: null
+  default: "ON (recommended+)"
+  scale: "Squad+"
+  description: "Exports task checklists to external files for progress tracking, human review, and record keeping."
+  full_definition: "modules/checklist-export.md"
+  integration_points:
+    - agent: "oyakata-neko (squad) / shigoto-neko (platoon+)"
+      phase: "Planning start"
+      action: "Create checklist file with Start + Task-Specific + Completion sections"
+    - agent: "shigoto-neko / oyakata-neko"
+      phase: "During work"
+      action: "Update checklist items as work progresses (genba-neko reports via SendMessage, shigoto-neko updates the file)"
+    - agent: "shigoto-neko / oyakata-neko"
+      phase: "Completion gate"
+      action: "Verify all items PASS or N/A, link from result report"

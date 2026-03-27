@@ -8,6 +8,7 @@ __pycache__/
 Thumbs.db
 _deleted/
 node_modules/
+.tmp/
 
 # Session artifacts (generated during operations, not part of framework)
 audit/

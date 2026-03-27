@@ -76,6 +76,14 @@ result/20260315_feature-x.md       ← result report
 
 **Principle: Everything except the result report and metrics should be complete at its phase boundary, not backfilled before commit.**
 
+## Planning Gate (Platoon+)
+
+Applied after the start gate, before task decomposition.
+
+- [ ] **Scope exclusions stated**: "What we are NOT doing" is explicitly written
+- [ ] **Acceptance criteria (Sprint Contract)**: Success criteria written as a checklist (`- [ ]`). Each item must be PASS/FIX binary-decidable. **Ambiguous words are prohibited** ("good", "appropriate", "sufficient", "clean", "correct", "easy to understand"). Recommended for squad too
+- [ ] **Plan reviewed**: Review by kurouto-neko (or non-implementer Opus). REQUEST_CHANGES → fix → APPROVE before proceeding to task decomposition
+
 ## Pre-Report Checkpoint (All Scales — Unconditional)
 
 **Fires unconditionally before reporting "done" to the commander. Independent of gate scale, escalation state, or task classification.**

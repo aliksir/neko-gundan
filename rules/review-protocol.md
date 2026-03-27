@@ -8,6 +8,17 @@ Quality assurance flow applied at all scales.
 2. **Reviewer is read-only**: No code modifications. Point out issues only, return to implementer for fixes
 3. **Loop limit 3 cycles**: After 3 cycles, arbitrator (Opus) intervenes to decide continue or abort
 
+## Scope Bind Rule (Sprint Contract, 2026-03-28)
+
+Reviewers judge PASS/FAIL **only** against the plan's "Acceptance Criteria (Sprint Contract)."
+
+- **Do not reject on criteria not in the contract**: Prevents scope creep ("this could also be improved", "that looks off too")
+- **Judge only what the contract specifies**: Each item is PASS or FIX. All items PASS = approved
+- **Issues found outside the contract**: Do not reject. Report via OBJECTION-001/002/003 instead. Whether to fix is a decision for the next task
+- **When no Sprint Contract exists**: Fall back to the plan's "success criteria." If neither exists, request definition before starting the review
+
+Inspired by: Anthropic "Harness Design" Planner-Generator Sprint Contract concept.
+
 ### Process Weight Exception
 
 The "implementer ≠ reviewer" principle has one defined exception:

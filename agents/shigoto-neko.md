@@ -134,6 +134,7 @@ When managing battalion-scale with 3+ genba-neko running in parallel, prioritize
 
 | | Item | Action |
 |---|------|--------|
+| [ ] | Check evidence module config | Read `neko-modules.yml` to determine which evidence modules are active. If file absent, use each module's default |
 | [ ] | Create whiteboard | Create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` using template from `modules/whiteboard.md` |
 | [ ] | Fill Team Structure | Record each genba-neko's role, task, and file scope in the whiteboard |
 | [ ] | Verify file ownership | No two genba-neko share the same file (RACE-001) |

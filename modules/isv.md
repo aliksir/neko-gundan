@@ -1,6 +1,6 @@
 # Intent State Vector Module (ISV)
 
-> **Module**: `isv` | **Default**: OFF | **Scale**: Squad+
+> **Module**: `isv` | **Default**: OFF | **Scale**: Squad+ | **Config**: `neko-modules.yml` → `evidence.isv`
 
 Records task intent, state, and results as a multi-dimensional vector. Makes the reasoning behind actions observable, enabling comparison and improvement of success/failure patterns.
 

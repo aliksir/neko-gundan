@@ -1,6 +1,6 @@
 # Raw Log Module
 
-> **Module**: `raw_log` | **Default**: OFF | **Scale**: Squad+
+> **Module**: `raw_log` | **Default**: OFF | **Scale**: Squad+ | **Config**: `neko-modules.yml` → `evidence.raw_log`
 
 Full audit trail of every agent action — what was read, changed, executed, and decided. For engineers who want to see **exactly** what the agent did, not just the summary.
 

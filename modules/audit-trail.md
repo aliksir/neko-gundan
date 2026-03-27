@@ -1,6 +1,6 @@
 # Audit Trail Module
 
-> **Module**: `audit_trail` | **Default**: OFF | **Scale**: Squad+
+> **Module**: `audit_trail` | **Default**: OFF | **Scale**: Squad+ | **Config**: `neko-modules.yml` → `evidence.audit_trail`
 
 Records structured audit evidence across the software development lifecycle: requirements traceability, approval records, change management, and audit summary reports.
 

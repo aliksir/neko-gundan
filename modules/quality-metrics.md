@@ -1,6 +1,6 @@
 # Quality Metrics Module
 
-> **Module**: `quality_metrics` | **Default**: OFF | **Scale**: All
+> **Module**: `quality_metrics` | **Default**: OFF | **Scale**: All | **Config**: `neko-modules.yml` → `evidence.quality_metrics`
 
 Accumulates quality metrics per task and outputs a cumulative markdown report with trend analysis.
 

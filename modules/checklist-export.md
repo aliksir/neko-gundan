@@ -1,6 +1,6 @@
 # Checklist Export Module
 
-> **Module**: `checklist_export` | **Default**: ON (recommended+) | **Scale**: Squad+
+> **Module**: `checklist_export` | **Default**: ON (recommended+) | **Scale**: Squad+ | **Config**: `neko-modules.yml` → `evidence.checklist_export`
 
 Exports task checklists to external files for progress tracking, human review, and record keeping.
 

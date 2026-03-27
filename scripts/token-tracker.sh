@@ -186,10 +186,15 @@ cmd_add_agent() {
       '.agents += [{"name": $name, "joined_at": $joined}]' \
       "${file}" > "${tmp_file}" && mv "${tmp_file}" "${file}"
   else
-    # jqなし: 簡易追記（末尾の"]"の前に追加）
+    # jqなし: 簡易追記
     local agent_entry="{\"name\": \"${agent_name}\", \"joined_at\": \"${joined_at}\"}"
-    # sedでagentsの末尾の]の前に挿入（簡易実装）
-    sed -i "s/\"agents\": \[\]/\"agents\": [${agent_entry}]/" "${file}" 2>/dev/null || true
+    if grep -q '"agents": \[\]' "${file}" 2>/dev/null; then
+      # 空配列 → 最初のエントリ
+      sed -i "s/\"agents\": \[\]/\"agents\": [${agent_entry}]/" "${file}" 2>/dev/null || true
+    else
+      # 既存エントリあり → 末尾の"]"の直前にカンマ付きで追記
+      sed -i "s/\(\"agents\": \[.*\)\]\([ \t]*\)$/\1, ${agent_entry}]\2/" "${file}" 2>/dev/null || true
+    fi
   fi
 
   echo "[token-tracker] エージェント '${agent_name}' を作戦 '${operation}' に追加: ${joined_at}"

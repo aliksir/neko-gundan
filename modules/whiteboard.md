@@ -78,6 +78,30 @@ For all missions, create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` as part of t
 - Cross-area insight -> **Write in Cross-Cutting**
 - Completed within own scope -> **Don't write** (SendMessage report only)
 
+### Knowledge Block Promotion (Focus Agent, 2026-03-28追加, arxiv:2601.07190)
+
+When context compression may occur (long sessions, large codebases), critical information risks being lost. Promote important findings to **knowledge blocks** — compressed, self-contained summaries that survive context compression.
+
+#### When to promote
+At each work checkpoint (not just at the end), ask: "If context is compressed right now, would this information be lost?"
+
+#### Knowledge block format
+```markdown
+## KB: {Topic} (promoted {timestamp})
+- **Decision**: [What was decided and why]
+- **Constraint**: [Hard limit discovered]
+- **State**: [Current state that next agent must know]
+```
+
+#### Promotion criteria
+| Question | If YES → |
+|----------|----------|
+| Would losing this change the next agent's approach? | Promote to KB |
+| Is this a decision that can't be re-derived from code? | Promote to KB |
+| Is this a constraint not documented anywhere else? | Promote to KB |
+
+Knowledge blocks go in the **Findings** section of the whiteboard, prefixed with `## KB:` for easy identification. They are never deleted during the mission — only archived at mission completion.
+
 ### Selective Sharing Criteria (arXiv:2602.05965)
 
 Not all findings are worth sharing. Excessive whiteboard writes create noise that hurts other agents' performance. Apply these filters before writing:
@@ -108,4 +132,5 @@ Not all findings are worth sharing. Excessive whiteboard writes create noise tha
 |-------|-------|--------|
 | shigoto-neko | Pre-dispatch gate | Create whiteboard, fill team structure (mandatory, no skip) |
 | genba-neko | Pre-work (step 3) | Read whiteboard (mandatory for platoon+, check if exists for squad) |
+| genba-neko | During work (checkpoints) | Promote critical findings to Knowledge Blocks when context compression risk exists |
 | genba-neko | Post-work (step 9) | Write findings that affect other agents |

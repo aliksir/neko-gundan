@@ -70,7 +70,7 @@ for entry in "${ALWAYS_REQUIRED[@]}"; do
             if [ -n "$log_file" ]; then
                 template_remains=$(grep -cE '（作業中に追記）|（追記予定）|TBD' "$log_file" 2>/dev/null || true)
                 template_remains=${template_remains:-0}
-                action_lines=$(grep -cE '^(Read|Edit|Write|Bash|Grep|Glob|Agent|WebFetch|WebSearch):' "$log_file" 2>/dev/null || true)
+                action_lines=$(grep -cE '^-?\s*(Read|Edit|Write|Bash|Grep|Glob|Agent|WebFetch|WebSearch|Decision|SendMessage|Skill|MCP):' "$log_file" 2>/dev/null || true)
                 action_lines=${action_lines:-0}
                 if [ "$template_remains" -gt 0 ]; then
                     echo -e "    ${RED}✗ 生ログにテンプレート未記入文言が残っています（${template_remains}箇所）${NC}"
@@ -87,12 +87,29 @@ for entry in "${ALWAYS_REQUIRED[@]}"; do
     fi
 done
 
-# metrics/ チェック（PJ別累積ファイル）
+# metrics/ チェック（PJ別累積ファイル — タスク名からPJ名を抽出して検索）
 total=$((total + 1))
 metrics_found=false
 if [ -d "${WORK_DIR}/metrics" ]; then
+    # まずタスク名そのままで検索
     if ls "${WORK_DIR}/metrics/"*"${PROJECT}"*_metrics.md 1>/dev/null 2>&1; then
         metrics_found=true
+    else
+        # タスク名からPJ名を抽出（YYYYMMDD_を除去、末尾の-xxx修飾子を順次削除して検索）
+        pj_base="${PROJECT}"
+        # 先頭の日付部分を除去（20260329_neko-claude-brushup → neko-claude-brushup）
+        pj_base="${pj_base#[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_}"
+        # 末尾のハイフン区切り修飾子を順次削除して検索
+        while [ -n "$pj_base" ]; do
+            if ls "${WORK_DIR}/metrics/"*"${pj_base}"*_metrics.md 1>/dev/null 2>&1; then
+                metrics_found=true
+                break
+            fi
+            # 末尾の -xxx を1段階削除
+            new_base="${pj_base%-*}"
+            [ "$new_base" = "$pj_base" ] && break
+            pj_base="$new_base"
+        done
     fi
 fi
 

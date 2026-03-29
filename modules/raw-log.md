@@ -31,49 +31,50 @@ ctrl+O（コンテキストビューア）で見える情報と同等の粒度�
 
 ## Actions
 
-Read: C:/work/project/src/main.js (250行)
-Read: C:/work/project/package.json (32行)
-Glob: src/**/*.jsx → 8 files
-Grep: "useState" in src/ → 12 matches in 5 files
-Edit: C:/work/project/src/main.js L15-20 — import追加
-Edit: C:/work/project/src/main.js L45-80 — handleSubmit関数書き換え
-Write: C:/work/project/src/utils/helper.js (新規, 35行)
-Bash: cd C:/work/project && npm install (exit:0)
-Bash: cd C:/work/project && npm run build (exit:0)
-Bash: cd C:/work/project && npm test (exit:1, FAIL: 2/15)
-Decision: テスト失敗はimportパスの変更漏れ → helper.jsのexportを修正
-Edit: C:/work/project/src/utils/helper.js L12 — export名修正
-Bash: cd C:/work/project && npm test (exit:0, PASS: 15/15)
-SendMessage: → genba-neko-1 "テスト修正完了、再レビュー依頼"
-Agent: genba-neko-1 (worktree, background) "エッジケーステスト追加"
-Skill: /simplify → 変更ファイル3件レビュー
+- Read: C:/work/project/src/main.js (250行)
+- Read: C:/work/project/package.json (32行)
+- Glob: src/**/*.jsx → 8 files
+- Grep: "useState" in src/ → 12 matches in 5 files
+- Edit: C:/work/project/src/main.js L15-20 — import追加
+- Edit: C:/work/project/src/main.js L45-80 — handleSubmit関数書き換え
+- Write: C:/work/project/src/utils/helper.js (新規, 35行)
+- Bash: cd C:/work/project && npm install (exit:0)
+- Bash: cd C:/work/project && npm run build (exit:0)
+- Bash: cd C:/work/project && npm test (exit:1, FAIL: 2/15)
+- Decision: テスト失敗はimportパスの変更漏れ → helper.jsのexportを修正
+- Edit: C:/work/project/src/utils/helper.js L12 — export名修正
+- Bash: cd C:/work/project && npm test (exit:0, PASS: 15/15)
+- SendMessage: → genba-neko-1 "テスト修正完了、再レビュー依頼"
+- Agent: genba-neko-1 (worktree, background) "エッジケーステスト追加"
+- Skill: /simplify → 変更ファイル3件レビュー
 ```
 
 ### 記録ルール
 
 | ルール | 内容 |
 |--------|------|
-| **全件記録** | 全てのツールコールを1行ずつ記録。省略・まとめ禁止 |
-| **1行1アクション** | `Read: {path} ({行数})` のようにツール名+対象+結果を1行で |
+| **全件記録** | Read/Write/Edit/Bash/Grep/Glob/Agent/Skill/MCP等、**全てのツールコールを1件ずつ記録**。省略・まとめ・要約禁止 |
+| **1行1アクション** | `- Read: {path} ({行数})` のようにツール名+対象+結果を1行で。リストマーカー `- ` 付き |
 | **結果を含める** | Bash→exit code、Grep→match数、テスト→pass/fail数 |
-| **失敗も記録** | エラー・リトライ・失敗した試行も全て記録（むしろ重要） |
-| **Decisionは理由付き** | 判断・選択をした箇所は `Decision:` で理由を1行記録 |
+| **失敗も記録** | エラー���リトライ・失敗した試行も全て記録（むしろ重要） |
+| **Decisionは理由付き** | 判断・選択をした箇所は `- Decision:` で理由を1行記録 |
+| **Readも全件** | ファイル読み込みは全て記録。「10ファイル読んだ」ではなく各ファイルを1行ずつ |
 
 ### ツール別フォーマット
 
 | Action | Format |
 |--------|--------|
-| **Read** | `Read: {path} ({N}行)` / `Read: {path} L{start}-{end}` |
-| **Edit** | `Edit: {path} L{line} — {何を変えたか}` |
-| **Write** | `Write: {path} (新規, {N}行)` / `Write: {path} (上書き, {N}行)` |
-| **Bash** | `Bash: {command} (exit:{code})` 失敗時は `(exit:{code}, {エラー要約})` |
-| **Grep** | `Grep: "{pattern}" in {path} → {N} matches in {M} files` |
-| **Glob** | `Glob: {pattern} → {N} files` |
-| **Decision** | `Decision: {何を判断したか} → {選んだ結果と理由}` |
-| **SendMessage** | `SendMessage: → {recipient} "{要約}"` |
-| **Agent** | `Agent: {name} ({options}) "{task}"` |
-| **Skill** | `Skill: /{name} → {結果要約}` |
-| **MCP** | `MCP: {tool_name}({params要約}) → {結果要約}` |
+| **Read** | `- Read: {path} ({N}行)` / `- Read: {path} L{start}-{end}` |
+| **Edit** | `- Edit: {path} L{line} — {何を変えたか}` |
+| **Write** | `- Write: {path} (新規, {N}行)` / `- Write: {path} (上書き, {N}行)` |
+| **Bash** | `- Bash: {command} (exit:{code})` 失敗時は `(exit:{code}, {エラー要約})` |
+| **Grep** | `- Grep: "{pattern}" in {path} → {N} matches in {M} files` |
+| **Glob** | `- Glob: {pattern} → {N} files` |
+| **Decision** | `- Decision: {何を判断したか} → {選んだ結果と理由}` |
+| **SendMessage** | `- SendMessage: → {recipient} "{要約}"` |
+| **Agent** | `- Agent: {name} ({options}) "{task}"` |
+| **Skill** | `- Skill: /{name} → {結果要約}` |
+| **MCP** | `- MCP: {tool_name}({params要約}) → {結果要約}` |
 
 ## Generation Procedure
 

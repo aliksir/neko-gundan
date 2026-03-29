@@ -11,3 +11,4 @@ evidence:
   isv: true              # Intent State Vector（意図・状態・結果ベクトル）
   quality_metrics: true  # 品質メトリクス（PJ別累積レポート・傾向分析）
   checklist_export: true # チェックリスト（作業+QA項目の外部ファイル出力）
+  review_output: true   # レビュー出力（simplify/kurouto-nekoの結果をファイル保存）

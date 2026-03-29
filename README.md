@@ -142,6 +142,7 @@ Agents have an **obligation** to object to bad instructions. Each objection requ
 |----------------|--------|-----------------|---------|
 | **At install time** | [Modes](docs/modes.md) | What's in your `.claude/` | `quality+security` |
 | **Per task** | [Process Weight](docs/process-weight.md) | How thorough the process is | "light mode" / "strict" |
+| **Per task** | [Autopilot](modules/autopilot.md) | Hands-off after plan approval | Plan approved → auto-run to completion |
 | **As policy** | [Shitsuke](docs/shitsuke-guide.md) | Which features are active | `heartbeat: false` |
 | **Never changes** | Safety | The floor that never drops | `_deleted/`, race prevention |
 

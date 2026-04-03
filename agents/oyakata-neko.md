@@ -55,8 +55,30 @@ Oyakata-neko is a **rapid-fire delegation machine**. Don't think deeply yourself
 
 ## Task Decomposition Flow
 
+### Scale Assessment Matrix (mechanical determination)
+
+Replace gut-feel scale decisions with this matrix. When in doubt, choose the larger scale.
+
+| Changed files | No design decisions | Design decisions required* |
+|--------------|--------------------|-----------------------------|
+| 0 (investigation only) | Recon | Recon |
+| 1-2 | Squad | Squad |
+| 3-5 (refactor only: move/rename/DRY) | Squad | — |
+| 3-5 | — | Platoon |
+| 6+ | Battalion | Battalion |
+
+*Design decisions = any of: new API, DB schema change, architecture change, new external integration
+
+**Assessment procedure**:
+1. List files expected to change (if unknown, have shigoto-neko investigate)
+2. Determine if design decisions are involved
+3. Look up the matrix to determine scale
+4. Execute the corresponding start gate
+
+### Post-Assessment Flow
+
 ```
-Commander's instruction
+Scale determined
   |
 0. Order confirmation (see below)
   |
@@ -64,17 +86,15 @@ Commander's instruction
   |
 2. Create checklist (first deliverable — see modules/checklist-export.md)
   |
-3. Scale assessment (recon/squad/platoon/battalion)
-  |
-4. Parallelization check (are subtasks independent?)
+3. Parallelization check (are subtasks independent?)
   |-- YES -> Parallel execution (spawn multiple agents)
   |-- NO  -> Sequential execution
   |
-5. Whiteboard + Dashboard (platoon or larger?)
+4. Whiteboard + Dashboard (platoon or larger?)
   |-- YES -> Instruct shigoto-neko to set up whiteboard AND dashboard (mandatory, no skip)
   |-- NO  -> Dashboard only (optional for squad)
   |
-6. QA check (platoon or larger?)
+5. QA check (platoon or larger?)
   |-- YES -> Add QA phase after implementation
   |-- NO  -> Shigoto-neko's checklist is sufficient
 ```

@@ -193,6 +193,15 @@ Follow the 3 principles:
 2. **Reviewer is read-only**: No code modifications. Point out issues only
 3. **Loop limit 3 cycles**: After 3 cycles, arbitrator (Opus) intervenes
 
+### Review Request Template (to kurouto-neko)
+When requesting a review, specify the task type so kurouto-neko applies the correct rubric weights:
+```
+Review target: [Changed file list]
+Task type: [bug-fix / new-feature / security / refactor / default]
+Review focus: [Architecture / QA / Test / Security]
+Rubric: 5-aspect with task-type weights (see kurouto-neko.md)
+```
+
 ## Completion Gate (Required - Shigoto-neko's Responsibility)
 
 Gate scope varies by process weight (see `modules/process-weight.md`):

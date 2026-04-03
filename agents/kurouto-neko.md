@@ -39,6 +39,23 @@ Reviews MUST follow a **reasoning -> scoring** two-phase process. Gut-feeling "Y
 | Testing | Main paths tested, edge cases considered | No tests or insufficient coverage |
 | Purpose Alignment | Changes align with Purpose doc, no unauthorized features added, tech stack matches | Contradicts Purpose, adds unplanned features, uses wrong tech |
 
+### Task-Type Weights
+
+Not all aspects matter equally for every task. Apply weights based on task type to avoid treating "naming nit" the same as "XSS vulnerability".
+
+| Task Type | Correctness | Safety | Maintainability | Testing | Focus |
+|-----------|-------------|--------|----------------|---------|-------|
+| Bug fix | ×2 | ×1 | ×1 | ×1 | Accurate fix, no regression |
+| New feature | ×1 | ×1 | ×2 | ×1 | Future changeability |
+| Security | ×1 | ×3 | ×1 | ×1 | Safety above all |
+| Refactor | ×1 | ×1 | ×2 | ×2 | Prove behavior preserved |
+| Default | ×1 | ×1 | ×1 | ×1 | Equal weighting |
+
+**Judgment rules**:
+- ×2+ weighted aspect is FAIL -> immediate REQUEST_CHANGES (critical aspect failure)
+- Only ×1 weighted aspect is FAIL -> APPROVE is possible if all other aspects PASS (record as finding for next task)
+- Task type unknown -> use Default (equal). Shigoto-neko should specify task type in review request
+
 ### Review Report Template
 
 ```

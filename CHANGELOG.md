@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.9.0] - 2026-04-04
+
+### Added
+- **CASCADE-001 module**: Task dependency graph with `←` notation on whiteboard. Automatic cascade blocking when upstream task fails. POLLING-001 suppression for BLOCKED tasks
+- **FANOUT-001 module**: Structured 3-phase parallel result integration (Fan-Out → Collect → Aggregate). Includes collect checklist, contradiction/duplicate detection, and whiteboard Aggregation Result template
+- **raw-log token tracking**: Optional `resource_usage` block (tokens, duration, tool_calls, errors) in genba-neko completion reports. Resource Summary table in raw log files
+
+### Changed
+- **shigoto-neko pre-dispatch gate**: Added dependency graph and output contract items (conditional — skip for independent tasks / single agent)
+- **genba-neko pre-work**: Added dependency graph status check before starting work
+- **whiteboard template**: Added Task Dependency Graph and Aggregation Result sections
+
 ## [1.8.0] - 2026-03-17
 
 ### Added

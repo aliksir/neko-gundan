@@ -126,6 +126,8 @@ Agents have an **obligation** to object to bad instructions. Each objection requ
 - **Race condition prevention**: No two agents edit the same file simultaneously
 - **Trust levels (FIDES)**: External data is explicitly tagged as LOW trust
 - **Destructive operation tiers**: Tier 1 is absolutely prohibited, Tier 2 requires confirmation
+- **Cascade failure prevention (CASCADE-001)**: Task dependencies declared with `←` notation on whiteboard. Upstream failure automatically blocks downstream tasks
+- **Fan-Out/Aggregate (FANOUT-001)**: Parallel agent results integrated through structured 3-phase process (Fan-Out → Collect → Aggregate) with contradiction/duplicate detection
 
 ### Observability
 
@@ -157,6 +159,8 @@ Every protocol exists because something went wrong without it.
 | "I checked" with no proof | Evidence-based completion gates |
 | Accidental file deletion | `_deleted/` safety buffer |
 | Agent lost context mid-task | Whiteboard knowledge sharing |
+| Upstream failure wasted downstream work | Cascade failure auto-blocking (CASCADE-001) |
+| Parallel results merged without structure | Fan-Out/Aggregate 3-phase integration (FANOUT-001) |
 
 [Case studies](docs/case-studies.md) show how these work in practice.
 

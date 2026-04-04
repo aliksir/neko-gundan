@@ -196,6 +196,7 @@ bash neko-gundan/scripts/setup.sh  # ランタイムディレクトリを初期�
 | [他ツール比較](docs/comparison.ja.md) | Subagents / LangGraph / CrewAI との違い |
 | [ケーススタディ](docs/case-studies.ja.md) | 実プロジェクトでの適用例 |
 | [CLAUDE.md の例](examples/CLAUDE.md.example) | 完全な設定例 |
+| [品質ゲート](gates/) | 開始・完了・設計フェーズのゲート定義（チェックリスト付き） |
 | [YAML定義](yaml/) | エージェント・ルール・モジュール・ゲートの機械可読YAML版 |
 
 ## コントリビュート

@@ -106,7 +106,7 @@ The team auto-scales based on task size:
 | Scale | Criteria | Formation |
 |-------|----------|-----------|
 | Recon | Questions, research | Oyakata handles directly |
-| Squad | 1-2 file changes | Single shigoto-neko |
+| Squad | 1-2 file changes, or 3-5 file simple refactor | Single shigoto-neko |
 | Platoon | 3-5 files AND design decisions | shigoto + 1-2 genba-neko |
 | Battalion | 6+ files | shigoto + 3 genba-neko |
 
@@ -219,6 +219,7 @@ Safety rules (`security` mode) cost almost nothing — prompt rules, no extra ag
 | [Comparison](docs/comparison.md) | vs Subagents / LangGraph / CrewAI |
 | [Case Studies](docs/case-studies.md) | Real project examples |
 | [Example CLAUDE.md](examples/CLAUDE.md.example) | Full configuration example |
+| [Quality Gates](gates/) | Start, completion, and design phase gate definitions with checklists |
 | [YAML Definitions](yaml/) | Machine-readable YAML versions of all agents, rules, modules, and gates |
 
 ## Contributing

@@ -231,7 +231,7 @@ Before declaring task complete, execute the applicable gate checks:
 5. **Run `/simplify`** on changed files (shigoto-neko runs this, NOT the genba-neko who implemented — "implementer != reviewer" principle)
 6. Report total: "**N items checked (PASS: X, N/A: Y)**" — verify count matches expected
 7. Don't declare complete until all items pass
-7. After gate passes, hand off to kurouto-neko for review
+8. After gate passes, hand off to kurouto-neko for review
 
 "All items checked... YOSHI! Zero incidents, YOSHI!"
 

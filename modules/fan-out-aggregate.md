@@ -1,0 +1,135 @@
+# Fan-Out/Aggregate Module (FANOUT-001)
+
+> **Module**: `fan_out_aggregate` | **Default**: ON | **Scale**: Platoon+
+
+並列現場猫の結果を構造化して統合する手順の明文化。
+
+着想元: open-multi-agent の `runParallel()`（MapReduce的な並列実行 + 結果集約パターン）。
+猫軍団ではコード内MapReduceではなく、仕事猫の行動ステップとして明文化する。
+
+## Why
+
+現状の仕事猫は「全員完了→完了ゲート」だが、複数現場猫の結果を**構造化して統合する明示的なステップ**がない。
+結果として、以下の問題が起きうる:
+
+- 現場猫Aの発見が現場猫Bの成果物に反映されない
+- 重複作業や矛盾した実装が完了ゲートまで検出されない
+- ホワイトボードの情報が断片的で全体像が見えない
+
+「全員の報告を聞いてから全体を見渡す。バラバラのジグソーパズルを並べるのが仕事猫の仕事だ」
+
+## 3フェーズ
+
+### Phase 1: Fan-Out（分散）
+
+仕事猫がタスクを分解し、現場猫に並列配分する。既存のタスク分解フローと同じ。
+
+```
+仕事猫 → [genba-1, genba-2, genba-3] (並列実行)
+```
+
+この段階で以下を明確にする:
+- 各現場猫の**出力契約**（何を返すか）: ファイル変更リスト、テスト結果、発見事項
+- **集約の粒度**: 結果をどのレベルで統合するか（ファイル単位、機能単位、コンポーネント単位）
+
+### Phase 2: Collect（収集）
+
+全現場猫の完了報告を受信し、結果を構造化する。
+
+#### 収集チェックリスト
+
+仕事猫は各現場猫の完了報告から以下を抽出する:
+
+```markdown
+### 収集結果: {mission-name}
+
+| Agent | Status | Files Changed | Tests | Findings | Blockers |
+|-------|--------|--------------|-------|----------|----------|
+| genba-1 | ✅ | 3 files | 5/5 pass | API仕様変更が必要 | なし |
+| genba-2 | ✅ | 2 files | 8/8 pass | なし | なし |
+| genba-3 | ❌ | 1 file | 2/4 fail | 型定義が不整合 | genba-1の変更待ち |
+```
+
+#### 矛盾・重複の検出
+
+収集時に以下をチェックする:
+
+| チェック項目 | 確認方法 |
+|------------|---------|
+| **ファイル競合** | 複数現場猫が同一ファイルを変更していないか（RACE-001で防止済みだが、変更が意味的に競合する場合がある） |
+| **API契約の整合** | あるエージェントが呼び出すAPIを別エージェントが変更していないか |
+| **テスト結果の不整合** | 個別テストは通るが統合すると壊れるパターン |
+| **重複実装** | 同じユーティリティを複数エージェントが独立に作成していないか |
+
+### Phase 3: Aggregate（集約）
+
+収集結果を統合し、全体としての成果物を確定する。
+
+#### 集約ステップ
+
+1. **マージ判定**: 全現場猫の変更を統合可能か判定
+   - 全員 ✅ + 矛盾なし → 統合実行
+   - 一部 ❌ or 矛盾あり → 修正指示（cascade-failure.mdの手順に従う）
+
+2. **統合実行**: 
+   - worktreeを使用している場合: マージ作業を実行
+   - 同一ブランチの場合: `git status` で全変更を確認
+
+3. **統合テスト**: 個別テストではなく、統合後の全体テストを実行
+   ```
+   仕事猫: "個別にヨシッでも、合わせたらどうして…ってことがある。統合テスト…ヨシッ！"
+   ```
+
+4. **ホワイトボード集約セクション更新**:
+   ```markdown
+   ## Aggregation Result
+   
+   **Status**: ✅ All merged / ⚠️ Partial (N/M tasks merged) / ❌ Blocked
+   **Integration test**: PASS / FAIL
+   **Conflicts resolved**: [あれば記述]
+   **Remaining work**: [あれば記述]
+   ```
+
+5. **完了ゲートへ進行**: 集約完了後、通常の完了ゲートフローに入る
+
+## 小隊での適用
+
+小隊（仕事猫単独、現場猫なし）でもFan-Out/Aggregateの考え方は適用できる:
+- 複数の `/simplify` エージェントを並列実行した結果を統合する場面
+- 複数ファイルへの変更を統合テストで検証する場面
+
+形式的なCollect/Aggregateステップは不要だが、「統合してから確認」の原則は同じ。
+
+## ホワイトボードテンプレート追加セクション
+
+Fan-Out/Aggregate使用時、ホワイトボードに以下セクションを追加する:
+
+```markdown
+## Aggregation Result
+
+**集約日時**: YYYY-MM-DD HH:MM
+**Status**: ⏳ Collecting / ✅ Merged / ⚠️ Partial / ❌ Blocked
+
+### 収集結果
+| Agent | Status | Files | Tests | Findings |
+|-------|--------|-------|-------|----------|
+
+### 矛盾・重複
+- [あれば記述]
+
+### 統合テスト結果
+- [コマンドと出力]
+
+### 残作業
+- [あれば記述]
+```
+
+## Integration Points
+
+| Agent | Phase | Action |
+|-------|-------|--------|
+| shigoto-neko | Task decomposition (pre-dispatch) | 各現場猫の出力契約と集約粒度を定義 |
+| shigoto-neko | Post-all-completion (collect phase) | 全現場猫の完了報告を収集チェックリストで構造化 |
+| shigoto-neko | Aggregate phase | 矛盾・重複チェック → マージ判定 → 統合テスト → ホワイトボード更新 |
+| shigoto-neko | Pre-completion-gate | Aggregation Result が ✅ Merged であることを確認 |
+| genba-neko | Post-work (completion report) | 出力契約に従った構造化報告（files_changed, tests, findings） |

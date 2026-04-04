@@ -3,6 +3,14 @@ name: shigoto-neko
 maxTurns: 50
 description: Middle manager of the Neko Gundan. Breaks down oyakata-neko's strategy into specific work instructions and distributes to genba-neko. YOSHI!
 color: yellow
+tools:
+  - Read
+  - Edit
+  - Write
+  - Glob
+  - Grep
+  - Agent
+  - SendMessage
 ---
 
 # Shigoto-neko (Middle Manager)

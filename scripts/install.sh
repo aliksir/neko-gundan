@@ -38,16 +38,23 @@ CYAN='\033[0;36m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-# --- モード判定 ---
+# --- フラグ解析（順序自由） ---
 UPDATE_MODE=false
 DOWNGRADE_MODE=false
-if [ "${1:-}" = "--update" ]; then
-    UPDATE_MODE=true
-    shift
-elif [ "${1:-}" = "--downgrade" ]; then
-    DOWNGRADE_MODE=true
-    shift
-fi
+LANG_FILTER=""
+while [ $# -gt 0 ]; do
+    case "${1:-}" in
+        --update)    UPDATE_MODE=true; shift ;;
+        --downgrade) DOWNGRADE_MODE=true; shift ;;
+        --lang)
+            if [ -z "${2:-}" ]; then
+                echo -e "${RED}Error: --lang requires a comma-separated list (e.g. --lang typescript,python)${NC}"
+                exit 1
+            fi
+            LANG_FILTER="$2"; shift 2 ;;
+        *)  break ;;
+    esac
+done
 
 # --- ヘルプ ---
 usage() {
@@ -68,6 +75,9 @@ usage() {
     echo "              Shows diff and lets you choose per file"
     echo "  --downgrade Downgrade to target mode, retiring unneeded files to _deleted/"
     echo "              Safely moves excess files instead of deleting them"
+    echo "  --lang LIST Install language-specific rules (comma-separated)"
+    echo "              Available: typescript, python, go, rust"
+    echo "              Default (no --lang): all languages"
     echo ""
     echo "Examples:"
     echo "  bash install.sh quality ./my-project"
@@ -75,6 +85,7 @@ usage() {
     echo "  bash install.sh all ~/projects/my-app"
     echo "  bash install.sh --update all ./my-project"
     echo "  bash install.sh --downgrade koneko ./my-project"
+    echo "  bash install.sh --lang typescript,python all ./my-project"
     exit 1
 }
 
@@ -173,7 +184,7 @@ koneko_modules=""
 
 # 全猫軍団ファイルのマスターリスト（ダウングレード用）
 all_agents="oyakata-neko.md shigoto-neko.md genba-neko.md kurouto-neko.md koneko-neko.md"
-all_rules="review-protocol.md completion-gates.md safety-tiers.md koneko-gates.md"
+all_rules="review-protocol.md completion-gates.md safety-tiers.md koneko-gates.md lang/typescript.md lang/python.md lang/go.md lang/rust.md"
 all_modules="ensemble-judge.md jit-tests.md reflexion.md linter-protection.md race-prevention.md heartbeat.md tdd-separation.md whiteboard.md isv.md spec-driven-review.md fides.md process-weight.md arbitrator.md capacity-escalation.md handoff-schema.md checklist-export.md quality-metrics.md module-addition.md faceted-prompting.md progress-visibility.md objection-flow.md raw-log.md"
 all_commands="neko-gundan.md"
 
@@ -238,6 +249,34 @@ AGENTS=$(echo "$AGENTS" | tr ' ' '\n' | sort -u | tr '\n' ' ')
 RULES=$(echo "$RULES" | tr ' ' '\n' | sort -u | tr '\n' ' ')
 MODULES=$(echo "$MODULES" | tr ' ' '\n' | sort -u | tr '\n' ' ')
 SNIPPETS=$(echo "$SNIPPETS" | tr ' ' '\n' | sort -u | tr '\n' ' ')
+
+# --- 言語ルール追加 ---
+# --- 言語ルール追加 ---
+LANG_RULES=""
+if [ -n "$LANG_FILTER" ]; then
+    # --lang で指定された言語のみ（バリデーション付き）
+    IFS=',' read -ra LANGS <<< "$LANG_FILTER"
+    for lang in "${LANGS[@]}"; do
+        lang=$(echo "$lang" | tr -d ' ')
+        if [[ ! "$lang" =~ ^[a-z0-9_-]+$ ]]; then
+            echo -e "${RED}Error: Invalid language name: $lang${NC}"
+            exit 1
+        fi
+        if [ -f "$NEKO_DIR/rules/lang/$lang.md" ]; then
+            LANG_RULES="$LANG_RULES lang/$lang.md"
+        else
+            echo -e "${YELLOW}Warning: Language rule not found: $lang${NC}"
+        fi
+    done
+else
+    # --lang 未指定: 全言語ルールを追加
+    if [ -d "$NEKO_DIR/rules/lang" ]; then
+        for f in "$NEKO_DIR"/rules/lang/*.md; do
+            [ -f "$f" ] && LANG_RULES="$LANG_RULES lang/$(basename "$f")"
+        done
+    fi
+fi
+RULES="$RULES $LANG_RULES"
 
 # --- ダウングレードモード ---
 if [ "$DOWNGRADE_MODE" = true ]; then
@@ -505,6 +544,7 @@ fi
 if [ -n "$(echo "$RULES" | tr -d ' ')" ]; then
     echo -e "${CYAN}Rules:${NC}"
     for f in $RULES; do
+        [[ "$f" == */* ]] && mkdir -p "$(dirname "$CLAUDE_DIR/rules/$f")"
         copy_file "$NEKO_DIR/rules/$f" "$CLAUDE_DIR/rules/$f"
     done
     echo ""

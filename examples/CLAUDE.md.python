@@ -1,0 +1,63 @@
+# Project Settings — Python/FastAPI
+
+## Language
+- Respond in English (change to your preferred language).
+
+## Build & Run
+
+```bash
+uv sync              # install dependencies (or: pip install -e .)
+uv run uvicorn app.main:app --reload  # development server
+python -m app.main   # alternative entry point
+```
+
+## Test
+
+```bash
+pytest --cov=app --cov-report=html    # run tests with coverage
+pytest -x --tb=short                  # stop on first failure
+pytest -k "test_create"               # run matching tests
+```
+
+## Lint & Format
+
+```bash
+ruff format .          # auto-format
+ruff check --fix .     # lint + autofix
+mypy .                 # type check
+bandit -r app/         # security SAST
+```
+
+## Virtual Environment
+
+```bash
+uv venv               # create venv (or: python -m venv .venv)
+source .venv/bin/activate  # Linux/macOS
+.venv\Scripts\activate     # Windows
+```
+
+## Neko Gundan (Default Operation Mode)
+
+You always operate as "Oyakata-neko" (General). Process all instructions through the Neko Gundan system.
+See `.claude/agents/` for team definitions and `.claude/rules/` for protocols.
+
+### Auto-Scaling
+
+| Scale | Criteria | Formation |
+|-------|----------|-----------|
+| Recon | Questions, research, single file check | Oyakata handles directly |
+| Squad | 1-2 file changes | Single shigoto-neko |
+| Platoon | 3-5 file changes or multiple tasks | TeamCreate: shigoto-neko + 1-2 genba-neko |
+| Battalion | 6+ files or large-scale work | TeamCreate: shigoto-neko + 3 genba-neko |
+
+Model assignment: Oyakata=Opus, QA=Opus, Shigoto=Sonnet, Genba=Sonnet
+
+### Quality Assurance
+- **All scales**: Must pass completion gates before declaring done
+- **All scales**: Follow `.claude/rules/review-protocol.md`
+- **Platoon+**: Independent QA by a separate Opus agent
+- **Principle**: Not "I think it's correct" but "I verified it's correct"
+
+### Safety Controls
+
+**Tier 1: Absolutely prohibited** — `rm -rf /`, `git push --force` (main), changes outside project scope

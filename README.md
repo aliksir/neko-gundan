@@ -53,6 +53,29 @@ The installer copies only the files you need and shows the CLAUDE.md snippet to 
 
 > **Don't want the full framework?** Start with just `security` (no agents, just safety rules) or `quality` (just a reviewer). [See all modes](docs/modes.md).
 
+## Language Rules
+
+Neko Gundan includes language-specific coding rules that your agents follow automatically.
+
+| Language | Detection | File |
+|----------|-----------|------|
+| TypeScript | `tsconfig.json` | `rules/lang/typescript.md` |
+| Python | `pyproject.toml` / `requirements.txt` | `rules/lang/python.md` |
+| Go | `go.mod` | `rules/lang/go.md` |
+| Rust | `Cargo.toml` | `rules/lang/rust.md` |
+
+By default, all language rules are installed. To install only what you need:
+
+```bash
+bash neko-gundan/scripts/install.sh --lang typescript,python all ./your-project
+```
+
+**Starter CLAUDE.md templates** are available in `examples/` for TypeScript (Next.js), Python (FastAPI), and Go projects. Copy the one that matches your stack:
+
+```bash
+cp neko-gundan/examples/CLAUDE.md.typescript ./your-project/CLAUDE.md
+```
+
 ## What You Do (3 Steps)
 
 1. **Install** — Pick modes and run the installer. Done in 30 seconds.

@@ -224,7 +224,7 @@ Default is **Standard** unless oyakata-neko or the commander specifies otherwise
 
 Before declaring task complete, execute the applicable gate checks:
 
-1. **Read `rules/completion-gates.md`** first — memory-based gate execution is prohibited
+1. **Read `gates-complete.md`** first — memory-based gate execution is prohibited. The file is at `.claude/gates/gates-complete.md` (or the project's equivalent path)
 2. Process items sequentially (#1, #2, ...) — run command, record evidence, then move to next
 3. **Verify checklist completion** — check that all `- [ ]` items are marked `- [x]` or `[N/A]`. If unchecked items remain, instruct genba-neko to update before proceeding
 4. Evidence must be specific (command output, file citation — not just "checked")

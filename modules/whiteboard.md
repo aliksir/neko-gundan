@@ -47,6 +47,22 @@ For all missions, create `{WHITEBOARD_DIR}/whiteboard-{mission}.md` as part of t
 ### {Agent 2}
 - [Discovery with source citation]
 
+## タスク依存グラフ (CASCADE-001)
+
+依存関係を `←` で記述。詳細は `modules/cascade-failure.md` 参照。
+
+```
+genba-1: {タスク名}
+genba-2: {タスク名} ← genba-1
+genba-3: {タスク名} ← genba-1
+genba-4: {タスク名} ← genba-2, genba-3
+```
+
+| Task | Agent | Status | Depends On | Note |
+|------|-------|--------|-----------|------|
+| {タスク名} | genba-1 | ⏳ PENDING | — | |
+| {タスク名} | genba-2 | ⏳ PENDING | genba-1 | |
+
 ## Cross-Cutting Observations
 [Insights spanning multiple areas]
 

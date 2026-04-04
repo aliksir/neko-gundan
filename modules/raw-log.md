@@ -76,6 +76,60 @@ ctrl+O（コンテキストビューア）で見える情報と同等の粒度�
 | **Skill** | `- Skill: /{name} → {結果要約}` |
 | **MCP** | `- MCP: {tool_name}({params要約}) → {結果要約}` |
 
+### トークン使用量・タイミング記録（オプショナル）
+
+着想元: open-multi-agent の `onTrace`（全LLMコール・ツール実行にタイミング+トークン使用量を自動記録するspan構造）。
+猫軍団ではコード内自動計測ではなく、現場猫がハンドオフ時に自己申告する形式で導入する。
+
+#### いつ記録するか
+
+- **全エージェント**: ハンドオフ（完了報告）時にセッション全体のサマリーを記録
+- **記録は任意だが推奨**: トークン情報が取得できない場合は省略可。タイミングは作業開始〜完了の経過時間で代用可
+
+#### セッションサマリーフォーマット
+
+完了報告の末尾に以下を付与する:
+
+```yaml
+resource_usage:
+  duration_min: 12        # 作業開始〜完了の経過時間（分）
+  tokens:
+    input: 45200          # 入力トークン数（概算可）
+    output: 8300          # 出力トークン数（概算可）
+    cache_read: 38000     # キャッシュ読み取りトークン数（取得可能な場合）
+  tool_calls: 47          # ツールコール総数
+  errors: 2               # エラー発生回数
+```
+
+#### ログ内フォーマット（詳細記録が必要な場合）
+
+高コストなツールコール（外部API・大規模Bash等）に限り、個別タイミングを記録してよい:
+
+```markdown
+- Bash: npm run build (exit:0) [23.4s]
+- Agent: genba-neko-2 (worktree, background) "テスト追加" [4.2min]
+- MCP: playwright-browser__navigate("https://...") → OK [8.1s]
+```
+
+角括弧 `[{duration}]` を行末に付与する。単位は秒(`s`)または分(`min`)。
+
+#### 集計セクション（生ログ末尾）
+
+仕事猫がraw-log生成時に、全エージェントのresource_usageを集計してログ末尾に追加する:
+
+```markdown
+## Resource Summary
+
+| Agent | Duration | Input Tokens | Output Tokens | Cache Tokens | Tool Calls | Errors |
+|-------|----------|-------------|---------------|-------------|------------|--------|
+| shigoto-neko | 8min | 32,000 | 6,100 | 28,000 | 35 | 0 |
+| genba-neko-1 | 12min | 45,200 | 8,300 | 38,000 | 47 | 2 |
+| genba-neko-2 | 10min | 38,500 | 7,200 | 31,000 | 42 | 1 |
+| **Total** | **30min** | **115,700** | **21,600** | **97,000** | **124** | **3** |
+```
+
+この集計は完了ゲート後のメトリクス記録にも活用できる（`metrics/` へのインプット）。
+
 ## Generation Procedure
 
 ### Genba-neko: Record During Work

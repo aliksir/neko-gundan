@@ -80,15 +80,7 @@
    仕事猫: "個別にヨシッでも、合わせたらどうして…ってことがある。統合テスト…ヨシッ！"
    ```
 
-4. **ホワイトボード集約セクション更新**:
-   ```markdown
-   ## Aggregation Result
-   
-   **Status**: ✅ All merged / ⚠️ Partial (N/M tasks merged) / ❌ Blocked
-   **Integration test**: PASS / FAIL
-   **Conflicts resolved**: [あれば記述]
-   **Remaining work**: [あれば記述]
-   ```
+4. **ホワイトボード集約セクション更新**: 下記「ホワイトボードテンプレート追加セクション」のフォーマットで記入
 
 5. **完了ゲートへ進行**: 集約完了後、通常の完了ゲートフローに入る
 
@@ -102,7 +94,8 @@
 
 ## ホワイトボードテンプレート追加セクション
 
-Fan-Out/Aggregate使用時、ホワイトボードに以下セクションを追加する:
+Fan-Out/Aggregate使用時、ホワイトボードに以下セクションを追加する。
+**このテンプレートがAggregation Resultの正（SSOT）。** Phase 3の集約ステップ4はこのテンプレートを参照すること。
 
 ```markdown
 ## Aggregation Result

@@ -78,10 +78,10 @@ BLOCKED → (依存先が修正完了後) → PENDING に戻す
 ```markdown
 | Task | Agent | Status | Depends On | Note |
 |------|-------|--------|-----------|------|
-| DBスキーマ | genba-1 | ✅ DONE | — | |
+| DBスキーマ | genba-1 | ✅ COMPLETED | — | |
 | API実装 | genba-2 | ❌ FAIL | genba-1 | 型定義エラー |
 | フロント | genba-3 | 🚫 BLOCKED | genba-2 | CASCADE: API実装FAIL |
-| テストデータ | genba-4 | ✅ DONE | genba-1 | |
+| テストデータ | genba-4 | ✅ COMPLETED | genba-1 | |
 | E2Eテスト | genba-5 | 🚫 BLOCKED | genba-3,4 | CASCADE: フロントBLOCKED |
 ```
 
@@ -92,6 +92,12 @@ BLOCKED → (依存先が修正完了後) → PENDING に戻す
 3. **修正判断**: 失敗タスクの修正を同じ現場猫に差し戻すか、別の現場猫に再割り当てするか判断
 4. **BLOCKED解除**: 依存先が修正完了したら、BLOCKEDタスクをPENDINGに戻して再開指示
 5. **ホワイトボード更新**: 状態変化をホワイトボードに反映
+
+## POLLING-001との連携
+
+BLOCKEDタスクの現場猫に対するHeartbeatポーリングは**抑制する**。
+BLOCKEDは仕事猫が明示的に設定した状態であり、進捗を監視する意味がない。
+依存先が修正完了しPENDINGに戻った時点でポーリングを再開する。
 
 ## 小隊での適用
 

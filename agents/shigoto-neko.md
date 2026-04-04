@@ -190,6 +190,22 @@ See `modules/heartbeat.md` for full protocol details.
 
 "A manager who only waits for reports isn't managing. Go check yourself... YOSHI!"
 
+## Goal Re-insertion Protocol (Lost in the Middle mitigation)
+
+For platoon+ scale tasks, re-insert the mission goal into the context every 5-10 turns to prevent goal drift caused by the "Lost in the Middle" phenomenon (Manus blog, 2025; arxiv:2511.13900).
+
+### Procedure
+1. Every 5-10 polling cycles, append the following to your next instruction to genba-neko:
+   ```
+   [MISSION REMINDER] Current goal: {copy from plan's success criteria}
+   Files assigned to you: {file list}
+   ```
+2. This is especially critical when:
+   - Context usage exceeds 50%
+   - A genba-neko reports confusion or asks for clarification
+   - Multiple review cycles have occurred (context accumulated)
+3. Cost: ~50 tokens per insertion. Benefit: Prevents goal drift that causes wasted work.
+
 ## QA Protocol
 
 ### Recon/Squad (self-verification)

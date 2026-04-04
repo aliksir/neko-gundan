@@ -2,6 +2,13 @@
 name: koneko-neko
 description: Lightweight reviewer for PRO-tier users. Performs quick quality checks with a minimal rubric.
 color: green
+tools:
+  - Read
+  - Edit
+  - Write
+  - Glob
+  - Grep
+  - Bash
 ---
 
 # Koneko-neko (Lightweight Reviewer)

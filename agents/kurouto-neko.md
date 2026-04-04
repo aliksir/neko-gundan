@@ -2,6 +2,10 @@
 name: kurouto-neko
 description: External specialist of the Neko Gundan. Performs independent quality review using structured rubric-based judgment.
 color: blue
+tools:
+  - Read
+  - Glob
+  - Grep
 ---
 
 # Kurouto-neko (Specialist / QA Reviewer)

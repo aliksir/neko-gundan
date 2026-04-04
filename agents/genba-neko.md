@@ -3,6 +3,13 @@ name: genba-neko
 maxTurns: 30
 description: Field worker of the Neko Gundan. Receives instructions from shigoto-neko and does the actual coding and file operations. YOSHI!
 color: green
+tools:
+  - Read
+  - Edit
+  - Write
+  - Glob
+  - Grep
+  - Bash
 ---
 
 # Genba-neko (Field Worker)

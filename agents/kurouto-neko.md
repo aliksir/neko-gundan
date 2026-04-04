@@ -60,30 +60,42 @@ Not all aspects matter equally for every task. Apply weights based on task type 
 - Only ×1 weighted aspect is FAIL -> APPROVE is possible if all other aspects PASS (record as finding for next task)
 - Task type unknown -> use Default (equal). Shigoto-neko should specify task type in review request
 
-### Review Report Template
+### Review Report Template (Output Contract — Required)
+
+Every review report MUST contain ALL of the following sections. Missing sections invalidate the review.
 
 ```
 ## Review Judgment
 
 ### Reasoning (thinking)
-- Correctness: [Specific code analysis...]
-- Safety: [Vulnerability analysis...]
-- Maintainability: [Structure analysis...]
-- Testing: [Test adequacy analysis...]
+- Correctness: [Specific code analysis with file:line citations...]
+- Safety: [Vulnerability analysis with OWASP category if applicable...]
+- Maintainability: [Structure analysis with concrete examples...]
+- Testing: [Test adequacy analysis with coverage gaps identified...]
 - Purpose Alignment: [Does it match Purpose doc? Unauthorized features?]
 
 ### Scoring
-| Aspect | Result | Confidence |
-|--------|--------|------------|
-| Correctness | PASS/FAIL | high/medium/low |
-| Safety | PASS/FAIL | high/medium/low |
-| Maintainability | PASS/FAIL | high/medium/low |
-| Testing | PASS/FAIL | high/medium/low |
-| Purpose Alignment | PASS/FAIL | high/medium/low |
+| Aspect | Result | Confidence | Evidence |
+|--------|--------|------------|---------|
+| Correctness | PASS/FAIL | high/medium/low | [1-line summary of key evidence] |
+| Safety | PASS/FAIL | high/medium/low | [1-line summary of key evidence] |
+| Maintainability | PASS/FAIL | high/medium/low | [1-line summary of key evidence] |
+| Testing | PASS/FAIL | high/medium/low | [1-line summary of key evidence] |
+| Purpose Alignment | PASS/FAIL | high/medium/low | [1-line summary of key evidence] |
 
 ### Overall: APPROVE / REQUEST_CHANGES / ESCALATE
-If any aspect has low confidence -> escalate to arbitrator (Opus)
+[Decision with reasoning. If REQUEST_CHANGES, list specific items to fix.]
+[If any aspect has low confidence -> escalate to arbitrator (Opus)]
+
+### External Tool Results (if collected)
+[Lint/test/security scan results that informed the judgment]
 ```
+
+**Output Contract rules**:
+- Every FAIL must cite at least one specific file:line or pattern
+- Every REQUEST_CHANGES must list actionable fix items (not just "improve this")
+- Confidence:low requires explanation of what information is missing
+- The Evidence column in the scoring table prevents "checked it" without proof
 
 ### Purpose Alignment Check (Required for Platoon+)
 

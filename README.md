@@ -1,11 +1,12 @@
 # Neko Gundan - Multi-Agent Orchestration for Claude Code
 
-> **New here?** Install the skill, then run `/welcome-neko` in Claude Code — interactive setup, no manual config needed!
+> **Recommended: Interactive Setup**
 > ```bash
 > git clone https://github.com/aliksir/neko-gundan.git
 > cp -r neko-gundan/skills/welcome-neko ~/.claude/skills/
 > # Then in Claude Code, type: /welcome-neko
 > ```
+> `/welcome-neko` guides you through mode selection, installation, and initial configuration — no manual setup needed.
 
 **[日本語版 README はこちら](README.ja.md)** | **On PRO plan? → [Koneko Gundan (Lite version)](README.koneko.md)**
 
@@ -36,7 +37,9 @@ Neko Gundan is not a universal tool. It's opinionated about one thing: **proving
 
 Start light, add more later. You can always run `install.sh` again with additional modes.
 
-## Quick Start
+## Quick Start (Advanced / CI)
+
+If you prefer manual installation or need CI integration, use the installer directly:
 
 ```bash
 git clone https://github.com/aliksir/neko-gundan.git

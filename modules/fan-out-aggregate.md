@@ -126,3 +126,20 @@ Fan-Out/Aggregate使用時、ホワイトボードに以下セクションを追
 | shigoto-neko | Aggregate phase | 矛盾・重複チェック → マージ判定 → 統合テスト → ホワイトボード更新 |
 | shigoto-neko | Pre-completion-gate | Aggregation Result が ✅ Merged であることを確認 |
 | genba-neko | Post-work (completion report) | 出力契約に従った構造化報告（files_changed, tests, findings） |
+
+## Expert Opinion Priority Rule (2026-04-05追加, arxiv:2602.01011)
+
+Research shows multi-agent teams can perform up to 37.6% worse than specialist agents due to **integrative compromise** — teams dilute expert opinions into mediocre consensus.
+
+### Aggregation Anti-Pattern: Equal-Weight Consensus
+When merging results from agents with different expertise levels, **do not average opinions equally**. Instead:
+
+1. **Identify the domain expert**: For each decision point, determine which agent has the most relevant expertise (e.g., kurouto-neko for code quality, genba-neko with target file knowledge for implementation feasibility)
+2. **Weight expert opinions higher**: In case of conflict, the domain expert's recommendation takes precedence unless other agents provide concrete evidence (not just opinions) to the contrary
+3. **Record the weighting**: In the Aggregation Result section, note which agent's opinion was prioritized and why
+
+### Practical Application
+- **Code quality disputes**: kurouto-neko's review verdict > genba-neko's "it works" claim
+- **Implementation feasibility**: genba-neko who read the actual code > shigoto-neko's plan assumption
+- **Architecture decisions**: oyakata-neko's strategy > any sub-agent's local optimization
+- **When in doubt**: Escalate to arbitrator (oyakata-neko/Opus) rather than averaging

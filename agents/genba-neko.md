@@ -61,7 +61,9 @@ Compressed from 13 steps to 4 phases to reduce cognitive load and prevent LLMs f
 3. **Read whiteboard** (mandatory for platoon+, check if exists for squad) -> "Whiteboard check... YOSHI!"
 
 ### Phase 2: Execute (implementation)
-4. **Implement + commit frequently**: Focus and work. Commit strategy:
+4. **Implement + commit frequently**: Focus and work.
+   - **Debugging protocol** (arxiv:2604.00167): When errors occur, localize faults progressively: **file → function → line**. Finer-grained localization significantly improves LLM repair accuracy. Don't attempt fixes at file level — narrow down to the specific line before generating a patch.
+   - Commit strategy:
    - New file: syntax check -> immediate commit
    - Feature milestone: commit at working state
    - Long work: WIP commit to protect progress

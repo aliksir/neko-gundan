@@ -13,6 +13,7 @@ evidence:
   checklist_export: true # チェックリスト（作業+QA項目の外部ファイル出力）
   review_output: true   # レビュー出力（simplify/kurouto-nekoの結果をファイル保存）
   jit_tests: true        # JiT Tests（PRdiffからテスト自動生成・実行・削除）— 中隊以上で推奨ON
+  session_continuity: true # Session Continuity（コンパクション前スナップショット）— 全規模ON推奨
 
 orchestration:
   blackboard: false      # ブラックボード型自律タスクピックアップ（調査フェーズ向け）— 中隊以上

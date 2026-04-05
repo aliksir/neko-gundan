@@ -90,3 +90,25 @@ session_handover:
 | `decisions` | What was chosen AND why, rejected alternatives | Obvious choices that need no explanation |
 | `failures` | Failed approach + root cause | Temporary errors that were fixed |
 | `next_steps` | Actionable items the next session can execute | Vague goals like "continue working" |
+
+## Audited Handoff Protocol (2026-04-05追加, arxiv:2604.01647)
+
+Every agent-to-agent handoff is a **trust boundary**. Treat it with the same rigor as a system interface. The 4-phase protocol ensures no unverified data crosses agent boundaries.
+
+### 4 Phases
+
+```
+Prepare → Verify → Approve → Commit
+```
+
+| Phase | Who | What | Evidence |
+|-------|-----|------|----------|
+| **Prepare** | Sending agent (genba-neko) | Fill all handoff fields, attach verification_status | Handoff YAML complete |
+| **Verify** | Sending agent | Self-check: committed items have evidence, provisional items are labeled | verification_status populated |
+| **Approve** | Receiving agent (shigoto-neko) | Validate fields per Validation Rules; check action field | Approval logged in audit trail |
+| **Commit** | Receiving agent | Accept handoff, proceed with next phase | Handoff recorded on whiteboard |
+
+### When to Apply
+- **Platoon+**: Full 4-phase protocol (mandatory)
+- **Squad**: Prepare + Commit only (Verify/Approve implicit in shigoto-neko review)
+- **Recon**: Not applicable

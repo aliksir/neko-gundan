@@ -33,3 +33,29 @@ Reflection (Reflexion):
 | Agent | Phase | Action |
 |-------|-------|--------|
 | genba-neko | Post-work (step 11, on failure) | Add Reflexion section (both Section A and Section B) to failure/redo report |
+
+## Explicit 3-Step Self-Correction Loop (2026-04-05追加, arxiv:2603.05863)
+
+ReflexiCoder research demonstrates that making the "generate → reflect → correct" cycle explicit (rather than implicit) improves self-correction by 40% in token efficiency.
+
+### When an error occurs during implementation
+
+Instead of immediately retrying or guessing at a fix:
+
+```
+Step 1: GENERATE — What did I produce? (capture the exact error/output)
+Step 2: REFLECT — Why did this fail? (root cause, not symptoms)
+Step 3: CORRECT — What specific change addresses the root cause?
+```
+
+### Integration with 3-Layer Watchdog
+- **L1 trigger (same error ×3)**: Before switching strategy, ensure all 3 iterations attempted the explicit 3-step loop. If they did and still failed, the root cause analysis is wrong — escalate
+- **L2 trigger**: Shigoto-neko reviews the 3-step logs to determine if genba-neko correctly identified root causes
+- The 3-step loop prevents "retry the same thing hoping for a different result" — each correction must address a newly identified cause
+
+### Example
+```
+Step 1 GENERATE: TypeError: Cannot read property 'map' of undefined at line 42
+Step 2 REFLECT: The API returns {data: null} when no results found, not {data: []}
+Step 3 CORRECT: Add null check: const items = response.data ?? [] before .map()
+```

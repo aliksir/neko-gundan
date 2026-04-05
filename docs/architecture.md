@@ -139,3 +139,20 @@ AI agents are prone to saying "I checked and it's fine" without actually checkin
 
 ### Why whiteboards?
 In parallel agent work, discoveries in one area often affect another. Without a shared knowledge surface, agents work in silos and make contradictory decisions.
+
+## Topology Selection Rationale (2026-04-05追加, arxiv:2601.13671)
+
+The scaling model above maps to three standard multi-agent topologies identified in the MAS orchestration survey:
+
+| Topology | Neko Gundan Scale | When to Use | Tradeoff |
+|----------|------------------|-------------|----------|
+| **Chain** | Squad (single shigoto-neko) | Linear tasks, clear sequential steps | Low overhead, no parallelism |
+| **Star** | Platoon (shigoto-neko hub + genba-neko spokes) | Independent parallel tasks, central coordination | Good parallelism, hub can bottleneck |
+| **Hierarchical** | Battalion (oyakata → shigoto → genba) | Complex tasks requiring decomposition at multiple levels | Maximum flexibility, highest coordination cost |
+
+### Selection Criteria
+- **Chain**: 1-2 files, no design decisions, sequential dependency
+- **Star**: 3-5 files, independent work units, one coordinator needed
+- **Hierarchical**: 6+ files or multiple design decisions requiring strategy + management + execution layers
+
+Reference: "The Orchestration of Multi-Agent Systems: Architectures, Protocols, and Enterprise Adoption" (arxiv:2601.13671) provides comprehensive analysis of MCP/A2A complementary protocols and topology patterns for enterprise multi-agent orchestration.

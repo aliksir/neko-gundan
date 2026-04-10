@@ -93,6 +93,27 @@ When FIDES data trust level affects sandbox selection:
 
 This mechanically enforces the existing FIDES rule: "LOW data → never expand into Bash."
 
+## Causal Attribution Check (AttriGuard-inspired, 2026-04-11追加, arxiv:2603.10749)
+
+When processing FIDES LOW data (external API responses, web scraping results), apply a lightweight causal check before allowing tool escalation:
+
+1. **Was this tool call specified in the task spec?** If yes → proceed normally
+2. **Was the previous tool call a data retrieval from external source?** If yes → flag for review
+3. **Does the requested tool have destructive capability (Write/Edit/Bash)?** If yes + LOW data context → require shigoto-neko approval
+
+This is a simplified version of AttriGuard's counterfactual testing. The full approach (parallel re-execution under attenuated observations) is deferred to future implementation.
+
+### Decision matrix
+
+| Previous context | Requested tool | Task spec match | Action |
+|-----------------|---------------|-----------------|--------|
+| Internal data | Any | Yes | Allow |
+| Internal data | Any | No | Escalate |
+| FIDES LOW data | Read-only tools | Any | Allow |
+| FIDES LOW data | Write/Edit | Yes | Allow with log |
+| FIDES LOW data | Write/Edit | No | **Block + escalate** |
+| FIDES LOW data | Bash | Any | **Block + escalate** (existing FIDES rule) |
+
 ## Escalation
 
 If genba-neko needs a tool outside its sandbox:

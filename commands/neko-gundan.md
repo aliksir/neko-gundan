@@ -1,3 +1,7 @@
+---
+description: "Launch the Neko Gundan multi-agent cat team for complex tasks with auto-scaling, quality gates, and review protocols"
+---
+
 # Neko Gundan Deployment
 
 Launch the Neko Gundan multi-agent system for the given task.

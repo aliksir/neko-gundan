@@ -1,19 +1,9 @@
 {
   "name": "neko-gundan",
   "version": "1.0.0",
-  "description": "Multi-agent orchestration framework for Claude Code with hierarchical team structure, quality gates, and bidirectional feedback protocols",
+  "description": "Multi-agent orchestration framework for Claude Code — hierarchical cat team (Oyakata/Shigoto/Genba-neko) with quality gates, review protocols, and auto-scaling from solo to battalion",
   "author": {
-    "name": "aliks",
-    "url": "https://github.com/aliksir"
-  },
-  "homepage": "https://github.com/aliksir/neko-gundan",
-  "repository": "https://github.com/aliksir/neko-gundan",
-  "license": "MIT",
-  "keywords": [
-    "multi-agent",
-    "orchestration",
-    "quality-assurance",
-    "team-management",
-    "code-review"
-  ]
+    "name": "aliksir",
+    "email": "hide.kiyohara@gmail.com"
+  }
 }

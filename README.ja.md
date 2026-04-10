@@ -132,12 +132,34 @@ bash neko-gundan/scripts/setup.sh  # ランタイムディレクトリを初期�
 - **カスケード障害防止（CASCADE-001）**: ホワイトボード上の `←` 記法でタスク依存を宣言。上流タスク失敗時に下流を自動ブロック
 - **Fan-Out/Aggregate（FANOUT-001）**: 並列エージェントの結果を3フェーズ（Fan-Out→Collect→Aggregate）で構造化統合。矛盾・重複を自動検出
 
+### サンドボックスエージェント
+
+サブエージェントにタスク種別に応じたツールレベルの制限を付与。レビュアーはコード編集不可、ドキュメント担当はBash実行不可。指示ではなく構造で制約を強制する。
+
+| プロファイル | 許可ツール | 用途 |
+|------------|-----------|------|
+| `read-only` | Read, Glob, Grep | コードレビュー、調査 |
+| `docs-only` | Read, Write, Glob, Grep | ドキュメント作成 |
+| `no-bash` | Bash以外全て | シェル実行が不要/リスクの高いタスク |
+| `no-db` | DB変更コマンド以外 | DB変更がスコープ外のタスク |
+| `research` | Read, Glob, Grep, WebSearch, WebFetch | 外部リサーチ |
+
+3層隔離: **worktree（git）> race prevention（ファイル）> sandbox（ツール）**
+
+### pass@k 信頼性メトリクス
+
+高リスクタスク（DB変更、セキュリティコード、EDI連携）では検証をk回独立実行し成功率を測定。pass@3 = 2/3 は「だいたい動くが非決定的な挙動がある」というフレーキーのシグナル。単一実行テストでは見逃す問題を検出する。
+
+### 知識の信頼度スコアリング
+
+`memory/lessons/` の各教訓に信頼度スコア `[c:0.0-1.0]` を付与。別PJで確認されればスコア上昇、60日間再確認なければ減衰、0.0到達で自動アーカイブ。0.9+かつ3PJ以上で確認されれば恒久ルールへの昇格候補。戦場で鍛えられた教訓が昇格し、古くなった教訓が退場する自己改善パイプライン。
+
 ### 観測可能性
 
 | 機能 | 何が見えるか | 詳細 |
 |------|------------|------|
 | **チェックリスト外出し** | ゲート結果と証跡 | [しつけガイド](docs/shitsuke-guide.ja.md) |
-| **品質メトリクス** | ゲート通過率・スキップ率・レビュー周回数の傾向 | [しつけガイド](docs/shitsuke-guide.ja.md) |
+| **品質メトリクス** | ゲート通過率・スキップ率・レビュー周回数・pass@k | [しつけガイド](docs/shitsuke-guide.ja.md) |
 | **生ログ** | 全Edit/Bash/判断の監査証跡 | [しつけガイド](docs/shitsuke-guide.ja.md) |
 | **監査証跡** | トレーサビリティ・承認ログ・変更管理 | [しつけガイド](docs/shitsuke-guide.ja.md) |
 
@@ -217,3 +239,4 @@ MIT License - 詳細は [LICENSE](LICENSE) を参照。
 - [仕事猫 / 現場猫](https://dic.nicovideo.jp/a/%E4%BB%95%E4%BA%8B%E7%8C%AB)のインターネットミームキャラクターに着想
 - レビュープロトコルは [takt](https://www.npmjs.com/package/takt) オーケストレーションツールに着想
 - Reflexionパターンは [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) に基づく
+- pass@kメトリクス、信頼度スコアリング、サンドボックスエージェントは [Everything Claude Code](https://github.com/affaan-m/everything-claude-code) に着想

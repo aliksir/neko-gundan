@@ -155,12 +155,34 @@ Agents have an **obligation** to object to bad instructions. Each objection requ
 - **Cascade failure prevention (CASCADE-001)**: Task dependencies declared with `←` notation on whiteboard. Upstream failure automatically blocks downstream tasks
 - **Fan-Out/Aggregate (FANOUT-001)**: Parallel agent results integrated through structured 3-phase process (Fan-Out → Collect → Aggregate) with contradiction/duplicate detection
 
+### Sandbox Agents
+
+Sub-agents get tool-level restrictions based on task type. A reviewer can't edit code. A documentation writer can't run Bash. This enforces rules mechanically, not just by instruction.
+
+| Profile | Allowed tools | Use case |
+|---------|--------------|----------|
+| `read-only` | Read, Glob, Grep | Code review, investigation |
+| `docs-only` | Read, Write, Glob, Grep | Documentation, reports |
+| `no-bash` | All except Bash | When shell is unnecessary or risky |
+| `no-db` | All except DB commands | Tasks where DB changes are out of scope |
+| `research` | Read, Glob, Grep, WebSearch, WebFetch | External research |
+
+Three layers of isolation: **worktree (git) > race prevention (files) > sandbox (tools)**.
+
+### pass@k Reliability Metrics
+
+For high-risk tasks (DB changes, security code, EDI integration), run verification k times independently and measure success rate. pass@3 = 2/3 means the change works most of the time but has non-deterministic behavior — a flakiness signal that single-run testing misses.
+
+### Knowledge Confidence Scoring
+
+Every lesson in `memory/lessons/` carries a confidence score `[c:0.0-1.0]`. Confirmed across projects: score goes up. Not re-encountered for 60 days: score decays. Reaches 0.0: auto-archived. Reaches 0.9+ across 3+ projects: candidate for promotion to permanent rules. This creates a self-improving knowledge pipeline where battle-tested lessons graduate and stale ones fade.
+
 ### Observability
 
 | Feature | What it shows | Details |
 |---------|--------------|---------|
 | **Checklist export** | Gate results with evidence | [Shitsuke Guide](docs/shitsuke-guide.md) |
-| **Quality metrics** | Gate pass rate, skip rate, review cycle trends | [Shitsuke Guide](docs/shitsuke-guide.md) |
+| **Quality metrics** | Gate pass rate, skip rate, review cycle trends, pass@k | [Shitsuke Guide](docs/shitsuke-guide.md) |
 | **Raw log** | Full Edit/Bash/decision audit trail | [Shitsuke Guide](docs/shitsuke-guide.md) |
 | **Audit trail** | Traceability, approval log, change management | [Shitsuke Guide](docs/shitsuke-guide.md) |
 
@@ -240,3 +262,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 - Inspired by the [Shigoto-neko / Genba-neko](https://dic.nicovideo.jp/a/%E4%BB%95%E4%BA%8B%E7%8C%AB) internet meme characters
 - Review protocol inspired by [takt](https://www.npmjs.com/package/takt) orchestration tool
 - Reflexion pattern from [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366)
+- pass@k metrics, confidence scoring, and sandbox agent patterns inspired by [Everything Claude Code](https://github.com/affaan-m/everything-claude-code)

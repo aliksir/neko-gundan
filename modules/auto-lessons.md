@@ -75,11 +75,68 @@ If fewer than 2 criteria pass, do NOT write to lessons/. Report via SendMessage 
 - **NOT writable**: CLAUDE.md, agent definitions, gates.md, rules/, or any config files
 - This module does NOT grant self-modification capabilities beyond lessons files
 
+## Confidence Scoring & Decay (ECC-inspired, 2026-04-11追加)
+
+Each lesson carries a confidence score that evolves over time. High-confidence lessons persist; low-confidence lessons decay and eventually get pruned.
+
+### Confidence Score
+
+Range: `0.0` (untested speculation) to `1.0` (battle-tested, multi-project verified)
+
+#### Format extension
+
+```
+- [PJ-name] [tag] Knowledge content — Action guideline (YYYY-MM-DD) [c:0.7]
+```
+
+The `[c:X.X]` suffix is the confidence score. If omitted, defaults to `0.5` (initial).
+
+#### Scoring rules
+
+| Event | Score change | Example |
+|-------|-------------|---------|
+| **Initial write** | `0.5` | New lesson recorded for the first time |
+| **Confirmed in another PJ** | `+0.2` (cap at 1.0) | Same lesson validated in a different project |
+| **Confirmed in same PJ** | `+0.1` (cap at 1.0) | Same lesson re-encountered in same project |
+| **Contradicted** | `-0.3` (floor at 0.0) | Evidence found that the lesson was wrong or outdated |
+| **Aged without confirmation** | `-0.1` per 60 days | No re-encounter for 60 days → decay |
+
+#### Auto-decay
+
+At session start (oyakata-neko's dev-lessons search):
+1. Check each lesson's date
+2. If `today - lesson_date > 60 days` AND no confirmation event: `confidence -= 0.1`
+3. If confidence drops to `0.0`: move to `memory/lessons/_archived/{topic}.md` with note
+4. Update the `[c:X.X]` in the original line
+
+#### Promotion: Lesson → Skill
+
+When a lesson reaches `c:0.9+` AND has been confirmed across 3+ different projects:
+- **Candidate for CLAUDE.md / rules/ promotion**
+- shigoto-neko proposes promotion to oyakata-neko
+- oyakata-neko reviews and, if approved, integrates into rules/ or CLAUDE.md
+- Original lesson line gets `[promoted → rules/{file}.md]` suffix
+
+This is the "instinct → skill evolution" pattern from ECC, adapted for the neko-gundan knowledge pipeline.
+
+### Confidence-based application
+
+When oyakata-neko applies lessons at session start:
+
+| Confidence | Application |
+|------------|-------------|
+| `0.8-1.0` | Apply as established rule |
+| `0.5-0.7` | Apply with note "confidence: medium — verify if still valid" |
+| `0.2-0.4` | Mention as reference only, do not apply as rule |
+| `0.0-0.1` | Skip (or check if archived) |
+
 ## Integration Points
 
 | Agent | Phase | Action |
 |-------|-------|--------|
-| genba-neko | During work (step 9.5) | Record knowledge to `memory/lessons/{topic}.md` when learned/constraint/rejected discoveries occur |
+| genba-neko | During work (step 9.5) | Record knowledge to `memory/lessons/{topic}.md` when learned/constraint/rejected discoveries occur. Set initial `[c:0.5]` |
 | genba-neko | Post-work (completion report) | Perform trajectory analysis: review full task trajectory, extract additional lessons using Write Scoring |
-| shigoto-neko | Completion gate (step 0.5) | Quality check on new lessons entries (duplicates, actionable, tags) |
-| oyakata-neko | Start gate (dev-lessons search) | Search accumulated lessons and apply relevant knowledge |
+| genba-neko | During work (re-encounter) | If existing lesson is confirmed, bump confidence: `[c:X.X]` → `[c:X.X+0.1]` or `+0.2` (cross-PJ) |
+| shigoto-neko | Completion gate (step 0.5) | Quality check on new lessons entries (duplicates, actionable, tags, confidence score present) |
+| oyakata-neko | Start gate (dev-lessons search) | Search accumulated lessons, apply auto-decay, apply confidence-based filtering |
+| shigoto-neko | On c:0.9+ cross-PJ lesson | Propose promotion to rules/ or CLAUDE.md |

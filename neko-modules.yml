@@ -18,3 +18,4 @@ evidence:
 orchestration:
   blackboard: false      # ブラックボード型自律タスクピックアップ（調査フェーズ向け）— 中隊以上
   maj_eval: false        # 多エージェント合議レビュー（高リスク変更向け）— 中隊以上
+  sandbox_agent: true    # サンドボックス化サブエージェント（ツールレベル制限）— 中隊以上で推奨ON

@@ -105,11 +105,61 @@ Starting points for interpretation. Adjust per project — a research prototype 
 | Confidence < 0.6 for any task | "Low-confidence task passed — review evidence quality" |
 | Same file changed 5+ times in 30 days | "Hotspot detected — consider if design needs stabilizing" |
 
+## pass@k Metrics (ECC-inspired, 2026-04-11追加)
+
+Multiple-execution success rate measurement. Instead of judging a task by a single attempt, run k independent attempts and measure how many succeed.
+
+### Concept
+
+| Metric | Formula | Meaning |
+|--------|---------|---------|
+| **pass@k** | (successful runs / k) | Success rate over k attempts. e.g., pass@3 = 2/3 = 67% |
+| **pass^k** | (all k runs succeed) | Strict success: all attempts must pass. e.g., pass^3 = true only if 3/3 |
+
+### When to apply
+
+- **Default (most tasks)**: pass@1 (standard single execution) — no change from current flow
+- **High-risk tasks**: pass@3 recommended when:
+  - DB schema changes
+  - Security-critical code
+  - EDI/external integration changes
+  - Performance-sensitive batch processing
+- **Flaky test detection**: pass@5 for suspected non-deterministic failures
+
+### How it works
+
+1. kurouto-neko (or shigoto-neko for squad) flags a task as `pass@k: 3` in the review
+2. The executor (genba-neko or test runner) runs the verification k times independently
+3. Results are recorded in the metrics row:
+
+```
+| Date | Task | Files | Cycles | Outcome | Confidence | Gate | pass@k | Flags |
+| 04-11 | EDI fix | 3 | 1 | 0.9 | 0.85 | P | 3/3 | - |
+| 04-11 | batch opt | 2 | 2 | 0.7 | 0.70 | P | 2/3 | ⚠️ flaky |
+```
+
+4. pass@k < k triggers `⚠️ flaky` flag — the task passes but reliability is suspect
+
+### Reference Thresholds
+
+| k | Healthy pass@k | Watch | Action needed |
+|---|---------------|-------|---------------|
+| 3 | 3/3 (100%) | 2/3 (67%) | 1/3 or 0/3 |
+| 5 | 5/5 or 4/5 | 3/5 (60%) | < 3/5 |
+
+### Alert Triggers (additional)
+
+| Condition | Alert |
+|-----------|-------|
+| pass@k < k for any high-risk task | "Flaky execution detected — investigate non-determinism" |
+| 3+ tasks with pass@k < k in 30 days | "Reliability trend degrading — systematic flakiness review needed" |
+
 ### Rules
 - Keep the last 30 task rows in Recent Tasks (older rows archived or trimmed)
 - Recalculate Summary from the last 10 tasks each time
 - Hotspots are calculated from git log of the last 30 days
 - If ISV module is not enabled, omit confidence/outcome columns and related metrics
+- pass@k column defaults to "1/1" for standard tasks (omit if all tasks are 1/1)
 - The file must be self-contained — all metric meanings are inline, no external references needed
 
 ## Integration Points

@@ -59,7 +59,7 @@ shitsuke:
   objection_flow: true      # 異議申立プロトコル（OBJECTION-001/002）— No gate item (core protocol)
 
   # --- UI品質系 ---
-  quality_layers: false     # 品質3層定義 L1/L2/L3 + Wave方式（UI開発時のみ有効化）— No gate item (design guideline)
+  quality_layers: true      # 品質3層定義 L1/L2/L3 + Wave方式（3+画面のUI作業時に自動適用）— No gate item (design guideline)
 
   # --- 出力系 ---
   checklist_export: true    # 完了ゲートチェックリストを外部ファイルに出力 — Gate item #9

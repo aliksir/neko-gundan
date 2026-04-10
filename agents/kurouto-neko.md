@@ -189,6 +189,7 @@ The following optional modules may be active. Check `neko-gundan.config.yaml`.
 | `modules/objection-flow.md` | Post-review (if design issues found) | Raise OBJECTION-003, record on whiteboard |
 | `modules/process-weight.md` | Pre-review | Check process weight. Light mode = not involved (return to shigoto-neko) |
 | `modules/audit-trail.md` | Post-review (APPROVE verdict) | Append approval record to `audit/{project}_approvals.md` |
+| `modules/quality-layers.md` | During review (UI tasks) | Verify correct L1/L2/L3 checklist was applied for the assigned layer |
 
 ---
 

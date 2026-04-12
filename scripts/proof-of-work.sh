@@ -45,6 +45,10 @@ fi
 
 mkdir -p "$OUTPUT_DIR"
 
+# test_pass結果のキャッシュ変数（no_regressionsで参照）
+TEST_PASS_STATUS="SKIP"
+TEST_PASS_EXIT=0
+
 # --- スタック自動検出 ---
 
 detect_stack() {
@@ -148,13 +152,16 @@ run_gate() {
                 fi
             else
                 case "$stack" in
-                    node)   cd "$dir" && npm test >/dev/null 2>&1 && status="PASS" || { status="FAIL"; exit_code=$?; } ;;
-                    python) cd "$dir" && python -m pytest >/dev/null 2>&1 && status="PASS" || { status="FAIL"; exit_code=$?; } ;;
-                    rust)   cd "$dir" && cargo test >/dev/null 2>&1 && status="PASS" || { status="FAIL"; exit_code=$?; } ;;
-                    go)     cd "$dir" && go test ./... >/dev/null 2>&1 && status="PASS" || { status="FAIL"; exit_code=$?; } ;;
+                    node)   cd "$dir" && timeout 600 npm test >/dev/null 2>&1 && status="PASS" || { status="FAIL"; exit_code=$?; } ;;
+                    python) cd "$dir" && timeout 600 python -m pytest >/dev/null 2>&1 && status="PASS" || { status="FAIL"; exit_code=$?; } ;;
+                    rust)   cd "$dir" && timeout 600 cargo test >/dev/null 2>&1 && status="PASS" || { status="FAIL"; exit_code=$?; } ;;
+                    go)     cd "$dir" && timeout 600 go test ./... >/dev/null 2>&1 && status="PASS" || { status="FAIL"; exit_code=$?; } ;;
                 esac
                 message="exit_code=${exit_code}"
             fi
+            # no_regressions ゲート用にテスト結果をキャッシュする
+            TEST_PASS_STATUS="$status"
+            TEST_PASS_EXIT="$exit_code"
             ;;
         build_success)
             if ! has_build "$dir" "$stack"; then
@@ -192,19 +199,14 @@ run_gate() {
             fi
             ;;
         no_regressions)
-            # テスト通過 = リグレッションなし（test_passと同じ結果を使う）
-            # 実際にはtest_passの結果を参照すべきだが、独立ゲートとして再実行
+            # test_pass ゲートの結果を再利用（テストの二重実行を避ける）
             if ! has_tests "$dir" "$stack"; then
                 status="SKIP"
                 message="テストなし（リグレッション検証不可）"
             else
-                case "$stack" in
-                    node)   cd "$dir" && npm test >/dev/null 2>&1 && status="PASS" || { status="FAIL"; exit_code=$?; } ;;
-                    python) cd "$dir" && python -m pytest >/dev/null 2>&1 && status="PASS" || { status="FAIL"; exit_code=$?; } ;;
-                    rust)   cd "$dir" && cargo test >/dev/null 2>&1 && status="PASS" || { status="FAIL"; exit_code=$?; } ;;
-                    go)     cd "$dir" && go test ./... >/dev/null 2>&1 && status="PASS" || { status="FAIL"; exit_code=$?; } ;;
-                esac
-                message="exit_code=${exit_code}"
+                status="${TEST_PASS_STATUS:-SKIP}"
+                exit_code="${TEST_PASS_EXIT:-0}"
+                message="test_pass結果を参照（exit_code=${exit_code}）"
             fi
             ;;
     esac

@@ -87,6 +87,22 @@ if (metaDirs.includes(projectName)) {
   process.exit(0);
 }
 
+// --- フェーズコンテキスト読み取り ---
+
+// .phase-context.json の taskName があれば、成果物検索にタスク名を使用（横断タスク対応）
+let artifactName = projectName;
+const phaseContextPath = resolve(workDir, '.phase-context.json');
+if (existsSync(phaseContextPath)) {
+  try {
+    const ctx = JSON.parse(readFileSync(phaseContextPath, 'utf-8'));
+    if (ctx.taskName) {
+      artifactName = ctx.taskName;
+    }
+  } catch {
+    // パースエラー時はprojectName使用
+  }
+}
+
 // --- ユーティリティ: ディレクトリ内にプロジェクト名を含む.mdがあるか ---
 
 function hasProjectFile(dirPath, projName) {
@@ -116,7 +132,7 @@ const alwaysRequired = [
 ];
 
 for (const { dir, label, hint } of alwaysRequired) {
-  if (!hasProjectFile(resolve(workDir, dir), projectName)) {
+  if (!hasProjectFile(resolve(workDir, dir), artifactName)) {
     missing.push({ dir, label, hint });
   }
 }
@@ -128,7 +144,7 @@ if (existsSync(metricsDir)) {
   try {
     const metricsFiles = readdirSync(metricsDir);
     metricsExists = metricsFiles.some(
-      f => f.includes(projectName) && f.endsWith('_metrics.md')
+      f => f.includes(artifactName) && f.endsWith('_metrics.md')
     );
   } catch {
     metricsExists = true;
@@ -165,7 +181,7 @@ try {
 }
 
 if (hasCodeChanges) {
-  if (!hasProjectFile(resolve(workDir, 'checklist'), projectName)) {
+  if (!hasProjectFile(resolve(workDir, 'checklist'), artifactName)) {
     missing.push({ dir: 'checklist', label: 'チェックリスト', hint: 'コード変更あり — 作業+QA項目を作成' });
   }
 }
@@ -176,7 +192,7 @@ if (hasCodeChanges) {
   if (existsSync(checklistDir)) {
     try {
       const checklistFiles = readdirSync(checklistDir).filter(
-        f => f.includes(projectName) && f.endsWith('.md')
+        f => f.includes(artifactName) && f.endsWith('.md')
       );
       const todayFiles = checklistFiles.filter(f => f.startsWith(today));
       const sorted = (todayFiles.length > 0 ? todayFiles : checklistFiles).sort().reverse();
@@ -207,8 +223,8 @@ if (missing.length > 0) {
   );
 
   const reason = [
-    `🚫 コミット前の成果物チェック！プロジェクト「${projectName}」の以下が不足:`,
-    ...missing.map(({ dir, label, hint }) => `  - ${dir}/*_${projectName}*.md（${label} — ${hint}）`),
+    `🚫 コミット前の成果物チェック！プロジェクト「${projectName}」${artifactName !== projectName ? `（タスク: ${artifactName}）` : ''}の以下が不足:`,
+    ...missing.map(({ dir, label, hint }) => `  - ${dir}/*_${artifactName}*.md（${label} — ${hint}）`),
     '',
     ...hints,
     '',

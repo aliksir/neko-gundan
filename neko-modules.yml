@@ -6,10 +6,10 @@
 # 成果物セット（plans/designs/test-plan/result等）には影響しません。
 
 evidence:
-  audit_trail: false     # 監査ログ（トレーサビリティ・承認記録・変更管理）— 中隊以上で推奨ON
-  raw_log: false         # 生ログ（全ツールコール1行1アクション記録）— 中隊以上で推奨ON
-  isv: false             # Intent State Vector（意図・状態・結果ベクトル）— 中隊以上で推奨ON
-  quality_metrics: false # 品質メトリクス（PJ別累積レポート・傾向分析）— 中隊以上で推奨ON
+  audit_trail: true      # 監査ログ（トレーサビリティ・承認記録・変更管理）— 中隊以上で推奨ON → ON化(2026-04-13)
+  raw_log: true          # 生ログ（全ツールコール1行1アクション記録）— 中隊以上で推奨ON → ON化(2026-04-13)
+  isv: false             # Intent State Vector（意図・状態・結果ベクトル）— Phase3で検討
+  quality_metrics: true  # 品質メトリクス（PJ別累積レポート・傾向分析）— 中隊以上で推奨ON → ON化(2026-04-13)
   checklist_export: true # チェックリスト（作業+QA項目の外部ファイル出力）
   review_output: true   # レビュー出力（simplify/kurouto-nekoの結果をファイル保存）
   jit_tests: true        # JiT Tests（PRdiffからテスト自動生成・実行・削除）— 中隊以上で推奨ON
@@ -19,3 +19,4 @@ orchestration:
   blackboard: false      # ブラックボード型自律タスクピックアップ（調査フェーズ向け）— 中隊以上
   maj_eval: false        # 多エージェント合議レビュー（高リスク変更向け）— 中隊以上
   sandbox_agent: true    # サンドボックス化サブエージェント（ツールレベル制限）— 中隊以上で推奨ON
+  exploration_mode: false # 木探索による並列実験・最良選択（EXPLORE-001）— 明示的選択時のみON

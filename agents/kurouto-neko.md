@@ -166,6 +166,9 @@ Codexへの指示は以下の4セクションで構造化する：
 ### 総合: APPROVE / REQUEST_CHANGES / ESCALATE
 [判定理由。REQUEST_CHANGESなら修正項目を具体的にリスト]
 [confidenceがlowの観点がある場合 → 仲裁者（Opus）にエスカレーション]
+[APPROVE候補時は **Adversarial Second-Pass** を実行してから真のAPPROVEへ（中隊+必須、小隊推奨）]
+[APPROVE時は **evidence_level** を付記（suspicion / static_check_passed / test_passed / root_cause_explained / integration_verified / production_validated）]
+[詳細: `rules/review-protocol.md` Evidence Level Ladder + Adversarial Second-Pass セクション（Clearwing由来, 2026-04-18）]
 
 ### 外部ツール結果（収集した場合）
 [判定に影響したlint/test/セキュリティスキャン結果]

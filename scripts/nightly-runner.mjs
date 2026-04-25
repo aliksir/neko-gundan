@@ -328,11 +328,14 @@ async function spawnWithTimeout(cmd, timeoutMs, jobName) {
     let stdoutTruncated = false;
     let timedOut = false;
 
+    let killTimer = null;
     const termTimer = setTimeout(() => {
       timedOut = true;
       child.kill('SIGTERM');
+      // SIGTERM 後5秒で SIGKILL（kurouto-neko 実装レビュー Q1 修正）
+      killTimer = setTimeout(() => child.kill('SIGKILL'), 5000);
+      killTimer.unref?.();
     }, timeoutMs);
-    let killTimer = null;
     termTimer.unref?.();
 
     child.stdout.on('data', d => {
@@ -361,12 +364,6 @@ async function spawnWithTimeout(cmd, timeoutMs, jobName) {
         stderr_tail: stderr.slice(-500),
       });
     });
-
-    // SIGTERM 後5秒で SIGKILL
-    if (timedOut) {
-      killTimer = setTimeout(() => child.kill('SIGKILL'), 5000);
-      killTimer.unref?.();
-    }
   });
 }
 

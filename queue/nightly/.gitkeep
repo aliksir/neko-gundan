@@ -1,0 +1,3 @@
+# queue/nightly/ - 夜間ジョブキュー
+# nightly-runner.mjs が読み込むジョブファイル（*.yml or *.json）を配置する。
+# 処理済みジョブは processed_ プレフィックスでリネームされる。

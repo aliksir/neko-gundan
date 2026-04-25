@@ -1,0 +1,89 @@
+# 夜間ジョブ OK/NG 分類ポリシー
+# 夜間帯（23:00-07:00 JST）に nightly-runner が実行可能なタスク種別と禁止種別の SSOT。
+# 関連: ~/.claude/rules/nightly-autopilot.md / scripts/nightly-runner.mjs
+
+version: "1.0"
+last_updated: "2026-04-25"
+
+# 夜間実行 OK のタスク種別
+# 各エントリは { name, max_budget_usd, timeout_min, output, prompt_template } 必須
+nightly_ok:
+  - name: daily-research
+    description: arxiv 探索 → MEMO-YOSHI 追記。論文知見の自動収集。
+    max_budget_usd: 2.00
+    timeout_min: 30
+    output: draft_commit
+    prompt_template: |
+      arxiv で直近24時間の cs.AI 新着論文から actionable insights を3件抽出し、
+      MEMO-YOSHI.md の「論文知見」セクションに追記する。
+      投稿先: feature/nightly-daily-research-{YYYYMMDD}
+      Draft commit のみ、push しない。
+
+  - name: lessons-lint
+    description: memory/lessons の品質チェック。重複・矛盾・陳腐化検出。
+    max_budget_usd: 1.00
+    timeout_min: 15
+    output: report_only
+    prompt_template: |
+      C:/Users/aliks/.claude/projects/C--work/memory/lessons/ 配下の全ファイルに対して
+      knowledge-lint の4チェック（矛盾・陳腐化・孤立・重複）を実行。
+      結果を report_only でまとめ、ファイル変更は行わない。
+
+  - name: dead-link-check
+    description: docs/rules/skills 内のリンク切れ検出。
+    max_budget_usd: 1.50
+    timeout_min: 20
+    output: report_only
+    prompt_template: |
+      C:/work/.claude/rules/、~/.claude/skills/、~/.claude/agents/ 配下の Markdown ファイルから
+      ファイル参照（`C:/...` `~/.claude/...`）を抽出し、存在確認を実施。
+      切れているリンクをリストアップして report_only で報告。
+
+  - name: typo-fix
+    description: 自動 typo 検出 + Draft PR。
+    max_budget_usd: 3.00
+    timeout_min: 45
+    output: draft_pr
+    prompt_template: |
+      C:/work/multi-agent-neko/ 配下の Markdown ファイルで明白な typo（重複文字・誤変換）を
+      検出して修正。feature/nightly-typo-fix-{YYYYMMDD} ブランチで Draft PR を作成。
+      不確かな修正は行わない（confidence high のみ）。
+
+  - name: test-coverage-suggest
+    description: カバレッジ低い箇所の提案。
+    max_budget_usd: 2.00
+    timeout_min: 30
+    output: report_only
+    prompt_template: |
+      C:/work/yoshi/ または C:/work/empirical-loop/ のテストカバレッジを確認し、
+      未カバー箇所への追加テスト案を3件提案。実装はせず report_only で出力。
+
+# 夜間実行 NG のタスク種別（ブロックリスト）
+nightly_ng:
+  - name: db-migration
+    reason: DB 変更は事前承認必須（tier2、夜間強制停止対象）
+
+  - name: schema-change
+    reason: スキーマ変更は影響範囲の事前確認必須
+
+  - name: dependency-major-upgrade
+    reason: 主要バージョンアップは tier2、人間レビュー必須
+
+  - name: file-deletion
+    reason: ファイル削除は _deleted/ 退避ルール適用、夜間判断不可
+
+  - name: production-deploy
+    reason: 本番デプロイは絶対に夜間 NG
+
+  - name: secret-update
+    reason: .env / API キーの変更は env_safety ルール適用、夜間 NG
+
+  - name: settings-edit
+    reason: settings.json 編集は KV-cache 破壊リスク、夜間 NG
+
+# 共通制限
+limits:
+  max_jobs_per_night: 5            # 1夜あたり最大ジョブ数
+  max_total_budget_usd: 30.00      # 1夜の合計予算上限（実消費が見積の4倍を見越して$30）
+  default_timeout_min: 30          # ジョブ単体のデフォルトタイムアウト
+  circuit_breaker_threshold: 3     # 同一ジョブの連続失敗上限（quarantine 化）

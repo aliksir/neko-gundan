@@ -14,10 +14,22 @@ nightly_ok:
     timeout_min: 30
     output: draft_commit
     prompt_template: |
-      arxiv で直近24時間の cs.AI 新着論文から actionable insights を3件抽出し、
-      MEMO-YOSHI.md の「論文知見」セクションに追記する。
-      投稿先: feature/nightly-daily-research-{YYYYMMDD}
-      Draft commit のみ、push しない。
+      daily-research タスクを実行する。手順を順序通りに完遂し、最後に必ず Draft commit する。
+
+      1. cd C:/work/memo-yoshi
+      2. git checkout -b feature/nightly-daily-research-{YYYYMMDD}
+      3. arxiv で直近24時間の cs.AI 新着論文から actionable insights を最大3件抽出
+      4. MEMO-YOSHI.md の「## 論文知見」セクションに追記（セクション不在ならファイル末尾に新規作成）
+         - 各エントリは「### YYYY-MM-DD: タイトル」形式、出典 URL 必須
+         - 質より量を優先しない: 0件でも commit する（空コミットを許容、メッセージで明示）
+      5. git add MEMO-YOSHI.md
+      6. git commit -m "nightly: daily-research {YYYYMMDD} (N insights)"
+         - N=0 なら "nightly: daily-research {YYYYMMDD} (no new insights)"
+         - --allow-empty を必要なら付与
+      7. push しない（commit のみ、Draft PR は別タスク）
+
+      完了条件: ステップ7まで全て完遂。途中で止まらないこと。
+      失敗時: なぜ止まったかを stderr に明示的に出力してから exit。
 
   - name: lessons-lint
     description: memory/lessons の品質チェック。重複・矛盾・陳腐化検出。

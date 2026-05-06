@@ -32,7 +32,7 @@ const CB_COOLDOWN_SEC = 60;
 const CB_FAILURE_THRESHOLD = 3;
 
 // ジョブ status 定数（stringly-typed 排除）
-const STATUS = Object.freeze({
+export const STATUS = Object.freeze({
   SUCCESS: 'success',
   FAILED: 'failed',
   TIMEOUT: 'timeout',
@@ -91,6 +91,15 @@ async function log(msg, debugOnly = false) {
   }
 }
 
+// ===== テンプレ展開（{KEY} → vars[KEY]、未知のキーは保持）=====
+// 用途: nightly-policy.yml の prompt_template 内 {YYYYMMDD} 等を実値に置換
+// 仕様: SCREAMING_SNAKE_CASE のみマッチ、未知キーはリテラル維持（過剰展開しない）
+export function expandTemplate(text, vars) {
+  return text.replace(/\{([A-Z_][A-Z0-9_]*)\}/g, (match, key) => {
+    return Object.prototype.hasOwnProperty.call(vars, key) ? String(vars[key]) : match;
+  });
+}
+
 // ===== YAML パーサ（nightly-policy.yml の構造に特化、依存ゼロ）=====
 // 対応構造: top-level key: value、ネスト object、`- name: ...` 配列要素
 // 非対応: 複数行文字列の `|`、フロー記法 `[a, b]`、複雑な anchor
@@ -145,7 +154,22 @@ export function parseYaml(text) {
     const m = trimmed.match(/^([\w_-]+):\s*(.*)$/);
     if (!m) continue;
     const [, key, val] = m;
-    if (val === '' || val === '|') {
+    if (val === '|') {
+      // YAML pipe block scalar: kurouto P0（cycle3）。後続のインデント超過行を文字列として収集
+      const block = [];
+      let blockIndent = null;
+      while (i + 1 < lines.length) {
+        const next = lines[i + 1];
+        if (next.trim() === '') { block.push(''); i++; continue; }
+        const nextIndent = next.length - next.trimStart().length;
+        if (nextIndent <= indent) break;
+        if (blockIndent === null) blockIndent = nextIndent;
+        block.push(next.slice(blockIndent));
+        i++;
+      }
+      while (block.length > 0 && block[block.length - 1] === '') block.pop();
+      current[key] = block.length > 0 ? block.join('\n') + '\n' : '';
+    } else if (val === '') {
       current[key] = {};
       stack.push({ container: current, key, indent, ref: current[key] });
     } else {
@@ -171,6 +195,21 @@ function parseValue(s) {
   if (s === 'false') return false;
   if (s === 'null' || s === '~') return null;
   return s;
+}
+
+// ===== policy.prompt_template を job に注入（kurouto P0 cycle3）=====
+// queue JSON は軽量定義のため prompt_template を持たない。policy.yml が真の prompt 出典として
+// buildClaudeCmd に届くよう、policy エントリの prompt_template を job にマージする。
+// jobs は filter 済（nightly_ok 該当のみ）を期待。
+export function mergePolicyPromptTemplates(jobs, policy) {
+  const okEntries = new Map((policy?.nightly_ok ?? []).map(p => [p.name, p]));
+  return jobs.map(j => {
+    const policyEntry = okEntries.get(j.name);
+    if (policyEntry?.prompt_template && j.prompt == null && j.prompt_template == null) {
+      return { ...j, prompt_template: policyEntry.prompt_template };
+    }
+    return j;
+  });
 }
 
 // ===== ポリシー読込 =====
@@ -282,19 +321,29 @@ async function notifyTelegram(message, dryRun = false) {
 }
 
 // ===== claude CLI cmd 構築 =====
-export function buildClaudeCmd(job, profilePath = PROFILE_PATH) {
-  // claude CLI: --disallowedTools は variadic、1フラグに空白区切り（設計書 §0.1.5）
+// dateStr: 第3引数で固定日付を注入可能（テスト容易性）。デフォルトは JST 当日 YYYYMMDD。
+export function buildClaudeCmd(job, profilePath = PROFILE_PATH, dateStr = jstDateString().replace(/-/g, '')) {
+  // テンプレ展開: prompt_template 内の {YYYYMMDD} 等を実値に置換
+  const rawPrompt = job.prompt ?? job.prompt_template ?? `[${job.name}] dry-run prompt`;
+  const expandedPrompt = expandTemplate(rawPrompt, {
+    YYYYMMDD: dateStr,
+    JOB_NAME: job.name,
+  });
+
+  // claude CLI: --disallowedTools / --allowedTools は variadic、1フラグに空白区切り（設計書 §0.1.5）
   return [
     'claude', '-p',
     '--settings', profilePath,
+    '--add-dir', 'C:/work/memo-yoshi',
     '--disallowedTools',
       'Bash(git push origin master:*) Bash(git push origin main:*) Bash(git push --force:*) Bash(git push -f:*) Bash(rm:*) Bash(taskkill:*)',
     '--allowedTools',
-      'Read(**) Edit(C:/work/**) Bash(git status:*) Bash(git log:*) Bash(git add:*) Bash(git commit:*) Bash(git push origin:*) Bash(gh pr create --draft:*) Bash(node:*) Bash(python:*)',
+      // Bash(git checkout:*)/(git switch:*)/(git branch:*) は kurouto P0 指摘で追加。prompt_template ステップ2 `git checkout -b` を blocked させないため。
+      'Read(**) Edit(C:/work/**) Bash(git status:*) Bash(git log:*) Bash(git add:*) Bash(git commit:*) Bash(git checkout:*) Bash(git switch:*) Bash(git branch:*) Bash(git push origin:*) Bash(gh pr create --draft:*) Bash(node:*) Bash(python:*)',
     '--max-budget-usd', String(job.max_budget_usd ?? 2.00),
     '--no-session-persistence',
     '--output-format', 'json',
-    job.prompt ?? job.prompt_template ?? `[${job.name}] dry-run prompt`,
+    expandedPrompt,
   ];
 }
 
@@ -387,12 +436,19 @@ async function saveResults(results) {
   return file;
 }
 
+// jobs ファイルが results JSON として渡された配列ならカウント（テスト容易性のため export）。
+// 実装本体: list 引数を受け取り、dry_run を除外したカウントを返す純粋関数。
+export function countNonDryRunResults(list) {
+  if (!Array.isArray(list)) return 0;
+  return list.filter(e => e?.status !== STATUS.DRY_RUN).length;
+}
+
 async function countTodayResults() {
   const file = path.join(RESULTS_DIR, `${jstDateString()}.json`);
   if (!existsSync(file)) return 0;
   try {
     const list = JSON.parse(await fs.readFile(file, 'utf-8'));
-    return Array.isArray(list) ? list.length : 0;
+    return countNonDryRunResults(list);
   } catch {
     return 0;
   }
@@ -466,11 +522,11 @@ async function main() {
 
   const cb = await runStartupGates(policy);
 
-  // ジョブ読込 + policy フィルタ
+  // ジョブ読込 + policy フィルタ + policy.prompt_template の注入（kurouto P0 cycle3）
   const allJobs = await loadJobQueue();
   const okNames = new Set(policy.nightly_ok.map(p => p.name));
   const ngNames = new Set((policy.nightly_ng ?? []).map(p => p.name));
-  const validJobs = allJobs.filter(j => {
+  const filteredJobs = allJobs.filter(j => {
     if (ngNames.has(j.name)) {
       log(`ジョブ ${j.name} は nightly_ng 該当、skip`);
       return false;
@@ -481,6 +537,7 @@ async function main() {
     }
     return true;
   });
+  const validJobs = mergePolicyPromptTemplates(filteredJobs, policy);
   await log(`ジョブ数: 全${allJobs.length} / valid ${validJobs.length}`);
 
   const maxBudget = policy.limits?.max_total_budget_usd ?? 30.0;

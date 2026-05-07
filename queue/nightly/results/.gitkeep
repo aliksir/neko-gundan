@@ -1,0 +1,3 @@
+# queue/nightly/results/ - 夜間ジョブ結果
+# 日付ごとに {YYYY-MM-DD}.json でジョブ結果が保存される。
+# nightly-summary skill が翌朝に Read する。

@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.10.0] - 2026-05-07
+
+### Added
+- **`hooks/kill-switch.sh`**: Physical kill switch for all tool calls. While `$AGENT_STOP_FILE` (default: `~/.claude/AGENT_STOP`) exists, every tool call is blocked. Engage with `touch ~/.claude/AGENT_STOP`, resume with `rm`. Inspired by [anthropics/cwc-long-running-agents](https://github.com/anthropics/cwc-long-running-agents) (Apache-2.0)
+- **`hooks/steer.sh`**: Mid-run redirect channel. When `$AGENT_STEER_FILE` (default: `~/.claude/STEER.md`) has content, surface it as `OPERATOR STEERING:` once at the next `PreToolUse`, then clear the file. Useful for redirecting long-running / nightly jobs without restart. Inspired by [anthropics/cwc-long-running-agents](https://github.com/anthropics/cwc-long-running-agents) (Apache-2.0)
+- **Hooks Guide updates**: New "Kill Switch" and "Steer" sections in `docs/hooks-guide.md`
+
+### Fixed
+- **`scripts/nightly-runner.mjs` payload delivery (commit `1686c44`)**: `policy.yml` `prompt_template` now reaches `buildClaudeCmd` via new `mergePolicyPromptTemplates()`. New `expandTemplate()` for `${VAR}` placeholder substitution. `parseYaml` now supports pipe block scalar (`|`). Added `Bash(git checkout|switch|branch:*)` to `--allowedTools` so feature-branch commits actually happen
+- **`rules/nightly-policy.yml`**: `daily-research` `prompt_template` rewritten to a 7-step procedure (cd → checkout → arxiv → append → commit) so the nightly job reaches the commit step
+
+### Changed
+- **`hooks/` block protocol convention**: Both new hooks use `{"decision":"block","reason":"..."}` on stdout + `exit 2`, matching existing `commit-guard.mjs` / `nightly-guard.mjs`. Documented in inline comments
+
 ## [1.9.0] - 2026-04-04
 
 ### Added

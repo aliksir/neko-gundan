@@ -53,6 +53,7 @@ When confidence is `low`, escalate to arbitrator (Opus).
 | Expected output | Provide "this input -> this output is correct" for self-checking |
 | Screenshot verification | For UI changes, use browser tools for visual check |
 | Lint/type check | `tsc --noEmit` / `ruff check` for static verification |
+| **Old value residual grep** | When changing constants / thresholds / counts / paths across multiple files, run `grep -rn "<old-value>"` over `rules/` `agents/` `gates/` `templates/` to catch residual occurrences before review. Especially important when editing rules / agents / gates / templates. Reduces review cycles by catching consistency issues during self-audit rather than reviewer feedback. |
 
 ## Optional Extensions
 

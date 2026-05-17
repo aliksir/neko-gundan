@@ -38,7 +38,6 @@ export const STATUS = Object.freeze({
   TIMEOUT: 'timeout',
   DRY_RUN: 'dry_run',
   SKIPPED_CB_OPEN: 'skipped_cb_open',
-  SKIPPED_BUDGET: 'skipped_budget',
 });
 
 // CLI 引数 parse（log() より先に初期化、TDZ 回避）
@@ -340,7 +339,6 @@ export function buildClaudeCmd(job, profilePath = PROFILE_PATH, dateStr = jstDat
     '--allowedTools',
       // Bash(git checkout:*)/(git switch:*)/(git branch:*) は kurouto P0 指摘で追加。prompt_template ステップ2 `git checkout -b` を blocked させないため。
       'Read(**) Edit(C:/work/**) Bash(git status:*) Bash(git log:*) Bash(git add:*) Bash(git commit:*) Bash(git checkout:*) Bash(git switch:*) Bash(git branch:*) Bash(git push origin:*) Bash(gh pr create --draft:*) Bash(node:*) Bash(python:*)',
-    '--max-budget-usd', String(job.max_budget_usd ?? 2.00),
     '--no-session-persistence',
     '--output-format', 'json',
     expandedPrompt,
@@ -540,25 +538,13 @@ async function main() {
   const validJobs = mergePolicyPromptTemplates(filteredJobs, policy);
   await log(`ジョブ数: 全${allJobs.length} / valid ${validJobs.length}`);
 
-  const maxBudget = policy.limits?.max_total_budget_usd ?? 30.0;
+  // 予算上限は撤廃（2026-05-09、Claude Code Pro plan 運用のため。cost_usd 記録は維持）
   const results = [];
   let totalUsd = 0;
 
   for (const job of validJobs) {
-    if (totalUsd >= maxBudget) {
-      await log(`[budget] 1日上限 $${maxBudget} 到達、以降 skip`);
-      results.push({ job_name: job.name, status: STATUS.SKIPPED_BUDGET, cost_usd: 0 });
-      continue;
-    }
     if (cbIsOpen(cb)) {
       results.push({ job_name: job.name, status: STATUS.SKIPPED_CB_OPEN, cost_usd: 0 });
-      continue;
-    }
-    // ジョブ単体予算 + 累積が maxBudget を超えそうなら skip（事前判定）
-    const jobBudget = job.max_budget_usd ?? 2.0;
-    if (totalUsd + jobBudget > maxBudget) {
-      await log(`[budget] ジョブ ${job.name} で上限超過の見込み、skip`);
-      results.push({ job_name: job.name, status: STATUS.SKIPPED_BUDGET, cost_usd: 0 });
       continue;
     }
 
@@ -592,7 +578,7 @@ async function main() {
   const success = results.filter(r => r.status === STATUS.SUCCESS).length;
   const dryRun = results.filter(r => r.status === STATUS.DRY_RUN).length;
   const failed = results.filter(r => [STATUS.FAILED, STATUS.TIMEOUT].includes(r.status)).length;
-  const skipped = results.filter(r => [STATUS.SKIPPED_CB_OPEN, STATUS.SKIPPED_BUDGET].includes(r.status)).length;
+  const skipped = results.filter(r => r.status === STATUS.SKIPPED_CB_OPEN).length;
 
   const resultFile = await saveResults(results);
   await log(`結果保存: ${resultFile}`);

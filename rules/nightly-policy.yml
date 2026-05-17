@@ -1,9 +1,13 @@
 # 夜間ジョブ OK/NG 分類ポリシー
 # 夜間帯（23:00-07:00 JST）に nightly-runner が実行可能なタスク種別と禁止種別の SSOT。
 # 関連: ~/.claude/rules/nightly-autopilot.md / scripts/nightly-runner.mjs
+#
+# 注意: 2026-05-09 より Claude Code Pro plan 運用のため、予算上限（max_budget_usd / max_total_budget_usd）は撤廃済み。
+#       各ジョブの max_budget_usd フィールドは parseYaml 動作確認のため残しているが、実行時には参照されない（参考値）。
+#       cost_usd 集計（実行コスト記録）は維持。詳細: result/20260509_nightly-budget-removal.md
 
-version: "1.0"
-last_updated: "2026-04-25"
+version: "1.1"
+last_updated: "2026-05-09"
 
 # 夜間実行 OK のタスク種別
 # 各エントリは { name, max_budget_usd, timeout_min, output, prompt_template } 必須
@@ -96,6 +100,6 @@ nightly_ng:
 # 共通制限
 limits:
   max_jobs_per_night: 5            # 1夜あたり最大ジョブ数
-  max_total_budget_usd: 30.00      # 1夜の合計予算上限（実消費が見積の4倍を見越して$30）
+  # max_total_budget_usd: 撤廃（2026-05-09、Pro plan 運用、API 課金なしのため）
   default_timeout_min: 30          # ジョブ単体のデフォルトタイムアウト
   circuit_breaker_threshold: 3     # 同一ジョブの連続失敗上限（quarantine 化）

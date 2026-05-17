@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.10.1] - 2026-05-10
+
+### Added
+- **schtask `nightly-enqueue-daily-research`**: Daily 22:00 JST trigger to auto-enqueue `daily-research` jobs into `queue/nightly/{YYYYMMDD}_daily-research.json`. Closes the gap discovered during stage-2 cutover (5/6) where enqueue was not automated, leading to 5/8 day 4 / 5/9 day 5 empty-queue runs. The 90-minute gap to `nightly-runner` (23:30) absorbs schtask startup delay
+- **`kidou/_do_enqueue_daily-research.bat`**: Wrapper script invoked by the new schtask. Calls `node scripts/nightly-runner.mjs --queue-add daily-research`, logs to `C:\work\logs\nightly-runner.log`, propagates exit code via `exit /b %errorlevel%`
+- Principal copied from existing `nightly-runner` schtask to ensure consistent execution context (UserId=aliks, RunLevel=Limited, LogonType=Interactive)
+
+### Removed
+- **Budget enforcement (2026-05-09 batch)**: Following migration to Claude Code Pro plan (flat-rate), per-job and per-night budget caps are no longer required. Removed:
+  - `--max-budget-usd` CLI argument passed to `claude` (was `$2.00` default per job)
+  - `policy.limits.max_total_budget_usd` (was `$30.00` per night)
+  - `STATUS.SKIPPED_BUDGET` status and budget-tracking aggregation in `nightly-runner.mjs`
+  - The `max_budget_usd` field is retained in `rules/nightly-policy.yml` per-job entries for `parseYaml` smoke compatibility (declared as a reference value, not enforced at runtime)
+  - Cost-recording (`cost_usd` aggregation in results) is retained
+  - Details: `result/20260509_nightly-budget-removal.md`
+
+### Misc
+- **`.gitignore`**: ignore `queue/nightly/` (per-environment runtime queue records) and `.cache/`
+- **`PROGRESS.md`**: append-only task log added (kaizen-fullbatch Phase 6, 2026-05-08)
+
 ## [1.10.0] - 2026-05-07
 
 ### Added

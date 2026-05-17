@@ -17,3 +17,7 @@ status/dashboard.md
 status/agent-status.json
 status/code-factory-report.*
 status/token-usage/
+
+# Nightly runner runtime artifacts (per-environment, not part of framework)
+queue/nightly/
+.cache/

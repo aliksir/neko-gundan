@@ -46,7 +46,8 @@ generate_alert() {
   local detected_at
   detected_at=$(iso8601_now)
 
-  local alert_file="${ALERTS_DIR}/stall-${task_id}-$(date +%Y%m%d%H%M%S).json"
+  local alert_file
+  alert_file="${ALERTS_DIR}/stall-${task_id}-$(date +%Y%m%d%H%M%S).json"
 
   cat > "${alert_file}" <<EOF
 {

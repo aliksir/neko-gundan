@@ -60,11 +60,11 @@ if [ -f "$STATUS_JSON" ] && command -v jq &>/dev/null; then
     fi
 else
     # チーム設定ファイルから読み取り
-    local config="$TEAMS_DIR/$TEAM_NAME/config.json"
-    if [ -f "$config" ] && command -v jq &>/dev/null; then
+    CONFIG="$TEAMS_DIR/$TEAM_NAME/config.json"
+    if [ -f "$CONFIG" ] && command -v jq &>/dev/null; then
         echo "| 名前 | タイプ |" >> "$DASHBOARD"
         echo "|------|--------|" >> "$DASHBOARD"
-        jq -r '.members[] | "| \(.name) | \(.agentType // "-") |"' "$config" 2>/dev/null >> "$DASHBOARD"
+        jq -r '.members[] | "| \(.name) | \(.agentType // "-") |"' "$CONFIG" 2>/dev/null >> "$DASHBOARD"
     else
         echo "_エージェント情報なし_" >> "$DASHBOARD"
     fi

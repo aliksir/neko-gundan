@@ -163,7 +163,7 @@ Agents have an **obligation** to object to bad instructions. Each objection requ
 
 ### Exploration Mode (Tree Search, v1.10.x)
 
-For tasks where the best approach isn't obvious, the manager can spawn parallel workers each trying a different solution branch (tree search). Results are scored and the dominant branch wins; rejected branches are archived as `_explored/` for traceability. Use when the task has multiple plausible designs and the cost of picking the wrong one is high. Disabled by default — opt in per-task with the `exploration` flag.
+For tasks where the best approach isn't obvious, the manager can spawn parallel workers each trying a different solution branch on isolated git worktrees (tree search). Results are scored and the dominant branch wins; rejected-branch rationale is auto-recorded to `lessons/` so future exploration runs can skip known-bad approaches. Use when the task has multiple plausible designs and the cost of picking the wrong one is high. Disabled by default — opt in per-task with the `exploration` flag.
 
 ### Sandbox Agents
 

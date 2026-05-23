@@ -32,7 +32,17 @@ jobs:
         run: sudo apt-get install -y shellcheck
 
       - name: Lint shell scripts
-        run: shellcheck scripts/*.sh
+        # `shellcheck scripts/*.sh` fails when the glob expands to no files.
+        # Guard with shopt + nullglob so an empty match yields zero args and shellcheck exits 0.
+        run: |
+          shopt -s nullglob
+          files=(scripts/*.sh)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No shell scripts under scripts/; skipping shellcheck."
+            exit 0
+          fi
+          shellcheck "${files[@]}"
+        shell: bash
 
   syntax-check:
     runs-on: ubuntu-latest

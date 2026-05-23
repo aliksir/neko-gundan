@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.10.2] - 2026-05-24
+
+### Fixed
+- **`.github/workflows/ci.yml` triggers on `master`** (commit `b9a716a`): The repository default branch is `master`, but the CI workflow listened for push/pull_request on `main` only. As a result, none of the recent v1.10.x commits triggered CI runs. Switch both `push.branches` and `pull_request.branches` from `[main]` to `[master]`. Reported by external code review (Codex), 2026-05-24.
+- **`.github/workflows/ci.yml` shellcheck nullglob guard** (本 v1.10.2 release): `shellcheck scripts/*.sh` fails when the glob expands to no files. Guard with `shopt -s nullglob` + array length check so an empty match yields zero args and shellcheck exits 0 with an informative message. Surfaced by kurouto-neko review of the v1.10.2 release candidate.
+- **`scripts/commit-guard.mjs` flag variants** (commit `96d381b`): `extractCommitMessage` now recognises `-am`, `-ma`, `-aSm`, `--message`, `--message=...` in addition to the original `-m`. Previously a `git commit -am "..."` would silently pass the CL-description bad-pattern check, defeating the v1.10.0 guard.
+
+### Documentation
+- **README parity update** (commits `871856f` + `eef7895`): `README.md` / `README.ja.md` / `README.koneko.md` brought into feature parity for v1.10.x — Safety Built In section adds physical switches (cwc-derived) + nightly autopilot guards, Implementer != Reviewer section adds Adversarial 2nd-Pass + Evidence Level Ladder, Key Features adds Exploration Mode section, Acknowledgments adds `cwc-long-running-agents` (Apache-2.0) + `clearwing` (MIT). Follow-up Nit fix in `eef7895` corrects exploration-mode persistence claim (`_explored/` → `lessons/`).
+
+### Misc
+- **First GitHub Releases published retroactively** (out-of-band): `v1.10.0` (commit `b1505ba`) and `v1.10.1` (commit `3552d56`) annotated tags + GitHub Releases were backfilled on 2026-05-24. `v1.10.2` is the first release where the tag and release ship together.
+
 ## [1.10.1] - 2026-05-10
 
 ### Added

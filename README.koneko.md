@@ -149,5 +149,6 @@ Runs in the background — only notifies when an update exists. Default is OFF.
 - **1 review cycle** — no back-and-forth review loop
 - **3-aspect rubric** — skips maintainability and Purpose alignment
 - **No modules** — shitsuke system not supported
+- **No v1.10.x heavy features** — Adversarial 2nd-Pass, Evidence Level Ladder, Exploration mode, nightly-runner, and kill-switch/steer hooks are full Neko Gundan only
 
 These are intentional. If you need them, upgrade to [full Neko Gundan](README.md).

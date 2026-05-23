@@ -111,6 +111,10 @@ bash neko-gundan/scripts/setup.sh  # ランタイムディレクトリを初期�
 2. レビュアーは**読み取り専用** — 指摘のみ、コード変更禁止
 3. 3サイクル超過で仲裁者（Opus）が最終判断
 
+**Adversarial 2nd-Pass（Clearwing由来、v1.10.x）**: レビュアーは APPROVE を出す直前に同一サイクル内で敵対的再検証を実行する（Q1: 壊れるエッジケースは? Q2: 合格基準の見落とし観点は? Q3: 実装者が認識していないリスクは? Q4: 実装者が「指示になかったが裁量補完で埋めた箇所」は? Q5: 実装が証明できない仕様プロパティは?）。3サイクル上限には加算しない。中隊+で必須、小隊で推奨。出典: [Lazarus-AI/clearwing](https://github.com/Lazarus-AI/clearwing)（MIT）
+
+**Evidence Level Ladder**: APPROVE 判定に証拠レベル6段階（`suspicion → static_check_passed → test_passed → root_cause_explained → integration_verified → production_validated`）を付記。合格基準で「レベルN以上」を要求してタスクごとに基準を引き上げ可能。
+
 ### 異議を申し立てるエージェント
 
 不適切な指示に**異議を申し立てる義務**がある。各異議には**事実 + 懸念 + 代替案**が必要。
@@ -131,6 +135,12 @@ bash neko-gundan/scripts/setup.sh  # ランタイムディレクトリを初期�
 - **破壊操作Tier**: Tier 1は絶対禁止、Tier 2は要確認
 - **カスケード障害防止（CASCADE-001）**: ホワイトボード上の `←` 記法でタスク依存を宣言。上流タスク失敗時に下流を自動ブロック
 - **Fan-Out/Aggregate（FANOUT-001）**: 並列エージェントの結果を3フェーズ（Fan-Out→Collect→Aggregate）で構造化統合。矛盾・重複を自動検出
+- **物理スイッチ（cwc由来、v1.10.0）**: `touch ~/.claude/AGENT_STOP` で全ツール呼出を即停止、`echo "<指示>" > ~/.claude/STEER.md` で次のツール呼出時に1回だけ方向修正。pre-tool-use hookで surface。出典: [anthropics/cwc-long-running-agents](https://github.com/anthropics/cwc-long-running-agents)（Apache-2.0）
+- **夜間 autopilot ガード（v1.10.0）**: 23:00〜07:00 JST の nightly-runner は Draft PR 必須、`master`/`main` 直 push 禁止、tier-2 破壊操作の自動エスカレーション、`--no-verify` バイパス検出を強制
+
+### 探索モード（ツリー探索、v1.10.x）
+
+最適解が自明でないタスクに対して、仕事猫が複数の解の枝それぞれを試す並列現場猫を spawn する（ツリー探索）。結果をスコア付けして優勝枝を採用、却下枝は `_explored/` にアーカイブして traceability を保つ。設計案が複数あって「間違った選択のコストが高い」タスクで使う。デフォルト無効、タスクごとに `exploration` フラグで opt-in。
 
 ### サンドボックスエージェント
 
@@ -240,3 +250,5 @@ MIT License - 詳細は [LICENSE](LICENSE) を参照。
 - レビュープロトコルは [takt](https://www.npmjs.com/package/takt) オーケストレーションツールに着想
 - Reflexionパターンは [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) に基づく
 - pass@kメトリクス、信頼度スコアリング、サンドボックスエージェントは [Everything Claude Code](https://github.com/affaan-m/everything-claude-code) に着想
+- 物理スイッチ（kill-switch / steer hooks、v1.10.0）は [anthropics/cwc-long-running-agents](https://github.com/anthropics/cwc-long-running-agents)（Apache-2.0）に由来
+- Adversarial 2nd-Pass + Evidence Level Ladder（v1.10.x）は [Lazarus-AI/clearwing](https://github.com/Lazarus-AI/clearwing)（MIT）に着想

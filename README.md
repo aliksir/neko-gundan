@@ -134,6 +134,10 @@ Each phase has its own lightweight gates. See [WORKFLOW.md](docs/WORKFLOW.md#pha
 2. Reviewers are **read-only** — feedback only, no code changes
 3. After 3 review cycles, an arbitrator (Opus) makes the final call
 
+**Adversarial 2nd-Pass (Clearwing-derived, v1.10.x)**: Before issuing APPROVE, the reviewer runs an adversarial self-check in the same cycle (Q1: edge cases that break this? Q2: missed acceptance criteria? Q3: risks the implementer didn't recognize? Q4: discretionary additions the implementer made without explicit instruction? Q5: properties the implementation can't actually prove?). The 3-cycle limit does NOT increment. Required at platoon+, recommended at squad. Source: [Lazarus-AI/clearwing](https://github.com/Lazarus-AI/clearwing) (MIT)
+
+**Evidence Level Ladder**: APPROVE judgments carry a 6-level evidence tag (`suspicion → static_check_passed → test_passed → root_cause_explained → integration_verified → production_validated`). Acceptance criteria can require "level N or higher" to lift the bar per task.
+
 ### Agents That Push Back
 
 Agents have an **obligation** to object to bad instructions. Each objection requires **Facts + Concerns + Alternative Proposal**.
@@ -154,6 +158,12 @@ Agents have an **obligation** to object to bad instructions. Each objection requ
 - **Destructive operation tiers**: Tier 1 is absolutely prohibited, Tier 2 requires confirmation
 - **Cascade failure prevention (CASCADE-001)**: Task dependencies declared with `←` notation on whiteboard. Upstream failure automatically blocks downstream tasks
 - **Fan-Out/Aggregate (FANOUT-001)**: Parallel agent results integrated through structured 3-phase process (Fan-Out → Collect → Aggregate) with contradiction/duplicate detection
+- **Physical switches (cwc-derived, v1.10.0)**: `touch ~/.claude/AGENT_STOP` to halt all tool calls immediately; `echo "<instruction>" > ~/.claude/STEER.md` for one-shot mid-run redirection. Both surface in pre-tool-use hooks. Source: [anthropics/cwc-long-running-agents](https://github.com/anthropics/cwc-long-running-agents) (Apache-2.0)
+- **Nightly autopilot guards (v1.10.0)**: 23:00–07:00 JST nightly-runner enforces draft-PR-only commits, blocks `master`/`main` direct push, escalates tier-2 destructive ops, and detects `--no-verify` bypass attempts
+
+### Exploration Mode (Tree Search, v1.10.x)
+
+For tasks where the best approach isn't obvious, the manager can spawn parallel workers each trying a different solution branch (tree search). Results are scored and the dominant branch wins; rejected branches are archived as `_explored/` for traceability. Use when the task has multiple plausible designs and the cost of picking the wrong one is high. Disabled by default — opt in per-task with the `exploration` flag.
 
 ### Sandbox Agents
 
@@ -263,3 +273,5 @@ MIT License - see [LICENSE](LICENSE) for details.
 - Review protocol inspired by [takt](https://www.npmjs.com/package/takt) orchestration tool
 - Reflexion pattern from [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366)
 - pass@k metrics, confidence scoring, and sandbox agent patterns inspired by [Everything Claude Code](https://github.com/affaan-m/everything-claude-code)
+- Physical kill-switch and steer hooks (v1.10.0) derived from [anthropics/cwc-long-running-agents](https://github.com/anthropics/cwc-long-running-agents) (Apache-2.0)
+- Adversarial 2nd-Pass + Evidence Level Ladder (v1.10.x) inspired by [Lazarus-AI/clearwing](https://github.com/Lazarus-AI/clearwing) (MIT)

@@ -257,4 +257,67 @@ if (missing.length > 0) {
       permissionDecisionReason: reason,
     },
   }));
+  process.exit(0);
+}
+
+// === CL Description bad pattern 警告（Google eng-practices 由来、2026-05-23 追加、第202回） ===
+// 不足成果物なし → commit メッセージの bad pattern をチェック
+// 警告のみ（stderr 出力 + exit 0 で続行）。ハードブロックではなく啓蒙レベル。
+// 参考: rules/google-eng-practices-patterns.md §6 / rules/review-protocol.md §Writing Good CL Descriptions
+
+const BAD_PATTERN_EXACT = [
+  'Fix bug', 'Fix build', 'Fix typo',
+  'Add patch', 'Update files', 'Update file',
+  'WIP', 'wip', 'tmp', 'TMP',
+];
+
+const BAD_PATTERN_PAST_TENSE = [
+  /^(Added|Fixed|Updated|Changed|Removed|Modified|Created|Deleted)\b/,
+];
+
+function extractCommitMessage(cmd) {
+  // git commit の commit message を抽出。HEREDOC や複数 -m はスキップ仕様（null 返却）。
+  // 対応形式（F-5、2026-05-23 第205回追加）:
+  //   - -m "msg"
+  //   - -am "msg" / -ma "msg" / -aSm "msg" など `m` を含む短フラグ結合
+  //   - --message "msg"
+  //   - --message="msg"
+  try {
+    const m = cmd.match(/git\s+commit\s+(?:[^"'\n]*?\s)?(?:-[a-zA-Z]*m[a-zA-Z]*|--message)(?:=|\s+)["']([^"'\n]+)["']/);
+    return m ? m[1] : null;
+  } catch {
+    return null;
+  }
+}
+
+function checkClDescription(msg) {
+  const warnings = [];
+  const trimmed = msg.trim();
+  if (BAD_PATTERN_EXACT.includes(trimmed)) {
+    warnings.push(`bad pattern「${trimmed}」: 何を/なぜを補足してください`);
+  }
+  if (trimmed.length > 0 && trimmed.length < 10) {
+    warnings.push(`第一行が短すぎ（${trimmed.length}文字）。10文字以上推奨`);
+  }
+  for (const re of BAD_PATTERN_PAST_TENSE) {
+    if (re.test(trimmed)) {
+      warnings.push(`過去形検出: 命令形（Add/Fix/Update）推奨`);
+      break;
+    }
+  }
+  return warnings;
+}
+
+const clMessage = extractCommitMessage(command);
+if (clMessage) {
+  const clWarnings = checkClDescription(clMessage);
+  if (clWarnings.length > 0) {
+    process.stderr.write([
+      '⚠️ CL Description 警告（commit は通します、参考情報）:',
+      ...clWarnings.map(w => `  - ${w}`),
+      '  ヒント: Google eng-practices "Writing Good CL Descriptions" 参照',
+      '  対応: 第一行は命令形 + 焦点絞った要約、本文に「なぜ」を補足',
+      '',
+    ].join('\n'));
+  }
 }

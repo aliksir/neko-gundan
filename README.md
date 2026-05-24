@@ -1,5 +1,9 @@
 # Neko Gundan - Multi-Agent Orchestration for Claude Code
 
+[![CI](https://github.com/aliksir/neko-gundan/actions/workflows/ci.yml/badge.svg)](https://github.com/aliksir/neko-gundan/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/aliksir/neko-gundan)](https://github.com/aliksir/neko-gundan/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 > **Recommended: Interactive Setup**
 > ```bash
 > git clone https://github.com/aliksir/neko-gundan.git
@@ -86,6 +90,26 @@ cp neko-gundan/examples/CLAUDE.md.typescript ./your-project/CLAUDE.md
 3. **Review the proof** — The agent delivers evidence (test results, diffs), not just "I'm done." You check the proof, not the code.
 
 Everything else — role assignment, review separation, objection handling, safety checks — happens behind the scenes.
+
+## 1-Minute Demo
+
+Here's what happens when you run a small change request:
+
+```text
+> /neko-gundan "Add dark mode toggle to settings page"
+
+[oyakata-neko]   READ   Purpose/, plans/ — recon-scale, single shigoto-neko
+[oyakata-neko]   PLAN   plans/20260524_dark-mode-toggle.md (acceptance C1-C5, Pre-Mortem 4)
+[oyakata-neko]   DESIGN designs/20260524_dark-mode-toggle.md (CSS vars + localStorage)
+[kurouto-neko]   REVIEW design — APPROVE (evidence_level: static_check_passed)
+[shigoto-neko]   IMPL   src/settings/DarkModeToggle.tsx, src/styles/theme.css
+[kurouto-neko]   REVIEW code — Adversarial Q1-Q5 passed
+                        APPROVE (evidence_level: test_passed)
+[oyakata-neko]   GATE   completion gate — all 5 artifacts present, CR-1..CR-6 violations: 0
+[oyakata-neko]   DONE   result/20260524_dark-mode-toggle.md
+```
+
+**The agent who wrote the code is never the one who reviewed it.** You see the proof (artifacts, evidence_level, gate results), not just a "done" message. Even if you skip reading the diff, the framework refuses to mark a task complete without recorded evidence.
 
 ## How It Works
 

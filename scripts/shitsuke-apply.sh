@@ -33,7 +33,7 @@ MODULES_DIR="$NEKO_DIR/modules"
 generate_stub() {
     local src="$1"    # modules/*.md のフルパス
     local dst="$2"    # .claude/rules/*.md のフルパス
-    local neko="$3"   # neko-gundan ディレクトリ
+    # $3 (neko-gundan ディレクトリ) は予約引数。現状未使用だが呼び出し元の互換性のため受領のみ。
 
     local filename
     filename="$(basename "$src")"

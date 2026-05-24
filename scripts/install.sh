@@ -291,7 +291,6 @@ if [ "$DOWNGRADE_MODE" = true ]; then
 
     DELETED_DIR="$TARGET_DIR/_deleted/neko-gundan-$(date +%Y%m%d)"
     retired=0
-    installed=0
 
     # ヘルパー: ファイルがターゲットモードに必要かチェック
     is_needed() {

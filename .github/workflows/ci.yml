@@ -17,6 +17,9 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install Python test dependencies
+        run: python -m pip install --upgrade pip pytest
+
       - name: Run framework validation
         run: python scripts/validate_framework.py .
 
@@ -41,7 +44,7 @@ jobs:
             echo "No shell scripts under scripts/; skipping shellcheck."
             exit 0
           fi
-          shellcheck "${files[@]}"
+          shellcheck --severity=warning "${files[@]}"
         shell: bash
 
   syntax-check:

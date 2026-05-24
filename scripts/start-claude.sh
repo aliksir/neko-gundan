@@ -6,7 +6,7 @@ BASE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 SESSION="claude"
 MONITOR="$BASE_DIR/scripts/agent-monitor.sh"
 
-cd "$BASE_DIR/.."
+cd "$BASE_DIR/.." || exit 1
 
 if tmux has-session -t "$SESSION" 2>/dev/null; then
     # 既存セッションにアタッチ

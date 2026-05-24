@@ -55,6 +55,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
+          # Node version used to syntax-check JS/MJS files below.
+          # This is the test-target Node — independent of the action's runtime
+          # (which is Node 24 on the v6 setup-node action and on ubuntu-latest runners).
           node-version: "20"
 
       - name: Check JS/MJS syntax

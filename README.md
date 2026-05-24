@@ -83,6 +83,8 @@ bash neko-gundan/scripts/install.sh --lang typescript,python all ./your-project
 cp neko-gundan/examples/CLAUDE.md.typescript ./your-project/CLAUDE.md
 ```
 
+For which template to pick, what to customize, and what the result looks like, see [examples/README.md](examples/README.md).
+
 ## What You Do (3 Steps)
 
 1. **Install** — Pick modes and run the installer. Done in 30 seconds.

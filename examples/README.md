@@ -37,6 +37,8 @@ cp neko-gundan/examples/CLAUDE.md.typescript ./your-project/CLAUDE.md
 #    - Test:       pick vitest OR jest (comment out the unused one)
 
 # 3. Run the installer to drop in agents, rules, and skills
+#    (Default: all 4 language rule files installed. Add --lang to filter.
+#     See README.md > "Language Rules" for the --lang flag.)
 bash neko-gundan/scripts/install.sh quality+security ./your-project
 
 # 4. Verify the install

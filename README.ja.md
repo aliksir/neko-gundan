@@ -1,5 +1,9 @@
 # 猫軍団 - Claude Code マルチエージェントオーケストレーション
 
+[![CI](https://github.com/aliksir/neko-gundan/actions/workflows/ci.yml/badge.svg)](https://github.com/aliksir/neko-gundan/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/aliksir/neko-gundan)](https://github.com/aliksir/neko-gundan/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 > **推奨: 対話形式セットアップ**
 > ```bash
 > git clone https://github.com/aliksir/neko-gundan.git
@@ -63,6 +67,26 @@ bash neko-gundan/scripts/setup.sh  # ランタイムディレクトリを初期�
 3. **証拠を確認する** — エージェントは「終わりました」ではなく証拠（テスト結果、diff）を出す。あなたはコードではなく証拠を確認する。
 
 役割の割り当て、レビュー分離、異議申立、安全チェック — 全部裏で勝手に回る。
+
+## 1分デモ
+
+小さな変更依頼を投げたらどう動くか:
+
+```text
+> /neko-gundan "設定画面にダークモード切替を追加して"
+
+[oyakata-neko]   READ   Purpose/, plans/ を読み込み — 偵察規模、仕事猫 1 体
+[oyakata-neko]   PLAN   plans/20260524_dark-mode-toggle.md（合格基準 C1-C5、Pre-Mortem 4 件）
+[oyakata-neko]   DESIGN designs/20260524_dark-mode-toggle.md（CSS 変数 + localStorage）
+[kurouto-neko]   REVIEW 設計 — APPROVE（evidence_level: static_check_passed）
+[shigoto-neko]   IMPL   src/settings/DarkModeToggle.tsx, src/styles/theme.css
+[kurouto-neko]   REVIEW コード — Adversarial Q1-Q5 全 PASS
+                        APPROVE（evidence_level: test_passed）
+[oyakata-neko]   GATE   完了ゲート — 成果物 5 種揃い、CR-1〜CR-6 違反 0
+[oyakata-neko]   DONE   result/20260524_dark-mode-toggle.md
+```
+
+**書いた猫はレビューしない。** あなたが見るのは「終わりました」ではなく証拠（成果物、evidence_level、ゲート結果）。diff を読まなくても、証拠が記録されていなければフレームワークがタスク完了を拒否する。
 
 ## 仕組み
 

@@ -186,6 +186,7 @@ Agents have an **obligation** to object to bad instructions. Each objection requ
 - **Fan-Out/Aggregate (FANOUT-001)**: Parallel agent results integrated through structured 3-phase process (Fan-Out → Collect → Aggregate) with contradiction/duplicate detection
 - **Physical switches (cwc-derived, v1.10.0)**: `touch ~/.claude/AGENT_STOP` to halt all tool calls immediately; `echo "<instruction>" > ~/.claude/STEER.md` for one-shot mid-run redirection. Both surface in pre-tool-use hooks. Source: [anthropics/cwc-long-running-agents](https://github.com/anthropics/cwc-long-running-agents) (Apache-2.0)
 - **Nightly autopilot guards (v1.10.0)**: 23:00–07:00 JST nightly-runner enforces draft-PR-only commits, blocks `master`/`main` direct push, escalates tier-2 destructive ops, and detects `--no-verify` bypass attempts
+- **Code provenance & license check (v1.10.x)**: Reviewers verify that no code of unknown origin is introduced and all dependencies carry compatible licenses. A classification table (permitted / caution / prohibited / unknown) blocks prohibited licenses at the design gate — unknown defaults to prohibited
 
 ### Exploration Mode (Tree Search, v1.10.x)
 

@@ -187,6 +187,7 @@ Agents have an **obligation** to object to bad instructions. Each objection requ
 - **Physical switches (cwc-derived, v1.10.0)**: `touch ~/.claude/AGENT_STOP` to halt all tool calls immediately; `echo "<instruction>" > ~/.claude/STEER.md` for one-shot mid-run redirection. Both surface in pre-tool-use hooks. Source: [anthropics/cwc-long-running-agents](https://github.com/anthropics/cwc-long-running-agents) (Apache-2.0)
 - **Nightly autopilot guards (v1.10.0)**: 23:00–07:00 JST nightly-runner enforces draft-PR-only commits, blocks `master`/`main` direct push, escalates tier-2 destructive ops, and detects `--no-verify` bypass attempts
 - **Code provenance & license check (v1.10.x)**: Reviewers verify that no code of unknown origin is introduced and all dependencies carry compatible licenses. A classification table (permitted / caution / prohibited / unknown) blocks prohibited licenses at the design gate — unknown defaults to prohibited
+- **neko-kensa automated analysis (v1.10.x)**: Integrated code quality inspector (zero dependencies) runs automatically at review Phase 2 start: `lint` (large files, high fan-in/fan-out, unresolved imports, deep inheritance, symbol overload) + `deps` (circular dependencies, rule violations). Powered by code-graph DB. Results feed into reviewer findings so human review focuses on design decisions
 
 ### Exploration Mode (Tree Search, v1.10.x)
 

@@ -95,6 +95,29 @@ Codexへの指示は以下の4セクションで構造化する：
 - テスト作成はCodexに任せない（Claude Code側で行う）
 - Codexへの指示にはコンテキストを全て明示する（コンテキスト非共有のため）
 
+## neko-kensa 自動実行（Phase 2 先行チェック）
+
+レビュー開始時に neko-kensa を先行実行し、機械検出可能な問題を findings に含める。人間の目（＝玄人猫）は設計判断に集中する。
+
+### 実行タイミング
+- **Phase 2 (Review) 開始直後、コード読み始める前**に実行
+- 対象リポが code-graph でインデックス済みであること（未インデックスなら先に `mcp__code-graph__index_repository` を実行）
+
+### 実行コマンド
+```bash
+node C:/work/neko-kensa/src/cli.mjs lint --db ~/.code-graph/graph.db
+node C:/work/neko-kensa/src/cli.mjs deps --db ~/.code-graph/graph.db
+```
+
+### findings への統合
+- neko-kensa の出力をレビューレポートの冒頭に「**Automated Findings (neko-kensa)**」セクションとして記載
+- サマリー行（`Summary: N issues ...`）のみ引用し、詳細はレポートに全行転記しない
+- neko-kensa で検出されなかった問題は人間（玄人猫）の観点で判定
+
+### スキップ条件
+- code-graph 非対応言語のみのプロジェクト → `[N/A: neko-kensa]`
+- graph.db が存在しない → `[N/A: graph.db not found]`（エラーにしない）
+
 ## Chain-of-Thought Judge（必須プロトコル）
 
 レビュー判定時は必ず**推論→判定の2段階**で実行する。直感的な「ヨシ/ダメ」は禁止。

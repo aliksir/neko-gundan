@@ -162,6 +162,7 @@ bash neko-gundan/scripts/setup.sh  # ランタイムディレクトリを初期�
 - **物理スイッチ（cwc由来、v1.10.0）**: `touch ~/.claude/AGENT_STOP` で全ツール呼出を即停止、`echo "<指示>" > ~/.claude/STEER.md` で次のツール呼出時に1回だけ方向修正。pre-tool-use hookで surface。出典: [anthropics/cwc-long-running-agents](https://github.com/anthropics/cwc-long-running-agents)（Apache-2.0）
 - **夜間 autopilot ガード（v1.10.0）**: 23:00〜07:00 JST の nightly-runner は Draft PR 必須、`master`/`main` 直 push 禁止、tier-2 破壊操作の自動エスカレーション、`--no-verify` バイパス検出を強制
 - **コード出所・ライセンスチェック（v1.10.x）**: レビュー時に出所不明のコード混入がないか、全依存のライセンスが互換性を持つかを検証。ライセンス分類表（許可/要注意/禁止/不明）で設計ゲート段階から禁止ライセンスをブロック — 不明は禁止扱い
+- **neko-kensa 自動解析（v1.10.x）**: 依存ゼロの内製コード品質検査ツールがレビュー Phase 2 開始時に自動実行。`lint`（巨大ファイル/過度な依存/未解決import/深い継承/シンボル過多）+ `deps`（循環依存/ルール違反）を code-graph DB から検出し、レビュー findings に自動統合。人間のレビューは設計判断に集中
 
 ### 探索モード（ツリー探索、v1.10.x）
 

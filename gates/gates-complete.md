@@ -40,10 +40,11 @@ Record **evidence** in the report for each item. Evidence-free checks are invali
 | 10 | **All artifacts confirmed** | `ls plans/ designs/ checklist/ test-plan/ result/ metrics/` — verify existence |
 | 11 | **Project list updated** | Pre-report checkpoint #5 completed? New → added. Existing → version updated |
 | 12 | **Report honesty** | Disclose any unchecked items. Record intervention_count in the report |
+| 13 | **neko-kensa automated check** | For tasks with code changes: run `neko-kensa lint` + `neko-kensa deps`, record results in report. code-graph not indexed or unsupported language → `[N/A]`. Docs-only changes → `[N/A]` |
 
 ### Execution
 1. **Force Read**: Read this file first
-2. **Fixed order**: Complete #1 through #12. Record "**12 of 12 items checked (PASS: X, N/A: Y)**" in the report
+2. **Fixed order**: Complete #1 through #13. Record "**13 of 13 items checked (PASS: X, N/A: Y)**" in the report
 
 ---
 
@@ -52,7 +53,7 @@ Record **evidence** in the report for each item. Evidence-free checks are invali
 ### Execution (Mandatory)
 1. **Force Read**: Read this file first. **Gates executed from memory are invalid**. Gates started without Read are void
 2. **Fixed order**: Complete #1 through #20, one at a time. Run verification → record evidence. Don't batch-mark as "done"
-3. **Item count check**: All 20 items. Record "**20 of 20 items checked (PASS: X, N/A: Y)**" in the report. If total != 20, something is missing
+3. **Item count check**: All 21 items. Record "**21 of 21 items checked (PASS: X, N/A: Y)**" in the report. If total != 21, something is missing
 
 Record **evidence** in the report for each item. Evidence-free checks are invalid.
 
@@ -77,6 +78,7 @@ Record **evidence** in the report for each item. Evidence-free checks are invali
 | 17 | **All checks filled** | Verify #1-#16 have no unchecked items (intermediate verification) |
 | 18 | **Project list updated** | Pre-report checkpoint #5 completed? New → added. Existing → version updated |
 | 19 | **Report honesty** | Disclose unchecked items. intervention_count must be based on conversation facts |
-| 20 | **Item count check** | Verify #1-#19 are all addressed. **Total must be 20 items** |
+| 20 | **neko-kensa automated check** | For tasks with code changes: run `neko-kensa lint` + `neko-kensa deps` + `neko-kensa dead` (with entry points), record results in report. code-graph not indexed or unsupported language → `[N/A]`. Docs-only → `[N/A]` |
+| 21 | **Item count check** | Verify #1-#20 are all addressed. **Total must be 21 items** |
 
 **Execution responsibility**: Start gate = oyakata-neko. Completion gate = shigoto-neko executes → kurouto-neko verifies.

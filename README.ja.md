@@ -225,6 +225,10 @@ bash neko-gundan/scripts/setup.sh  # ランタイムディレクトリを初期�
 
 [ケーススタディ](docs/case-studies.ja.md)で具体的な適用例を見る。
 
+### Dynamic Workflows（リサーチプレビュー）
+
+ローカルで動くJSスクリプトが多数のサブエージェントを統括する大隊規模向けの機能。外部APIではなくローカル実行で、既存サブスクのusage枠を消費する（外部課金なし・データ持ち出しなし）。委譲は大隊規模（6ファイル以上）が前提で、中隊以下では過剰。委譲した場合も最終APPROVEは引き続きWorkflow外のkurouto-nekoが行う（Workflow内部の敵対的相互レビューは予備審査にとどまる）。詳細・委譲判断・名前空間衝突対策は [modules/dynamic-workflows.md](modules/dynamic-workflows.md) を参照。リサーチプレビューのためコマンドや挙動は変わり得る。
+
 ## トレードオフ
 
 **最終判断は人間。** レビュアーと実装者は同じモデルファミリーなので同じ盲点を共有し得る。「より良い初稿」であって「レビュー不要」ではない。
@@ -236,6 +240,8 @@ bash neko-gundan/scripts/setup.sh  # ランタイムディレクトリを初期�
 | `.claude/` のプロンプト複雑さ | 「完了」を自称する未検証作業の再レビュー |
 
 安全ルール（`security` モード）はほぼコストゼロ。[他ツールとの比較](docs/comparison.ja.md)も参照。
+
+**Dynamic Workflows（リサーチプレビュー）** は任意かつローカル実行。外部APIではなく既存サブスクのusage枠を消費し、最終レビューは引き続きWorkflow外のkurouto-nekoが担う。
 
 ## ドキュメント
 
@@ -257,6 +263,7 @@ bash neko-gundan/scripts/setup.sh  # ランタイムディレクトリを初期�
 | [テンプレ選び方とカスタマイズ](examples/README.md) | TypeScript / Python / Go 言語別テンプレの選び方、カスタマイズ手順、完成イメージ |
 | [品質ゲート](gates/) | 開始・完了・設計フェーズのゲート定義（チェックリスト付き） |
 | [YAML定義](yaml/) | エージェント・ルール・モジュール・ゲートの機械可読YAML版 |
+| [Dynamic Workflows](modules/dynamic-workflows.md) | 大隊規模をローカルJSサブエージェント統括に委譲する判断 |
 
 ## コントリビュート
 

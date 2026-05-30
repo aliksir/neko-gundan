@@ -62,3 +62,16 @@ The following features are available as modules. Check `neko-gundan.config.yaml`
 - `modules/jit-tests.md` — Just-in-Time disposable tests from PR diffs
 - `modules/ensemble-judge.md` — Multi-strategy evaluation (SE-Jury Method)
 - `modules/spec-driven-review.md` — Verify alignment with project spec
+
+## Workflow Delegation Review Discipline
+
+When battalion-scale work is delegated to a Dynamic Workflow (Claude orchestrating many sub-agents via a locally executed JS script), the Workflow's internal adversarial cross-review counts as a **preliminary screen only** — it is a separate layer from neko-gundan's review discipline (implementer != reviewer, Adversarial 2nd-Pass, Evidence Level Ladder, 5-phase review).
+
+- **Final APPROVE is always performed by a kurouto-neko OUTSIDE the workflow.** The Workflow's self-convergence does not constitute approval.
+- **The orchestrator who launched the Workflow must NOT double as the final reviewer** — doing so violates the implementer != reviewer principle.
+- **Dump run artifacts to `result/` and `audit/` before Evidence-Ladder judgment.** Intermediate state lives in script variables and is invisible to the external reviewer; persist it first so the reviewer can apply the rubric.
+- **The 3-cycle loop limit and arbitrator escalation apply OUTSIDE the workflow**, separate from the Workflow's internal convergence count.
+
+This is a research-preview feature; behavior and commands may change — re-verify at GA.
+
+Canonical conditions live in `modules/dynamic-workflows.md` (SSOT); update the SSOT first.

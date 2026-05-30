@@ -1,0 +1,167 @@
+module_detail:
+  name: Dynamic Workflows Integration Module
+  id: dynamic_workflows
+  default: "OFF"
+  scale: Platoon+
+  why: >
+    Dynamic Workflows is a Claude Code feature where Claude writes a JavaScript
+    script that the runtime executes LOCALLY in the background, orchestrating
+    sub-agents at scale. Unlike absorbing an external OSS philosophy, this module
+    integrates an official Claude Code feature into the cat-corps flow. The point
+    is operational: when, at what scale and role to use it, and how it coexists
+    with the existing TeamCreate (neko-gundan) flow. Without explicit rules,
+    teams risk overkill on small tasks, namespace collisions with existing
+    procedure docs, and skipping the final external review.
+  description: >
+    Operational rules for integrating the official Claude Code Dynamic Workflows
+    feature (research preview) and the ultracode effort into the cat-corps flow.
+    Covers the feature facts, the four-way usage table
+    (sub-agent / skill / TeamCreate / Dynamic Workflows), the orchestrator's
+    delegation decision, the review discipline when work is delegated, and the
+    namespace-collision defense. The sole SSOT for prose is
+    modules/dynamic-workflows.md; this YAML is the machine-readable mirror.
+
+  facts:
+    identity: >
+      Claude writes a JavaScript script that the runtime executes LOCALLY in the
+      background, orchestrating sub-agents at scale.
+    execution_location: >
+      LOCAL execution (up to 16 concurrent / CPU-bound; 1000 agents total per
+      run). Consumes the existing subscription usage pool.
+    external_billing: >
+      None. No external API billing and no data leaving the machine, so it does
+      not conflict with a no-external-API / zero-billing / no-data-egress policy.
+    launch_paths:
+      - "Path 1: the keyword 'workflow' in a prompt (press alt+w to ignore a misfire)."
+      - "Path 2: /effort ultracode (xhigh + auto-orchestration, session-only; /effort high reverts)."
+      - "Path 3: the bundled /deep-research <question>."
+    intermediate_results: >
+      Held in SCRIPT VARIABLES, so they do NOT consume the orchestrator's
+      context. This is the key advantage.
+    convergence: >
+      Independent sub-agents adversarially cross-review to self-converge.
+    limits: >
+      No user input mid-run; resume within the same session; a fresh session
+      starts from zero.
+    save_location: >
+      Save via /workflows -> select run -> s -> the PROJECT .claude/workflows/
+      with a neko- prefix. NEVER save to the home ~/.claude/workflows/, which
+      holds the routing-table procedure docs.
+    off_switches:
+      - "/config toggle"
+      - "disableWorkflows: true in settings.json"
+      - "CLAUDE_CODE_DISABLE_WORKFLOWS=1"
+    official_doc: "https://code.claude.com/docs/en/workflows"
+
+  four_way_usage:
+    sub_agent: >
+      Single independent delegation; the plan is held by the caller.
+    skill: >
+      A packaged, self-contained, reusable workflow; the plan follows the prompt.
+    teamcreate: >
+      Persistent team + shared task list + HUMAN-READABLE artifacts. Review
+      discipline (implementer != reviewer, etc.) works through artifact files.
+      Strong for staged human approval / HITL.
+    dynamic_workflows: >
+      Local JS orchestrating many sub-agents; intermediate state lives in script
+      variables (no orchestrator context cost); adversarial self-convergence;
+      no input mid-run.
+    one_liner: >
+      TeamCreate = work needing human mid-step approval plus human-readable
+      artifacts. Dynamic Workflows = exploratory work with no mid-step approval
+      that benefits from massive parallelism and self-convergence.
+      They are COMPLEMENTARY, not competing.
+
+  delegation:
+    prerequisite: >
+      The feature must be ON (/config) on a compatible Claude Code version. If it
+      is OFF or not yet rolled out, skip this section and fall back to TeamCreate
+      (fail-safe).
+    consider_when: >
+      Consider delegating to a Dynamic Workflow ONLY when the scale is BATTALION
+      (6+ files / large work) AND one of the following holds (OR; the
+      oyakata-neko orchestrator makes the final call):
+    consider_conditions:
+      - "(a) Cross-codebase audit: whole-repo scan type, no human mid-step approval needed."
+      - "(b) Large mechanical migration: many repetitive transforms with a fixed pattern."
+      - "(c) Cross-verification research: converge via independent agents' adversarial cross-review."
+    do_not_delegate_when:
+      - "Each phase needs human mid-step approval (no input mid-run, so it is unsuitable)."
+      - "Staged human-readable artifacts (plans/designs/whiteboard) are required for inspection."
+      - "Scale is mid-size or below (overkill)."
+      - "CPU contention: a TeamCreate is already running — avoid 16-agent local CPU starvation."
+    constraints_on_delegation:
+      - "Keep in mind: up to 16 concurrent / 1000 total agents, no input mid-run, resume within the same session."
+      - "Intermediate results stay in script variables = no orchestrator context cost (advantage)."
+      - "If saving a completed run, always /workflows -> s -> the PROJECT .claude/workflows/ with a neko- prefix (namespace defense)."
+      - "Does not conflict with a no-external-API / zero-billing policy (local execution, existing subscription usage pool)."
+    ssot: >
+      The SSOT for the delegation conditions is the oyakata-neko agent
+      definition (Dynamic Workflows delegation section). This YAML is a mirror;
+      on revision, update the SSOT first and follow here.
+
+  review_discipline:
+    core: >
+      The Workflow's internal adversarial cross-review is a PRELIMINARY
+      screening — a separate layer from the cat-corps implementer != reviewer /
+      Adversarial 2nd-Pass / Evidence Level Ladder / 5-phase review.
+    rules:
+      - "1. The Workflow's internal adversarial review is preliminary screening; it does NOT replace the cat-corps final review (kurouto-neko)."
+      - "2. Even for delegated battalion work, the FINAL APPROVE is ALWAYS performed by a kurouto-neko OUTSIDE the Workflow. The orchestrator (oyakata-neko) who launched the Workflow must NOT double as the final reviewer (implementer != reviewer violation)."
+      - "3. Dump run artifacts to result/audit before review (the Evidence Ladder cannot be applied to raw script variables)."
+      - "4. The 3-cycle limit and arbitrator escalation apply OUTSIDE the Workflow (cat-corps review loop), counted separately from the Workflow's internal convergence count."
+    layer_mapping:
+      - "Adversarial cross-review (internal): preliminary screening for Adversarial 2nd-Pass, not the final verdict."
+      - "implementer != reviewer (CR-1): the final reviewer is a kurouto-neko OUTSIDE the Workflow; the orchestrator never doubles as reviewer."
+      - "Evidence Level Ladder: dump run evidence to result/audit, then the kurouto-neko applies the ladder."
+      - "5-phase review: map the Workflow output to the Map->...->Validation phase artifacts and review them."
+      - "Final APPROVE: a Workflow run alone is never final; the kurouto-neko's external review of the run artifacts is the only passing verdict."
+    ssot: >
+      The SSOT for this discipline is the review-protocol module (Workflow
+      delegation review section). This YAML is a mirror; on revision, update the
+      SSOT first and follow here.
+
+  namespace:
+    problem: >
+      The existing ~/.claude/workflows/*.md (bug-fix / new-feature / refactor /
+      security-audit / research) are PROCEDURE docs (how-to) Read by the
+      gates-start routing table. Dynamic Workflow saved scripts use the same .md
+      extension but contain JS orchestration. Mixing them makes the gate Read JS
+      as a procedure doc.
+    defense:
+      - "(i) Save Dynamic Workflow outputs ONLY under the project .claude/workflows/ with a neko- prefix; never the home ~/.claude/workflows/ (physically separated from the old procedure-doc directory)."
+      - "(ii) Add a gates-start note that neko-* workflows are OUT of the routing table's Read scope (naming alone is insufficient, because the routing-table logic does not inspect the prefix)."
+      - "(iii) Document the role difference: procedure doc (how-to) vs execution engine (Dynamic Workflow)."
+
+  templates:
+    - name: Reusable workflow template pointer
+      fields:
+        - "Saved reusable workflows follow templates/workflow-template.md."
+        - "Save target: the PROJECT .claude/workflows/ with a neko- prefix."
+
+  integration_points:
+    - agent: oyakata-neko
+      phase: Delegation decision (battalion scale)
+      action: >
+        Decide whether to delegate to a Dynamic Workflow using the consider /
+        do-not-delegate conditions. Fail-safe to TeamCreate if the feature is OFF
+        or not rolled out.
+    - agent: kurouto-neko
+      phase: After a delegated run completes
+      action: >
+        Perform the FINAL APPROVE OUTSIDE the Workflow against run artifacts
+        dumped to result/audit, applying the Evidence Level Ladder. The
+        orchestrator must not double as this reviewer.
+    - agent: shigoto-neko / genba-neko
+      phase: Saving a completed run
+      action: >
+        Save only under the project .claude/workflows/ with a neko- prefix; never
+        the home directory. Keep neko-* workflows out of the gates-start routing
+        scope.
+
+  notes:
+    - "This is the integration of an official Claude Code feature, not absorption of an external OSS philosophy."
+    - "Research preview: behavior, commands, and the effort menu may change. Re-verify at the preview -> GA migration (saved-workflow format compatibility and command names)."
+    - "If not adopted in practice, keep as a dormant rule (do not delete, reference only)."
+    - "Non-interference: the existing review, autopilot, and routing-table flows are unchanged; this module only appends a delegation layer and a namespace note."
+    - "The sole SSOT for prose is modules/dynamic-workflows.md; this YAML mirrors it for machine readability."

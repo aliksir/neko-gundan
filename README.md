@@ -250,6 +250,10 @@ Every protocol exists because something went wrong without it.
 
 [Case studies](docs/case-studies.md) show how these work in practice.
 
+### Dynamic Workflows (research preview)
+
+For battalion-scale work (6+ files), the orchestrator (oyakata-neko) can delegate to a Dynamic Workflow — a JavaScript script the runtime executes locally in the background to orchestrate many sub-agents at once (up to 16 concurrent, 1000 total per run). It runs locally and consumes your existing subscription usage, so there is no external API billing and no data leaving the machine; intermediate results stay in script variables and never eat the orchestrator's context. Delegate only for a cross-codebase audit, a large mechanical migration, or cross-verification research with no human approval needed mid-run — never when each phase needs human sign-off, when human-readable artifacts are required, or when a TeamCreate is already running. The workflow's internal cross-review is only a preliminary screening: the final APPROVE always goes to a kurouto-neko outside the workflow (implementer != reviewer). See [modules/dynamic-workflows.md](modules/dynamic-workflows.md).
+
 ## Trade-offs
 
 **You are still the boss.** The reviewer and implementer share the same model family, so they can share blind spots. Think of it as "better first draft" — not "no review needed."
@@ -261,6 +265,8 @@ Every protocol exists because something went wrong without it.
 | `.claude/` prompt complexity | Re-reviewing "completed" work that wasn't verified |
 
 Safety rules (`security` mode) cost almost nothing — prompt rules, no extra agent calls. [Comparison with other tools](docs/comparison.md).
+
+**Dynamic Workflows (research preview)** are optional and local — they consume your existing subscription usage, not an external API, and the final review still goes through a kurouto-neko outside the workflow.
 
 ## Documentation
 
@@ -281,6 +287,7 @@ Safety rules (`security` mode) cost almost nothing — prompt rules, no extra ag
 | [Example CLAUDE.md](examples/CLAUDE.md.example) | Full configuration example |
 | [Quality Gates](gates/) | Start, completion, and design phase gate definitions with checklists |
 | [YAML Definitions](yaml/) | Machine-readable YAML versions of all agents, rules, modules, and gates |
+| [Dynamic Workflows](modules/dynamic-workflows.md) | When to delegate battalion-scale work to local JS sub-agent orchestration |
 
 ## Contributing
 

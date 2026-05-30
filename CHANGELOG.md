@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.11.0] - 2026-05-30
+
+### Added
+- **Dynamic Workflows support (research preview)**: New SSOT `modules/dynamic-workflows.md` documenting Claude Code's Dynamic Workflows feature — Claude writes a JavaScript orchestration script that the runtime executes **locally** in the background, coordinating many sub-agents at scale (up to 16 concurrent, 1000 agents total per run). Runs against the existing subscription usage pool: **no external API billing, no data leaving the machine**. Intermediate results live in script variables (they do not consume the orchestrator's context), and independent agents adversarially cross-review to self-converge. Three launch paths: the keyword `workflow` in a prompt, `/effort ultracode`, and the bundled `/deep-research`. Official doc: https://code.claude.com/docs/en/workflows
+- **`yaml/modules/dynamic-workflows.yaml`**: Machine-readable module config (toggle, default state, applicable scale).
+- **`templates/workflow-template.md`**: Reusable template for saving Dynamic Workflow scripts. Saved runs go under the **project** `.claude/workflows/` with a `neko-` prefix (never the home `~/.claude/workflows/`, which holds the routing-table procedure docs) so the gates-start routing table never reads a JS orchestration script as a how-to procedure doc.
+- **Mirror sections appended** to `agents/oyakata-neko.md` (battalion-scale delegation decision: cross-codebase audit / large mechanical migration / cross-verification research — and when NOT to delegate, with a fail-safe fallback to TeamCreate), `rules/review-protocol.md` (review discipline — the Workflow's internal cross-review is only a preliminary screening; **final approve is always performed by a kurouto-neko outside the Workflow**, and the orchestrator that launched the Workflow must not double as the final reviewer), `gates/gates-start.md` (note that `neko-*` workflows are out of the routing table's Read scope), and `docs/WORKFLOW.md` (pointer to the SSOT). `README.md` and `README.ja.md` updated to mention the feature. The four-way usage distinction (sub-agent / skill / TeamCreate / Dynamic Workflows) is documented as complementary, not competing.
+- **neko-kensa automated analysis integrated into the review workflow** (commit `e0d8a0c`).
+- **`examples/README.md`** added to walk through template customization (commit `2a1f8f2`, #121).
+- **README CI/Release badges and a 1-Minute Demo** added (commit `486fc93`, #120).
+
+### Changed
+- **GitHub Actions bumped to v6** (commit `486fc93`, #120).
+- **LF line endings enforced** via `.gitattributes` (`* text=auto eol=lf`) (commit `6f325fb`, #119).
+
+### Documentation
+- **Code provenance & license check** added to the "Safety Built In" section of the README (commit `a02c999`).
+- **Three review nits from PR #120/#121** bundled into a single cleanup PR (commit `a306c82`, #122).
+
+### Fixed
+- **CI failures fixed**: pytest install plus shellcheck SC2168/SC2164/SC2155/SC2034 (commit `e2a1ee6`, #118).
+
+> Dynamic Workflows is a research preview — behavior and commands may change. Re-verify at the preview→GA migration. If the feature is off or not yet rolled out, treat the delegation guidance as a dormant rule and fall back to TeamCreate.
+
 ## [1.10.2] - 2026-05-24
 
 ### Fixed

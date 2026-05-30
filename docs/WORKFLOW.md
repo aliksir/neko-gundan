@@ -339,3 +339,29 @@ bash scripts/token-tracker.sh status "作戦名"
 | テスト実行結果の証跡 | pass/fail件数・カバレッジ等のコマンド出力 |
 | 品質チェック結果 | lint/セキュリティスキャン等の結果。未実施→`[N/A]` |
 | 不合格項目の一覧化 | fail・警告・脆弱性がある場合は一覧化 |
+
+---
+
+## Dynamic Workflows との連携
+
+Claude Code 公式の **Dynamic Workflows**（ランタイムがローカルでサブエージェントを大規模に統括する仕組み）に作業を委譲した場合、猫軍団のフェーズとの関係は次の通り。
+
+### 主要フェーズへの対応
+
+Workflow 内部が走らせる `Map → ... → Validation` の流れは、本ワークフローの**主要フェーズ（PLAN → DESIGN → EXECUTE → REVIEW → VERIFY。準備の SETUP と報告の REPORT を除く実質作業）**にマッピングできる。ただし Workflow 内部の敵対的相互レビューは**予備審査**にすぎず、猫軍団の品質規律（実装者≠レビュアー、Adversarial 2nd-Pass、Evidence Level Ladder など）とは**別レイヤー**である。
+
+### 最終 APPROVE の所在
+
+- Workflow の内部レビューで最終合格を確定しない。
+- **最終 APPROVE は必ず Workflow の外側の玄人猫（kurouto-neko）が行う。**
+- Workflow を起動した親方猫（oyakata-neko）が最終レビュアーを兼任することは**禁止**（実装者≠レビュアー違反）。
+- 玄人猫が Evidence Level Ladder で判定できるよう、run の成果物は `result/` / `audit/` にダンプしてからレビュー対象にする。
+- ループ上限3回・仲裁者エスカレーションは Workflow の**外側**（猫軍団のレビューループ）に適用し、Workflow 内部の収束回数とは別カウントとする。
+
+### 委譲する/しないの判断
+
+委譲を検討するのは**大隊規模**のときに限る。詳細な使い分け・委譲判断・名前空間の衝突防止は SSOT である `modules/dynamic-workflows.md` を参照する。委譲時の保存先テンプレートは `templates/workflow-template.md` を案内する（保存は `neko-` 接頭辞付きでプロジェクトの `.claude/workflows/` に限定し、ホームディレクトリの汎用フロー手順書とは混在させない）。
+
+機能未配信・OFF の場合は本連携をスキップし、通常の猫軍団編成にフォールバックする。
+
+- 公式ドキュメント: https://code.claude.com/docs/en/workflows

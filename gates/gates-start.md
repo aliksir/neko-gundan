@@ -154,3 +154,10 @@ Record **evidence** (command output or summary) for each item.
 - Run DB/API/UI design during design phase (if applicable)
 - No DB → record DB design as `[N/A]` and skip
 - No API/UI needed → same treatment
+
+---
+
+## Note: neko-* Dynamic Workflows are out of the routing table
+
+Saved Dynamic Workflow run scripts (`neko-*` prefixed `.md` files under the project `.claude/workflows/`) are **OUT of this gate's Task Type Routing Table Read scope**. They are execution engines (JavaScript orchestration), not procedure docs, so the routing table must never Read them as workflows. Delegation decisions about Dynamic Workflows are made via `agents/oyakata-neko.md` §Dynamic Workflows 委譲判断 and `modules/dynamic-workflows.md` (SSOT). Research preview — behavior/commands may change; re-verify at GA.
+

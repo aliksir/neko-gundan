@@ -1,0 +1,146 @@
+module_detail:
+  name: Process Weight Module
+  id: ESCALATION-001
+  default: "ON"
+  scale: All
+  why: "全タスクに重いプロセスを強制するとコストと時間が無駄になる。一方で軽いプロセスを本番前変更に適用するのは危険。動的にプロセス重量を選択し、リスクに応じてエスカレーションできる仕組みを提供する。安全プロトコルはどの重量でも削減されない。"
+  description: "動的プロセス重量選択モジュール。Light / Standard / Strict の3段階を定義し、自然言語キーワードで切り替える。任意のエージェントがリスクを検知した場合 ESCALATION-001 で重量アップグレードを要求できる。タスクトポロジー選択ガイド（arXiv:2602.16873）も含む。"
+  configuration:
+    steps:
+      - "neko-gundan.config.yaml でデフォルト重量を設定可能（未設定時は Standard）"
+      - "ユーザーが自然言語キーワードで起動時に重量を指定する"
+      - "Light mode キーワード: 'ライトで' / 'ライトモードで' / '軽くやって' / 'サクッと' / 'light mode' / 'quick fix'"
+      - "Strict mode キーワード: '厳密に' / 'ストリクトで' / '慎重に' / 'リリース前' / 'strict mode' / 'careful'"
+      - "Standard mode: キーワード指定なしの場合のデフォルト"
+  procedures:
+    - id: 1
+      name: "プロセス重量の比較表"
+      steps:
+        - "Light — トリガー: キーワード指定時 / 完了ゲート: クイックゲート(テスト+diff のみ) / レビュー: セルフチェック可 / 異議: エスカレーションのみ / ホワイトボード: なし / 計画・報告: 1行サマリー / ISV: スキップ"
+        - "Standard — トリガー: デフォルト / 完了ゲート: フルゲート / レビュー: 実装者≠レビュアー / 異議: 通常 / ホワイトボード: 小隊以上 / 計画・報告: 標準 / ISV: オプション"
+        - "Strict — トリガー: キーワード指定時またはリリース前 / 完了ゲート: フルゲート＋アンサンブルジャッジ / レビュー: 必須＋アンサンブル / 異議: 必須＋仲裁者スタンバイ / ホワイトボード: 必須 / 計画・報告: 詳細 / ISV: 必須"
+      conditions: []
+    - id: 2
+      name: "タスクトポロジー選択（依存関係分析）"
+      steps:
+        - "チーム編成前にタスクの依存関係グラフを分析する"
+        - "ステップ1: 計画書から全サブタスクを列挙する"
+        - "ステップ2: 依存関係を特定する — どのサブタスクが他の出力を必要とするか"
+        - "ステップ3: 並列化ポテンシャルを計算する — 任意の時点での最大独立サブタスク数"
+        - "ステップ4: トポロジーを選択する"
+        - "  並列化=1 → Chain（逐次）"
+        - "  並列化>1かつサブ管理不要 → Star（ハブスポーク）"
+        - "  並列化>1かつサブ管理必要 → Hierarchical（階層）"
+        - "  混在 → Hybrid（依存波+並列混在）"
+        - "この分析はファイル数ベースのスケーリングを依存関係考慮スケーリングで置き換える（arXiv:2602.16873）"
+      conditions: []
+    - id: 3
+      name: "トポロジー選択ガイド"
+      steps:
+        - "Chain（逐次）: タスクに厳密な順序依存がある場合（A→B→C） — 猫軍団マッピング: 小隊・単独作業員・逐次ステップ"
+        - "Star（ハブスポーク）: 中央マネージャーが調整する独立サブタスク群 — 猫軍団マッピング: 小隊・仕事猫が独立現場猫を調整"
+        - "Hierarchical（階層）: サブマネージャーが必要な複雑タスク — 猫軍団マッピング: 大隊・親方→仕事猫→現場猫の3層"
+        - "Hybrid（混在）: 依存と独立が混在するサブタスク — 猫軍団マッピング: 小隊以上・並列波と逐次の組み合わせ"
+      conditions: []
+    - id: 4
+      name: "Light Mode — クイックゲート"
+      steps:
+        - "フル完了ゲートを最小チェックに置き換える（rules/completion-gates.md のゲート項目番号を参照）"
+        - "ゲート#1: テスト通過（全成功基準達成） — テストスイート実行"
+        - "ゲート#2: 意図しないdiffなし — git diff で対象ファイルのみ変更確認"
+        - "ゲート#5: コミット済み（未コミットの新規ファイルなし） — git status がclean"
+        - "plans/, result/, ISV, ホワイトボードは不要"
+      conditions:
+        - "Light mode が選択されている場合"
+    - id: 5
+      name: "Light Mode — セルフチェック定義"
+      steps:
+        - "Light mode では玄人猫（独立レビュアー）は関与しない。レビュー依頼を送らない"
+        - "実装者（現場猫または仕事猫）が以下のセルフチェックを実施する"
+        - "許可: テスト実行で機能確認"
+        - "許可: lint/型チェックで静的品質確認"
+        - "許可: git diff で意図しない変更がないか確認"
+        - "許可: 基本的なロジックチェック（このif分岐は正しいか？）"
+        - "不可（Standard/Strict mode が必要）: 別の視点からの批判的レビュー"
+        - "不可（Standard/Strict mode が必要）: セキュリティ深掘り"
+        - "不可（Standard/Strict mode が必要）: 保守性・アーキテクチャ評価"
+      conditions:
+        - "Light mode が選択されている場合"
+    - id: 6
+      name: "エスカレーションプロトコル（ESCALATION-001）"
+      steps:
+        - "任意のエージェントがプロセス重量アップグレードを要求できる"
+        - "これは義務であって提案ではない — リスクが現在の重量を超えると判断したら必ず申し立てる"
+        - "エスカレーションフォーマット:"
+        - "  ESCALATION-001: Process weight upgrade request"
+        - "  Current: Light"
+        - "  Proposed: Standard (or Strict)"
+        - "  Reason: [具体的なトリガー — 例: 'DBマイグレーションを含む4ファイルに触れる']"
+        - "エスカレーションフロー:"
+        - "  1. エージェントがリスクを検知"
+        - "  2. ESCALATION-001 を申し立てる"
+        - "  3. 親方猫（または親方猫不在なら仕事猫）が判断: ACCEPT / REJECT / MODIFY"
+        - "  ACCEPT: 上位重量に切り替えて継続"
+        - "  REJECT: 現在の重量を維持（理由を明記すること）"
+        - "  MODIFY: 部分的なアップグレード（例: 'レビューは追加するがホワイトボードはスキップ'）"
+      conditions: []
+    - id: 7
+      name: "Light→Standard エスカレーショントリガー"
+      steps:
+        - "以下のいずれか1つでも該当すれば Light から Standard にエスカレーション必須"
+        - "変更ファイルが3以上: スコープが 'quick fix' を超えている"
+        - "DBまたはAPI変更を含む: 構造的リスク"
+        - "セキュリティ関連の変更: 安全リスク"
+        - "既存テストが壊れる: 予期しない影響範囲"
+        - "エージェントが「これはLightではない」と判断: プロフェッショナルな判断"
+      conditions:
+        - "Light mode で作業中の場合"
+    - id: 8
+      name: "Strict Mode — 使用場面"
+      steps:
+        - "リリース前の変更"
+        - "本番DBの変更"
+        - "セキュリティ重要機能"
+        - "ユーザーが '慎重に' / 'careful' と指定した場合"
+        - "Strict mode が有効化するもの: アンサンブルジャッジ、必須ISV、完全証跡ゲート、仲裁者スタンバイ"
+      conditions: []
+    - id: 9
+      name: "既存プロトコルとの統合"
+      steps:
+        - "OBJECTION-001/002 — Light: エスカレーションのみ / Standard: アクティブ / Strict: アクティブ＋仲裁者"
+        - "HEARTBEAT-001 — Light: アクティブ / Standard: アクティブ / Strict: アクティブ"
+        - "POLLING-001 — Light: 緩和（15分） / Standard: 通常（10分） / Strict: 積極的（5分）"
+        - "RACE-001 — Light: アクティブ / Standard: アクティブ / Strict: アクティブ"
+        - "Reflexion — Light: 失敗時のみ / Standard: 失敗時 / Strict: 常に（成功時も）"
+      conditions: []
+  templates:
+    - name: "ESCALATION-001 申立フォーマット"
+      fields:
+        - "ESCALATION-001: Process weight upgrade request"
+        - "Current: {Light / Standard}"
+        - "Proposed: {Standard / Strict}"
+        - "Reason: {具体的なトリガー}"
+  integration_points:
+    - agent: oyakata-neko
+      phase: Task assignment
+      action: "Set initial process weight based on activation keywords"
+    - agent: shigoto-neko
+      phase: Pre-dispatch
+      action: "Pass process weight to genba-neko in task instructions"
+    - agent: genba-neko
+      phase: During work
+      action: "Monitor escalation triggers, file ESCALATION-001 if needed"
+    - agent: kurouto-neko
+      phase: Review start
+      action: "Check process weight to determine review depth (self-check vs independent)"
+    - agent: oyakata-neko
+      phase: On ESCALATION-001
+      action: "Decide ACCEPT/REJECT/MODIFY for weight upgrade requests"
+  notes:
+    - "安全プロトコル（RACE-001, HEARTBEAT-001, 安全Tier）はプロセス重量で削減されない。Light modeはプロセスを軽くするが、安全性を下げるものではない"
+    - "エスカレーションは罰せられない。誤検知は許容される。見落としは許容されない"
+    - "エスカレーションしたエージェントは作業を継続する — ゼロから再開しない"
+    - "ダウングレード（Standard→Light）は明示的な人間の承認が必要"
+    - "REJECT には理由を必ず記載すること: '理由: [スコープは実際には1ファイルに限定されているため]'"
+    - "SSOT: 正規のゲート項目一覧は rules/completion-gates.md にある。このモジュールは各重量レベルでチェックするサブセットを定義する"
+    - "タスクトポロジー選択はファイル数ベースのスケーリングを依存関係考慮スケーリングで補完する（arXiv:2602.16873）"

@@ -1,0 +1,12 @@
+[package]
+name = "mutation-inject"
+version = "0.1.0"
+edition = "2021"
+description = "Mutation-Based Review Validator — inject code mutations for reviewer quality measurement"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+regex = "1"
+aes-gcm = "0.10"
+rand = "0.8"

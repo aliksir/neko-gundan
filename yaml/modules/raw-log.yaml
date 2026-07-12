@@ -1,0 +1,121 @@
+module_detail:
+  name: Raw Log Module
+  id: null
+  default: "OFF"
+  scale: Squad+
+  why: "完了ゲートは『何をチェックしたか』を証明する。Raw logは『何をしたか』を証明する。ステークホルダーに全ての行変更を説明する必要がある場合、報告書だけでは不十分。フルdiff・全コマンド出力・各判断の根拠が必要になる。"
+  description: "エージェントが行った全アクション（読み取り・変更・実行・判断）の完全な監査証跡。ctrl+Oのコンテキストビューアと同等の粒度で全ツールコールを1行ずつ記録する。要約禁止・省略禁止・全件記録が最優先。"
+  configuration:
+    steps:
+      - "neko-gundan.config.yaml で有効化:"
+      - "  shitsuke:"
+      - "    raw_log: true"
+      - "出力ディレクトリを CLAUDE.md で設定（オプション、デフォルトは logs/）:"
+      - "  ### ログ出力"
+      - "  - raw_log_output_dir: logs/"
+      - "出力ファイルパス: logs/raw-{mission-name}-{YYYYMMDD}.md"
+      - "1ミッションにつき1ファイル。作業完了後に生成（作業中ではない）"
+  procedures:
+    - id: 1
+      name: "現場猫 — 作業中のアクション記録"
+      steps:
+        - "実行中は取ったアクションをメンタルメモとして記録する（作業中のファイル書き込みは不要）"
+        - "ハンドオフ時に完了報告に構造化アクションリストを含める"
+        - "アクションリストのYAMLフォーマット:"
+        - "  actions:"
+        - "    - tool: Edit"
+        - "      file: src/checks/inbound.js"
+        - "      line: 31"
+        - "      diff: |"
+        - "        + /\\b(?:Invoke-Expression|IEX)\\s*[\\s(]/i,"
+        - "    - tool: Bash"
+        - "      command: node -e 'const {CHECKS}...'"
+        - "      output: 'IN-002 patterns: 16'"
+        - "      exit: 0"
+      conditions: []
+    - id: 2
+      name: "仕事猫 — ログファイル生成"
+      steps:
+        - "全現場猫の作業完了後、完了ゲート前に以下を実施する"
+        - "1. 全現場猫の完了報告からアクションリストを収集する"
+        - "2. git diff を実行して正確な差分を取得する（エージェントの記憶に頼らない）"
+        - "   コマンド: git diff HEAD~{N}..HEAD -- {files}"
+        - "3. アクションリストとgit diffを統合してログファイルを生成する"
+        - "4. logs/raw-{mission}-{YYYYMMDD}.md に書き込む"
+        - "エージェントが報告したdiffとgitのdiffが一致しない場合、gitのバージョンを使用して不一致をフラグする"
+      conditions: []
+    - id: 3
+      name: "記録ルール"
+      steps:
+        - "全件記録: 全てのツールコールを1行ずつ記録。省略・まとめ禁止"
+        - "1行1アクション: 'Read: {path} ({行数})' のようにツール名+対象+結果を1行で"
+        - "結果を含める: Bash→exit code、Grep→match数、テスト→pass/fail数"
+        - "失敗も記録: エラー・リトライ・失敗した試行も全て記録（むしろ重要）"
+        - "Decisionは理由付き: 判断・選択をした箇所は 'Decision:' で理由を1行記録"
+      conditions: []
+    - id: 4
+      name: "ツール別フォーマット"
+      steps:
+        - "Read: `Read: {path} ({N}行)` または `Read: {path} L{start}-{end}`"
+        - "Edit: `Edit: {path} L{line} — {何を変えたか}`"
+        - "Write: `Write: {path} (新規, {N}行)` または `Write: {path} (上書き, {N}行)`"
+        - "Bash: `Bash: {command} (exit:{code})` 失敗時は `(exit:{code}, {エラー要約})`"
+        - "Grep: `Grep: \"{pattern}\" in {path} → {N} matches in {M} files`"
+        - "Glob: `Glob: {pattern} → {N} files`"
+        - "Decision: `Decision: {何を判断したか} → {選んだ結果と理由}`"
+        - "SendMessage: `SendMessage: → {recipient} \"{要約}\"`"
+        - "Agent: `Agent: {name} ({options}) \"{task}\"`"
+        - "Skill: `Skill: /{name} → {結果要約}`"
+        - "MCP: `MCP: {tool_name}({params要約}) → {結果要約}`"
+      conditions: []
+  templates:
+    - name: "Raw Log File Format"
+      fields:
+        - "# Raw Log: {Mission Name}"
+        - "**Date**: YYYY-MM-DD HH:MM"
+        - "**Scale**: {squad/platoon/battalion}"
+        - "**Team**: {agent list}"
+        - "## Actions"
+        - "Read: <project>/src/main.js (250行)"
+        - "Read: <project>/package.json (32行)"
+        - "Glob: src/**/*.jsx → 8 files"
+        - "Grep: \"useState\" in src/ → 12 matches in 5 files"
+        - "Edit: <project>/src/main.js L15-20 — import追加"
+        - "Edit: <project>/src/main.js L45-80 — handleSubmit関数書き換え"
+        - "Write: <project>/src/utils/helper.js (新規, 35行)"
+        - "Bash: cd <project> && npm install (exit:0)"
+        - "Bash: cd <project> && npm run build (exit:0)"
+        - "Bash: cd <project> && npm test (exit:1, FAIL: 2/15)"
+        - "Decision: テスト失敗はimportパスの変更漏れ → helper.jsのexportを修正"
+        - "Edit: <project>/src/utils/helper.js L12 — export名修正"
+        - "Bash: cd <project> && npm test (exit:0, PASS: 15/15)"
+        - "SendMessage: → genba-neko-1 \"テスト修正完了、再レビュー依頼\""
+        - "Agent: genba-neko-1 (worktree, background) \"エッジケーステスト追加\""
+        - "Skill: /simplify → 変更ファイル3件レビュー"
+    - name: "Genba-neko Action List (handoff YAML)"
+      fields:
+        - "actions:"
+        - "  - tool: Edit"
+        - "    file: {path}"
+        - "    line: {line_number}"
+        - "    diff: |"
+        - "      {diff content}"
+        - "  - tool: Bash"
+        - "    command: {command}"
+        - "    output: {output_summary}"
+        - "    exit: {exit_code}"
+  integration_points:
+    - agent: genba-neko
+      phase: "Post-work (completion report)"
+      action: "Include structured action list in handoff"
+    - agent: shigoto-neko
+      phase: Pre-completion-gate
+      action: "Collect action lists, run git diff, generate raw log file"
+    - agent: shigoto-neko
+      phase: Completion gate
+      action: "Verify raw log file exists"
+  notes:
+    - "このモジュールがアクティブな場合、完了ゲートに項目を追加: 'Raw log generated — logs/raw-{mission}-*.md exists with action details'"
+    - "git diff が正確な差分の正（source of truth）。エージェントが報告したdiffと一致しない場合はgitのバージョンを使用してフラグを立てる"
+    - "ログファイルは作業完了後に生成する（作業中にリアルタイム書き込みしない）"
+    - "要約禁止・省略禁止・全件記録が最優先"

@@ -1,0 +1,790 @@
+# ゲート定義（SSOT）
+# 全ゲートの定義はこのファイルが正（SSOT）。MEMORY.mdからはポインタで参照する。
+# ゲート実行時は必ずこのファイルを Read で読み込むこと。記憶ベースでの実行は禁止。
+# 変換元: .claude/rules/gates.md（405行）
+
+gates:
+
+  # ============================================================
+  # 規模別ゲートスケーリング
+  # ============================================================
+  scaling:
+    - scale: recon
+      label: 偵察
+      start_gate: "ナノ開始（2項目）"
+      completion_gate: "なし"
+      plan_required: false
+      report_required: false
+      artifact_set: "なし"
+    - scale: squad
+      label: 小隊
+      start_gate: "ミニ開始（7項目）"
+      completion_gate: "ミニ完了（9項目）"
+      plan_required: true
+      report_required: true
+      artifact_set: "全8種"
+    - scale: "platoon+"
+      label: 中隊+
+      start_gate: "フル開始（11項目）"
+      completion_gate: "フル完了（19項目）"
+      plan_required: true
+      report_required: true
+      artifact_set: "全8種"
+
+  # ============================================================
+  # オーダー受領時の対象確認（全規模共通・ゲート前に実施）
+  # ============================================================
+  order_reception:
+    notes: "直前の作業コンテキストをリセットしてから判断すること"
+    steps:
+      - id: 1
+        check: "依頼か？"
+        method: "下記「依頼認識基準」で判定。依頼でなければゲート不要"
+      - id: 2
+        check: "新規 or 既存？"
+        method: "新規プロジェクトか、既存アプリの改修か → MEMORY.mdのプロジェクト一覧で確認"
+      - id: 3
+        check: "何のアプリ？"
+        method: "対象プロジェクト名を特定（カレントディレクトリに引きずられない）"
+      - id: 4
+        check: "プロジェクトフォルダは？"
+        method: "`<project-root>/{プロジェクト名}` のパスを確認"
+
+    recognition_criteria:
+      - type: "明確な依頼"
+        examples:
+          - "〇〇を実装して"
+          - "バグを直して"
+          - "追加して"
+        gate: "必須（小隊以上）"
+      - type: "暗黙の依頼"
+        examples:
+          - "そういえばあれも直して"
+          - "ついでにこれも"
+        gate: "必須（別作業中なら切替手順も）"
+      - type: "調査依頼"
+        examples:
+          - "〇〇調べて"
+          - "これ読んで"
+          - "どう思う？"
+        gate: "必須（ナノ開始）"
+      - type: "導入・設定依頼"
+        examples:
+          - "入れて"
+          - "設定して"
+          - "公開して"
+        gate: "必須（小隊以上）"
+      - type: "雑談のみ"
+        examples:
+          - "はろー"
+          - "ありがとう"
+        gate: "不要（ただし「雑談からの昇格」参照）"
+
+    principle: "何かを「やる」依頼は全てゲートを通す。純粋な雑談のみ不要。"
+
+    escalation_from_chat: >
+      雑談中に「ついでにこれ調べて」「これ入れて」等の依頼が発生した場合、その時点で
+      ナノゲート（調査）またはミニ開始ゲート（開発・改修）を即座に通す。
+      「雑談の延長だからゲート不要」という判断は禁止。
+
+    project_switch_procedure:
+      - "現在の作業状態を確認（git status、未コミットの変更がないか）"
+      - "未コミットの変更があればWIPコミットまたはstash"
+      - "新しい依頼の「オーダー受領時の対象確認」を実施"
+      - "新しい対象プロジェクトのディレクトリで開始ゲートを通す"
+      - "元の作業に戻る場合は、元プロジェクトのgit statusから再開"
+
+  # ============================================================
+  # ナノ開始ゲート（偵察用・2項目）
+  # ============================================================
+  nano_start:
+    scale: recon
+    label: "ナノ開始ゲート"
+    items_count: 2
+    description: "偵察（調査・質問・1ファイル確認）でも最低限の状況把握を行う。10秒で終わる。"
+    items:
+      - id: 1
+        check: "対象特定"
+        method: "何について・どのPJか。対象がPJ横断なら `[横断]` と記録"
+      - id: 2
+        check: "完了像の確認"
+        method: "総司令が求めているアウトプットは何か（回答？ファイル変更？記録？）"
+
+    execution:
+      step1: "上記2項目を頭の中で確認するだけでOK（ファイル出力不要）"
+      step2: "対象がPJに紐づく場合は `git status` を推奨（必須ではない）"
+      step3: "調査結果から「これは小隊以上だな」と判断したら、その時点でミニ/フル開始ゲートに昇格"
+
+    escalation_rules:
+      - "ナノゲートで開始しても、開発・改修・設定変更・ファイル作成が発生した時点で即座にミニ開始ゲート以上に昇格する"
+      - >
+        昇格した瞬間に以下を実行する（実装着手より前）:
+        1. plans/YYYYMMDD_{タスク名}.md を作成（スコープ・成功基準を書く）
+        2. checklist/YYYYMMDD_{タスク名}.md を作成（作業項目を書く）
+        3. その後に実装を開始する
+        4. 完了時に result/YYYYMMDD_{タスク名}.md を作成する
+      - "「先に手を動かして後で書く」は禁止。計画書が先、コードが後。"
+      - "外部レビュー（Codex等）で修正リストが既にある場合でも、計画書にスコープとして転記してから着手する。"
+
+    artifact_set_rules:
+      - "1タスク = 1セット（9種）。全成果物を同じ {タスク名} で1対1対応させる。"
+      - "命名: YYYYMMDD_{タスク名} を全成果物で統一"
+      - "複数タスクを1セッションで処理しても、成果物は個別に作る（1報告書にまとめない）"
+      - "計画書があるのに報告書がない、またはその逆は不整合。ペアで存在すること"
+      - "メトリクスは報告書に含めない。metrics/ の累積ファイルに追記し、報告書からはリンクで参照"
+
+    artifact_set_examples:
+      - path: "plans/20260315_welcome-neko.md"
+        label: "計画書"
+      - path: "designs/20260315_welcome-neko.md"
+        label: "設計書"
+      - path: "checklist/20260315_welcome-neko.md"
+        label: "チェックリスト"
+      - path: "test-plan/20260315_welcome-neko.md"
+        label: "テスト計画書"
+      - path: "audit/20260315_welcome-neko.md"
+        label: "監査ログ"
+      - path: "logs/20260315_welcome-neko.md"
+        label: "生ログ"
+      - path: "result/20260315_welcome-neko.md"
+        label: "報告書"
+      - path: "metrics/{PJ名}_metrics.md"
+        label: "メトリクス（PJ別累積、タスク行を追記）"
+      - path: "whiteboard/whiteboard-{PJ名}.md"
+        label: "ホワイトボード（中隊+のみ）"
+
+    artifact_timing:
+      note: "「テンプレート作成→コミット前に慌てて埋める」は禁止。各成果物はフェーズ完了時に完成していること。"
+      principle: "報告書とメトリクス以外は、コミット前ではなく各フェーズ完了時に完成している。"
+      items:
+        - artifact: "計画書"
+          timing: "開始ゲート完了時（着手前）"
+          checkpoint: "計画書がないコードは存在しないのと同じ"
+        - artifact: "チェックリスト"
+          timing: "計画書作成時（着手前）"
+          checkpoint: "作業項目+QA項目を洗い出してから着手"
+        - artifact: "設計書"
+          timing: "設計フェーズ完了時（実装前）"
+          checkpoint: "設計レビュー通過後に実装開始"
+        - artifact: "テスト計画書"
+          timing: "設計完了時（実装前）"
+          checkpoint: "テスト対象判定と同時にマトリクス骨格を作成"
+        - artifact: "監査ログ"
+          timing: "各フェーズ通過時に随時追記"
+          checkpoint: "レビュー承認・スコープ変更の都度記録"
+        - artifact: "生ログ"
+          timing: "作業中に随時追記"
+          checkpoint: "Read/Edit/Bash等のアクションを都度記録"
+        - artifact: "報告書"
+          timing: "完了ゲート直前"
+          checkpoint: "全フェーズの結果を集約"
+        - artifact: "メトリクス"
+          timing: "完了ゲート時"
+          checkpoint: "タスク行追記+サマリー再計算"
+
+  # ============================================================
+  # ミニ開始ゲート（小隊用・7項目）
+  # ============================================================
+  mini_start:
+    scale: squad
+    label: "ミニ開始ゲート"
+    items_count: 7
+    note: "各項目は証跡（実行結果の貼り付け or 要約）をチェック時に記録すること。"
+    execution:
+      forced_read: true
+      sequential: true
+      recording_format: "7項目中N項目確認（PASS: X, N/A: Y）と計画書に記載"
+    items:
+      - id: 1
+        check: "git status / git log"
+        method: "対象プロジェクトのディレクトリで `git status` + `git log --oneline -5`"
+      - id: 2
+        check: "Purpose確認"
+        method: "Purpose/{プロジェクト名}.md をRead。新規PJで未存在→`[新規]`と記録"
+      - id: 3
+        check: "影響範囲"
+        method: "変更予定のファイル・機能を明記"
+      - id: 4
+        check: "計画書作成"
+        method: "`plans/YYYYMMDD_{PJ名}.md` に計画書を作成（スコープ・手順・成功基準）"
+      - id: 5
+        check: "チェックリスト作成"
+        method: "`checklist/YYYYMMDD_{PJ名}.md` に作業+QA項目を作成"
+      - id: 6
+        check: "成果物テンプレート一括作成"
+        method: "以下5種のテンプレートファイルを作成（内容は後続フェーズで埋める）"
+        templates:
+          - path: "designs/YYYYMMDD_{PJ名}.md"
+            description: "設計方針・変更箇所・判断理由の枠"
+          - path: "test-plan/YYYYMMDD_{PJ名}.md"
+            description: "テスト対象・テストマトリクスの枠"
+          - path: "audit/YYYYMMDD_{PJ名}.md"
+            description: "トレーサビリティ+承認ログの枠"
+          - path: "logs/YYYYMMDD_{PJ名}.md"
+            description: "生ログヘッダ（日時・規模・チーム）"
+      - id: 7
+        check: "成果物存在確認"
+        method: "`ls plans/ designs/ checklist/ test-plan/ audit/ logs/` で7種の存在を確認"
+
+  # ============================================================
+  # フル開始ゲート（中隊+用・11項目）
+  # ============================================================
+  full_start:
+    scale: "platoon+"
+    label: "フル開始ゲート"
+    items_count: 11
+    warnings:
+      - "開発・改修の依頼を受けた時点で即座に通すこと。セッション継続でも例外なし。"
+      - "全ての作業で計画書（plans/）と報告書（result/）を必須とする。"
+    note: "各項目は証跡（実行結果の貼り付け or 要約）をチェック時に記録すること。"
+    execution:
+      forced_read: true
+      sequential: true
+      memory_based_forbidden: true
+      recording_format: "11項目中N項目確認（PASS: X, N/A: Y）と計画書に記載"
+    flow:
+      - "開始ゲート"
+      - "計画"
+      - "設計"
+      - "設計レビュー"
+      - "実装"
+      - "品質確認"
+    flow_notes:
+      - "設計フェーズでDB/API/UI設計を実施（該当する場合）"
+      - "DB不使用プロジェクトはDB設計を `[N/A]` と記録してスキップ"
+      - "API/UIが不要な場合も同様に `[N/A]`"
+    items:
+      - id: 1
+        check: "git status / git log"
+        method: "対象プロジェクトのディレクトリで `git status` + `git log --oneline -5`"
+      - id: 2
+        check: "handover.md確認"
+        method: "Readで読む。存在しなければ `[N/A]`"
+      - id: 3
+        check: "dev-lessons検索"
+        method: "`Grep pattern=\"\\[プロジェクト名\\]\"` + 技術タグ。ヒットした教訓の行動指針を確認"
+      - id: 4
+        check: "Purpose確認"
+        method: "`Purpose/{プロジェクト名}.md` をRead。新規PJで未存在→`[新規]`と記録（計画立案時に作成）"
+      - id: 5
+        check: "退避ファイル確認"
+        method: "`ls {プロジェクト}/_deleted/`"
+      - id: 6
+        check: "ホワイトボード作成（必須）"
+        method: >
+          `ls whiteboard/whiteboard-{プロジェクト名}*`。
+          既存があれば再利用、なければ新規作成（WHITEBOARD-001テンプレート準拠）。スキップ不可
+        skip_allowed: false
+      - id: 7
+        check: "計画書作成"
+        method: "`plans/{PJ名}_*.md` に計画書を作成。スコープ・作業手順・成功基準を含む"
+      - id: 8
+        check: "QA/作業チェックリスト作成"
+        method: "計画書から作業項目+QA項目を洗い出し `checklist/YYYYMMDD_{PJ名}.md` に統合チェックリストとして作成"
+      - id: 9
+        check: "成果物テンプレート一括作成"
+        method: "以下5種のテンプレートファイルを作成（内容は後続フェーズで埋める）"
+        templates:
+          - path: "designs/YYYYMMDD_{PJ名}.md"
+            description: "設計方針・変更箇所・判断理由の枠"
+          - path: "test-plan/YYYYMMDD_{PJ名}.md"
+            description: "テスト対象・テストマトリクスの枠"
+          - path: "audit/YYYYMMDD_{PJ名}.md"
+            description: "トレーサビリティ+承認ログ+変更管理の枠"
+          - path: "logs/YYYYMMDD_{PJ名}.md"
+            description: "生ログヘッダ（日時・規模・チーム）"
+      - id: 10
+        check: "ダッシュボード初期化"
+        method: "`status/dashboard.md` に作戦概要(What/Why)・チーム(Who)・制約(Constraints)・現在状態(Current State)を記入"
+      - id: 11
+        check: "成果物存在確認（ゲート完了条件）"
+        method: "`ls plans/ designs/ checklist/ test-plan/ audit/ logs/ whiteboard/ status/dashboard.md` で全成果物の存在を確認"
+
+  # ============================================================
+  # 計画ゲート（中隊以上）
+  # ============================================================
+  planning_gate:
+    scale: "platoon+"
+    label: "計画ゲート"
+    items:
+      - id: 1
+        check: "スコープ外の明示"
+        method: "「やらないこと」を明記"
+      - id: 2
+        check: "定量的な成功基準"
+        method: "テスト可能な完了条件"
+      - id: 3
+        check: "計画書レビュー"
+        method: "玄人猫（または実装者以外のOpus）にレビュー依頼。REQUEST_CHANGES→修正→APPROVE後にタスク分解へ進む"
+
+  # ============================================================
+  # DB設計ゲート（全規模共通。DB変更がある場合は必須）
+  # ============================================================
+  db_design_gate:
+    scale: all
+    condition: "DB変更がある場合は必須"
+    label: "DB設計ゲート"
+    artifact: "plans/{プロジェクト名}_db_design.md（ER図/スキーマ定義を含む）"
+    notes:
+      - "小規模変更（カラム追加等）でも通す。小さい変更が将来の変更に影響するため。"
+      - "DBレビュー: 設計者≠レビュアー（review-protocol.md準拠）。"
+    items:
+      - id: 1
+        check: "ER図/スキーマ定義"
+        aspect: "テーブル構造・リレーションが文書化されている"
+      - id: 2
+        check: "正規化"
+        aspect: "第3正規形以上。非正規化する場合は理由を明記"
+      - id: 3
+        check: "インデックス設計"
+        aspect: "主要クエリパターンに対応したインデックスが定義されている"
+      - id: 4
+        check: "命名規約"
+        aspect: "snake_case、既存テーブル・カラムとの一貫性"
+      - id: 5
+        check: "拡張性"
+        aspect: "将来の変更（カラム追加・テーブル分割等）への影響分析"
+      - id: 6
+        check: "マイグレーション"
+        aspect: "既存データへの影響、ロールバック手順"
+
+  # ============================================================
+  # API/UI設計ゲート（該当する場合）
+  # ============================================================
+  api_ui_design_gate:
+    condition: "該当する場合"
+    label: "API/UI設計ゲート"
+    notes:
+      - "DB設計レビュー通過後に着手。API設計とUI設計は並行可。"
+    items:
+      - id: 1
+        check: "エンドポイント/画面一覧"
+        aspect: "必要なAPI・画面が洗い出されている"
+      - id: 2
+        check: "DB設計との整合性"
+        aspect: "DB設計のスキーマとAPI/UIのデータフローが一致"
+      - id: 3
+        check: "レビュー通過"
+        aspect: "設計者≠レビュアーで確認済み"
+
+  # ============================================================
+  # 報告前チェックポイント（全規模共通・無条件発火）
+  # ============================================================
+  pre_report_checkpoint:
+    scope: all
+    label: "報告前チェックポイント"
+    trigger: "報告しようとした行為自体"
+    description: >
+      ゲート規模・昇格状態に関係なく、総司令に「完了」「終わった」「ヨシッ」と報告する前に必ず通す。
+      ナノだろうがフルだろうが、規模判定を経由しない。
+    execution_notes:
+      - "#1-2は頭の中で確認"
+      - "#3はスクリプト実行が必須（頭の中確認のみは不可）"
+      - "#4は新規/既存に応じて実施"
+      - "コンテキスト圧縮後に成果物を忘れる問題を機械的に防止する"
+    items:
+      - id: 1
+        check: "依頼と成果の一致"
+        method: "総司令が頼んだことと、実際にやったことは一致しているか？"
+      - id: 2
+        check: "動作の証拠"
+        method: "「やった」ではなく「動く/存在する」証拠があるか？（コマンド出力、ファイル存在確認、テスト結果等）"
+      - id: 3
+        check: "成果物一括チェック"
+        method: "`bash multi-agent-neko/scripts/artifact-check.sh {PJ名}` を実行し、全必須成果物の存在を機械的に検証。不足があれば報告前に作成。頭の中確認ではなくスクリプト実行が必須"
+        script_required: true
+      - id: 4
+        check: "プロジェクト一覧更新"
+        method: "新規PJ→MEMORY.mdのプロジェクト一覧に追加。既存PJ→バージョン情報を作業内容に合わせて更新（`repo-versions.md`）"
+
+  # ============================================================
+  # ミニ完了ゲート（小隊用・12項目）
+  # ============================================================
+  mini_completion:
+    scale: squad
+    label: "ミニ完了ゲート"
+    items_count: 12
+    note: "各項目は証跡を報告書に記録。証跡なしのチェックは無効。"
+    integrity:
+      - "未確認項目があれば明示。intervention_countは報告書に記録。"
+    execution:
+      forced_read: true
+      sequential: true
+      recording_format: "12項目中N項目確認（PASS: X, N/A: Y）と報告書に記載"
+    items:
+      - id: 1
+        check: "チェックリスト実行"
+        method: "`checklist/YYYYMMDD_{PJ名}.md` の各項目を検証"
+        evidence: "各チェック項目の検証結果"
+      - id: 2
+        check: "git status確認"
+        method: "`git status` でclean or コミット済み"
+        evidence: "git statusの出力"
+      - id: 3
+        check: "実機動作確認"
+        method: >
+          実装した機能を実際に動かして期待通り動くことを確認。テスト実行・CLI実行・ブラウザ確認等。
+          証跡として実行コマンドと出力を記録。テスト対象がない場合（ドキュメントのみ等）→`[N/A]`と理由を明記
+        evidence: "実行コマンドと出力"
+        na_condition: "テスト対象がない場合（ドキュメントのみ等）"
+      - id: 4
+        check: "設計レビュー"
+        method: "設計者≠レビュアーで設計書をレビュー（Sonnet以上）。設計不要（「設計対象なし」記載）の場合→`[N/A]`"
+        evidence: "レビュー結果"
+        na_condition: "設計不要（「設計対象なし」記載）の場合"
+      - id: 5
+        check: "/simplify"
+        method: "変更ファイルに対して実行（実装者以外が実行）"
+        evidence: "simplify実行結果"
+      - id: 6
+        check: "設計書の完成"
+        method: "`designs/YYYYMMDD_{PJ名}.md` が空テンプレートでなく内容が埋まっていること。設計不要の場合→「設計対象なし」と理由を記録（ファイルは必須）"
+        evidence: "設計書の内容確認"
+      - id: 7
+        check: "テスト計画書の完成"
+        method: "`test-plan/YYYYMMDD_{PJ名}.md` が空テンプレートでなく内容が埋まっていること。テスト不要の場合→「テスト対象なし」と理由を記録（ファイルは必須）"
+        evidence: "テスト計画書の内容確認"
+      - id: 8
+        check: "監査ログの完成"
+        method: "`audit/YYYYMMDD_{PJ名}.md` にトレーサビリティ（REQ→commit→test）、承認記録、使用コマンド・権限（カテゴリ/コマンド/対象/回数）が記入されていること"
+        evidence: "監査ログの内容確認"
+      - id: 9
+        check: "生ログの完成"
+        method: "`logs/YYYYMMDD_{PJ名}.md` にエージェント行動の証跡（Read/Edit/Bash等の要約）が記入されていること"
+        evidence: "生ログの内容確認"
+      - id: 10
+        check: "メトリクス追記"
+        method: "`metrics/{PJ名}_metrics.md` にタスク行を追記＋サマリー再計算。報告書にはメトリクスを含めずリンク参照のみ"
+        evidence: "メトリクスファイルの更新確認"
+      - id: 11
+        check: "成果物格納（全種確認）"
+        method: "`ls plans/ designs/ checklist/ test-plan/ audit/ logs/ result/ metrics/` で全成果物の存在を確認"
+        evidence: "ls出力"
+      - id: 12
+        check: "プロジェクト一覧更新済み"
+        method: "報告前チェックポイント#4が実施済みか確認。新規→MEMORY.mdに追加済み。既存→バージョン更新済み"
+        evidence: "MEMORY.md / repo-versions.mdの更新確認"
+
+  # ============================================================
+  # フル完了ゲート（中隊+用・20項目）
+  # ============================================================
+  full_completion:
+    scale: "platoon+"
+    label: "フル完了ゲート"
+    items_count: 20
+    note: "各項目は証跡を報告書に記録。証跡なしのチェックは無効。"
+    execution:
+      forced_read: true
+      memory_based_forbidden: true
+      sequential: true
+      no_bulk_check: true
+      recording_format: "20項目中N項目確認（PASS: X, N/A: Y）と報告書に記載"
+      notes:
+        - "強制Read: まずこのファイルを Read で読み込む。記憶ベースでのゲート実行は禁止。Readせずに始めたゲートは無効"
+        - "順序固定: #1から順に1つずつ消化。各項目で確認コマンド実行→証跡記録。まとめて「済み」にしない"
+        - "項目数チェック: 全20項目。合計が20にならなければ抜けがある"
+    responsibility:
+      start_gate: "親方猫"
+      completion_gate: "仕事猫実行→玄人猫が検証"
+    items:
+      - id: 1
+        check: "チェックリスト実行"
+        method: "開始ゲートで生成済みの `checklist/YYYYMMDD_{PJ名}.md` の各項目をRead/Grep/テスト等で検証"
+        evidence: "各チェック項目の検証結果"
+      - id: 2
+        check: "git status確認"
+        method: "`git status` でclean or コミット済み"
+        evidence: "git statusの出力"
+      - id: 3
+        check: "実機動作確認"
+        method: >
+          実装した機能を実際に動かして期待通り動くことを確認。テスト実行・CLI実行・ブラウザ確認等。
+          証跡として実行コマンドと出力を記録。テスト対象がない場合（ドキュメントのみ等）→`[N/A]`と理由を明記
+        evidence: "実行コマンドと出力"
+        na_condition: "テスト対象がない場合（ドキュメントのみ等）"
+      - id: 4
+        check: "設計書の完成"
+        method: "`designs/YYYYMMDD_{PJ名}.md` に設計方針・判断理由が記入済み。設計不要→「設計対象なし」と理由を記録（ファイル必須）"
+        evidence: "設計書の内容確認"
+      - id: 5
+        check: "テスト計画書の完成"
+        method: "`test-plan/YYYYMMDD_{PJ名}.md` のテストマトリクスが全て実施済み（`[ ]`残りなし）。テスト不要→「テスト対象なし」と理由を記録（ファイル必須）"
+        evidence: "テスト計画書の全項目実施確認"
+      - id: 6
+        check: "監査ログの完成"
+        method: "`audit/YYYYMMDD_{PJ名}.md` にトレーサビリティ（全REQがVERIFIED/DEFERRED）、承認記録、変更管理、使用コマンド・権限（カテゴリ/コマンド/対象/回数）が記入済み"
+        evidence: "監査ログの内容確認"
+      - id: 7
+        check: "生ログの完成"
+        method: "`logs/YYYYMMDD_{PJ名}.md` に全エージェントの行動証跡（Read/Edit/Bash/Decision等）が記入済み"
+        evidence: "生ログの内容確認"
+      - id: 8
+        check: "メトリクス追記"
+        method: "`metrics/{PJ名}_metrics.md` にタスク行追記＋サマリー再計算。報告書にメトリクスを含めずリンク参照のみ"
+        evidence: "メトリクスファイルの更新確認"
+      - id: 9
+        check: "Purpose更新"
+        method: "機能追加時に更新。変更なし→`[N/A]`"
+        evidence: "Purpose更新確認"
+        na_condition: "変更なし"
+      - id: 10
+        check: "不変条件チェック"
+        method: "Purposeの不変条件を全件検証。未定義→`[N/A]`"
+        evidence: "不変条件の検証結果"
+        na_condition: "未定義"
+      - id: 11
+        check: "ファイル削除の退避"
+        method: "`ls {プロジェクト}/_deleted/`。削除なし→`[N/A]`"
+        evidence: "_deleted/の内容確認"
+        na_condition: "削除なし"
+      - id: 12
+        check: "/simplify"
+        method: "変更ファイルに対して実行（実装した現場猫以外が実行）。simplifyは玄人猫レビューの代替にはならない"
+        evidence: "simplify実行結果"
+      - id: 13
+        check: "玄人猫レビュー"
+        method: "実装者以外のOpusエージェントが独立レビュー実施（review-protocol.md準拠）"
+        evidence: "レビュー報告書"
+      - id: 14
+        check: "ホワイトボードアーカイブ"
+        method: "`whiteboard/`に保存済み確認→dashboard.mdクリア→git commit"
+        evidence: "ホワイトボードファイルの確認 + git commit hash"
+      - id: 15
+        check: "成果物格納（全種確認）"
+        method: "`ls plans/ designs/ checklist/ test-plan/ audit/ logs/ result/ metrics/` で全成果物の存在を確認"
+        evidence: "ls出力"
+      - id: 16
+        check: "ISV記録"
+        method: "結果次元を記入し `memory/isv-log.md` に追記。偵察→`[N/A]`"
+        evidence: "isv-log.mdへの追記確認"
+        na_condition: "偵察規模"
+      - id: 17
+        check: "全チェック埋まり"
+        method: "上記#1-#16に未確認がないか確認（中間確認用）"
+        evidence: "全項目確認済みの確認"
+      - id: 18
+        check: "プロジェクト一覧更新済み"
+        method: "報告前チェックポイント#4が実施済みか確認。新規→MEMORY.mdに追加済み。既存→バージョン更新済み"
+        evidence: "MEMORY.md / repo-versions.mdの更新確認"
+      - id: 19
+        check: "報告の誠実性"
+        method: "未確認項目があれば明示。intervention_countは会話事実に基づくこと"
+        evidence: "誠実な報告の確認"
+      - id: 20
+        check: "完了ゲート項目数チェック"
+        method: "上記#1-#19に未確認がないか確認。合計が20項目であること"
+        evidence: "20項目全ての確認"
+
+  # ============================================================
+  # 実行前ファクトチェックゲート（不可逆アクション共通）
+  # ============================================================
+  fact_check_gate:
+    label: "実行前ファクトチェックゲート"
+    scope: "不可逆アクション共通"
+    targets:
+      - "X投稿"
+      - "git push（公開リポ）"
+      - "外部API副作用あり呼び出し"
+      - "パッケージ公開など"
+    notes:
+      - "ソース不明のファクトは推測で埋めず総司令に確認。「たぶん合ってる」は不可。"
+    items:
+      - id: 1
+        check: "アクション手段"
+        method: "アクションディスパッチテーブル（MEMORY.md）に該当エントリがあれば指定手段を使用"
+      - id: 2
+        check: "ファクト突合"
+        method: "客観的事実（バージョン、数値、URL、名称）を各ソースファイルで検証。LLMの記憶で埋めない"
+      - id: 3
+        check: "下書き提示"
+        method: "外部公開コンテンツはファクトチェック結果と共に総司令に提示し承認を得る"
+
+  # ============================================================
+  # モジュール追加ゲート（猫軍団にモジュール/プロトコルを追加する時）
+  # ============================================================
+  module_addition_gate:
+    label: "モジュール追加ゲート"
+    trigger: "猫軍団にモジュール/プロトコルを追加する時"
+    principle: "「ドキュメントを書いた＝導入完了」ではない。以下を全て通すこと。"
+    items:
+      - id: 1
+        check: "モジュール文書作成"
+        method: "`modules/` or `docs/` にプロトコル定義を作成"
+      - id: 2
+        check: "行動フロー統合"
+        method: "対象エージェントの行動ステップに組み込み、`agents/*.md`に追記"
+      - id: 3
+        check: "ゲート反映"
+        method: "gates.mdの開始/完了ゲートに検証項目として追加（該当する場合）"
+      - id: 4
+        check: "SSOT明記"
+        method: "定義の正（SSOT）がどこかを明記"
+      - id: 5
+        check: "git commit"
+        method: "モジュール導入完了としてコミット"
+
+  # ============================================================
+  # フェーズ別ゲート（/neko-gundan <phase> 用）
+  # ============================================================
+  phase_gates:
+    label: "フェーズ別ゲート"
+    usage: "/neko-gundan <phase> 用"
+    notes:
+      - "フェーズ別独立実行時に使用する専用ゲート。"
+      - "全フロー一気通貫（引数なし）の場合は従来のナノ/ミニ/フル開始・完了ゲートを使う。"
+      - "テンプレート: `multi-agent-neko/templates/` 参照（入力フォーマットの完全一致は不要）。"
+
+    design_start:
+      label: "Design 開始ゲート"
+      items_count: 4
+      items:
+        - id: 1
+          check: "対象プロジェクト特定"
+          method: "何のPJか。新規なら `[新規]`。既存なら `Purpose/{PJ名}.md` をRead"
+        - id: 2
+          check: "製品仕様の入力確認"
+          method: "設計に必要な情報が揃っているか（口頭/文書/URL等）。不足があれば総司令に確認"
+        - id: 3
+          check: "既存設計の確認"
+          method: "`ls plans/{PJ名}_* designs/{PJ名}_*` で既存の計画書・設計書を確認。上書きではなく追加/更新の判断"
+        - id: 4
+          check: "設計書テンプレート作成"
+          method: "`designs/YYYYMMDD_{PJ名}.md` を作成（方針・変更箇所・判断理由の枠）"
+
+    design_completion:
+      label: "Design 完了ゲート"
+      items_count: 5
+      items:
+        - id: 1
+          check: "計画書の存在"
+          method: "`plans/` に計画書が存在する。スコープ・成功基準・やらないことを含む"
+        - id: 2
+          check: "設計書の完成"
+          method: "`designs/YYYYMMDD_{PJ名}.md` に設計方針・変更箇所・判断理由が記入済み。設計不要→「設計対象なし」と理由を記録（ファイル必須）"
+        - id: 3
+          check: "必要な設計の完了"
+          method: "DB設計・API設計・UI設計のうち必要なものが全て完了。不要なものは `[N/A]` と記録"
+        - id: 4
+          check: "テスト計画書の判定"
+          method: >
+            タスク中に検証行為（スクリプト実行・CLI出力確認・ブラウザ確認・ビルド確認等）が発生するか設計書から判定。
+            ありの場合: `test-plan/` にテストマトリクスの骨格（ID・機能・観点・期待結果）を作成。
+            なしの場合: `test-plan/` に「テスト対象なし」と判定理由を記録。
+            判定基準: 計画書・設計書に「確認する」「テストする」「実行して検証」「動作確認」等の記述があれば「あり」。
+            純粋なドキュメント修正・設定値の文言変更のみ「なし」
+        - id: 5
+          check: "設計レビュー実施"
+          method: "設計者≠レビュアーで確認済み（review-protocol.md準拠）"
+
+    implement_start:
+      label: "Implement 開始ゲート"
+      items_count: 4
+      note: "設計書（designs/）が推奨入力。不在時は計画書に設計不要の根拠があるか確認する。"
+      items:
+        - id: 1
+          check: "設計書の存在確認"
+          method: "`designs/YYYYMMDD_{PJ名}.md` を確認。存在すればReadで読み込み。存在しない場合→次の項目で設計不要の根拠を確認"
+        - id: 2
+          check: "設計不要の根拠確認（設計書不在時のみ）"
+          method: >
+            計画書（plans/）をReadし、設計が不要である根拠を確認。
+            以下のいずれかが明記されている場合のみ設計書を「設計対象なし」で作成して続行:
+            (1)ドキュメント修正・設定値変更のみ
+            (2)人間または外部AIが設計済みと明記
+            (3)既存設計書の範囲内の追加実装と明記。
+            根拠がなければ実装開始不可 — 設計フェーズに戻るか総司令に確認
+          condition: "設計書不在時のみ"
+        - id: 3
+          check: "実装可能レベル判定"
+          method: "設計書または計画書にスコープ・成功基準があるか。どちらにもなければ実装開始不可 — 総司令に確認"
+        - id: 4
+          check: "git status確認"
+          method: "対象プロジェクトで `git status`。未コミットの変更があればWIP or stash"
+
+    implement_completion:
+      label: "Implement 完了ゲート"
+      items_count: 4
+      items:
+        - id: 1
+          check: "成功基準の充足"
+          method: "計画書の成功基準を1つずつ検証。全て満たしていること"
+        - id: 2
+          check: "コードのコミット"
+          method: "`git status` でclean or コミット済み"
+        - id: 3
+          check: "構文チェック通過"
+          method: "lint/型チェック実行（該当する場合）。結果を証跡として記録"
+          na_condition: "該当しない場合"
+        - id: 4
+          check: "実機動作確認"
+          method: "テスト実行・CLI実行・ブラウザ確認等。証跡を記録。テスト対象がない場合→`[N/A]`と理由を明記"
+          na_condition: "テスト対象がない場合"
+
+    review_start:
+      label: "Review 開始ゲート"
+      items_count: 3
+      note: "レビュー対象によって照合元（前提ファイル）が異なる。存在する照合元は読み込む。"
+      items:
+        - id: 1
+          check: "レビュー対象の特定"
+          method: "計画書 / 設計書 / コード のいずれか。対象種別で照合元が決まる"
+        - id: 2
+          check: "照合元の読み込み"
+          method: "計画書レビュー→前提なし / 設計書レビュー→計画書を読む（あれば） / コードレビュー→設計書を読む（あれば）"
+        - id: 3
+          check: "対象の可読性確認"
+          method: "対象ファイルが `Read` / `git diff` で確認可能"
+
+    review_completion:
+      label: "Review 完了ゲート"
+      items_count: 3
+      items:
+        - id: 1
+          check: "照合元の明記"
+          method: >
+            レビュー報告に照合元を明記。
+            計画書レビュー→「照合元: なし」/
+            設計書レビュー→「照合元: plans/XXX.md」/
+            コードレビュー→「照合元: designs/XXX.md」。
+            照合元なしの場合はその旨を記録
+        - id: 2
+          check: "レビュー報告書の出力"
+          method: "verdict（APPROVE/REQUEST_CHANGES）+ findings が明示されている"
+        - id: 3
+          check: "判定の根拠"
+          method: "各findingにファイルパス・行番号・具体的な指摘が含まれている"
+
+    test_start:
+      label: "Test 開始ゲート"
+      items_count: 3
+      items:
+        - id: 1
+          check: "テスト対象の特定"
+          method: "プロジェクト名・対象範囲・テスト種別が明確"
+        - id: 2
+          check: "実装済みコードの存在"
+          method: "対象ディレクトリにコードが存在することを確認"
+        - id: 3
+          check: "テスト計画書の作成・承認"
+          method: "テストマトリクス（機能×観点）を含むテスト計画書を作成し、総司令に提示・承認を得る。格納先はプロジェクト設定に従う"
+
+    test_completion:
+      label: "Test 完了ゲート"
+      items_count: 5
+      items:
+        - id: 1
+          check: "単体テスト全件実行"
+          method: "テストマトリクスの正常系・異常系が全て実施済み（[ ]が残っていないこと）"
+        - id: 2
+          check: "結合テスト全件実行"
+          method: "結合テストマトリクスのシナリオが全て実施済み"
+        - id: 3
+          check: "テスト実行結果の証跡"
+          method: "pass/fail件数・カバレッジ等のコマンド出力を記録"
+        - id: 4
+          check: "品質チェック結果"
+          method: "lint/セキュリティスキャン等の結果（実施した場合）を記録。未実施→`[N/A]`と理由"
+          na_condition: "未実施の場合"
+        - id: 5
+          check: "不合格項目の一覧化"
+          method: "fail・警告・脆弱性がある場合は一覧化。全件合格なら「全件PASS」と記録"

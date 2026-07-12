@@ -1,0 +1,12 @@
+{
+  "max_concurrent_agents": 5,
+  "per_role_limits": {
+    "oyakata-neko": 1,
+    "shigoto-neko": 2,
+    "genba-neko": 4,
+    "kurouto-neko": 2
+  },
+  "per_state_limits": {
+    "in_progress": 4
+  }
+}

@@ -1,0 +1,17 @@
+module:
+  name: jit_tests
+  id: null
+  default: "OFF"
+  scale: "Platoon+"
+  description: "Disposable tests auto-generated from PR diffs. Used as review aid."
+  full_definition: "modules/jit-tests.md"
+  integration_points:
+    - agent: kurouto-neko
+      phase: "Review (3+ files changed or insufficient coverage)"
+      action: "Generate disposable tests from `git diff`, run them, feed failures back to implementer"
+    - agent: genba-neko
+      phase: "Post-review fix"
+      action: "Fix issues identified by JiT test failures"
+    - agent: kurouto-neko
+      phase: "Post-review pass"
+      action: "Delete disposable tests from `tmp/jit-tests/` (not committed)"

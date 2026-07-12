@@ -1,0 +1,20 @@
+module:
+  name: tdd_separation
+  id: null
+  default: "OFF"
+  scale: "Platoon+"
+  description: "Prevents Context Pollution by separating test creation and implementation to different agents."
+  full_definition: "modules/tdd-separation.md"
+  integration_points:
+    - agent: shigoto-neko
+      phase: "Task splitting (platoon+)"
+      action: "Assign test creation and implementation to different genba-neko"
+    - agent: "genba-neko A"
+      phase: "Test creation"
+      action: "Write tests, handoff to genba-neko B (action: auto)"
+    - agent: "genba-neko B"
+      phase: "Implementation"
+      action: "Implement against tests without reading test creator's analysis"
+    - agent: kurouto-neko
+      phase: "Review"
+      action: "Review both tests and implementation independently"

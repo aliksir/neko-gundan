@@ -1,0 +1,38 @@
+# =============================================================================
+# Recommended Preset — Balanced setup for most teams
+# =============================================================================
+# Good balance of safety and overhead. Enables monitoring and basic quality
+# modules without the advanced/experimental features.
+#
+# Modules to copy to .claude/rules/:
+#   - modules/whiteboard.md
+#   - modules/heartbeat.md
+#   - modules/race-prevention.md
+#   - modules/reflexion.md
+#   - modules/checklist-export.md
+# =============================================================================
+
+shitsuke:
+  objection_flow: true
+  whiteboard: true
+  heartbeat: true
+  race_prevention: true
+  reflexion: true
+  isv: false
+  fides: false
+  capacity_escalation: false
+  arbitrator: false
+  handoff_schema: false
+  jit_tests: false
+  tdd_separation: false
+  ensemble_judge: false
+  spec_driven_review: false
+  checklist_export: true
+  quality_metrics: false
+  raw_log: false
+  faceted_prompting: false
+  linter_protection: false
+  module_addition: false
+  process_weight: false
+  progress_visibility: false
+  audit_trail: false

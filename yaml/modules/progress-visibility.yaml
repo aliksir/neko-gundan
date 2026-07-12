@@ -1,0 +1,74 @@
+module_detail:
+  name: Progress Visibility Module
+  id: null
+  default: "ON"
+  scale: Platoon+
+  why: "マルチエージェントシステムで「何が起きているか見えない」状態は最悪の状態。構造化された可視性がなければ、仕事猫は停滞を検知できず、親方猫は情報に基づいた判断ができず、総司令は進捗を確認できない。"
+  description: "作業進捗をチームメンバー全員と総司令に常時可視化する。ダッシュボード更新プロトコル、規模別バリアント、コネコ/Lightモードでのダッシュボード不使用時のSendMessageプロトコルを定義する。"
+  configuration:
+    steps:
+      - "ダッシュボード保存先: status/dashboard.md（プロジェクトルート相対）"
+      - "1つのアクティブミッションにつき1ダッシュボード。複数ミッションの並行実行時は同一ファイル内のセクションで管理"
+  procedures:
+    - id: 1
+      name: "ダッシュボード更新プロトコル"
+      steps:
+        - "記録フィールド — ミッション概要: 目標・規模・チーム構成（仕事猫が開始時に記入）"
+        - "記録フィールド — タスク状態: タスクごとに not started / in progress / blocked / complete（仕事猫が状態変化時に更新）"
+        - "記録フィールド — 現在のブロッカー: アクティブなブロッカーとオーナー（仕事猫が発見次第即時記入）"
+        - "記録フィールド — 完了率: 完了タスク数 / 総タスク数（仕事猫がタスク完了時に更新）"
+        - "記録フィールド — 最終更新日時: タイムスタンプ（仕事猫が毎更新時に記入）"
+      conditions: []
+    - id: 2
+      name: "ダッシュボード更新タイミング"
+      steps:
+        - "ミッション開始: チーム構成を含むダッシュボードエントリを作成"
+        - "タスクを現場猫に割り当て時: タスク行を追加（状態: in progress）"
+        - "現場猫が完了報告時: 状態を complete に更新"
+        - "ブロッカー発見時: ブロッカーセクションに追加"
+        - "ブロッカー解消時: ブロッカーから削除し、解決内容を記録"
+        - "ミッション完了時: 最終ステータスを更新"
+      conditions: []
+    - id: 3
+      name: "規模別バリアント"
+      steps:
+        - "Platoon+: フルダッシュボード（status/dashboard.md） — 開始時作成・作業中更新・終了時最終化。仕事猫が管理"
+        - "Squad: オプション — SendMessageによる報告で十分。仕事猫または親方猫が管理"
+        - "Koneko: ダッシュボードなし — 進捗はSendMessageでユーザーに直接報告。単一エージェントがユーザーに報告"
+        - "Light mode: ダッシュボードなし — ただし SendMessage による進捗報告は必須。実装者が SendMessage で報告"
+      conditions: []
+    - id: 4
+      name: "コネコ / Light Mode 進捗プロトコル"
+      steps:
+        - "ダッシュボードを使わない場合でも、以下でプログレスを可視化する"
+        - "1. マイルストーン完了時にSendMessage — 何をしたか、次は何か を報告"
+        - "2. ブロッカー発見時に即座にSendMessage — 待たず即報告"
+        - "3. 完了報告 — 全作業の最終サマリー"
+        - "ダッシュボードがなくても可視性がなくなるわけではない。進捗を報告すること"
+      conditions:
+        - "Koneko または Light mode の場合"
+  templates:
+    - name: "Dashboard Entry"
+      fields:
+        - "ミッション概要（目標・規模・チーム構成）"
+        - "タスク一覧（タスクID・担当者・状態: not started / in progress / blocked / complete）"
+        - "現在のブロッカー（ブロッカー内容・オーナー）"
+        - "完了率（完了タスク数 / 総タスク数）"
+        - "最終更新日時（YYYY-MM-DD HH:MM）"
+  integration_points:
+    - agent: shigoto-neko
+      phase: Pre-dispatch
+      action: "Create dashboard entry (part of Pre-Dispatch Hard Gate)"
+    - agent: shigoto-neko
+      phase: During work
+      action: "Update on every genba-neko status change"
+    - agent: shigoto-neko
+      phase: Completion
+      action: "Final update with results"
+    - agent: oyakata-neko
+      phase: Monitoring
+      action: "Read dashboard for situation awareness"
+  notes:
+    - "完了ゲート#14（小隊以上 かつ progress_visibility: true）: status/dashboard.md に全タスクの最終ステータス・完了率・'Mission: COMPLETE' が記録されていること"
+    - "コネコ / Light mode ではこのゲート項目は N/A（ダッシュボードなし）"
+    - "複数ミッションを並行実行する場合は同一ファイル内のセクションで管理する"

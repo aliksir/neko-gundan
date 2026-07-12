@@ -1,0 +1,14 @@
+module:
+  name: race_prevention
+  id: "RACE-001"
+  default: "ON"
+  scale: "Platoon+"
+  description: "Prevents file conflicts when multiple agents work in parallel."
+  full_definition: "modules/race-prevention.md"
+  integration_points:
+    - agent: shigoto-neko
+      phase: "Pre-dispatch gate"
+      action: "Assign file ownership, verify no overlapping files between genba-neko"
+    - agent: genba-neko
+      phase: "During work (step 6)"
+      action: "Stay within assigned files, consult shigoto-neko for out-of-scope changes"

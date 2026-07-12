@@ -1,0 +1,354 @@
+# Neko Gundan - Multi-Agent Orchestration for Claude Code
+
+[![CI](https://github.com/aliksir/neko-gundan/actions/workflows/ci.yml/badge.svg)](https://github.com/aliksir/neko-gundan/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/aliksir/neko-gundan)](https://github.com/aliksir/neko-gundan/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+> **Recommended: Interactive Setup**
+> ```bash
+> git clone https://github.com/aliksir/neko-gundan.git
+> cp -r neko-gundan/skills/welcome-neko ~/.claude/skills/
+> # Then in Claude Code, type: /welcome-neko
+> ```
+> `/welcome-neko` guides you through mode selection, installation, and initial configuration — no manual setup needed.
+
+**[日本語版 README はこちら](README.ja.md)** | **On PRO plan? → [Koneko Gundan (Lite version)](README.koneko.md)**
+
+> One Claude Code agent can write code. But it can't catch its own mistakes, stop bad decisions, or coordinate across files safely. Neko Gundan splits the work into a team — so the agent that writes the code is never the one that reviews it.
+
+## Who This Is For
+
+**Good fit:**
+- You've had an agent delete the wrong file, break working code, or ship something "it checked itself"
+- You're working on a product where quality accidents cost real time — not a throwaway prototype
+- You want a second pair of eyes on AI-generated code, but don't want to review every line yourself
+- You're coordinating multi-file changes and need agents that don't step on each other
+
+**Not a good fit:**
+- You're prototyping or doing quick experiments where speed matters more than correctness
+- You want a library of 100+ specialized agents — try [VoltAgent](https://github.com/VoltAgent/core) or [wshobson/agents](https://github.com/wshobson/agents) instead
+- A single `quality` or `security` mode feels like too much — standard Claude Code subagents may be all you need
+
+Neko Gundan is not a universal tool. It's opinionated about one thing: **proving that work is correct, not just done.**
+
+## Quick Pick — "Just Tell Me What to Install"
+
+| Your situation | Recommended install | Why |
+|----------------|-------------------|-----|
+| Solo dev, want a safety net | `security` | Zero agents. Just rules that prevent accidental deletion and unsafe operations |
+| Small product, quality matters | `quality+security` | 1 reviewer agent + safety rules. Best cost/benefit starting point |
+| Multi-file features, team-scale changes | `all` | Full team structure. Standard weight for most tasks, strict for releases |
+
+Start light, add more later. You can always run `install.sh` again with additional modes.
+
+## Quick Start (Advanced / CI)
+
+If you prefer manual installation or need CI integration, use the installer directly:
+
+```bash
+git clone https://github.com/aliksir/neko-gundan.git
+
+# Pick what you need
+bash neko-gundan/scripts/install.sh quality+security ./your-project
+
+# Or install everything
+bash neko-gundan/scripts/install.sh all ./your-project
+bash neko-gundan/scripts/setup.sh  # Initialize runtime directories
+```
+
+The installer copies only the files you need and shows the CLAUDE.md snippet to add. For updates, hooks setup, and session-start auto-check, see [Update Guide](docs/update-guide.md) and [Hooks Guide](docs/hooks-guide.md).
+
+> **Don't want the full framework?** Start with just `security` (no agents, just safety rules) or `quality` (just a reviewer). [See all modes](docs/modes.md).
+
+## Language Rules
+
+Neko Gundan includes language-specific coding rules that your agents follow automatically.
+
+| Language | Detection | File |
+|----------|-----------|------|
+| TypeScript | `tsconfig.json` | `rules/lang/typescript.md` |
+| Python | `pyproject.toml` / `requirements.txt` | `rules/lang/python.md` |
+| Go | `go.mod` | `rules/lang/go.md` |
+| Rust | `Cargo.toml` | `rules/lang/rust.md` |
+
+By default, all language rules are installed. To install only what you need:
+
+```bash
+bash neko-gundan/scripts/install.sh --lang typescript,python all ./your-project
+```
+
+**Starter CLAUDE.md templates** are available in `examples/` for TypeScript (Next.js), Python (FastAPI), and Go projects. Copy the one that matches your stack:
+
+```bash
+cp neko-gundan/examples/CLAUDE.md.typescript ./your-project/CLAUDE.md
+```
+
+For which template to pick, what to customize, and what the result looks like, see [examples/README.md](examples/README.md).
+
+## What You Do (3 Steps)
+
+1. **Install** — Pick modes and run the installer. Done in 30 seconds.
+2. **Give tasks** — Tell the agent what to do in plain language. Add "light mode" or "strict" to control thoroughness.
+3. **Review the proof** — The agent delivers evidence (test results, diffs), not just "I'm done." You check the proof, not the code.
+
+Everything else — role assignment, review separation, objection handling, safety checks — happens behind the scenes.
+
+## 1-Minute Demo
+
+Here's what happens when you run a small change request:
+
+```text
+> /neko-gundan "Add dark mode toggle to settings page"
+
+[oyakata-neko]   READ   Purpose/, plans/ — recon-scale, single shigoto-neko
+[oyakata-neko]   PLAN   plans/20260524_dark-mode-toggle.md (acceptance C1-C5, Pre-Mortem 4)
+[oyakata-neko]   DESIGN designs/20260524_dark-mode-toggle.md (CSS vars + localStorage)
+[kurouto-neko]   REVIEW design — APPROVE (evidence_level: static_check_passed)
+[shigoto-neko]   IMPL   src/settings/DarkModeToggle.tsx, src/styles/theme.css
+[kurouto-neko]   REVIEW code — Adversarial Q1-Q5 passed
+                        APPROVE (evidence_level: test_passed)
+[oyakata-neko]   GATE   completion gate — all 5 artifacts present, CR-1..CR-5 violations: 0
+[oyakata-neko]   DONE   result/20260524_dark-mode-toggle.md
+```
+
+**The agent who wrote the code is never the one who reviewed it.** You see the proof (artifacts, evidence_level, gate results), not just a "done" message. Even if you skip reading the diff, the framework refuses to mark a task complete without recorded evidence.
+
+## How It Works
+
+```
+Commander (Human)
+    |
+Oyakata-neko (General) --- Strategy & delegation
+    |
+Shigoto-neko (Manager) --- Task decomposition & QA
+    |
+Genba-neko (Worker) --- Implementation
+    |
+Kurouto-neko (Reviewer) --- Independent review
+```
+
+The team auto-scales based on task size:
+
+| Scale | Criteria | Formation |
+|-------|----------|-----------|
+| Recon | Questions, research | Oyakata handles directly |
+| Squad | 1-2 file changes, or 3-5 file simple refactor | Single shigoto-neko |
+| Platoon | 3-5 files AND design decisions | shigoto + 1-2 genba-neko |
+| Battalion | 6+ files | shigoto + 3 genba-neko |
+| Regiment | 10+ files, cross-project | shigoto x3 + genba x5 |
+
+## Key Features
+
+### Mandatory Design Phase
+
+Every task follows: **Plan → Design → Design Review → Implement → Quality Check**. Design review is required at all scales (not just platoon+) — it catches config mismatches and architectural issues early. Design documents (`designs/`) are required — `commit-guard` hook blocks commits without them. Artifacts are completed at their phase boundary, not backfilled before commit.
+
+### Phase-Based Independent Execution
+
+```bash
+/neko-gundan design "Add user auth"       # Design only
+/neko-gundan implement "plans/auth.md"     # Implement only
+/neko-gundan review "feature/auth branch"  # Review only
+/neko-gundan test "src/auth/"              # Test only
+/neko-gundan "Add user auth"              # Full flow (default)
+```
+
+Each phase has its own lightweight gates. See [WORKFLOW.md](docs/WORKFLOW.md#phase-based-independent-execution) for details.
+
+### Implementer != Reviewer
+
+1. The agent who wrote the code **never** reviews it
+2. Reviewers are **read-only** — feedback only, no code changes
+3. After 3 review cycles, an arbitrator (Opus) makes the final call
+
+**Adversarial 2nd-Pass (Clearwing-derived, v1.10.x)**: Before issuing APPROVE, the reviewer runs an adversarial self-check in the same cycle (Q1: edge cases that break this? Q2: missed acceptance criteria? Q3: risks the implementer didn't recognize? Q4: discretionary additions the implementer made without explicit instruction? Q5: properties the implementation can't actually prove?). The 3-cycle limit does NOT increment. Required at platoon+, recommended at squad. Source: [Lazarus-AI/clearwing](https://github.com/Lazarus-AI/clearwing) (MIT)
+
+**Evidence Level Ladder**: APPROVE judgments carry a 6-level evidence tag (`suspicion → static_check_passed → test_passed → root_cause_explained → integration_verified → production_validated`). Acceptance criteria can require "level N or higher" to lift the bar per task.
+
+### Agents That Push Back
+
+Agents have an **obligation** to object to bad instructions. Each objection requires **Facts + Concerns + Alternative Proposal**.
+
+- **OBJECTION-001** (worker → manager): "This instruction will break things"
+- **OBJECTION-002** (manager → general): "This strategy contradicts our goal"
+- **OBJECTION-003** (reviewer → manager): "This design has a flaw"
+
+### Evidence-Based Quality Gates
+
+"I confirmed it" is not allowed — only "here's the proof." Every task must pass a gate with recorded evidence.
+
+**Goal-based success criteria**: At plan time, define what success looks like from the end-user's perspective — not "config was applied" but "the result the user expects actually happens." `crontab -l` showing an entry doesn't mean the job runs; a config file having the right values doesn't mean the service works. The completion gate requires proof of the **goal**, not the **means**. See [Post-Change Verification](rules/post-change-verification.md).
+
+### Safety Built In
+
+- **File deletion safety**: Files go to `_deleted/` first, never instant-deleted
+- **Race condition prevention**: No two agents edit the same file simultaneously
+- **Trust levels (FIDES)**: External data is explicitly tagged as LOW trust
+- **Destructive operation tiers**: Tier 1 is absolutely prohibited, Tier 2 requires confirmation
+- **Cascade failure prevention (CASCADE-001)**: Task dependencies declared with `←` notation on whiteboard. Upstream failure automatically blocks downstream tasks
+- **Fan-Out/Aggregate (FANOUT-001)**: Parallel agent results integrated through structured 3-phase process (Fan-Out → Collect → Aggregate) with contradiction/duplicate detection
+- **Physical switches (cwc-derived, v1.10.0)**: `touch ~/.claude/AGENT_STOP` to halt all tool calls immediately; `echo "<instruction>" > ~/.claude/STEER.md` for one-shot mid-run redirection. Both surface in pre-tool-use hooks. Source: [anthropics/cwc-long-running-agents](https://github.com/anthropics/cwc-long-running-agents) (Apache-2.0)
+- **Nightly autopilot guards (v1.10.0)**: 23:00–07:00 JST nightly-runner enforces draft-PR-only commits, blocks `master`/`main` direct push, escalates tier-2 destructive ops, and detects `--no-verify` bypass attempts
+- **Code provenance & license check (v1.10.x)**: Reviewers verify that no code of unknown origin is introduced and all dependencies carry compatible licenses. A classification table (permitted / caution / prohibited / unknown) blocks prohibited licenses at the design gate — unknown defaults to prohibited
+- **neko-kensa automated analysis (v1.10.x)**: Integrated code quality inspector (zero dependencies) runs automatically at review Phase 2 start: `lint` (large files, high fan-in/fan-out, unresolved imports, deep inheritance, symbol overload) + `deps` (circular dependencies, rule violations). Powered by code-graph DB. Results feed into reviewer findings so human review focuses on design decisions
+
+### Exploration Mode (Tree Search, v1.10.x)
+
+For tasks where the best approach isn't obvious, the manager can spawn parallel workers each trying a different solution branch on isolated git worktrees (tree search). Results are scored and the dominant branch wins; rejected-branch rationale is auto-recorded to `lessons/` so future exploration runs can skip known-bad approaches. Use when the task has multiple plausible designs and the cost of picking the wrong one is high. Disabled by default — opt in per-task with the `exploration` flag.
+
+### Model Assignment
+
+Use `/neko-model` to configure which model each agent uses. The team auto-scales model assignment by role.
+
+```bash
+/neko-model opus            # All agents use Opus
+/neko-model sonnet          # All agents use Sonnet
+/neko-model kurouto opus    # Only kurouto uses Opus
+/neko-model reset           # Reset to session default
+```
+
+### Sandbox Agents
+
+Sub-agents get tool-level restrictions based on task type. A reviewer can't edit code. A documentation writer can't run Bash. This enforces rules mechanically, not just by instruction.
+
+| Profile | Allowed tools | Use case |
+|---------|--------------|----------|
+| `read-only` | Read, Glob, Grep | Code review, investigation |
+| `docs-only` | Read, Write, Glob, Grep | Documentation, reports |
+| `no-bash` | All except Bash | When shell is unnecessary or risky |
+| `no-db` | All except DB commands | Tasks where DB changes are out of scope |
+| `research` | Read, Glob, Grep, WebSearch, WebFetch | External research |
+
+Three layers of isolation: **worktree (git) > race prevention (files) > sandbox (tools)**.
+
+### pass@k Reliability Metrics
+
+For high-risk tasks (DB changes, security code, EDI integration), run verification k times independently and measure success rate. pass@3 = 2/3 means the change works most of the time but has non-deterministic behavior — a flakiness signal that single-run testing misses.
+
+### Knowledge Confidence Scoring
+
+Every lesson in `memory/lessons/` carries a confidence score `[c:0.0-1.0]`. Confirmed across projects: score goes up. Not re-encountered for 60 days: score decays. Reaches 0.0: auto-archived. Reaches 0.9+ across 3+ projects: candidate for promotion to permanent rules. This creates a self-improving knowledge pipeline where battle-tested lessons graduate and stale ones fade.
+
+### Mutation Review
+
+After kurouto-neko issues an APPROVE, Neko Gundan verifies the reviewer's own quality by injecting deliberate bugs into the approved code and re-running the review blind. The result is a Reviewer Quality Score (RQS): >= 80% PASS, 60-79% triggers reviewer configuration review, < 60% halts the task. Required at squad+ for any code change. See [`modules/mutation-review.md`](modules/mutation-review.md).
+
+### Trust Propagation Graph (TPG)
+
+Tracks data trust as it moves between agents. High-trust sources (commander input, project files) propagate trust scores to derived outputs; low-trust sources (external APIs, web scraping) tag results as LOW throughout the pipeline. Cycle detection prevents circular trust dependencies. v3 integrates with ISV drift events. See [`modules/trust-propagation-graph.md`](modules/trust-propagation-graph.md).
+
+### Intent Drift Detector (IDD)
+
+Monitors whether agents are still working toward the original task goal as a session progresses. Integrated with ISV (Intent State Vector) Phase 4 analysis — when drift angle exceeds threshold, it surfaces a warning before work continues in the wrong direction. See [`modules/intent-drift-detector.md`](modules/intent-drift-detector.md).
+
+### Observability
+
+| Feature | What it shows | Details |
+|---------|--------------|---------|
+| **Checklist export** | Gate results with evidence | [Shitsuke Guide](docs/shitsuke-guide.md) |
+| **Quality metrics** | Gate pass rate, skip rate, review cycle trends, pass@k | [Shitsuke Guide](docs/shitsuke-guide.md) |
+| **Raw log** | Full Edit/Bash/decision audit trail | [Shitsuke Guide](docs/shitsuke-guide.md) |
+| **Audit trail** | Traceability, approval log, change management | [Shitsuke Guide](docs/shitsuke-guide.md) |
+
+### Modes and Process Weight
+
+| When to decide | System | What it controls | Example |
+|----------------|--------|-----------------|---------|
+| **At install time** | [Modes](docs/modes.md) | What's in your `.claude/` | `quality+security` |
+| **Per task** | [Process Weight](docs/process-weight.md) | How thorough the process is | "light mode" / "strict" |
+| **Per task** | [Autopilot](modules/autopilot.md) | Hands-off after plan approval | Plan approved → auto-run to completion |
+| **As policy** | [Shitsuke](docs/shitsuke-guide.md) | Which features are active | `heartbeat: false` |
+| **Never changes** | Safety | The floor that never drops | `_deleted/`, race prevention |
+
+## Design Philosophy
+
+Every protocol exists because something went wrong without it.
+
+| Incident | Protocol |
+|----------|----------|
+| Agent couldn't catch its own mistakes | Independent reviewer requirement |
+| Bad instruction cascaded unchallenged | Bidirectional objection protocols |
+| "I checked" with no proof | Evidence-based completion gates |
+| Config deployed but never verified working | Post-Change Verification — goal-based success criteria |
+| Accidental file deletion | `_deleted/` safety buffer |
+| Agent lost context mid-task | Whiteboard knowledge sharing |
+| Upstream failure wasted downstream work | Cascade failure auto-blocking (CASCADE-001) |
+| Parallel results merged without structure | Fan-Out/Aggregate 3-phase integration (FANOUT-001) |
+
+[Case studies](docs/case-studies.md) show how these work in practice.
+
+### Dynamic Workflows (research preview)
+
+For battalion-scale work (6+ files), the orchestrator (oyakata-neko) can delegate to a Dynamic Workflow — a JavaScript script the runtime executes locally in the background to orchestrate many sub-agents at once (up to 16 concurrent, 1000 total per run). It runs locally and consumes your existing subscription usage, so there is no external API billing and no data leaving the machine; intermediate results stay in script variables and never eat the orchestrator's context. Delegate only for a cross-codebase audit, a large mechanical migration, or cross-verification research with no human approval needed mid-run — never when each phase needs human sign-off, when human-readable artifacts are required, or when a TeamCreate is already running. The workflow's internal cross-review is only a preliminary screening: the final APPROVE always goes to a kurouto-neko outside the workflow (implementer != reviewer). See [modules/dynamic-workflows.md](modules/dynamic-workflows.md).
+
+**How to activate:** This capability only engages when you explicitly opt in — include the word `workflow` in your request, or enable ultracode (`/effort ultracode`). Without opt-in, Neko Gundan orchestrates with standard TeamCreate sub-agents and behavior is unchanged. Dynamic Workflows is a Claude Code research-preview feature: it requires a Claude Code version that ships Workflows, and gracefully falls back to TeamCreate where the feature is unavailable.
+
+## Trade-offs
+
+**You are still the boss.** The reviewer and implementer share the same model family, so they can share blind spots. Think of it as "better first draft" — not "no review needed."
+
+| You spend more on | You spend less on |
+|---|---|
+| Tokens (2-3x at platoon scale) | Debugging agent-introduced bugs |
+| Initial response time | Recovering from accidental file deletion |
+| `.claude/` prompt complexity | Re-reviewing "completed" work that wasn't verified |
+
+Safety rules (`security` mode) cost almost nothing — prompt rules, no extra agent calls. [Comparison with other tools](docs/comparison.md).
+
+**Dynamic Workflows (research preview)** are optional and local — they consume your existing subscription usage, not an external API, and the final review still goes through a kurouto-neko outside the workflow.
+
+## Adapters
+
+Use neko-gundan rules with other AI coding CLIs:
+
+| CLI | File | Usage |
+|-----|------|-------|
+| [Codex CLI](https://github.com/openai/codex) | `adapters/codex/AGENTS.md` | Copy to your project root as `AGENTS.md` |
+| [Aider](https://github.com/paul-gauthier/aider) | `adapters/aider/conventions.md` | Copy to your project root as `CONVENTIONS.md` |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | `adapters/gemini/GEMINI.md` | Copy to your project root as `GEMINI.md` |
+
+Each adapter carries the core neko-gundan quality rules (implementer != reviewer, 3-cycle review limit, evidence-based gates) in the format each CLI expects.
+
+## Documentation
+
+| Guide | Content |
+|-------|---------|
+| [Modes Guide](docs/modes.md) | Pick what you need, combine freely |
+| [Process Weight](docs/process-weight.md) | Light / Standard / Strict |
+| [Workflow](docs/WORKFLOW.md) | Phase-based independent execution details |
+| [Shitsuke Guide](docs/shitsuke-guide.md) | Module system configuration |
+| [Hooks Guide](docs/hooks-guide.md) | Gate Guard / Commit Guard setup |
+| [Update Guide](docs/update-guide.md) | Diff updates, auto-check |
+| [Architecture](docs/architecture.md) | System design and agent interactions |
+| [Protocols](docs/protocols.md) | All protocol definitions |
+| [Harness Engineering](docs/harness-engineering.md) | Design principles and anti-pattern defense |
+| [Auto Mode](docs/auto-mode.md) | Claude Code auto permission mode |
+| [Comparison](docs/comparison.md) | vs Subagents / LangGraph / CrewAI |
+| [Case Studies](docs/case-studies.md) | Real project examples |
+| [Example CLAUDE.md](examples/CLAUDE.md.example) | Full configuration example |
+| [Quality Gates](gates/) | Start, completion, and design phase gate definitions with checklists |
+| [Post-Change Verification](rules/post-change-verification.md) | Goal-based success criteria for config/infra changes |
+| [YAML Definitions](yaml/) | Machine-readable YAML mirrors (experimental, may lag behind `.md` originals) |
+| [Dynamic Workflows](modules/dynamic-workflows.md) | When to delegate battalion-scale work to local JS sub-agent orchestration |
+
+## Contributing
+
+1. Follow the existing agent definition style
+2. Include protocol IDs for new protocols (e.g., `NEWPROTOCOL-001`)
+3. Add examples for new features
+4. Test with actual Claude Code sessions before submitting
+
+## License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+## Acknowledgments
+
+- Built for [Claude Code](https://github.com/anthropics/claude-code) by Anthropic
+- The foundational idea — multi-agent orchestration with Claude Code — came from [this article by おしお](https://zenn.dev/shio_shoppaize/articles/5fee11d03a11a1)
+- Inspired by the [Shigoto-neko / Genba-neko](https://dic.nicovideo.jp/a/%E4%BB%95%E4%BA%8B%E7%8C%AB) internet meme characters
+- Review protocol inspired by [takt](https://www.npmjs.com/package/takt) orchestration tool
+- Reflexion pattern from [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366)
+- pass@k metrics, confidence scoring, and sandbox agent patterns inspired by [Everything Claude Code](https://github.com/affaan-m/everything-claude-code)
+- Physical kill-switch and steer hooks (v1.10.0) derived from [anthropics/cwc-long-running-agents](https://github.com/anthropics/cwc-long-running-agents) (Apache-2.0)
+- Adversarial 2nd-Pass + Evidence Level Ladder (v1.10.x) inspired by [Lazarus-AI/clearwing](https://github.com/Lazarus-AI/clearwing) (MIT)

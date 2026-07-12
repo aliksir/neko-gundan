@@ -1,0 +1,48 @@
+module_detail:
+  name: Reflexion Module
+  id: null
+  default: "ON"
+  scale: All
+  why: "同じミスを繰り返すことを防ぐ。失敗を言語化することで根本原因の分析と具体的な改善アクションを促す（Reflexion研究由来）。「気をつける」という曖昧な反省ではなく、次回の具体的な行動変容を定義する。"
+  description: "タスクが失敗またはやり直しになった場合に、現場猫が構造化された振り返りを実施する。何が起きたか・なぜ起きたか・次はどうするかを報告に含める。"
+  configuration:
+    steps:
+      - "常時アクティブ（設定不要）"
+      - "失敗またはやり直し時に自動的にトリガーされる"
+  procedures:
+    - id: 1
+      name: "Reflexion振り返り（失敗時必須）"
+      steps:
+        - "タスクが失敗またはやり直しになった場合、報告書に以下の振り返りセクションを追加する:"
+        - "  Reflection (Reflexion):"
+        - "    - What happened: [事実の記述]"
+        - "    - Why it happened: [根本原因の分析]"
+        - "    - Next time: [具体的な改善アクション]"
+        - "根本原因が不明な場合は正直に 'Cause unknown, consulting shigoto-neko' と書く"
+        - "振り返り内容が他の猫にも有用なら、ホワイトボードのFindingsにも転記する"
+      conditions:
+        - "タスクが失敗またはやり直しになった場合"
+    - id: 2
+      name: "禁止事項"
+      steps:
+        - "'気をつける' / 'I'll be more careful' などの曖昧な反省は禁止"
+        - "必ず具体的なアクションを書くこと"
+        - "  NG: 'I'll be careful next time'"
+        - "  OK: 'Next time I'll Grep import paths before running tests'"
+      conditions: []
+  templates:
+    - name: "Reflexion Section (report)"
+      fields:
+        - "Reflection (Reflexion):"
+        - "  - What happened: [事実の記述]"
+        - "  - Why it happened: [根本原因の分析]"
+        - "  - Next time: [具体的な改善アクション（曖昧禁止・具体的行動のみ）]"
+  integration_points:
+    - agent: genba-neko
+      phase: "Post-work (step 11, on failure)"
+      action: "Add Reflexion section to failure/redo report"
+  notes:
+    - "'気をつける' / '注意する' は禁止。具体的な行動を書くこと"
+    - "根本原因が不明な場合は推測で埋めず、正直に不明と書いて仕事猫に相談する"
+    - "振り返り内容が他の猫にも有用な場合はホワイトボードのFindingsにも転記する"
+    - "Strict mode では成功時も Reflexion を実施する（失敗時のみではなく）"

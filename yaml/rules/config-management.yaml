@@ -1,0 +1,31 @@
+config_management:
+  description: "設定ファイル変更管理"
+
+  change_procedure:
+    targets:
+      - "CLAUDE.md"
+      - "エージェント定義（.claude/agents/）"
+      - "MEMORY.md"
+    steps:
+      - "実行前に総司令に変更内容を提示して確認を取る"
+      - "変更が確定したら memory/config-changelog.md に追記（形式: 日付・対象・変更内容・理由）"
+      - "変更履歴は削除・上書きしない。常に追記する"
+
+  kv_cache_optimization:
+    description: "CLAUDE.mdの構造変更時の厳守事項（コスト10倍差）"
+    cost_note: "キャッシュ済み $0.30 vs 未キャッシュ $3.00 / M tokens"
+    rules:
+      - "プレフィックス安定化: 先頭〜中盤のセクションは変更しない。変更はファイル末尾に追記"
+      - "追記のみ: 既存テキストの途中挿入・並び替えはキャッシュを破壊する。末尾追記を優先"
+      - "時変要素は末尾: タイムスタンプ・バージョン番号等の動的情報はファイル最後に配置"
+      - "重要指示は先頭側に配置（Lost in the middle対策）: LLMは長い入力の中間部分を見落としやすい（2026-03-17追加、参考: Claude Architect試験ガイド）。クリティカルルール・破壊操作禁止・ゲート定義へのポインタ等は先頭〜前半に、参照リンク・メトリクス設定・将来タスク等は後半〜末尾に配置する"
+
+  rework_metrics:
+    description: "結果報告書に記録し、改善傾向を追跡する"
+    metrics:
+      - metric: "intervention_count"
+        description: "人間の修正介入回数（セッション中）"
+      - metric: "review_cycles"
+        description: "レビューループの実サイクル数（1回でPASS=理想）"
+      - metric: "reflexion_count"
+        description: "Reflexion振り返りが発生した回数"

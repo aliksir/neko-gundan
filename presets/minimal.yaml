@@ -1,0 +1,34 @@
+# =============================================================================
+# Minimal Preset — Core features only
+# =============================================================================
+# Great for getting started or small projects.
+# Only core features are active (objections, completion gates, review protocol).
+# No additional modules to copy — just use agents/ and rules/ as-is.
+#
+# Modules to copy to .claude/rules/: (none)
+# =============================================================================
+
+shitsuke:
+  objection_flow: false
+  whiteboard: false
+  heartbeat: false
+  race_prevention: false
+  reflexion: false
+  isv: false
+  fides: false
+  capacity_escalation: false
+  arbitrator: false
+  handoff_schema: false
+  jit_tests: false
+  tdd_separation: false
+  ensemble_judge: false
+  spec_driven_review: false
+  checklist_export: false
+  quality_metrics: false
+  raw_log: false
+  faceted_prompting: false
+  linter_protection: false
+  module_addition: false
+  process_weight: false
+  progress_visibility: false
+  audit_trail: false

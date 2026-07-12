@@ -1,0 +1,62 @@
+module_detail:
+  name: Capacity Escalation Module
+  id: CAPACITY-001
+  default: "OFF"
+  scale: Battalion
+  why: >
+    管理負荷が許容量を超えた場合に品質が劣化する前にshigoto-nekoがoyakata-nekoへエスカレーションするプロトコル。
+    「忙しいが何とかなる」と品質を犠牲にすることは中間管理職として最悪の判断。
+  description: >
+    shigoto-nekoの管理負荷が許容量を超えた際のエスカレーションプロトコル。
+    OBJECTION（指示が「間違っている」）とは異なり、指示は正しいが「こなしきれない」という事実報告。
+
+  procedures:
+    - id: 1
+      name: shigoto-neko エスカレーション手順
+      conditions:
+        - "3体以上のgenba-nekoを管理中 かつ P0/P1対応が遅延している"
+        - "POLLING-001のインターバルを維持できない（確認が追いつかない）"
+        - "完了ゲート実行が先送りされている（P2遅延が慢性化）"
+        - "genba-nekoからのHeatbeat報告が2件以上同時にキューに溜まっている"
+      steps:
+        - "トリガー条件に1つでも該当したらoyakata-nekoにエスカレーション報告を送る"
+        - "エスカレーションテンプレートを使って報告する"
+        - "oyakata-nekoの判断を待つ"
+
+    - id: 2
+      name: oyakata-neko 対応フロー
+      steps:
+        - "状況確認: ダッシュボードとTaskListでshigoto-nekoの負荷を客観的に把握する"
+        - "判断: 以下のいずれかを選択する"
+        - "  A: タスク先送り（優先度の低いWaveを後回し）—最も安全な選択肢"
+        - "  B: 並列度削減（genba-neko数を減らし管理オーバーヘッドを軽減）"
+        - "  C: shigoto-neko追加（2体目のshigoto-nekoを生成して管理負荷を分散）"
+        - "  D: スコープ縮小（「対象外」に追加して総量を減らす）"
+        - "命令発行: 判断をshigoto-nekoに伝え、再編を実行する"
+
+  templates:
+    - name: CAPACITY-001 エスカレーションテンプレート
+      fields:
+        - "親方！キャパシティ報告っす！"
+        - "Load: [管理中のgenba-neko数 / アクティブタスク数]"
+        - "遅延していること: [具体的に何が遅れているか — P0/P1/P2でカテゴリ分け]"
+        - "品質リスク: [このまま続けると何が犠牲になるか]"
+        - "提案:"
+        - "  - [A: タスク再優先/先送り]"
+        - "  - [B: genba-neko数削減（並列度低下）]"
+        - "  - [C: shigoto-neko追加]"
+        - "  - [D: その他]"
+
+  integration_points:
+    - agent: shigoto-neko
+      phase: "作業中（トリガー該当時: genba-neko3体以上かつ遅延 / polling追いつかず / ゲート先送り / Heartbeat2件以上キュー）"
+      action: CAPACITY-001エスカレーション報告をoyakata-nekoに送信
+    - agent: oyakata-neko
+      phase: shigoto-nekoからCAPACITY-001受信時
+      action: 負荷を確認し対応策を決定（先送り/削減/追加/縮小）して指示を出す
+
+  notes:
+    - "「何とかする」は禁止。shigoto-nekoがオーバーキャパシティの場合、品質ゲートは形骸化する"
+    - "キャパシティエスカレーションは義務であり恥ではない。エスカレーションしたshigoto-nekoを責めない"
+    - "エスカレーションが頻発する場合、初期タスク分解が過剰だった可能性が高い → 次回の計画に反映する"
+    - "OBJECTION-002との違い: OBJECTION-002は指示が『間違っている』、CAPACITY-001は指示は正しいが『こなしきれない』という事実報告"

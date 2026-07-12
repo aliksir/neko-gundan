@@ -1,0 +1,43 @@
+__pycache__/
+*.pyc
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+_deleted/
+node_modules/
+.tmp/
+
+# Session artifacts (generated during operations, not part of framework)
+audit/
+logs/
+status/dashboard.md
+status/agent-status.json
+status/code-factory-report.*
+status/token-usage/
+status/circuit-breaker.json
+status/archive/
+status/alerts/
+status/traces/*.json
+status/traces/*.jsonl
+status/lifecycle-log.jsonl
+status/stall-log.md
+
+# Nightly runner runtime artifacts (per-environment, not part of framework)
+queue/nightly/
+.cache/
+
+# Dynamic Workflow runtime context (per-run, not part of framework)
+.phase-context.json
+
+# kantoku-watchdog runtime state (per-run, not part of framework)
+.kantoku-watchdog-state.json
+
+# ローカル専用ファイル（PUBLICリポへの誤コミット防止）
+.publish-deny-patterns
+LOCAL-VS-PUBLIC.md
+queue/
+
+.pii-clearance.json

@@ -1,0 +1,72 @@
+# =============================================================================
+# 猫軍団しつけ設定（Module Configuration）
+# =============================================================================
+# [SCOPE] 行動モジュール（22種）の ON/OFF 制御。shitsuke-apply.sh が読む。
+# 証跡モジュール（audit_trail/raw_log 等）は neko-modules.yml で別管理。
+# 両ファイルの対象モジュールに重複はない。
+# プロジェクトに合わせてモジュールのON/OFFを設定する。
+# 変更後は `bash scripts/shitsuke-apply.sh` で .claude/rules/ に反映。
+#
+# プリセットで一括設定:
+#   bash scripts/shitsuke-apply.sh --preset minimal      # コアのみ
+#   bash scripts/shitsuke-apply.sh --preset recommended   # バランス型
+#   bash scripts/shitsuke-apply.sh --preset full          # 全部入り
+#
+# 対話式で個別設定:
+#   /shitsuke コマンドを実行
+# =============================================================================
+
+shitsuke:
+  # Module types:
+  #   - Always active (not listed here): objection-flow.md (core protocol)
+  #   - Configurable (listed below): enable/disable per project
+  #
+  # Naming convention: config key uses underscores (e.g., race_prevention)
+  #                    file name uses hyphens (e.g., race-prevention.md)
+
+  # --- 監視系 ---
+  whiteboard: true        # ホワイトボード共有（WHITEBOARD-001）— Gate item #8 (platoon+)
+  heartbeat: true         # スタック検出・進捗監視（HEARTBEAT-001 + POLLING-001）— No gate item (process module)
+  race_prevention: true   # ファイル競合防止（RACE-001）— No gate item (process module)
+  progress_visibility: true  # ダッシュボード進捗見える化（DASHBOARD-001）— Gate item #14 (platoon+)
+
+  # --- 品質強化系 ---
+  reflexion: true         # 失敗時の振り返り — Gate item #13 (on failure)
+  isv: true               # Intent State Vector — 意図の数値化（上級者向け）— Gate item #11
+  fides: true              # データ信頼レベル FIDES（上級者向け）— No gate item (trust tagging)
+  process_weight: true     # プロセスウェイト — タスク特性に応じたゲート軽重判定 — No gate item (process module)
+
+  # --- プロンプト設計系 ---
+  faceted_prompting: true  # Faceted Prompting — プロンプトのSoC設計・Recency Effect活用 — No gate item (design guideline)
+
+  # --- 高度な制御系 ---
+  capacity_escalation: true   # 容量エスカレーション（CAPACITY-001）— No gate item (process module)
+  arbitrator: true            # 仲裁プロセス（3回ループ超過時）— No gate item (process module)
+  handoff_schema: true        # 構造化ハンドオフ — No gate item (handoff format)
+
+  # --- コード保護系 ---
+  linter_protection: true   # リンター設定変更禁止（コードを直せ、設定を弱めるな）— Gate item #12
+
+  # --- テスト系 ---
+  jit_tests: true         # 使い捨てテスト（JiTTests）— No gate item (review aid)
+  tdd_separation: true    # TDD分離原則（テスト作成≠実装）— No gate item (process module)
+
+  # --- レビュー系 ---
+  ensemble_judge: true     # Ensemble Judge（SE-Jury複合評価）— No gate item (review method)
+  spec_driven_review: true  # 仕様駆動レビュー（Purpose照合）— No gate item (review method)
+  mutation_review: false     # Mutation Review（変異注入レビュー品質検証）— No gate item (review method)
+
+  # --- ガバナンス系 ---
+  module_addition: true    # モジュール追加チェックリスト（MODULE-001）— No gate item (process module)
+
+  # --- コア行動系 ---
+  objection_flow: true      # 異議申立プロトコル（OBJECTION-001/002）— No gate item (core protocol)
+
+  # --- UI品質系 ---
+  quality_layers: true      # 品質3層定義 L1/L2/L3 + Wave方式（3+画面のUI作業時に自動適用）— No gate item (design guideline)
+
+  # --- 出力系 ---
+  checklist_export: true    # 完了ゲートチェックリストを外部ファイルに出力 — Gate item #9
+  quality_metrics: true     # 品質メトリクス累積レポート出力 — Gate item #10
+  raw_log: true             # 全行動生ログ出力（監査用）— 完了時にgit diff+行動リストを生成
+  audit_trail: true          # 監査証跡（トレーサビリティ・承認ログ・変更管理・監査レポート）— Gate item #15

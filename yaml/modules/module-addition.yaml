@@ -1,0 +1,92 @@
+module_detail:
+  name: Module Addition Checklist
+  id: MODULE-001
+  default: "ON"
+  scale: All
+  why: "「ドキュメントを書いた＝導入完了」というアンチパターンを防ぐ。新モジュール追加時に影響範囲・エージェント統合・ゲート反映・SSOT定義・双方向チェック・参照整合性・コミットを全て漏れなく実施することを保証する。"
+  description: "猫軍団システムへの新モジュール・プロトコル追加時に適用する9ステップチェックリスト。ワークフロー統合なしにモジュールはデプロイ済みとみなされない。"
+  configuration:
+    steps:
+      - "適用条件: modules/ に新モジュール追加時、docs/protocols.md に新プロトコル追加時、rules/ に新ルール追加時"
+  procedures:
+    - id: 1
+      name: "モジュール文書作成"
+      steps:
+        - "modules/ または docs/ にプロトコル定義を作成する"
+        - "証跡: ファイルパスを記録"
+      conditions: []
+    - id: 2
+      name: "影響分析"
+      steps:
+        - "新モジュールの影響を受ける既存ファイルを全て特定する"
+        - "agents/, rules/, docs/, modules/ を横断して関連概念を検索する"
+        - "証跡: 影響ファイル一覧と変更内容を記録"
+        - "チェック観点1: どのエージェントが影響を受けるか → agents/*.md を関連キーワードで検索"
+        - "チェック観点2: どのゲートを更新が必要か → rules/completion-gates.md を確認"
+        - "チェック観点3: どの既存モジュールと相互作用するか → modules/*.md を関連概念で検索"
+        - "チェック観点4: 設定に影響するか → neko-gundan.config.yaml を確認"
+        - "チェック観点5: 新しいSSOTを作成するか → 競合する定義がないことを確認"
+      conditions: []
+    - id: 3
+      name: "エージェントワークフローへの統合"
+      steps:
+        - "対象エージェントの Active Modules テーブルに追加する"
+        - "モジュールが適用される具体的なアクションステップにも埋め込む"
+        - "証跡: agents/*.md の行番号を記録"
+      conditions: []
+    - id: 4
+      name: "ゲート更新"
+      steps:
+        - "モジュールがゲート項目を追加する場合、rules/completion-gates.md に検証項目を追加する"
+        - "証跡: ゲート項目番号を記録"
+      conditions:
+        - "モジュールがゲート項目を追加する場合のみ"
+    - id: 5
+      name: "設定登録"
+      steps:
+        - "neko-gundan.config.yaml にコメント付きでエントリを追加する"
+        - "証跡: 設定行を記録"
+      conditions: []
+    - id: 6
+      name: "SSOT定義"
+      steps:
+        - "単一情報源（SSOT）がどこかを明記する"
+        - "参照コピーには 'SSOT: {path}' と記載する"
+        - "証跡: ファイル内のSSSOT宣言を記録"
+      conditions: []
+    - id: 7
+      name: "双方向チェック"
+      steps:
+        - "送信側プロトコルを定義している場合、受信側の処理も定義されていることを確認する（逆も同様）"
+        - "証跡: 両側が文書化されていることを確認"
+      conditions: []
+    - id: 8
+      name: "参照整合性確認"
+      steps:
+        - "新モジュール内の全ファイル参照が存在するファイルを指していることを確認する"
+        - "証跡: scripts/check-doc-refs.sh の出力を記録"
+      conditions: []
+    - id: 9
+      name: "Gitコミット"
+      steps:
+        - "全ての変更をまとめてコミットする"
+        - "証跡: コミットハッシュを記録"
+      conditions: []
+  templates: []
+  integration_points:
+    - agent: oyakata-neko
+      phase: Module deployment decision
+      action: "Apply MODULE-001 checklist before any new module/protocol is considered deployed"
+    - agent: shigoto-neko
+      phase: Module addition task
+      action: "Execute all 9 checklist steps in order; record evidence for each step"
+    - agent: genba-neko
+      phase: "Module file creation (step 1)"
+      action: "Create the module document, then immediately commit (new-file-immediate-commit rule)"
+    - agent: kurouto-neko
+      phase: Module review
+      action: "Verify all 9 checklist steps have evidence before approving; reject if any step is skipped"
+  notes:
+    - "SSOT: このファイルが MODULE-001 の正（SSOT）。docs/protocols.md はこのファイルを参照する"
+    - "ワークフロー統合なしにモジュールはデプロイ済みとみなされない。影響分析を先に実施すること"
+    - "全9ステップが必須。証跡なしのチェックは無効"

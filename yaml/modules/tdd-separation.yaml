@@ -1,0 +1,47 @@
+module_detail:
+  name: TDD Separation Module
+  id: null
+  default: "OFF"
+  scale: Platoon+
+  why: "テスト作成と実装を同一コンテキストで実行すると、テスト作成者の分析が実装者に漏れる（Context Pollution）。テスト作成者が発見した設計上の洞察が実装者に先渡しされ、テストが期待通りに機能しなくなる可能性がある。別エージェントに分離することでこれを防ぐ（review-protocol.md § TDD分離原則、論文根拠: arxiv）。"
+  description: "テスト作成と実装を異なるエージェントに分離することでContext Pollutionを防ぐ。現場猫Aがテストを書いてハンドオフし、現場猫Bが独立して実装する。実装者はテスト作成者の分析を読まずに実装する。"
+  configuration:
+    steps:
+      - "neko-gundan.config.yaml でモジュールを有効化する"
+      - "小隊以上のタスクでテスト作成と実装を異なる現場猫に割り当てる"
+  procedures:
+    - id: 1
+      name: "TDD分離フロー"
+      steps:
+        - "現場猫A: テストを作成する"
+        - "handoff(action:auto) で現場猫Bにハンドオフする"
+        - "現場猫B: テスト作成者の分析を読まずにテストに対して実装する"
+        - "玄人猫: テストと実装を独立してレビューする"
+        - "フロー図: genba-neko A（テスト作成） → handoff(action:auto) → genba-neko B（実装） → kurouto-neko（レビュー）"
+      conditions:
+        - "小隊以上のタスクの場合"
+    - id: 2
+      name: "Context Pollution 防止ルール"
+      steps:
+        - "現場猫Bは現場猫Aの分析・コメント・設計洞察を読まない"
+        - "現場猫Bはテストコード自体のみを入力として受け取る"
+        - "テストが何をテストするか（What）は知ってよい。なぜそのアプローチか（Why）は知ってはいけない"
+      conditions: []
+  templates: []
+  integration_points:
+    - agent: shigoto-neko
+      phase: "Task splitting (platoon+)"
+      action: "Assign test creation and implementation to different genba-neko"
+    - agent: "genba-neko A"
+      phase: Test creation
+      action: "Write tests, handoff to genba-neko B (action: auto)"
+    - agent: "genba-neko B"
+      phase: Implementation
+      action: "Implement against tests without reading test creator's analysis"
+    - agent: kurouto-neko
+      phase: Review
+      action: "Review both tests and implementation independently"
+  notes:
+    - "同一コンテキストでのテスト作成と実装は Context Pollution を引き起こす"
+    - "現場猫Bはテスト作成者の分析を読んではいけない。テストコード自体のみを参照する"
+    - "review-protocol.md の TDD分離原則と連携（F1スコアが新規セッション分離で+16%改善: arxiv:2603.12123）"

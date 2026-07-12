@@ -1,0 +1,31 @@
+module:
+  name: handoff_schema
+  id: null
+  default: "OFF"
+  scale: "Platoon+"
+  description: "Structured data format for inter-agent work handoffs."
+  full_definition: "modules/handoff-schema.md"
+  integration_points:
+    - agent: genba-neko
+      phase: "Post-work (handoff to next agent)"
+      action: "Include structured handoff data (from, to, status, completed, pending, files_modified, blockers)"
+    - agent: genba-neko
+      phase: "Post-work (TPG active)"
+      action: "Populate trust_context from TPG session state (effective_trust, low_node_count, contamination_path, tpg_snapshot_id)"
+    - agent: shigoto-neko
+      phase: "Handoff review"
+      action: "Validate handoff fields (from/to required, status valid, completed non-empty, action field appropriate). If trust_context present, verify rules 9-12"
+    - agent: shigoto-neko
+      phase: "Task routing"
+      action: "Use action field to decide: auto (proceed), confirm (approve first), propose_only (review only). If contamination_path is true, override to confirm"
+  validation_rules:
+    - id: 9
+      rule: "trust_context present: effective_trust must be HIGH/MEDIUM/LOW"
+    - id: 10
+      rule: "trust_context present: low_node_count must be integer >= 0"
+    - id: 11
+      rule: "trust_context present: contamination_path must be boolean"
+    - id: 12
+      rule: "contamination_path true implies effective_trust should be LOW (warning if mismatch)"
+    - id: 13
+      rule: "trust_context present: tpg_snapshot_id must be non-empty string"

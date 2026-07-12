@@ -1,0 +1,12 @@
+{
+  "stall_detection": {
+    "threshold_sec": 300,
+    "check_interval_sec": 30
+  },
+  "backoff": {
+    "initial_delay_sec": 10,
+    "multiplier": 2,
+    "max_delay_sec": 300,
+    "max_retries": 5
+  }
+}

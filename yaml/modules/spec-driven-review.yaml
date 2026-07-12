@@ -1,0 +1,42 @@
+module_detail:
+  name: Spec-Driven Review Module
+  id: null
+  default: "OFF"
+  scale: "Platoon+ (recommended for squad with specs)"
+  why: "コードが動作するかだけでなく、プロジェクト仕様・要件と整合しているかを検証する。仕様書なしのコードレビューは実装の正しさを確認できるが、方向性の正しさを確認できない。"
+  description: "レビュー前にプロジェクト仕様・要件（Purposeファイル）を読み込み、変更が仕様の方向性と整合しているかを確認する。仕様外機能の追加や技術スタックの逸脱を検出する。"
+  configuration:
+    steps:
+      - "neko-gundan.config.yaml でモジュールを有効化する"
+      - "仕様書: Purpose/{プロジェクト名}.md を参照先として使用する"
+  procedures:
+    - id: 1
+      name: "仕様駆動レビューフロー"
+      steps:
+        - "1. レビュー開始前にプロジェクト仕様・要件（Purposeファイル）を読み込む"
+        - "2. 変更が仕様の方向性と整合しているか確認する"
+        - "3. 整合していない場合 → 実装者に差し戻す（理由を明示）"
+        - "4. 仕様が古い・存在しない場合 → 先に仕様を更新してからレビューを進める"
+      conditions: []
+    - id: 2
+      name: "レビューチェックリスト追加項目"
+      steps:
+        - "変更は仕様が定める主要機能に関連しているか？"
+        - "仕様外の無許可の新機能が追加されていないか？"
+        - "技術スタックが仕様と整合しているか？"
+      conditions: []
+  templates: []
+  integration_points:
+    - agent: kurouto-neko
+      phase: Pre-review
+      action: "Read project spec/requirements (Purpose file) before starting code review"
+    - agent: kurouto-neko
+      phase: Review
+      action: "Check changes against spec direction; return to implementer if misaligned"
+    - agent: shigoto-neko
+      phase: "Pre-review (when spec is outdated/missing)"
+      action: "Update spec before review proceeds"
+  notes:
+    - "仕様書が古いまたは存在しない場合、レビューを進める前に仕様を更新すること"
+    - "仕様と整合しない変更を発見した場合は差し戻し必須（理由を明示）"
+    - "スペックのないプロジェクトでは適用困難。その場合は Standard レビューにフォールバックする"

@@ -1,0 +1,17 @@
+module:
+  name: spec_driven_review
+  id: null
+  default: "OFF"
+  scale: "Platoon+ (recommended for squad with specs)"
+  description: "Verifies not just \"does the code work\" but also \"does it align with the project spec/requirements.\""
+  full_definition: "modules/spec-driven-review.md"
+  integration_points:
+    - agent: kurouto-neko
+      phase: "Pre-review"
+      action: "Read project spec/requirements (Purpose file) before starting code review"
+    - agent: kurouto-neko
+      phase: "Review"
+      action: "Check changes against spec direction; return to implementer if misaligned"
+    - agent: shigoto-neko
+      phase: "Pre-review (when spec is outdated/missing)"
+      action: "Update spec before review proceeds"

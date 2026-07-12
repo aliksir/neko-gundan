@@ -1,0 +1,63 @@
+module_detail:
+  name: Race Condition Prevention Module
+  id: RACE-001
+  default: "ON"
+  scale: Platoon+
+  why: "複数エージェントが並列作業する場合、同一ファイルを同時編集するとコンフリクトが発生し、作業が無効になる。ファイル所有権の明示的な割り当てとworktree隔離により、この問題を構造的に防止する。"
+  description: "複数エージェントが並列作業する際のファイルコンフリクトを防ぐ。仕事猫はファイル所有権を割り当て、現場猫は担当外ファイルに触れない。小隊以上では worktree 隔離オプションを提供する。"
+  configuration:
+    steps:
+      - "worktree 隔離を使用する場合: isolation='worktree' で現場猫を起動する"
+      - "  Agent(subagent_type='genba-neko', isolation='worktree')"
+      - "大規模モノレポで sparsePaths を使用する場合（Claude Code 2.1.76以上）:"
+      - "  プロジェクトの .claude/settings.json に以下を設定:"
+      - "  {"
+      - "    'worktree': {"
+      - "      'sparsePaths': ['packages/core', 'services/api']"
+      - "    }"
+      - "  }"
+  procedures:
+    - id: 1
+      name: "仕事猫 — ファイル割り当てルール"
+      steps:
+        - "2体以上の現場猫が同一ファイルを同時編集しないようにする"
+        - "タスク分割時にファイル所有権を明確に割り当てる"
+        - "共有ファイルの変更は1体の現場猫に集約する"
+      conditions: []
+    - id: 2
+      name: "現場猫 — 境界ルール"
+      steps:
+        - "他の現場猫と同一ファイルを同時編集しない"
+        - "割り当てられたファイルの範囲内に留まる"
+        - "担当スコープ外のファイル変更が必要な場合は仕事猫に相談する"
+      conditions: []
+    - id: 3
+      name: "Worktree 隔離（小隊以上）"
+      steps:
+        - "現場猫が異なるファイルセットで並列作業する場合、isolation='worktree' で各エージェントに独立したgitブランチを与える"
+        - "worktree 内のメインブランチファイルを直接触らない"
+        - "作業完了後のマージは仕事猫が管理する"
+      conditions:
+        - "現場猫が異なるファイルセットで並列作業する場合"
+    - id: 4
+      name: "sparsePaths による物理的隔離（Claude Code 2.1.76以上）"
+      steps:
+        - "大規模モノレポでは worktree.sparsePaths を使用して各現場猫に割り当てパスのみを物理的にチェックアウトする"
+        - "sparsePaths 外のファイルは worktree 内に物理的に存在しないため、RACE-001 の強制が自動化される"
+        - "ディスク使用量と worktree 起動時間も削減される"
+        - "警告: Stale worktree 自動削除に既知のバグあり（Issue #27753） — コミット済みだが未マージのブランチが警告なく削除される可能性がある。worktree ライフサイクル外で重要なブランチを保護すること"
+      conditions:
+        - "Claude Code 2.1.76 以上の場合"
+        - "大規模モノレポで作業する場合"
+  templates: []
+  integration_points:
+    - agent: shigoto-neko
+      phase: Pre-dispatch gate
+      action: "Assign file ownership, verify no overlapping files between genba-neko"
+    - agent: genba-neko
+      phase: "During work (step 6)"
+      action: "Stay within assigned files, consult shigoto-neko for out-of-scope changes"
+  notes:
+    - "安全プロトコルのため、プロセス重量（Light/Standard/Strict）に関係なく常にアクティブ"
+    - "sparsePaths の stale worktree 自動削除バグ（Issue #27753）に注意。修正待ち状態"
+    - "sparsePaths のメリット: スコープ外ファイルが物理的に存在しないため RACE-001 強制が自動化される"

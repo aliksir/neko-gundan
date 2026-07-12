@@ -1,0 +1,209 @@
+# 夜間ジョブ OK/NG 分類ポリシー
+# 夜間帯（23:00-07:00 JST）に nightly-runner が実行可能なタスク種別と禁止種別の SSOT。
+# 関連: ~/.claude/rules/nightly-autopilot.md / scripts/nightly-runner.mjs
+#
+# 注意: 2026-05-09 より Claude Code Pro plan 運用のため、予算上限（max_budget_usd / max_total_budget_usd）は撤廃済み。
+#       各ジョブの max_budget_usd フィールドは parseYaml 動作確認のため残しているが、実行時には参照されない（参考値）。
+#       cost_usd 集計（実行コスト記録）は維持。詳細: result/20260509_nightly-budget-removal.md
+
+version: "1.1"
+last_updated: "2026-05-09"
+
+# 夜間実行 OK のタスク種別
+# 各エントリは { name, max_budget_usd, timeout_min, output, prompt_template } 必須
+nightly_ok:
+  - name: daily-research
+    description: arxiv 探索 → MEMO-YOSHI 追記。論文知見の自動収集。
+    max_budget_usd: 2.00
+    timeout_min: 30
+    output: draft_commit
+    prompt_template: |
+      daily-research タスクを実行する。手順を順序通りに完遂し、最後に必ず Draft commit する。
+
+      1. cd {MEMO_YOSHI_DIR}
+      2. git checkout -b feature/nightly-daily-research-{YYYYMMDD}
+      3. arxiv で直近24時間の cs.AI 新着論文から actionable insights を最大3件抽出
+      4. MEMO-YOSHI.md の「## 論文知見」セクションに追記（セクション不在ならファイル末尾に新規作成）
+         - 各エントリは「### YYYY-MM-DD: タイトル」形式、出典 URL 必須
+         - 質より量を優先しない: 0件でも commit する（空コミットを許容、メッセージで明示）
+      5. git add MEMO-YOSHI.md
+      6. git commit -m "nightly: daily-research {YYYYMMDD} (N insights)"
+         - N=0 なら "nightly: daily-research {YYYYMMDD} (no new insights)"
+         - --allow-empty を必要なら付与
+      7. push しない（commit のみ、Draft PR は別タスク）
+
+      完了条件: ステップ7まで全て完遂。途中で止まらないこと。
+      失敗時: なぜ止まったかを stderr に明示的に出力してから exit。
+
+  - name: lessons-lint
+    description: memory/lessons の品質チェック。重複・矛盾・陳腐化検出。
+    max_budget_usd: 1.00
+    timeout_min: 15
+    output: report_only
+    prompt_template: |
+      {LESSONS_DIR}/ 配下の全ファイルに対して
+      knowledge-lint の4チェック（矛盾・陳腐化・孤立・重複）を実行。
+      結果を report_only でまとめ、ファイル変更は行わない。
+
+  - name: dead-link-check
+    description: docs/rules/skills 内のリンク切れ検出。
+    max_budget_usd: 1.50
+    timeout_min: 20
+    output: report_only
+    prompt_template: |
+      {WORK_DIR}/.claude/rules/、{CLAUDE_CONFIG_DIR}/skills/、{CLAUDE_CONFIG_DIR}/agents/ 配下の Markdown ファイルから
+      ファイル参照（`C:/...` `~/.claude/...`）を抽出し、存在確認を実施。
+      切れているリンクをリストアップして report_only で報告。
+
+  - name: typo-fix
+    description: 自動 typo 検出 + Draft PR。
+    max_budget_usd: 3.00
+    timeout_min: 45
+    output: draft_pr
+    prompt_template: |
+      {WORK_DIR}/multi-agent-neko/ 配下の Markdown ファイルで明白な typo（重複文字・誤変換）を
+      検出して修正。feature/nightly-typo-fix-{YYYYMMDD} ブランチで Draft PR を作成。
+      不確かな修正は行わない（confidence high のみ）。
+
+  - name: pii-mask-yoshi-health
+    description: pii-mask-yoshi パターン健全性テスト。FP/FN回帰検出と複雑度メトリクス記録。
+    max_budget_usd: 0.50
+    timeout_min: 10
+    output: report_only
+    prompt_template: |
+      pii-mask-yoshi のパターン健全性チェックを実行する。
+
+      1. テスト実行:
+         cd {WORK_DIR}/pii-mask-yoshi && node --test test/masker.test.mjs test/realworld.test.mjs test/e2e.test.mjs test/converter.test.mjs 2>&1
+         結果を PASS/FAIL 件数で記録。
+
+      2. 複雑度メトリクス収集:
+         - grep -c 'new RegExp\|\/.*\/' {WORK_DIR}/pii-mask-yoshi/src/masker.mjs でパターン数をカウント
+         - wc -l {WORK_DIR}/pii-mask-yoshi/src/masker.mjs でファイル行数を記録
+         - grep -c 'label:' {WORK_DIR}/pii-mask-yoshi/src/masker.mjs でラベル数を記録
+
+      3. 結果を {WORK_DIR}/metrics/pii-mask-yoshi-health.md に追記（日付+テスト結果+複雑度）。
+         ファイルがなければ新規作成。既存ならテーブル末尾に1行追記。
+
+      4. テスト失敗があれば Telegram 通知: [NIGHTLY-HEALTH] pii-mask-yoshi テスト失敗 N件
+
+  - name: denwa-neko-diary
+    description: 電話猫の日記。前日の出来事から学びと気づきを思考過程付きで記録。
+    max_budget_usd: 1.00
+    timeout_min: 15
+    output: report_only
+    prompt_template: |
+      電話猫日記を生成する。以下の手順を順序通りに実行。
+
+      1. 情報収集（並列可）:
+         - {WORK_DIR}/.claude/handover.md を Read（存在しなければスキップ）
+         - {WORK_DIR}/daily/ から前日の daily note を Read（存在しなければスキップ）
+         - git log --since='24 hours ago' --all --oneline を実行
+         - {WORK_DIR}/chat-logs/ から前日日付のファイル名一覧を取得（中身は読まない）
+         - {WORK_DIR}/memory/kaigi/ から前日日付の議事録を Read（存在しなければスキップ）
+
+      2. 収集した情報を元に、電話猫として日記を書く:
+         - 電話猫の人格: 冷静・論理的、「そもそも」の視点、「外から見ると」の視点
+         - 口調: 淡々と。「もしもし」で始める。締め「台風の時に頼むピザはサクサクしててうまいぞ」
+         - 思考過程を必ず書く: なぜ気になったか、そもそもどうなのか
+         - 出来事を2-4個ピックアップして深掘り
+
+      3. {WORK_DIR}/denwa-neko/memory/diary/YYYY-MM-DD.md に保存
+         - 既存ファイルがあれば _v2.md として保存
+
+      完了条件: 日記ファイルが保存されること。情報源ゼロなら「静かな日」エントリを生成。
+
+  - name: neko-kaigi
+    description: 前日の猫会議（デイリー総括）。5猫で多角的に前日作業を振り返り、KPT+改善提案を出力。
+    max_budget_usd: 3.00
+    timeout_min: 90  # 45→90 (猫会議20260711 S-3: 12セッション分ログで3夜連続タイムアウト)
+    output: report_only
+    prompt_template: |
+      前日の猫会議（デイリー総括）を実行する。
+
+      1. 情報収集（並列可）:
+         - ~/.claude/handover.md を Read（前日セッションの内容把握）
+         - {WORK_DIR}/chat-logs/ から前日日付のログファイルを Read
+         - 前日の git commit を全プロジェクトから収集:
+           for dir in {WORK_DIR}/*/; do
+             if [ -d "$dir/.git" ]; then
+               yoshi git -C "$dir" log --oneline --since="yesterday" --until="today"
+             fi
+           done
+         - {WORK_DIR}/daily/ から前日の daily note を Read（存在すれば）
+
+      2. /neko-kaigi スキルを実行:
+         - 5猫（効率猫/発見猫/安全猫/新人猫/電話猫）で前日作業を多角的に振り返る
+         - KPT + スキル化提案 + ツール化提案 + ルール改善を出力
+
+      3. 出力:
+         - {WORK_DIR}/reviews/YYYYMMDD_neko-kaigi.html（HTML議事録）
+         - {WORK_DIR}/memory/kaigi/YYYYMMDD.md（MD findings）
+
+      注意: 夜間帯のため git push / npm publish は禁止。ファイル書き込みのみ。
+      完了条件: 議事録ファイル2件が保存されること。前日セッションなし（handover未更新）の場合は「前日活動なし」と記録して正常終了。
+
+  - name: test-coverage-suggest
+    description: カバレッジ低い箇所の提案。
+    max_budget_usd: 2.00
+    timeout_min: 30
+    output: report_only
+    prompt_template: |
+      {WORK_DIR}/yoshi/ または {WORK_DIR}/empirical-loop/ のテストカバレッジを確認し、
+      未カバー箇所への追加テスト案を3件提案。実装はせず report_only で出力。
+
+  - name: omakase-digest
+    description: 猫会議おまかせ委任（delegated）の自動消化。小隊以下は実装、中隊以上は計画書作成まで。
+    max_budget_usd: 3.00
+    timeout_min: 60
+    output: draft_commit
+    prompt_template: |
+      おまかせ委任の自動消化タスクを実行する。
+
+      1. node {WORK_DIR}/multi-agent-neko/scripts/omakase-digest.mjs --dry-run を実行し、
+         今夜処理すべき対象1件（id/title/assignee/expiry/出典候補）を確認する。
+         「消化対象なし」と表示されたらそのまま報告して終了。
+      2. 抽出は omakase-digest.mjs が kaigi-open-items.jsonl から機械的に行う（期限昇順・1夜1件）。
+         会議md / future-tasks.md は直接パースしない（構造化データ経由で既に抽出済みのため、
+         表形式のゆれに弱い直接パースは行わない設計）。
+      3. 表示された出典候補（memory/kaigi/{id先頭8桁}_*.md）を Read し、デフォルトアクションを把握する。
+         同日に複数会議が存在する場合は候補ファイルを順に確認し、対象idが記載されている方を採用する。
+      4. 規模判定（gates-start.md の規模判定マトリクスを適用。CLAUDE.md規模表基準: 小隊=1-2ファイル変更、または3-5ファイルで設計判断なし）:
+         - 小隊以下（1-2ファイル変更、または3-5ファイルで設計判断なし）→ feature/nightly-omakase-{id} ブランチで実装+テストまで実施し commit
+         - 中隊以上（3-5ファイル変更 AND 設計判断あり、またはより大規模）→ plans/{YYYYMMDD}_{id}.md の計画書作成のみ（実装しない）
+      5. いずれの場合も kaigi-open-items の close は実行しない（closeは翌朝総司令確認後の人間側操作）。
+      6. 結果を報告: 対象id / 判定規模 / 実施内容 / commit hash or 計画書パス / close推奨の可否。
+
+      制約: nightly-autopilot.md の夜間ガード全てに従う。DBスキーマ変更・外部API変更・
+      ディレクトリ外変更に該当したら即中断して報告。
+      失敗時: なぜ止まったかを stderr に明示してから exit。
+
+# 夜間実行 NG のタスク種別（ブロックリスト）
+nightly_ng:
+  - name: db-migration
+    reason: DB 変更は事前承認必須（tier2、夜間強制停止対象）
+
+  - name: schema-change
+    reason: スキーマ変更は影響範囲の事前確認必須
+
+  - name: dependency-major-upgrade
+    reason: 主要バージョンアップは tier2、人間レビュー必須
+
+  - name: file-deletion
+    reason: ファイル削除は _deleted/ 退避ルール適用、夜間判断不可
+
+  - name: production-deploy
+    reason: 本番デプロイは絶対に夜間 NG
+
+  - name: secret-update
+    reason: .env / API キーの変更は env_safety ルール適用、夜間 NG
+
+  - name: settings-edit
+    reason: settings.json 編集は KV-cache 破壊リスク、夜間 NG
+
+# 共通制限
+limits:
+  max_jobs_per_night: 5            # 1夜あたり最大ジョブ数
+  # max_total_budget_usd: 撤廃（2026-05-09、Pro plan 運用、API 課金なしのため）
+  default_timeout_min: 30          # ジョブ単体のデフォルトタイムアウト
+  circuit_breaker_threshold: 3     # 同一ジョブの連続失敗上限（quarantine 化）

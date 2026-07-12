@@ -1,0 +1,1 @@
+publish.mjs runScan covers PII check; pre-commit hook is redundant for staging repos

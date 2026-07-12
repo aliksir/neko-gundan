@@ -1,0 +1,17 @@
+module:
+  name: heartbeat
+  id: "HEARTBEAT-001 / POLLING-001"
+  default: "ON"
+  scale: "Platoon+"
+  description: "Active progress monitoring and stuck detection."
+  full_definition: "modules/heartbeat.md"
+  integration_points:
+    - agent: genba-neko
+      phase: "During work (step 6)"
+      action: "Report when stuck (5min/2errors/unclear/unexpected). 3 consecutive errors -> `[ESCALATION]`"
+    - agent: shigoto-neko
+      phase: "After assignment (Progress Monitoring)"
+      action: "Poll at 5min, then every 10min. Respond to `[ESCALATION]` immediately"
+    - agent: oyakata-neko
+      phase: "After background agent launch"
+      action: "Apply 15-minute rule for stall detection on `run_in_background` agents"

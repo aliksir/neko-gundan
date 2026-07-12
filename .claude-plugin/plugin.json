@@ -1,0 +1,9 @@
+{
+  "name": "neko-gundan",
+  "version": "1.12.1",
+  "description": "Multi-agent orchestration framework for Claude Code — hierarchical cat team (Oyakata/Shigoto/Genba-neko) with quality gates, review protocols, and auto-scaling from solo to battalion",
+  "author": {
+    "name": "aliksir",
+    "email": "62920013+aliksir@users.noreply.github.com"
+  }
+}

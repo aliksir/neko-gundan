@@ -1,0 +1,56 @@
+# =============================================================================
+# Full Preset — Everything enabled (maximum quality control)
+# =============================================================================
+# All modules active. Maximum quality assurance but highest overhead.
+# Best for large-scale, security-critical, or mission-critical projects.
+#
+# Modules to copy to .claude/rules/:
+#   - modules/whiteboard.md
+#   - modules/heartbeat.md
+#   - modules/race-prevention.md
+#   - modules/reflexion.md
+#   - modules/isv.md
+#   - modules/fides.md
+#   - modules/capacity-escalation.md
+#   - modules/arbitrator.md
+#   - modules/handoff-schema.md
+#   - modules/jit-tests.md
+#   - modules/tdd-separation.md
+#   - modules/ensemble-judge.md
+#   - modules/spec-driven-review.md
+#   - modules/checklist-export.md
+#   - modules/quality-metrics.md
+#   - modules/faceted-prompting.md
+#   - modules/linter-protection.md
+#   - modules/module-addition.md
+#   - modules/process-weight.md
+#   - modules/progress-visibility.md
+#   - modules/objection-flow.md
+#   - modules/raw-log.md
+#   - modules/audit-trail.md
+# =============================================================================
+
+shitsuke:
+  objection_flow: true
+  whiteboard: true
+  heartbeat: true
+  race_prevention: true
+  reflexion: true
+  isv: true
+  fides: true
+  capacity_escalation: true
+  arbitrator: true
+  handoff_schema: true
+  jit_tests: true
+  tdd_separation: true
+  ensemble_judge: true
+  spec_driven_review: true
+  checklist_export: true
+  quality_metrics: true
+  raw_log: true
+  faceted_prompting: true
+  linter_protection: true
+  module_addition: true
+  process_weight: true
+  progress_visibility: true
+  audit_trail: true

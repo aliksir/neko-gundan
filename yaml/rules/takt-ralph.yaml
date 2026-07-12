@@ -1,0 +1,122 @@
+takt_integration:
+  description: "takt連携・自律ループ詳細"
+
+  task_hierarchy:
+    principle: "1 Task = 1 Agent Session。タスクが大きすぎたら分割。"
+    levels:
+      - level: "Milestone"
+        definition: "1つの動作する機能"
+        neko_mapping: "大隊の目標単位"
+      - level: "Wave"
+        definition: "依存関係順に並べたタスク群"
+        neko_mapping: "中隊のフェーズ"
+      - level: "Task"
+        definition: "1エージェントセッション分の作業"
+        neko_mapping: "現場猫1体の担当"
+
+  takt_modes:
+    description: "takt = AIエージェントオーケストレーションツール。実装→レビュー→修正を自動ループで回す。"
+    modes:
+      - mode: "猫軍団"
+        when: "判断・設計が必要、複雑な連携"
+        command: "TeamCreate + エージェント"
+      - mode: "takt"
+        when: "放置運転したい単発タスク"
+        command: "takt -t \"タスク\" --auto-pr"
+      - mode: "ralph-loop"
+        when: "TDD自己修正ループ"
+        command: "自律ループ設定"
+    takt_commands:
+      - purpose: "単発タスク（放置運転）"
+        command: "takt -t \"機能Xを実装\" --auto-pr"
+      - purpose: "Issue駆動"
+        command: "takt -i 42 --auto-pr"
+      - purpose: "猫軍団piece使用（カスタム）"
+        command: "takt -w neko-gundan -t \"タスク内容\""
+      - purpose: "CI/パイプライン"
+        command: "takt -t \"タスク\" --pipeline --quiet"
+    custom_piece:
+      path: ".takt/pieces/neko-gundan.yaml"
+      stages: "計画→テスト→実装→AIレビュー→修正→並列レビュー→監督の7段階"
+      review_protocol: "review-protocol.md に従う"
+
+  autonomous_loop:
+    description: "ralph-loop統合。以下の全てを満たす場合、猫軍団の代わりに自律ループで回せる"
+    conditions:
+      - "完了基準がテストで機械的に検証できる（テスト通過、ビルド成功、lint通過）"
+      - "人間の判断が不要（デザイン・アーキテクチャ決定がない）"
+      - "新規コードベースまたはスコープが明確"
+    pattern:
+      - "1. 失敗するテストを書く"
+      - "2. 機能を実装する"
+      - "3. テスト実行 → 失敗なら修正して3に戻る"
+      - "4. リファクタリング"
+      - "5. 全テスト通過したら完了"
+    safety:
+      - "--max-iterations で上限を必ず設定"
+      - "完了基準は <promise>COMPLETE</promise> のような明示的シグナル"
+      - "3回連続テストのみループ → 行き詰まりと判断し報告"
+    do_not_use_when:
+      - "主観的判断が必要"
+      - "成功基準が曖昧"
+      - "本番デバッグ"
+
+  watchdog:
+    description: "3層Watchdog（行き詰まり段階的検出）。「繰り返しは失敗の兆候」。検出→分析→戦略変更のループで自己修正する。"
+    principle: "L1で90%解決。L3到達は設計ミスの兆候。"
+    layers:
+      - level: "L1: 機械的検出"
+        trigger: "同一テスト3回失敗 / 同一ファイル3回編集 / 同一エラー繰り返し / コンテキスト70%超消費"
+        action: "自動で戦略切替（アプローチ変更、設計再評価、セッション分割）"
+      - level: "L2: AIトリアージ"
+        trigger: "L1検出後も改善しない（追加2回失敗）"
+        action: "仕事猫に状況報告、アプローチ全面見直し"
+      - level: "L3: エスカレーション"
+        trigger: "L2でも解決不能"
+        action: "親方猫（Opus）に上申、タスク分割または中止判断"
+    heartbeat_integration:
+      description: "3層WatchdogとHeartbeatプロトコルは連動する"
+      rules:
+        - "現場猫のHeartbeat [ESCALATION] → L2として扱い、仕事猫が即介入"
+        - "仕事猫のポーリングで2回連続進捗なし → L1として扱い、戦略切替を検討"
+        - "L2到達 + Heartbeat報告なし（沈黙） → サイレントストール。仕事猫がReadで直接確認し、必要ならタスク再分割"
+
+  background_agent_stall_detection:
+    added: "2026-03-15"
+    problem: "Agent(run_in_background=true)で起動したエージェントは仕事猫のポーリング対象外。通知が来ない場合、親方猫が気づかず30分以上放置される事例が発生。"
+    countermeasures:
+      - "15分ルール: 最初のエージェント完了から15分経過しても残りが返ってこない場合、出力ファイルの最終更新時刻を確認"
+      - "ストール判定: 出力ファイルが10分以上更新されていない → サイレントストール"
+      - "回収手順: 出力ファイルから途中結果を回収し、未完了分は新しいエージェントで再実行（スコープを縮小して）"
+      - "原因記録: レート制限・WebFetch並列過多・コンテキスト超過のいずれかを特定し記録"
+    prevention:
+      - "バックグラウンドエージェントの並列数は最大5体（今回の実績上限）"
+      - "WebFetchを多用するリサーチ系は3体以下を推奨（レート制限回避）"
+      - "各エージェントにWebFetchの呼び出し上限を指示に含める（「WebFetchは最大3回まで」等）"
+
+  circuit_breaker:
+    description: "外部CLI（Codex/Gemini）やMCPツールの障害時に、無限リトライを防止する3状態モデル。"
+    principle: "3回失敗したら同じことを繰り返さない。別の手段を探す"
+    state_transition: "CLOSED（正常）→ 連続3回失敗 → OPEN（遮断）→ 60秒経過 → HALF-OPEN（試行）→ 成功: CLOSED / 失敗: OPEN"
+    states:
+      - state: "CLOSED"
+        behavior: "通常実行"
+        neko_action: "そのまま作業続行"
+      - state: "OPEN"
+        behavior: "リクエスト即失敗（実行しない）"
+        neko_action: "代替手段に切り替え or 仕事猫に報告"
+      - state: "HALF-OPEN"
+        behavior: "1リクエストだけ試行"
+        neko_action: "成功→CLOSED、失敗→OPEN"
+    targets:
+      - "codex exec のタイムアウト・エラー"
+      - "gemini -p のAPI障害"
+      - "MCPツールの応答なし"
+      - "外部WebFetch/WebSearchの連続失敗"
+    fallback_map:
+      - target: "Codex"
+        alternative: "Claude Code内で直接実装（規模縮小）"
+      - target: "Gemini"
+        alternative: "WebSearch or WebFetch で代替"
+      - target: "MCP"
+        alternative: "対応するCLIコマンド or 手動操作"

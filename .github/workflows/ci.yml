@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install Python test dependencies
+        run: python -m pip install --upgrade pip pytest
+
+      - name: Run framework validation
+        run: python scripts/validate_framework.py .
+
+      - name: Run tests
+        run: python -m pytest tests/ -v
+
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install shellcheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Lint shell scripts
+        # `shellcheck scripts/*.sh hooks/*.sh` fails when globs expand to no files.
+        # Guard with shopt + nullglob so empty matches yield zero args and shellcheck exits 0.
+        run: |
+          shopt -s nullglob
+          files=(scripts/*.sh hooks/*.sh)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No shell scripts under scripts/ or hooks/; skipping shellcheck."
+            exit 0
+          fi
+          shellcheck --severity=warning "${files[@]}"
+        shell: bash
+
+  syntax-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          # Node version used to syntax-check JS/MJS files below.
+          # This is the test-target Node — independent of the action's runtime
+          # (which is Node 24 on the v6 setup-node action and on ubuntu-latest runners).
+          node-version: "20"
+
+      - name: Check JS/MJS syntax
+        run: |
+          for f in scripts/*.mjs hooks/*.mjs hooks/*.js test/*.mjs; do
+            if [ -f "$f" ]; then
+              echo "Checking $f"
+              node --check "$f"
+            fi
+          done
+
+      - name: Run Node tests
+        run: |
+          if [ -f "test/nightly-runner.test.mjs" ]; then
+            echo "Running test/nightly-runner.test.mjs"
+            node --test test/nightly-runner.test.mjs
+          else
+            echo "test/nightly-runner.test.mjs not found; skipping."
+          fi
